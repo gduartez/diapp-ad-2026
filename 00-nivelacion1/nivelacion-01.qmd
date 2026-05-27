@@ -1,0 +1,1426 @@
+---
+title: "Clase 1: Estadística Descriptiva"
+subtitle: "**Nivelación Estadística**"
+institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
+author: '**Prof. Gabriel Duarte Zúñiga**'
+lang: es
+date: "06-02-2026"
+
+format:
+  live-revealjs: 
+    date-format: long
+    slide-number: true
+    incremental: true
+    # self-contained: true
+    transition: slide
+    background-transition: fade
+    highlight-style: github
+    code-link: true
+    theme: [styles.scss]
+    fig-width: 8
+    fig-height: 6
+    chalkboard:
+      buttons: true
+    preview-links: auto
+    logo: img/logo-26.png
+    # footer: <https://goblab.uai.cl/>
+    quiz:                      # <- opciones de quarto-quiz
+      checkKey: 'c'
+      resetKey: 'r'
+      shuffleOptions: false    # false para que el orden sea el que defines
+      disableOnCheck: false
+      includeScore: false
+
+revealjs-plugins:
+  - quiz
+filters:
+  - live                       
+engine: knitr
+
+webr:
+  render-df: DT
+  packages:
+    - dplyr
+    - ggplot2
+    - gapminder
+    - janitor
+    - openintro
+    - corrplot
+    
+editor: 
+  markdown: 
+    wrap: 72
+bibliography: references.bib
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+```{r}
+#| include: false
+library(tidyverse)
+library(gapminder)
+library(MetBrewer)
+theme_set(
+  theme_classic(base_size = 16) +
+  theme(
+    # Título
+    plot.title    = element_text(face = "bold", size = 16, 
+                                 color = "black", hjust = 0),
+    # Subtítulo
+    plot.subtitle = element_text(size = 14, color = "#6B7C93", 
+                                 hjust = 0, margin = margin(t = 2, b = 8)),
+    # Caption
+    plot.caption  = element_text(size = 10, color = "#868e96", 
+                                 hjust = 1, face = "italic"),
+    # Ejes
+    # axis.title    = element_text(color = "gray20"),
+    # axis.text     = element_text(color = "gray20"),
+    # Leyenda
+    legend.title  = element_text(face = "bold")
+  )
+)
+
+options(
+  ggplot2.discrete.colour = met.brewer("Hiroshige", 3),
+  ggplot2.discrete.fill   = met.brewer("Hiroshige", 3)
+)
+```
+
+# ¡Bienvenidas y Bienvenidos!
+
+## Nivelación Estadística
+
+- El objetivo de este módulo es introducir los conceptos básicos de
+  probabilidad y estadística mediante la ejecución de código en lenguaje
+  `R`.
+
+- Al finalizar este curso, las y los estudiantes serán capaces de
+  emplear estadísticas descriptivas para un conjunto de [datos
+  ordenados]{.underline} *(tidy)* y entender la importancia de la
+  inferencia estadística para extraer conclusiones a partir de
+  información muestral u observacional (no experimental).
+
+- Si bien la nivelación estadística es **optativa**, los contenidos
+  abordados serán fundamentales para los temas tratados en el módulo 2
+  de Análisis de Datos y Estadística Computacional.
+
+## Información General de la Nivelación {.smaller}
+
+- 🕐 **2 clases** en total con una duración de 2:00 hrs cada una.
+
+- La clase se divide en diferentes secciones:
+
+  i.  👨‍🏫 **Exposición:** Láminas de contenido que resumen el
+      conocimiento principal esperado como resultado de aprendizaje,
+      junto con código de ejemplo.
+  ii. 🧠 **Preguntas:** A lo largo de la clase se realizarán preguntas
+      que pueden ir contestando en línea para evaluar el aprendizaje de
+      cada sección.
+  iii. 💻 **Ejercicio guiado:** Ejercicio práctico resuelto de manera
+       simultánea por el profesor junto con los alumnos.
+       <!-- i. 👥 **Ejercicio grupal:** Ejercicios en grupos de 4-6 personas para resolver en conjunto los problemas propuestos. El profesor y ayudante pasarán por las salas recurrentemente. -->
+  iv. 🔒 **Cierre:** Resumen de los aspectos más relevantes y espacio
+      final de preguntas.
+
+- 📝 Cada sesión cuenta con una **guía de ejercicios** para reforzar el
+  aprendizaje de manera autónoma.
+
+- 📤 La presentación y grabación se subirán a **Webcursos** al finalizar
+  cada clase.
+
+- 2 clases:
+
+  - Clase 1: **Martes 02 de junio** de 18:30 a 21:00
+  - Clase 2: **Jueves 04 de junio** de 18:30 a 21:00
+
+## Reglas Generales
+
+- Durante las clases se debe mantener la **cámara prendida**. Quienes no
+  puedan hacerlo por algún motivo deben avisar mediante correo
+  electrónico o chat privado de zoom al ayudante.
+
+- ¡Siéntanse libres de hacer consultas! De todos modos, el mayor
+  aprendizaje se adquiere a través de la **práctica**: Ensayo y error.
+
+- Toda comunicación y consultas fuera de clase deben realizarse a través
+  del foro de ***webcursos***: No solo se beneficiarán ustedes, sino que
+  también sus compañeras/os!
+
+- Este módulo **no** tiene evaluaciones.
+
+## 🎯 Objetivos Clase 1
+
+Los objetivos específicos de la clase 1 son:
+
+- Comprender **qué es la estadística** y cuál es su relevancia para los
+  cientistas sociales.
+- Distinguir los **objetivos** de las **dos ramas** principales de la
+  estadística y cómo se utilizan en ciencias sociales para procesar y
+  analizar información.
+- Aplicar mediante lenguaje `R` **estadísticas descriptivas** para
+  diversos conjuntos de datos.
+  <!-- - Introducir las nociones básicas de **probabilidad**. -->
+
+# [Introducción a la Estadística]{style="color:white"} {background="#416fc4"}
+
+## Definiciones de Estadística
+
+En términos generales, la estadística se define como una disciplina que,
+basada en determinadas metodologías y conceptos, consiste en **producir,
+analizar, procesar, interpretar y presentar un conjunto de datos**.
+
+Así, la definición que usaremos a lo largo de la nivelación y del módulo
+2 del DIAPP será la siguiente:
+
+:::: fragment
+::: callout-note
+## Estadística [@agresti2018]
+
+La estadística consiste en un conjunto de métodos para **obtener** y
+**analizar** [**datos**]{style="color: darkblue;"}.
+:::
+::::
+
+## ¿Qué Son Los Datos? {.smaller}
+
+- La recopilación de información está en el centro de toda conocimiento
+  científico.
+- Esta recopilación entrega *observaciones*, las cuales son usadas en el
+  análisis estadístico.
+- A las observaciones recolectadas sobre características de interés se
+  les conoce como **datos**.
+- Analizar los datos de manera correcta nos permite aprender cómo estas
+  características recolectadas están asociadas y responder preguntas
+  relevantes para la ciencia social, como por ejemplo:
+  - ¿Los trabajadores que tienen mayor educación suelen ganar más?
+    ¿Cuánto más?
+  - ¿Qué variables permiten explicar de mejor manera los altos niveles
+    violencia en ciertos territorios?
+  - ¿Cuál es el efecto de un programa social en la reincidencia
+    delictual de niños, niñas y adolescentes?
+
+## Datos Ordenados o *Tidy Data* {.smaller}
+
+A lo largo de este módulo y el siguiente, trabajaremos principalmente
+con datos rectangulares u ordenados (o en su defecto, haremos las
+transformaciones correspondientes para conseguir esta estructura). En
+`R`, a estos objetos se le conocen como **dataframes** (o **tibbles**
+dentro del entorno `tidyverse`). Algunas definiciones esenciales para
+entender esta estructura son las siguientes:
+
+- [**Dataframe:**]{.underline} Corresponde a una tabla de **datos
+  rectangulares** (aquellos que comúnmente asociamos a una hoja de
+  cálculo). Son la estructura de datos básica para los modelos
+  estadísticos.
+- [**Variables:**]{.underline} Corresponde a las **columnas** de la
+  tabla de datos y definen las características de nuestra unidad de
+  observación. Por definición, los valores que toman las variables
+  pueden **variar** entre los sujetos de una muestra o población. A la
+  variable de interés en un estudio se le conoce como **variable
+  dependiente** o *outcome* ($y$).
+- [**Observaciones:**]{.underline} Corresponde a las **filas** de una
+  tabla de datos, en donde cada una de ellas representa un caso o unidad
+  de análisis del conjunto de datos (una persona, un hogar, un país,
+  etc.).
+- [**Valores:**]{.underline} Son los datos concretos dentro de cada
+  celda, es decir, el valor que toma cada variable para cada
+  observación.
+
+## Datos Ordenados o *Tidy Data*
+
+::: {.fragment .fade-in}
+![Fuente: Data tidying [@wickham2023]](img/tidydata.png){width="100%"
+fig-align="center"}
+:::
+
+## 💻 Datos Ordenados o *Tidy Data* {.smaller}
+
+- Con la función `head()` es posible mostrar las primeras 6
+  observaciones de un dataframe (u otro objeto) en `R`.
+
+- Para ejemplificar, veamos un caso concreto con información almacenada
+  dentro del paquete gapminder [@gapminder] en `R`. Este dataset
+  proporciona información sobre indicadores económicos y demográficos de
+  142 países cada cinco años entre 1952 y 2007:
+
+::: fragment
+```{webr}
+#| exercise: ex_1
+library(gapminder) #paquete que contiene los datos
+______(gapminder) #mostramos las primeras 6 observaciones
+
+```
+:::
+
+## Datos Ordenados o *Tidy Data* {.smaller}
+
+```{r}
+library(DT)
+datatable(gapminder, options = list(pageLength = 6))
+```
+
+::: {.cuadro-pregunta .fragment}
+¿Cuál sería una definición apropiada de una observación para este
+dataset?
+:::
+
+## ¿Para Qué Sirve la Estadística? {.smaller}
+
+::: fragment
+En este sentido, la estadística provee métodos para:
+:::
+
+1.  [**Diseñar:**]{.underline} Planear como obtener datos para un
+    estudio de investigación, de manera que sean **informativos**.
+    - Ejemplo: Cómo seleccionar a la gente para una encuesta y cómo
+      diseñar sus preguntas.
+2.  [**Describir:**]{.underline} Resumir y entender los datos obtenidos
+    y de manera simple y sin distorsionar o perder mucha información.
+    - Ejemplo: Presentar estadísticas descriptivas o gráficos de barra
+      con el objetivo de mostrar los datos de manera simple y
+      entendible, sin distorsionar o perder mucha información.
+3.  [**Inferir:**]{.underline} Para hacer **predicciones** basadas en
+    los datos, manejando la incertidumbre de una estimación de manera
+    objetiva.
+    - Ejemplo: Estimar los rangos en que oscila el efecto de un programa
+      de manera confiable.
+
+## Población y Muestra {.smaller}
+
+Gran parte de la estadística se basa en cómo extraer conclusiones a
+partir de un conjunto **parcial** de datos sobre una población de
+estudio. Es relevante entender que la población no solamente pueden ser
+personas, sino que también hogares, unidades territoriales, etc.
+
+:::: fragment
+::: callout-note
+## Población y Muestra [@agresti2018]
+
+La población es el conjunto **total** de sujetos de interés en un
+estudio. Una muestra, es un **subconjunto de la población** sobre la
+cual se recolectan datos.
+:::
+::::
+
+::: fragment
+![Fuente: Elaboración propia con IA (ChatGPT,
+2026)](img/poblacion-muestra-ChatGPT.png){width="50%"}
+:::
+
+## Estadística Descriptiva e Inferencial {.medium}
+
+Las principales formas de analizar datos son la **estadística
+descriptiva** y la **estadística inferencial**, las cuales conforman las
+principales dos ramas de esta ciencia.
+
+:::: fragment
+::: callout-note
+## Estadística Descriptiva [@agresti2018]
+
+La estadística descriptiva **resume** información en un conjunto de
+datos mediante gráficos, tablas y números como promedios y porcentajes.
+:::
+::::
+
+:::: fragment
+::: callout-note
+## Estadística Inferencial [@agresti2018]
+
+La estadística inferencial entrega **predicciones** respecto a la
+población a partir de una muestra de datos.
+:::
+::::
+
+::: fragment
+Un **estadístico** descriptivo corresponde a una medida numérica de
+resumen de una **muestra** de datos, mientras que una medida resumen de
+la **población** se conoce como **parámetro**.
+:::
+
+:::: fragment
+::: callout-note
+## Parámetro [@agresti2018]
+
+Un **parámetro** es un resumen numérico de la **población**.
+:::
+::::
+
+## Estadística Descriptiva: Ingresos en Chile
+
+Dos conceptos fundamentales en el campo de la estadística son la
+**incertidumbre** y la **variación**. En este sentido, la estadística y
+la probabilidad se basan en métodos tanto para describir y modelar esta
+variabilidad, así como para tomar decisiones en presencia de ella.
+
+::::: {.columns .img-full}
+::: {.column .fragment .fade-in width="50%"}
+[![Fuente: Encuesta Suplementaria de Ingresos
+2024](img/ingreso-medio-ine-2024.png)](https://www.ine.gob.cl/docs/default-source/encuesta-suplementaria-de-ingresos/publicaciones-y-anuarios/s%C3%ADntesis-de-resultados/2024/esi2024.pdf?sfvrsn=68833405_4)
+:::
+
+::: {.column .fragment .fade-in width="50%"}
+[![Fuente: Encuesta Suplementaria de Ingresos
+2024](img/ingreso-mediano-ine-2024.png)](https://www.ine.gob.cl/docs/default-source/encuesta-suplementaria-de-ingresos/publicaciones-y-anuarios/s%C3%ADntesis-de-resultados/2024/esi2024.pdf?sfvrsn=68833405_4)
+:::
+:::::
+
+## Estadística Inferencial: Evaluación de Programas
+
+[![Fuente:
+](img/evaluacion-mi-abogado.png){width="70%"}](https://www.dipres.gob.cl/597/articles-266613_r_ejecutivo_institucional.pdf)
+
+## 🧠 Pregunta N° 1 {.quiz-question .smaller}
+
+La **Encuesta CEP N°95 (septiembre-octubre 2025)** preguntó a 1.217
+personas en 100 comunas de Chile cuáles son los 3 problemas a los que
+debería dedicar el mayor esfuerzo el gobierno. El **61%** mencionó la
+delincuencia, asaltos y robos en primer lugar.
+
+::: nonincremental
+***¿Qué tipo de estadística representa este 61%?***
+
+- [Estadística descriptiva para una muestra.]{.correct
+  data-explanation="Correcto. El 61% resume y describe los datos recolectados en la muestra de 1.217 personas encuestadas en 100 comunas."}
+- [Estadística inferencial sobre la población
+  chilena.]{data-explanation="No exactamente. Para hacer inferencia necesitaríamos un paso adicional: estimar con qué nivel de confianza ese 60% representa a todos los chilenos mayores de 18 años."}
+- [Un parámetro
+  poblacional.]{data-explanation="Un parámetro describe a toda la población. Este 60% proviene de una muestra de 1.217 personas, no de todos los chilenos, por lo que es un estadístico muestral, no un parámetro poblacional."}
+- [Estadística descriptiva para la población
+  chilena.]{data-explanation="La estadística descriptiva es correcta, pero el resultado describe la muestra encuestada, no la población completa. Para describir a toda la población habría que haber consultado a todos los chilenos mayores de 18 años."}
+:::
+
+## Variables y su Clasificación
+
+- Como vimos anteriormente, diferentes sujetos o unidades de análisis
+  pueden tener diferentes valores para una variable. Por ejemplo, en una
+  muestra, para la variable sexo podemos tener tanto hombres como
+  mujeres.
+
+- Los valores que puede tomar una variable define su **escala de
+  medición** (*measurement scale*). Los métodos estadísticos válidos
+  para una variable dependen de esta definición.
+
+- La primera clasificación para las escalas de medición de las variables
+  es distinguir si son **números** o **categorías**. En segundo lugar,
+  se debe reconocer el **número de niveles** que hay dentro de cada una
+  de ellas.
+
+## Variables y su Clasificación {.smaller}
+
+- **Numéricos:** Variables cuya escala de medición tiene valores
+  numéricos que representan diferentes magnitudes. Pueden clasificarse
+  en:
+  - [Continuos:]{.underline} Datos que pueden tomar cualquier valor en
+    un intervalo, es decir, pueden tomar [infinitos valores
+    posibles]{style="color: darkred;"} dentro de los números reales.
+    Ejemplo de variables continuas son la altura, el peso o el tiempo
+    entre dos ciudadaes.
+  - [Discretos:]{.underline} Datos que sus posibles valores forman un
+    conjunto de números separados, tales como los recuentos (0, 1, 2, 3,
+    ...). Un ejemplo de variables discretas es el número de hermanos.
+- **Categóricos:** Variables que solo pueden tomar valores específicos
+  sobre un set de posibles categorías. Pueden clasificarse en:
+  - [Nominales:]{.underline} Categorías que [no se pueden
+    ordenar]{style="color: darkred;"}, es decir, que ninguna categoría
+    es mayor ni menor que ninguna otra categoría. Por ejemplo: Blanco,
+    Verde y Rojo.
+    - [Binarios:]{.underline} Un caso especial de datos categóricos con
+      solo **2** categorías de valores, por ejemplo: hombre/mujer, 0/1,
+      verdadero/falso, presente/ausente, etc.
+  - [Ordinales:]{.underline} Datos categóricos que tienen un **orden**
+    explícito. A diferencia de las cuantitativas, hay un orden pero no
+    un valor numérico que permite medir cuánta es la distancia entre
+    cada categoría. Ej: primer, segundo y tercer lugar; clase alta,
+    media o baja; siempre, ocasionalmente o nunca; etc.
+
+## Variables y su Clasificación
+
+:::: fragment
+::: callout-important
+Hay casos en los que una variable numérica puede ser ***tratada*** como
+continua o discreta, lo cual depende del criterio del investigador, de
+la naturaleza del dato y de la pregunta de investigación. Esta
+definición, puede tener implicancias en el método o técnica cuantitativa
+que se utilice para analizar los datos.
+:::
+::::
+
+## Tipos de Datos {.smaller}
+
+```{mermaid}
+flowchart TD
+  A[Variables] --> B[Cuantitativas o Numéricas]
+  A --> C[Cualitativas o Categóricas]
+  B --> D[Discretas]
+  B --> E[Continuas]
+  C --> F[Ordinales]
+  C --> G[Nominales]
+
+  style A fill:#adb5bd 
+  style B fill:#e9ecef
+  style C fill:#e9ecef
+```
+
+::: fragment
+En `R` las variables de un conjunto de datos o *dataframe* poseen
+**clases** que permiten *asociar* la tipificación anterior:
+
+| Clase | Significado | Tipo de Variable Asociada |
+|-------------------|---------------------------|---------------------------|
+| `int` | *integer* o números enteros (sin decimales) | Cuantitativa / Discreta o Continua |
+| `num` | *numeric* o números reales (aquellos que pueden tener decimales) | Cuantitativa / Continua |
+| `factor` | *factor* o variables categóricas con niveles (valores únicos) | Cualitativa / Ordinal o Nominal |
+:::
+
+## 💻 Ejemplo en `R` {.smaller}
+
+Con la función `str()` es posible identificar clase de cada variable que
+`R` reconoce para un conjunto de datos:
+
+::: fragment
+```{webr}
+#| exercise: ex_2
+library(gapminder)
+______(gapminder) #muestro la estructura y clases de las variables del dataframe
+```
+:::
+
+## Ejemplo en `R` {.smaller}
+
+Otra forma más elegante obtener esta información es con la función
+`glimpse <dplyr>`:
+
+::: fragment
+```{r}
+#| echo: true
+library(dplyr) #Cargo paquete para usar función glimpse
+glimpse(gapminder)
+```
+:::
+
+::: fragment
+Del resultado anterior vemos que:
+
+- [country]{.mark} es una variable tipo `factor`.
+- [continent]{.mark} es una variable tipo `factor`.
+- [year]{.mark} es una variable tipo `int`.
+- [lifeExp]{.mark} es una variable tipo `num`.
+- [pop]{.mark} es una variable tipo `int`.
+- [gdpPercap]{.mark} es una variable tipo `num`.
+:::
+
+## Resumen {.medium}
+
+::: callout-tip
+## Conceptos Importantes [@agresti2018]
+
+- El campo de la estadística guarda relación con la recopilación,
+  análisis y uso de datos para tomar decisiones y resolver problemas.
+- Las 2 ramas principales de la estadística son la **descriptiva** y la
+  **inferencial**.
+- La [**estadística descriptiva**]{style="color: darkred;"} consiste en
+  métodos para **organizar y resumir datos**.
+- La [**estadística inferencial**]{style="color: darkblue;"} consiste en
+  métodos para obtener conclusiones o predicciones objetivas a partir de
+  una **muestra** de datos.
+- Los datos corresponden observaciones que se recolectan sobre
+  características de interés. Los datos que usaremos en este curso
+  corresponden a datos ordenados o rectangulares en donde cada fila es
+  una observación de la unidad de análisis, cada columna una variable o
+  característica de interés y cada celda es un valor específico para una
+  observación y una característica determinada.
+- Los métodos estadísticos analizan datos de **variables**
+  (características que varían entre sujetos o unidades de observación) y
+  pueden definirse como **cuantitativas** (variables que son medidas en
+  un intervalo) o **cualitativas** (variables que toman un valor
+  específico dentro de un conjunto de categorías).
+- Las [**variables cuantitativas**]{style="color: darkgreen;"} pueden
+  clasificarse en dos: Discretas (cuyos valores posibles son finitos) y
+  continuas (cuyos valores posibles son infinitos dentro un rango
+  determinado). Las [**variables
+  cualitativas**]{style="color: darkorange;"} por su parte, pueden ser
+  nominales (categorías sin orden) y ordinales (categorías con un orden
+  definido que indica mayor o menor medida de algo sin especificar
+  *cuánto*).
+:::
+
+## 🧠 Pregunta N°2: Tipos de Variables (1/3) {.quiz-question}
+
+La encuesta CEP pregunta: *¿Cuál es su nivel educacional?* con las
+opciones: Sin estudios, Básica, Media, Técnica, Universitaria.
+
+¿Qué tipo de variable es?
+
+::: nonincremental
+- [Nominal]{data-explanation="Las categorías nominales no tienen orden. Aquí sí existe un orden natural (de menor a mayor nivel educativo), por lo que nominal no es correcto."}
+- [Ordinal]{.correct
+  data-explanation="Correcto. Las categorías tienen un orden definido (de menor a mayor nivel educativo), pero no podemos medir cuánta es la distancia entre cada nivel. Es una variable cualitativa ordinal."}
+- [Cuantitativa]{data-explanation="Las variables cuantitativas toman valores numéricos con distancias medibles entre ellos. El nivel educacional es una categoría, no un número."}
+:::
+
+## 🧠 Pregunta N°2: Tipos de Variables (2/3) {.quiz-question}
+
+La encuesta CEP pregunta: *¿Cuántos años tiene usted?*
+
+¿Qué tipo de variable es?
+
+::: nonincremental
+- [Nominal]{data-explanation="Las variables nominales son categorías sin orden. La edad es un número con distancias medibles entre valores, no una categoría."}
+- [Ordinal]{data-explanation="Las variables ordinales tienen orden pero sin distancias medibles. La edad sí tiene distancias medibles: 10 años es exactamente el doble de 5 años."}
+- [Cuantitativa]{.correct
+  data-explanation="Correcto. La edad es un número continuo con distancias medibles entre valores. Es una variable cuantitativa continua."}
+:::
+
+## 🧠 Pregunta N°2: Tipos de Variables (3/3) {.quiz-question}
+
+La encuesta CEP pregunta: *¿Con qué partido político se identifica?* con
+opciones: UDI, RN, PDG, PPD, PS, PC, Ninguno, Otro.
+
+¿Qué tipo de variable es?
+
+::: nonincremental
+- [Nominal]{.correct
+  data-explanation="Correcto. Los partidos políticos son categorías sin ningún orden natural entre ellas. Ningún partido es 'mayor' ni 'menor' que otro. Es una variable cualitativa nominal."}
+- [Ordinal]{data-explanation="Las variables ordinales tienen un orden definido entre categorías. Los partidos políticos no tienen un orden intrínseco, aunque a veces se les ubica en un eje izquierda-derecha, eso es una interpretación, no una propiedad del dato."}
+- [Cuantitativa]{data-explanation="Las variables cuantitativas toman valores numéricos medibles. Un partido político es una categoría, no un número."}
+:::
+
+# [Estadística Descriptiva]{style="color:white"} {background-color="#22226c"}
+
+## Estadística Descriptiva {.smaller}
+
+- El objetivo de la estadística descriptiva es resumir datos para
+  facilitar su comprensión y puede usarse tanto para datos
+  **cuantitativos** como **cualitativos**.
+- Para variables **cualitativas**, generalmente se utilizan las
+  frecuencias absolutas y relativas de cada categoría.
+- Para las variables **cuantitativas** el espectro de medidas es más
+  amplio, pudiendo distinguir cuatro grandes tipos:
+  1.  Medidas de **tendencia central** (🎯): Media, Mediana y Moda.
+  2.  Medidas de **variabilidad** (📊): Varianza y Desviación Estándar.
+  3.  Medidas de **posición** (📏): Percentiles, Rango Intercuartil
+      (IQR).
+  4.  Medidas de **asociación** (📈) para datos cuantitativos
+      bivariados: Correlación.
+
+:::: fragment
+::: callout-tip
+## Conocimiento Relevante [@agresti2018]
+
+Las estadísticas descriptivas para una variable cuantiativa poseen dos
+atributos principales para describirlas numéricamente: El **centro** o
+su observación típica (por ejemplo, a través de la **media**) y su
+**variabilidad** (por ejemplo, a través de la **desviación estándar**).
+:::
+::::
+
+## Distribuciones de Frecuencia {.smaller}
+
+- Una de las formas más básicas de resumir información es mediante
+  tablas y gráficos que muestren una distribución de frecuencia, ya sea
+  de una variable cualitativa o cuantitativa.
+
+:::: fragment
+::: callout-note
+## Distribución de Frecuencia [@agresti2018]
+
+Una distribución de frecuencias es una lista de los posibles valores de
+una variable, junto con el número de observaciones para cada valor.
+:::
+::::
+
+- Las distribuciones de frecuencia se pueden visualizar mediante
+  ***gráficos de barra (barplots)*** para datos cualitativos y mediante
+  ***histogramas (histograms)*** en el caso de datos cuantitativos.
+
+::: fragment
+Para resumir datos categóricos, una forma sencilla de hacerlo sería:
+
+1.  Listar los distitos valores de cada categoría.
+2.  Contar los casos (observaciones) que hay dentro de cada una de
+    ellas.
+3.  Construir un indicador de frecuencia relativa (o porcentaje) de cada
+    categoría que permita entender rápidamente el peso de cada una sobre
+    el total.
+:::
+
+## Ejemplo de Frecuencias de Datos Cualitativos {.smaller}
+
+- El dataset `penguins` contiene datos de 344 pingüinos adultos de tres
+  especies que habitan en tres islas del archipiélago Palmer, en la
+  Antártida, incluyendo su tamaño (longitud de las aletas, masa
+  corporal, dimensiones del pico) y sexo.
+
+- Analicemos la frecuencia absoluta y relativa de las especies y
+  presentémosla en una tabla:
+
+::: fragment
+```{r}
+#| echo: true
+
+library(janitor) #para agrupar datos de manera más sencilla
+library(knitr)
+penguins |> 
+  tabyl(species) |> 
+  adorn_totals("row") |> 
+  adorn_pct_formatting(digits = 1) |> 
+  rename(Especie = species, Frecuencia = n, Porcentaje = percent) |> 
+  kable()
+```
+:::
+
+## Visualización de Datos Cualitativos {.smaller}
+
+Para visualizar datos categóricos sencillos como el ejemplo anterior, un
+gráfico de barras es una de las soluciones más adecuadas:
+
+```{r}
+#| echo: true
+#| classes: r-stretch
+#| out-width: "100%"
+
+library(ggplot2)
+penguins |>
+  ggplot(aes(x = species)) +
+  geom_bar(fill = "cyan4") +
+  labs(x = "Especies", y = "Frecuencia", title = "Gráfico de Barras",
+       subtitle = "Frecuencia absoluta de pingüinos por especie")
+```
+
+## Distribución de Frecuencias Cuantitativas {.medium}
+
+- Un **histograma** es un gráfico de distribución de frecuencia para una
+  variable **cuantitativa**.
+- A diferencia de los gráficos de barra en donde a una cantidad finita
+  de valores posibles a contabilizar, los histogramas requieren definir
+  la cantidad de intervalos o barras (*bins*) con que se construirá el
+  gráfico.
+- Si se ocupan muy pocos intervalos o barras, se pierde mucha
+  información. Si se ocupan muchos intervalos, la información se torna
+  difícil de interpretar e incluso puede ocultar los patrones generales
+  que se quieren mostrar.
+- Una alternativa para mostrar la distribución completa de una variable
+  es hacer gráficos de densidad (*density plots*)
+- En `R` esto se puede lograr mediante `geom_histogram()` y
+  `geom_density()`
+
+## Histogramas y Gráficos de Densidad {.smaller}
+
+::::: columns
+::: {.column .fragment .fade-in width="50%"}
+```{r}
+#| echo: true
+#| classes: r-stretch
+#| out-width: "100%"
+#| code-line-numbers: "3,4"
+library(ggplot2)
+penguins |>
+  ggplot(aes(x = flipper_len)) +
+  geom_histogram(fill = "green4", color = "black", alpha = .5) +
+  labs(x = "Largo de la Aleta", y = "Frecuencia", title = "Gráfico de Densidad del Largo de la Aleta",
+       subtitle = "344 Pingüinos del dataset penguins")
+```
+:::
+
+::: {.column .fragment .fade-in width="50%"}
+```{r}
+#| echo: true
+#| classes: r-stretch
+#| out-width: "100%"
+#| code-line-numbers: "4"
+library(ggplot2)
+penguins |>
+  ggplot(aes(x = flipper_len)) +
+  geom_density(fill = "purple4", color = "black", alpha = .5) +
+  labs(x = "Largo de la Aleta", y = "Frecuencia", title = "Histograma del Largo de la Aleta",
+       subtitle = "344 Pingüinos del dataset penguins")
+```
+:::
+:::::
+
+## 🎯 Media (*Mean*) {.smaller}
+
+::: callout-tip
+## Media (*mean or average*)
+
+La media es la suma de todos los valores dividido por la cantidad de
+valores observados (n = cantidad total de observaciones)
+:::
+
+$$Media(y) = \bar{y} = {\frac {1}{n}}\sum _{i=1}^{n}y_{i}={\frac {y_{1}+y_{2}+\cdots +y_{n}}{n}}$$
+
+::: fragment
+Supongamos que tenemos los números del 1 al 5 guardados en un vector:
+$V_1 =\{1,2,3,4,5\}$
+:::
+
+::: {.cuadro-pregunta .fragment}
+¿Cuál sería la media de $V_1$?
+:::
+
+::: {.fragment .fade-in}
+Para resolver, bastaría con aplicar la fórmula:
+$\bar{V_1} ={\frac {1+2+3+4+5}{5}} = 3$
+
+En `R`, esto se realiza con la función `mean()`
+
+```{r}
+#| echo: true
+mean(c(1,2,3,4,5))
+```
+:::
+
+## 💻 🎯 Media: Aplicación
+
+Calcule el **promedio** de víctimas de homicidio consumado **mensuales**
+del año 2025 a partir del
+[informe](https://prevenciondehomicidios.cl/wp-content/uploads/2026/03/Informe_de_victimas_de_homicidios_consumados_2025_VF.pdf)
+elaborado por el Centro para la Prevención de Homicidios y Delitos
+Violentos ¿cuántas víctimas de homicidios hubo durante 2025? (*Hint: la
+función `sum()` permite sumar los elementos de un vector*)
+
+```{webr}
+#|exercise: ex_3
+homicidios_2025 <- c(97,103,77,82,85,69,98,103,94,107,89,87)
+
+______(homicidios_2025) #promedio de víctimas mensual en 2025
+______(______) #total de víctimas 2025
+```
+
+## 🎯 Media y Valores Faltantes
+
+::: fragment
+Es importante señalar que en R, cuando se intenta calcular la media y
+existen valores faltantes, el resultado será siempre `NA`:
+:::
+
+::: fragment
+```{r media_na1}
+#| echo: true
+mean(c(1,2,NA,4,5))
+```
+:::
+
+::: fragment
+Para calcular la media de los valores válidos o existentes en estas
+situaciones, se debe utilizar el argumento `na.rm = T`:
+:::
+
+::: {.fragment .fade-in}
+```{r media_na2}
+#| echo: true
+mean(c(1,2,NA,4,5), na.rm = T)
+```
+:::
+
+## 🎯 Mediana
+
+- La mediana es el número central en una lista **ordenada** de datos.
+- Si hay un número par de valores de datos, el valor central en realidad
+  no se encuentra en el conjunto de datos, sino que se obtiene a partir
+  del promedio de los dos valores que dividen los datos ordenados en la
+  mitad superior e inferior.
+- La formula matemática de la mediana es la siguiente:
+
+::: {.fragment .fade-in}
+
+$$Mediana =
+\begin{cases}
+ \frac{x_\frac{n}{2} + x_{\frac{n}{2}+1}}{2} \text{, si n es par} \\
+ x_\frac{n+1}{2}\text{, si n es impar}
+ \end{cases}       $$
+:::
+
+## 🎯 Mediana
+
+- En comparación con la media, que utiliza todas las observaciones, la
+  mediana depende sólo de los valores en el **centro** de los datos
+  ordenados.
+- Si bien esto puede parecer una desventaja, dado que **la media es
+  mucho más sensible a los valores extremos**, hay muchos casos en los
+  que la mediana es una mejor métrica para describir la tendencia
+  central de los datos.
+
+::: fragment
+En `R` la función para calcular la mediana es: `median()`
+:::
+
+## 🎯 Mediana: Aplicación {.smaller}
+
+::: fragment
+Con **N impar** la mediana es justo el valor en la posición central una
+vez habiendo ordenado los datos de menor a mayor:
+
+```{r median}
+#| echo: true
+median(c(1,2,3,4,5))
+```
+:::
+
+::: fragment
+Vemos que la mediana puede mantenerse igual pese a que los valores de
+los extremos de la variable cambien:
+
+```{r median2, echo=TRUE}
+#| echo: true
+median(c(2,2,3,5,5))
+```
+:::
+
+::: fragment
+Cuando **N es par** la mediana es el promedio de los dos valores
+centrales del conjunto ordenado:
+
+```{r median3, echo=TRUE}
+median(c(1,2,3,4))
+```
+:::
+
+## 📊 Varianza {.smaller}
+
+Las medidas de tendencia central por sí solas **no son suficientes**
+para describir numéricamente los datos de una variable cuantitativa. Si
+bien describen un valor típico, no permiten resumir la **dispersión** de
+los datos alrededor de ese valor típico.
+
+::: fragment
+```{r}
+#| echo: false
+#| fig-height: 5
+#| fig-width: 9
+#| out-width: "95%"
+library(gapminder)
+library(tidyverse)
+
+# Simular datos
+set.seed(123)
+datos <- tibble(
+  valor = c(
+    rnorm(100000, mean = 400, sd = 100),   # País A: dispersa
+    rnorm(100000, mean = 400, sd = 20)    # País B: concentrada
+  ),
+  grupo = rep(c("Continente A", "Continente B"), each = 100000)
+)
+
+ggplot(datos, aes(x = valor, color = grupo, fill = grupo)) +
+  geom_density(alpha = 0.3, linewidth = 1) +
+  geom_vline(xintercept = 400, linetype = "dashed", 
+             color = "gray40", linewidth = 0.8) +
+  labs(
+    x = "PIB Anual (Miles de Millones de Dólares)",
+    y = "Frecuencia relativa",
+    title = "Distribuciones simuladas con la misma media pero distinta variabilidad",
+    color = NULL,
+    fill  = NULL
+  ) +
+  scale_color_manual(values = c("Continente A" = "#e74c3c",
+                                "Continente B" = "#2980b9")) +
+  scale_fill_manual(values  = c("Continente A" = "#e74c3c",
+                                "Continente B" = "#2980b9")) +
+  annotate("text", x = 580, y = 0.005, 
+           label = "Continente A\n(sd = 10)", color = "#e74c3c") +
+  annotate("text", x = 550, y = 0.01, 
+           label = "Continente B\n(sd = 2)", color = "#2980b9")
+```
+:::
+
+## 📊 Varianza {.smaller}
+
+- La medida de variabilidad más útil se basa en las **desviaciones** de
+  cada observación respecto a la media $\bar{y}$:
+
+::: fragment
+$$\text{Desviación}_i = y_i - \bar{y}$$
+:::
+
+- La suma de todas las desviaciones siempre es **cero**:
+  $\sum(y_i - \bar{y}) = 0$, por lo que se usan los **cuadrados** de las
+  desviaciones para poder obtener una medida de variabilidad de una
+  variable completa (y no solo la desviación de cada uno de sus
+  valores).
+
+- La **varianza** $s^2$ es aproximadamente el promedio de las
+  desviaciones al cuadrado:
+
+::: fragment
+$$s^2 = \frac{\sum(y_i - \bar{y})^2}{n-1} = \frac{(y_1-\bar{y})^2 + (y_2-\bar{y})^2 + \cdots + (y_n-\bar{y})^2}{n-1}$$
+:::
+
+- En `R` se puede calcular usando la función `var()`
+
+::: fragment
+```{r}
+#| echo: true
+var(penguins$body_mass, na.rm = T)
+```
+:::
+
+
+## 📊 Desviación Estándar {.medium}
+
+- La **desviación estándar** $s$ es la raíz cuadrada de la varianza:
+
+::: fragment
+$$s = \sqrt{\frac{\sum(y_i - \bar{y})^2}{n-1}}$$
+:::
+
+- $s$ representa la distancia *típica* de una observación respecto a la
+  media: **a mayor** $s$, mayor dispersión de los datos.
+
+- En `R` se puede calcular usando la función `sd()`
+
+::: fragment
+```{r}
+#| echo: true
+sd(penguins$body_mass, na.rm = T)
+```
+:::
+
+## 📊 Desviación Estándar: Propiedades [@agresti2018] {.medium}
+
+1.  La desviación estándar no puede ser negativa: $s\geq0$.
+2.  $s=0$ solo cuando **todas** las observaciones tienen el **mismo
+    valor**.
+3.  A mayor variabilidad en torno a la media, mayor valor de $s$.
+4.  Se usa $n-1$ en el denominador (en lugar de $n$) porque con datos de
+    una **muestra** esto entrega una mejor estimación de la variabilidad
+    real de la **población**.
+5.  Si los datos cambian de **escala**, la desviación estándar cambia
+    proporcionalmente. Por ejemplo, si los ingresos se expresan en miles
+    de pesos en lugar de pesos (es decir, 50 en lugar de 50.000 por
+    ejemplo), la desviación estándar también se divide por 1.000.
+
+## 📊 Desviación Estándar: Regla Empírica
+
+Para distribuciones con forma de **campana**, la desviación estándar
+permite ubicar las observaciones según los siguientes rangos:
+
+| Rango            | Observaciones            |
+|------------------|--------------------------|
+| $\bar{y} \pm s$  | \~**68%** de los datos   |
+| $\bar{y} \pm 2s$ | \~**95%** de los datos   |
+| $\bar{y} \pm 3s$ | \~**99.7%** de los datos |
+
+## 📊 Desviación Estándar: Regla Empírica
+
+```{r}
+#| echo: false
+#| fig-width: 9
+#| fig-height: 5
+#| classes: r-stretch
+library(ggplot2)
+
+ggplot(data.frame(x = c(-4, 4)), aes(x)) +
+  # Área 99.7%
+  stat_function(fun = dnorm, xlim = c(-3, 3),
+                geom = "area", fill = "#a8d8ea", alpha = 0.8) +
+  # Área 95%
+  stat_function(fun = dnorm, xlim = c(-2, 2),
+                geom = "area", fill = "#4a90d9", alpha = 0.7) +
+  # Área 68%
+  stat_function(fun = dnorm, xlim = c(-1, 1),
+                geom = "area", fill = "#22226c", alpha = 0.8) +
+  # Curva normal encima
+  stat_function(fun = dnorm, linewidth = 1, color = "#22226c") +
+  # Líneas verticales en ±1s, ±2s, ±3s
+  geom_vline(xintercept = c(-3, -2, -1, 1, 2, 3),
+             linetype = "dashed", color = "gray40", linewidth = 0.5) +
+  # Línea media
+  geom_vline(xintercept = 0, linetype = "dashed",
+             color = "#22226c", linewidth = 0.8) +
+  # Flechas y etiquetas de porcentaje
+  annotate("segment", x = -1, xend = 1,
+           y = 0.28, yend = 0.28,
+           arrow = arrow(ends = "both", length = unit(0.2, "cm")),
+           color = "#22226c", linewidth = 0.7) +
+  annotate("text", x = 0, y = 0.30, label = "68%",
+           fontface = "bold", size = 4, color = "white") +
+  annotate("segment", x = -2, xend = 2,
+           y = 0.18, yend = 0.18,
+           arrow = arrow(ends = "both", length = unit(0.2, "cm")),
+           color = "#4a90d9", linewidth = 0.7) +
+  annotate("text", x = 0, y = 0.20, label = "95%",
+           fontface = "bold", size = 4, color = "white") +
+  annotate("segment", x = -3, xend = 3,
+           y = 0.08, yend = 0.08,
+           arrow = arrow(ends = "both", length = unit(0.2, "cm")),
+           color = "#a8d8ea", linewidth = 0.7) +
+  annotate("text", x = 0, y = 0.10, label = "99.7%",
+           fontface = "bold", size = 4, color = "white") +
+  # Etiquetas eje x
+  scale_x_continuous(
+    breaks = -3:3,
+    labels = c(expression(bar(y)-3*s), expression(bar(y)-2*s),
+               expression(bar(y)-s),   expression(bar(y)),
+               expression(bar(y)+s),   expression(bar(y)+2*s),
+               expression(bar(y)+3*s))
+  ) +
+  labs(x = NULL, y = NULL) +
+  theme(axis.text.y  = element_blank(),
+        panel.grid   = element_blank(),
+        axis.text.x  = element_text(size = 10))
+```
+
+## 📊 🧠 Pregunta N° 3
+
+La nota promedio de un examen es $\bar{y} = 4$ y su desviación estándar
+es $s = 1$. Suponiendo que la distribución de notas tiene forma de
+**campana**:
+
+::: nonincremental
+***¿Entre qué notas se concentra el 95% de los estudiantes?***
+
+- [Entre 2 y 6.]{.correct
+  data-explanation="Correcto. Por la Regla Empírica, el 95% de los datos cae entre $\\bar{y} \\pm 2s = 4 \\pm 2(1)$, es decir, entre 2 y 6."}
+- [Entre 3 y
+  5.]{data-explanation="Ese rango corresponde a $\\bar{y} \\pm 1s$, que concentra aproximadamente el 68% de los estudiantes, no el 95%."}
+- [Entre 1 y
+  7.]{data-explanation="Ese rango corresponde a $\\bar{y} \\pm 3s$, que concentra el 99.7% de los estudiantes, no el 95%."}
+- [Entre 3,5 y
+  4,5.]{data-explanation="Ese rango es demasiado estrecho. Con $s = 1$, un rango de solo ±0,5 concentraría aproximadamente el 38% de los estudiantes."}
+:::
+
+## 📏 Percentiles y Cuartiles {.medium}
+
+Otra forma de describir una distribución es mediante **medidas de
+posición**. Esto nos permite identificar el punto en el cual cierto
+porcentaje de los datos se ubican debajo (o sobre) tal punto.
+
+:::: fragment
+::: callout-note
+## Percentiles y Cuartiles
+
+El **percentil** $p$ es el valor tal que el $p\%$ de las observaciones
+cae por debajo o en ese punto, y el $(100-p)\%$ cae por encima.
+
+Los **cuartiles** ($Q_n$) se obtienen a partir de la definición de
+percentil cuando se define $p = 25$ y $p = 75$. Los cuartiles, junto con
+la mediana, dividen la distribución en cuatro partes, cada una de las
+cuales contiene una cuarta parte de las observaciones.
+
+| Percentil | Nombre                     | Interpretación                  |
+|-----------|----------------------------|---------------------------------|
+| 25°       | **Cuartil inferior** $Q_1$ | 25% de los datos cae por debajo |
+| 50°       | **Mediana** $Q_2$          | 50% de los datos cae por debajo |
+| 75°       | **Cuartil superior** $Q_3$ | 25% de los datos cae por encima |
+
+El **Rango Intercuartil** $IQR = Q_3 - Q_1$ mide la dispersión del 50%
+central de los datos y es la base de para la construcción del gráfico
+conocido como *boxplot* o de caja y bigotes.
+:::
+::::
+
+## 📏 Percentiles: Boxplot {.smaller}
+
+- El boxplot es uno de los gráficos más comunes para identificar
+  rápidamente las medidas de posición de una variable ya que se compone
+  de los siguientes elementos:
+  - **La caja:** Cuyo límite inferior es primer cuartil ($Q_1$), su
+    línea central el segundo cuartil (mediana) y su límite superior el
+    tercer cuartil ($Q_3$).
+  - **Los bigotes:** Que representan la variabilidad fuera del 50%
+    central ($1,5 \times IQR$).
+  - **Los valores atípicos:** Todo aquello que está fuera de los
+    bigotes.
+
+:::: fragment
+::: callout-note
+## Valor Atípico (*Outlier*) [@agresti2018]
+
+Una observación se considera un [**valor atípico**
+(*outlier*)]{style="color: darkred;"} cuando cae fuera de los siguientes
+límites:
+
+$$[\, Q_1 - 1{,}5 \times IQR \;,\; Q_3 + 1{,}5 \times IQR \,]$$
+
+Este criterio es una regla práctica para la **detección inicial** de
+valores inusuales, no una sentencia definitiva. Ante un valor atípico,
+siempre corresponde preguntarse:
+
+- ¿Es un **error de registro** o digitación?
+- ¿Es un valor **esperable** dado el contexto?
+- ¿Requiere una **transformación** o tratamiento especial?
+:::
+::::
+
+## 📏 Percentiles: Boxplot
+
+::: {.fragment .fade-in}
+![Fuente: [Conceptos
+Claros](https://conceptosclaros.com/como-ser-mas-rapido-boxplot-estadistica-descriptiva-parte2/)](img/boxplot.png){width="80%"
+fig-align="center"}
+:::
+
+## 📏 Boxplot en `R` {.smaller}
+
+Para hacer un boxplot en `R` se puede usar la función `geom_boxplot()`.
+Si se especifica una variable cuantitativa y otra cualitativa, es
+posible comparar distribuciones entre categorías
+
+::::: columns
+::: {.column .fragment .fade-in width="50%"}
+```{r}
+#| echo: true
+#| classes: r-stretch
+#| out-width: "100%"
+#| code-line-numbers: "3,4"
+gapminder |> 
+  filter(year == 2007) |> 
+  ggplot(aes(y = gdpPercap)) +
+    geom_boxplot(fill = "yellow4", alpha = .6) 
+```
+:::
+
+::: {.column .fragment .fade-in width="50%"}
+```{r}
+#| echo: true
+#| classes: r-stretch
+#| out-width: "100%"
+#| code-line-numbers: "3"
+gapminder |> 
+  filter(year == 2007) |> 
+  ggplot(aes(x = continent, y = gdpPercap)) +
+    geom_boxplot(fill = "orange4", alpha = .6) 
+```
+:::
+:::::
+
+## 💻 📏 Boxplot: Aplicación
+
+Ocupando el dataset `penguins`, haga un boxplot del peso de los 344
+pingüinos en gramos (`body_mass`) por especie (`species`):
+
+```{webr}
+#|exercise: ex_4
+penguins |> 
+  ggplot(aes(x = ______ , y = ______)) +
+  ______(fill = "purple4", color = "black", alpha = .5) +
+  labs(title = "Boxplot Peso de los Pingüinos por Especie")
+```
+
+## 📏 Puntaje Z: Medida de Posición
+
+El **puntaje** $z$ mide cuántas desviaciones estándar separan una
+observación de la media:
+
+$$z = \frac{y_i - \bar{y}}{s} = \frac{\text{observación} - \text{media}}{\text{desviación estándar}}$$
+
+- Un $z > 0$ indica que la observación está **sobre** la media.
+- Un $z < 0$ indica que la observación está **bajo** la media.
+- Un $|z| > 3$ es una señal de **valor atípico** (*outlier*) para
+  distribuciones con forma de campana.
+
+## 💻 📏 Puntaje Z {.medium}
+
+Utilizando el dataset `bdims` que contiene 507 medidas físicas de
+individuos activos, calcule el puntaje Z para una persona que tiene
+tiene una altura (`hgt`) de 2 metros (200 en la escala de la variable)
+¿Qué puede concluir a partir de este puntaje asumiendo que la
+distribución de la altura tiene forma de campana?
+
+```{webr}
+#|exercise: ex_5
+y <- ______(bdims$hgt) #Media
+s <- ______(______) #Desviación Estándar
+z <- (______ - ______ )/______ #Puntaje Z
+
+z
+```
+
+## 📈 Medidas de Asociación Bivariadas {.smaller}
+
+- Hasta el momento, hemos revisado como resumir variables cuantitativas
+  y cualitativas tanto numéricamente como con gráficos.
+
+- Generalmente los estudios requieren del manejo de más de una variable
+  en simultáneo, por ejemplo, para estudiar la asociación entre ellas.
+  En este contexto, se define una **variable de respuesta o resultado**
+  (típicamente $y$) y una (o más) **variable(s) explicativa(s)**
+  (típicamente $x$).
+
+- Los análisis que consideran la relación entre 2 variables se conocen
+  como **análisis bivariados**. Para variables cualitativas, una forma
+  sencilla de analizar su relación es construir **tablas de
+  contingencia**.
+
+- Las tablas de contingencia muestran la frecuencia de las observaciones
+  de forma cruzada en filas y columnas, permitiendo evaluar la
+  dependencia o asociación entre dichas variables. En `R` se puede usar
+  `tbl_cross()` del paquete `gtsummary`
+
+- Por su parte, en el caso de 2 variables cuantitativas, un gráfico de
+  dispersión (*scatterplot*) es una de las herramientas más intuitivas
+  para analizar la relación entre ellas. En `R` se puede usar
+  `geom_point()` junto con `aes(x = x, y = y)` para graficar un
+  *scatterplot*
+
+## 📈 Tablas de Contingencia {.smaller}
+
+```{r}
+#| echo: true
+library(gtsummary)
+penguins |>
+  tbl_cross(
+    row    = species,
+    col    = sex,
+    percent = "row",        # porcentajes por fila
+    missing = "no",          # excluye NA
+    label   = list(species ~ "Especie", sex ~ "Sexo")
+  ) |>
+    modify_caption("**Distribución de pingüinos por especie y sexo**") |> 
+  bold_labels()
+```
+
+## 📈 Gráficos de Dispersión {.smaller}
+
+```{r}
+#| classes: r-stretch
+#| out-width: "100%"
+#| echo: true
+penguins |> 
+  ggplot(aes(x = body_mass, y = flipper_len,
+             color = species)) +
+  geom_point() + 
+  labs(title = "Masa corporal de los pingüinos\nen comparación con la longitud de sus aletas.", x = "Masa Corporal", y = "Longitud de Aletas")
+```
+
+## 📈 Correlación {.medium}
+
+- Se dice que las variables $X$ e $Y$ (cada una con datos cuantitativos)
+  están correlacionadas **positivamente** si es que cuando aumenta $X$,
+  $Y$ también lo hace, y viceversa.\
+- Si cuando $X$ aumenta $Y$ disminuye, y viceversa, las variables están
+  correlacionadas **negativamente**.
+- Es importante notar que la correlación es una medida de **dependencia
+  lineal** entre dos variables **cuantitativas**. Esto quiere decir, que
+  puede ocurrir que 2 variables estén relacionadas de manera **no
+  lineal** y, por lo tanto, exista una baja o nula correlación de
+  Pearson, lo que **no implica** que no haya asociación entre estas
+  variables.
+- Para calcular el coeficiente de correlación de Pearson, multiplicamos
+  las desviaciones de la media de la variable 1 por las de la variable 2
+  y las dividimos por el producto de las desviaciones estándar
+  respectivas:
+
+::: {.fragment .fade-in}
+$$r=\frac{\sigma_{xy}}{{\sigma _{x}\sigma _{y}}} = {\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{(n-1) s_{x}s_{y}}}$$
+:::
+
+## 📈 Correlación {.medium}
+
+- El valor numérico de la correlación de pearson nos indica 2 cosas: la
+  **fuerza** de la correlación (valor absoluto de la correlación: $|r|$)
+  y en qué **dirección** va la correlación (signo de la correlación:
+  $r <0$ o $r>0$).
+- El coeficiente de correlación es una métrica estandarizada, por lo que
+  siempre oscila entre –1 (correlación negativa perfecta) a +1
+  (correlación positiva perfecta). Un coeficiente de correlación de 0
+  indica que **no hay correlación** o asociación lineal entre las
+  variables.
+
+## 📈 Correlación {.smaller}
+
+- Es importante notar que no existe una única interpretación de la
+  fuerza de la correlación de pearson (en efecto, hay muchos rangos
+  utilizados dependiendo de la disciplina, por ejemplo [ver
+  aquí](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6107969/)). Sin
+  embargo una regla práctica es la siguiente [@devore2016]:
+  - $r = 0$: **No existe correlación**
+  - $0 < |r| \leq 0.5$: **Correlación Débil**
+  - $0.5 < |r| < 0.8$: **Correlación Moderada**
+  - $0.8 \leq  |r| < 1$: **Correlación Fuerte**
+  - $|r| = 1$: **Correlación Perfecta**
+
+## 📈 Matriz de Correlaciones {.smaller}
+
+- La matriz de correlaciones es una tabla donde las variables se
+  muestran tanto en filas como en columnas, y los valores de las celdas
+  son las correlaciones entre las variables.
+
+- Esta matriz es necesaria para realizar los gráficos de correlación o
+  `corplots`.
+
+- El comando en R para obtener esta matriz de correlaciones es `cor()`
+
+::: fragment
+```{r cor, echo=T}
+gapminder_num <- gapminder |> 
+  filter(year == 2007) |>  #Dejo observaciones del año más reciente
+  select(gdpPercap,lifeExp) #Selecciono solo variables cuantitativas
+cor(gapminder_num)
+```
+:::
+
+## 💻 Gráfico de Dispersión (*Scatterplot*) {.smaller}
+
+Utilizando el dataset de `gapminder` realice un gráfico de dispersión entre `lifeExp` (eje y) y  `gdpPercap` (eje x)
+
+```{webr}
+#|exercise: ex_6
+gapminder |> 
+  filter(year == 2007) |>  
+  ggplot(aes(x = ______, y = ______))+
+  ______(alpha = .7, color = "blue4")
+```
+
+## 💻 Gráfico de Dispersión (*Scatterplot*) + Recta
+
+La función `geom_smooth` permite ajustar visualmente una función a la distribución de los datos. Con su argumento `method = lm` permite ajustar una recta que ayuda a visualizar la relación lineal entre ambas variables.
+
+```{webr}
+#|exercise: ex_7
+gapminder |> 
+  filter(year == 2007) |>  
+  ggplot(aes(x = ______, y = ______))+
+  ______(alpha = .7, color = "blue4") +
+  ______(method = ______)
+```
+
+## 💻 Matriz de Correlaciones
+
+Por último, la librería `corrplot` permite visualizar de manera más efectiva las matrices de correlación. Su función homónima `corrplot()` recibe como argumento una matriz de correlaciones y permite ajustar diferentes parámetros visuales. Utilizando el dataset `USArrests` realice un corrplot de todas sus variables.
+
+```{webr}
+#|exercise: ex_8
+______(USArrests) #Verifique que las variables sean todas cuantitativas
+
+```
+
+
+```{webr}
+#|exercise: ex_9
+library(corrplot)
+m <- ______(______) #Genere matriz de correlaciones
+______(m,method = 'number',type="lower",tl.col="black",pch.col = "black",) #Genere corrplot
+```
+## Resumen Estadística Descriptiva {.medium}
+
+::: callout-tip
+## Conceptos Importantes
+- La métrica básica para tendencias centrales es la media, pero puede
+  ser sensible a valores atípicos (*outliers*).
+- Otras métricas como la mediana son menos sensibles a valores atípicos
+  y, por lo tanto, son más robustas en presencia de ellos.
+- La varianza es la medida más típica de dispersión pero tiene la
+  desventaja de no estar en escalas interpretables. Como alternativa, la
+  raíz cuadrada de la varianza (la desviación estándar) es mejor para
+  poder interpretar la magnitud de la variabilidad en la escala del
+  dato.
+- Los percentiles permiten conocer rápidamente que porcentaje de las
+  unidades de observación estan bajo cierto umbral.
+- La covarianza, es una medida de asociación entre dos variables
+  cuantitativas. De manera análoga a la desviación estándar, la
+  correlación es una medida que acota la escala entre -1 y 1 y permite
+  interpretar de manera más sencilla la fuerza y sentido de esta
+  asociación.
+:::
+
+# Cierre
+
+## Próxima Clase
+
+- Probabilidades
+- Inferencia Estadística: Intervalos de confianza
+- Inferencia Estadística: Test de significancia y p-values
+
+## Bibliografía

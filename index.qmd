@@ -1,0 +1,14 @@
+---
+title: "DIAPP 2026 · Análisis de Datos y Estadística Computacional"
+---
+
+Bienvenidos al sitio del **Módulo II** del Diplomado en Herramientas 
+de Inteligencia Artificial para Políticas Públicas (DIAPP 2026), 
+Universidad Adolfo Ibáñez.
+
+| | |
+|---|---|
+| **Profesor** | Gabriel Duarte Zúñiga |
+| **Ayudante** | Jean Paul Sepúlveda |
+| **Modalidad** | Zoom, martes 18:30 |
+| **Plataforma** | Webcursos |

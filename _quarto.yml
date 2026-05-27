@@ -1,0 +1,61 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - "index.qmd"
+    - "programa.qmd"
+    - "!00-nivelacion1/*.qmd"
+    - "!00-nivelacion2/*.qmd"
+    - "!01-importar/*.qmd"
+    - "!02-transformar/*.qmd"
+    - "!03-visualizar/*.qmd"
+    - "!04-comunicar/*.qmd"
+    - "!05-inferencia/*.qmd"
+    - "!06-regresion1/*.qmd"
+    - "!07-regresion2/*.qmd"
+    - "!08-eda/*.qmd"
+
+website:
+  title: "DIAPP 2026 · Análisis de Datos"
+  favicon: img/logo-26.png
+  navbar:
+    left:
+      - text: "🏠 Inicio"
+        href: index.qmd
+      - text: "📋 Programa"
+        href: programa.qmd
+    right:
+      - icon: github
+        href: https://github.com/gduartez/diapp-2026
+
+  sidebar:
+    style: "docked"
+    contents:
+      - text: "**Nivelación**"
+      - text: "Clase 1: Estadística Descriptiva"
+        href: 00-nivelacion1/index.qmd
+      - text: "Clase 2: Inferencia Estadística"
+        href: 00-nivelacion2/index.qmd
+      - text: "---"
+      - text: "**Módulo 2**"
+      - text: "Clase 1: Importar datos"
+        href: 01-importar/index.qmd
+      - text: "Clase 2: Transformar datos"
+        href: 02-transformar/index.qmd
+      - text: "Clase 3: Visualizar datos"
+        href: 03-visualizar/index.qmd
+      - text: "Clase 4: Comunicar con R"
+        href: 04-comunicar/index.qmd
+      - text: "Clase 5: Inferencia"
+        href: 05-inferencia/index.qmd
+      - text: "Clase 6: Regresión I"
+        href: 06-regresion1/index.qmd
+      - text: "Clase 7: Regresión II"
+        href: 07-regresion2/index.qmd
+      - text: "Clase 8: Taller de cierre"
+        href: 08-eda/index.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true

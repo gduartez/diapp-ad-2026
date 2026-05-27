@@ -1,0 +1,569 @@
+/* ====================================================================
+ ========================= SHARED: Accessibility ======================
+ ====================================================================== */
+
+/* Focus outline for keyboard navigation */
+.sqq-option-row:focus,
+.sqq-mc-btn:focus,
+.mqq-btn:focus,
+.mqq-option-block:focus,
+.fbq-button:focus,
+.fbq-target:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Only show focus outline for keyboard users, not mouse clicks */
+.sqq-option-row:focus:not(:focus-visible),
+.sqq-mc-btn:focus:not(:focus-visible),
+.mqq-btn:focus:not(:focus-visible),
+.mqq-option-block:focus:not(:focus-visible),
+.fbq-button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+
+/* ====================================================================
+ ========================= STYLE: singleQuestion Quiz =================
+ ====================================================================== */
+
+/* General stuff */
+.sqq-clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/*  ------- Main widget container -------- */
+
+.sqq-quiz {
+  width: 100%!important;
+  margin-left: auto!important;
+  margin-right: auto!important;
+  border-radius: 5px !important;
+  background-color: #F7F7F7;
+  overflow: hidden;
+}
+
+/* ------------ Question container ------------- */
+
+.sqq-question {
+  width: 100% !important;
+  background-color: #5F5F5F;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.sqq-question-text  {
+  font-weight: bold !important;
+  color: #FFFFFF;
+  margin: 0px !important;
+}
+
+/* ------------ Main quiz container, incl. answer options ------------- */
+
+.sqq-main {
+  min-height: 120px;
+  padding: 10px 15px !important;
+  box-sizing: border-box !important;
+}
+
+.sqq-option-row {
+  background-color: #ECECEC;
+  cursor: pointer !important;
+  border: none !important;
+  border-radius: 5px !important;
+  margin-bottom: 8px !important;
+  display: flex;
+}
+
+.sqq-option-row::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.sqq-option-cols {
+  flex: 1;
+  position: relative;
+}
+
+/* .sqq-option-col1 width and flex are set dynamically in JS based on fontSize */
+
+
+/* ------------ Individual options ------------- */
+
+.sqq-div-letter {
+  background-color: #3498db;
+  text-align: center!important;
+  border-radius: 4px !important;
+  margin: 0 20px !important;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+p.sqq-p-lett {
+  text-align: center;
+  color: white !important;
+  font-weight: 600 !important;
+  margin: 0px !important;
+}
+
+div.sqq-div-text {
+  padding-right: 20px;
+}
+
+.sqq-p-text {
+  color: inherit;
+  margin: 0px !important;
+}
+
+
+/* --------- Multiple-Choice style ----------*/
+
+/* Selected row background is set via JS inline styles
+   using darkenColor(optionBg, 0.3) */
+
+/* Letter color for selected rows is set via JS inline styles
+   using optionLabelHoverBg (derived from optionLabelBg parameter) */
+
+
+/* ------------ Buttons ------------- */
+
+.sqq-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: left;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  padding: 0 10px;
+}
+
+.sqq-mc-btn {
+  padding: 8px 16px;
+  line-height: 1.4;
+  margin-right: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border: 1px solid transparent !important;
+  border-radius: 5px !important;
+  text-shadow: none;
+  box-sizing: border-box;
+}
+
+/* Gray border only on secondary buttons (tip/solution) */
+.sqq-mc-btn.sqq-btn-secondary {
+  border: 1px solid #BBBBBB !important;
+}
+
+.sqq-mc-btn:hover {
+  filter: brightness(0.8);
+}
+
+.sqq-mc-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+  filter: none;
+}
+
+/* ------------ Tip and solution divs ------------- */
+
+.sqq-tips {
+  display: none;
+  padding: 10px 15px;
+  margin: 10px 15px;
+  border-radius: 5px;
+}
+
+.sqq-tips p {
+  margin: 5px 0;
+}
+
+.sqq-solution {
+  display: none;
+  padding: 10px 15px;
+  margin: 10px 15px;
+  border-radius: 5px;
+}
+
+.sqq-solution p {
+  margin: 5px 0;
+}
+
+/* --------- Responsive Design --------------*/
+
+@media screen and (max-width: 400px) {
+  .sqq-question-text {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }
+}
+
+
+/* ====================================================================
+ ========================= STYLE: multiQuestion Quiz ==================
+ ====================================================================== */
+
+/* General stuff */
+.mqq-clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/*  ------- Main widget container -------- */
+
+.mqq-quiz {
+  margin: 0 !important;
+  width: 100%!important;
+  font-weight: 400 !important;
+  text-align: left !important;
+  overflow: hidden;
+  border-radius: 5px !important;
+}
+
+/*  ------- Title container --------  */
+
+.mqq-title {
+  width: 100% !important;
+  display: flex !important;
+}
+
+.mqq-title-left {
+  flex: 1 !important;
+  position: relative !important;
+  font-weight: bold !important;
+}
+
+.mqq-title-right {
+  text-align: right;
+}
+
+/* Responsive design for title container */
+
+@media (max-width: 500px) {
+  .mqq-title {
+    flex-direction: column;
+  }
+  .mqq-title-right {
+    flex: 1 !important;
+    width: 100% !important;
+    text-align: left;
+    margin-top: 0.5em;
+  }
+}
+
+
+/* ------------ Question container ------------- */
+
+p.mqq-question-text {
+  font-weight: bold !important;
+  margin: 8px 0 0 0 !important;
+}
+
+
+/* ----- The main quiz area, incl. answer options ------ */
+
+.mqq-main {
+  padding: 10px 20px 20px 20px !important;
+  border-radius: 0 0 5px 5px !important;
+}
+
+.mqq-content {
+  margin-top: 0 !important;
+}
+
+.mqq-form-group {
+  border: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.mqq-options {
+  /* margin-top: 10px !important; */
+  /* margin-left: 2.5px !important; */
+  width: 90%;
+}
+
+.mqq-option-block {
+  padding: 10px !important;
+  margin-bottom: 2px !important;
+  position: relative !important;
+  display: block !important;
+}
+
+.mqq-form-check-label {
+  display: inline-block !important;
+  margin-bottom: 0 !important;
+  cursor: pointer !important;
+}
+
+.mqq-quiz label.mqq-form-check-label input.mqq-form-check-input {
+  padding: 0 !important;
+  position: absolute !important;
+}
+
+.mqq-quiz span.optionval {
+  font-weight: normal !important;
+  display: block;
+}
+
+/* ------------ Buttons ------------- */
+
+.mqq-buttons {
+  position: relative;
+  width: 90%;
+  padding: 10px 0;
+  margin-left: 5px !important;
+}
+
+button.mqq-btn {
+  display: inline-block !important;
+  font-weight: 400 !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+  padding: 8px 16px !important;
+  line-height: 1.4 !important;
+  border: 1px solid transparent !important;
+  border-radius: 5px !important;
+  text-shadow: none;
+  box-sizing: border-box;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !important;
+}
+
+.mqq-btn.disabled, .mqq-btn:disabled {
+  opacity: .65 !important;
+}
+
+.mqq-btn:not(:disabled):not(.disabled) {
+  cursor: pointer !important;
+}
+
+.mqq-btn:hover {
+  filter: brightness(0.85);
+}
+
+button.mqq-btn.mqq-showsolution:hover {
+  filter: brightness(0.8);
+}
+
+button.mqq-btn.mqq-tip-btn,
+button.mqq-btn.mqq-showsolution {
+  border: 1px solid #BBBBBB !important;
+}
+
+button.mqq-btn.mqq-hidden {
+  display: none !important;
+}
+
+button.mqq-btn.mqq-tip-btn:hover {
+  filter: brightness(0.8);
+}
+
+.mqq-previous {
+  margin-right: 5px !important;
+  margin-top: 10px !important;
+}
+
+.mqq-next {
+  margin-left: 5px !important;
+  margin-top: 10px !important;
+}
+
+.mqq-quiz button, .mqq-quiz select {
+  text-transform: none !important;
+}
+
+.mqq-quiz button, .mqq-quiz input {
+  overflow: visible !important;
+}
+
+
+/* ------------ Timer------------- */
+
+.mqq-timer {
+  position: absolute;
+  right: 0;
+  text-align: right;
+  border: none;
+  margin-top: 5px;
+  background: none;
+}
+
+/* --------- The result page ------------- */
+
+.mqq-quiz .result h3.mqq-res-header {
+  font-weight: 700 !important;
+  margin-top: 15px;
+  border-bottom: 1px solid #ccc !important;
+}
+
+.mqq-last-row {
+  border-bottom: 1px solid #ccc !important;
+}
+
+.mqq-result-question {
+  font-weight: bold !important;
+}
+
+.mqq-result-answer,
+.mqq-last-row {
+  font-weight: normal;
+}
+
+.mqq-result-answer span {
+  font-weight: normal !important;
+}
+
+.mqq-wrong {
+  color: #FF0000 !important;
+  font-weight: bold;
+}
+
+.mqq-correct {
+  color: green !important;
+  font-weight: bold;
+}
+
+
+/* ====================================================================
+ ========================= STYLE: Fill-in-the-Blank Quiz ==============
+ ====================================================================== */
+
+/* General stuff */
+.fbq-clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/*  ------- Main widget container -------- */
+
+.fbq-quiz {
+  border-radius: 5px !important;
+  background-color: #F7F7F7!important;
+  overflow: hidden;
+}
+
+/* ------------ Title div ------------- */
+
+.fbq-quiz .fbq-title {
+  display: block;
+  min-height: 10px;
+}
+
+.fbq-quiz p.fbq-title-text {
+  font-weight: bold;
+  display: block;
+  padding: 0 !important;
+}
+
+
+/* ------------ Question/description div ------------- */
+
+.fbq-quiz p.fbq-question-text {
+  display: block;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* ----- The main quiz area, incl. the cloze text ------ */
+
+.fbq-quiz .fbq-main {
+  border-radius: 0 0 5px 5px !important;
+  background-color: #F7F7F7;
+  padding: 15px 20px 5px 20px;
+}
+
+.fbq-quiz .fbq-cloze {
+  display: block;
+  padding: 0 0 20px 0;
+  margin: 0;
+}
+
+.fbq-quiz .fbq-cloze pre {
+  font-size: 1em;
+  line-height: 2.5;
+  padding: 5.5px 0;
+}
+
+.fbq-quiz input[type="text"].fbq-target {
+  padding: 4px 6px !important;
+  height: auto !important;
+  line-height: 1.4 !important;
+  margin-left: 10px;
+  border: 1px solid #ccc !important;
+  border-radius: 4px;
+  font-size: inherit;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+/* ------------ Buttons ------------- */
+
+.fbq-quiz .fbq-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: left;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.fbq-quiz .fbq-button {
+  padding: 8px 16px;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border: 1px solid transparent !important;
+  border-radius: 5px !important;
+  text-shadow: none;
+  box-sizing: border-box;
+}
+
+.fbq-quiz .fbq-button-submit:hover {
+  filter: brightness(0.8);
+}
+
+/* Gray border only on secondary buttons (tip/solution) */
+.fbq-quiz .fbq-button-tip,
+.fbq-quiz .fbq-button-solution {
+  border: 1px solid #BBBBBB !important;
+}
+
+.fbq-quiz .fbq-button-tip:hover,
+.fbq-quiz .fbq-button-solution:hover {
+  background-color: #ADADAD !important;
+}
+
+/* ------------ Tip div ------------- */
+
+.fbq-quiz .fbq-tips {
+  display: none;
+  padding: 5px 15px;
+  margin: 10px 15px;
+  border-radius: 5px;
+}
+
+.fbq-quiz .fbq-tips p {
+  margin: 5px 0;
+}
+
+.fbq-quiz span.fbq-option {
+  cursor: pointer;
+  display: inline-block;
+  background-color: white;
+  padding: 2.5px 10px;
+  margin: 3px 2px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
