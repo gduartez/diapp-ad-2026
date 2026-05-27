@@ -6,16 +6,18 @@ Bienvenidos al sitio del **Módulo II** del Diplomado en Herramientas
 de Inteligencia Artificial para Políticas Públicas (DIAPP 2026), 
 Universidad Adolfo Ibáñez.
 
-:: {.grid}
+## Nivelación Estadística
+
+::: {.grid}
 ::: {.g-col-12 .g-col-md-6}
 | | |
 |---|---|
 | **Módulo** | Nivelación Estadística |
 | **Carácter** | Optativo |
-| **Profesor** | Gabriel Duarte |
-| **Ayudante** | Jean Paul Sepúlveda |
+| **Profesor** | Gabriel Duarte (gabriel.duarte@edu.uai.cl) |
+| **Ayudante** | Jean Paul Sepúlveda (jean.sepulveda@edu.uai.cl) |
 | **Modalidad** | En vivo, vía Zoom |
-| **Plataforma** | Webcursos |
+| **Plataforma** | [Webcursos](https://webcursos.uai.cl/) |
 | **Evaluación** | Sin evaluaciones |
 :::
 ::: {.g-col-12 .g-col-md-6}
@@ -28,7 +30,7 @@ Universidad Adolfo Ibáñez.
 
 [📋 Programa](files/Programa Nivelación Estadística 2026.pdf){.btn .btn-outline-primary target="_blank"}
 [📊 Clase 1: Estadística Descriptiva](00-nivelacion1/nivelacion-01.html){.btn .btn-primary}
-[📊 Clase 2: Inferencia Estadística](00-nivelacion2/nivelacion-02.html){.btn .btn-primary}
+[📊 Clase 2: Estadística Inferencial](00-nivelacion2/nivelacion-02.html){.btn .btn-primary}
 
 ---
 
@@ -67,7 +69,7 @@ Universidad Adolfo Ibáñez.
 | Ayudantía 1 | Jueves 25-06-2026 | 18:30 |
 | Ayudantía 2 | Martes 14-07-2026 | 18:30 |
 
-[📋 Programa Módulo II](files/Programa Nivelación Estadística 2026.pdf){.btn .btn-outline-primary target="_blank"}
+[📋 Programa Módulo II](files/Programa de Módulo II - Análisis de Datos y Estadística Computacional (2026 VF).pdf){.btn .btn-outline-primary target="_blank"}
 
 | Clase | Tema | Material |
 |---|---|---|
