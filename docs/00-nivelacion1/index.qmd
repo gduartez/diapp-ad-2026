@@ -1,0 +1,18 @@
+---
+title: "Clase 1: Estadística Descriptiva"
+---
+
+## Material de clase
+
+Usa las flechas del teclado para navegar. 
+Presiona **F** para pantalla completa.
+
+```{=html}
+<iframe src="nivelacion-01.html" 
+        width="100%" 
+        height="550px"
+        style="border:1px solid #ddd; border-radius:8px">
+</iframe>
+```
+
+[🔗 Abrir en pantalla completa](nivelacion-01.html){.btn .btn-primary}
