@@ -6,9 +6,76 @@ Bienvenidos al sitio del **Módulo II** del Diplomado en Herramientas
 de Inteligencia Artificial para Políticas Públicas (DIAPP 2026), 
 Universidad Adolfo Ibáñez.
 
+:: {.grid}
+::: {.g-col-12 .g-col-md-6}
 | | |
 |---|---|
-| **Profesor** | Gabriel Duarte Zúñiga |
+| **Módulo** | Nivelación Estadística |
+| **Carácter** | Optativo |
+| **Profesor** | Gabriel Duarte |
 | **Ayudante** | Jean Paul Sepúlveda |
-| **Modalidad** | Zoom, martes 18:30 |
+| **Modalidad** | En vivo, vía Zoom |
 | **Plataforma** | Webcursos |
+| **Evaluación** | Sin evaluaciones |
+:::
+::: {.g-col-12 .g-col-md-6}
+| N° | Fecha | Hora |
+|---|---|---|
+| Clase 1 | Martes 02-06-2026 | 18:30 a 21:00 |
+| Clase 2 | Jueves 04-06-2026 | 18:30 a 21:00 |
+:::
+:::
+
+[📋 Programa](files/Programa Nivelación Estadística 2026.pdf){.btn .btn-outline-primary target="_blank"}
+[📊 Clase 1: Estadística Descriptiva](00-nivelacion1/nivelacion-01.html){.btn .btn-primary}
+[📊 Clase 2: Inferencia Estadística](00-nivelacion2/nivelacion-02.html){.btn .btn-primary}
+
+---
+
+## Módulo II: Análisis de Datos y Estadística Computacional
+
+::: {.grid}
+::: {.g-col-12 .g-col-md-6}
+| | |
+|---|---|
+| **Módulo** | II |
+| **Prerrequisito** | Introducción a R |
+| **Asistencia** | 75% |
+| **Profesor** | Gabriel Duarte |
+| **Ayudante** | Jean Paul Sepúlveda |
+| **Modalidad** | En vivo, vía Zoom |
+| **Plataforma** | Webcursos |
+:::
+::: {.g-col-12 .g-col-md-6}
+| N° | Fecha | Hora |
+|---|---|---|
+| Clase 1 | Martes 09-06-2026 | 18:30 a 21:50 |
+| Clase 2 | Sábado 13-06-2026 | 09:00 a 12:20 |
+| Clase 3 | Martes 16-06-2026 | 18:30 a 21:50 |
+| Clase 4 | Sábado 20-06-2026 | 09:00 a 12:20 |
+| Clase 5 | Martes 23-06-2026 | 18:30 a 21:50 |
+| Clase 6 | Sábado 04-07-2026 | 09:00 a 12:20 |
+| Clase 7 | Martes 07-07-2026 | 18:30 a 21:50 |
+| Clase 8 | Sábado 11-07-2026 | 09:00 a 12:20 |
+:::
+:::
+
+**Ayudantías:**
+
+| N° | Fecha | Hora |
+|---|---|---|
+| Ayudantía 1 | Jueves 25-06-2026 | 18:30 |
+| Ayudantía 2 | Martes 14-07-2026 | 18:30 |
+
+[📋 Programa Módulo II](files/Programa Nivelación Estadística 2026.pdf){.btn .btn-outline-primary target="_blank"}
+
+| Clase | Tema | Material |
+|---|---|---|
+| 1 | Importación y cruce de datos | [Ver clase](01-importar/clase-01.html) |
+| 2 | Transformación de datos | Próximamente |
+| 3 | Visualización de datos | Próximamente |
+| 4 | Comunicar con R e IA | Próximamente |
+| 5 | Inferencia estadística | Próximamente |
+| 6 | Regresión lineal I | Próximamente |
+| 7 | Regresión lineal II | Próximamente |
+| 8 | Taller de cierre | Próximamente |
