@@ -31,31 +31,32 @@ website:
   sidebar:
     style: "docked"
     contents:
-      - text: "**Nivelación**"
-      - text: "Clase 1: Estadística Descriptiva"
-        href: 00-nivelacion1/index.qmd
-      - text: "Clase 2: Inferencia Estadística"
-        href: 00-nivelacion2/index.qmd
-      - text: "---"
-      - text: "**Módulo 2**"
-      - text: "Clase 1: Importar datos"
-        href: 01-importar/index.qmd
-      - text: "Clase 2: Transformar datos"
-        href: 02-transformar/index.qmd
-      - text: "Clase 3: Visualizar datos"
-        href: 03-visualizar/index.qmd
-      - text: "Clase 4: Comunicar con R"
-        href: 04-comunicar/index.qmd
-      - text: "Clase 5: Inferencia"
-        href: 05-inferencia/index.qmd
-      - text: "Clase 6: Regresión I"
-        href: 06-regresion1/index.qmd
-      - text: "Clase 7: Regresión II"
-        href: 07-regresion2/index.qmd
-      - text: "Clase 8: Taller de cierre"
-        href: 08-eda/index.qmd
+      - section: "Nivelación"
+        contents:
+        - text: "Clase 1: Estadística Descriptiva"
+          href: 00-nivelacion1/nivelacion-01.html
+        - text: "Clase 2: Inferencia Estadística"
+          href: 00-nivelacion2/nivelacion-02.html
+      - section: "Módulo 2"
+        contents:
+        - text: "Clase 1: Importar datos"
+          href: 01-importar/clase-01.html
+        - text: "Clase 2: Transformar datos"
+          href: 02-transformar/clase-02.html
+        - text: "Clase 3: Visualizar datos"
+          href: 03-visualizar/clase-03.html
+        - text: "Clase 4: Comunicar con R"
+          href: 04-comunicar/clase-04.html
+        - text: "Clase 5: Inferencia"
+          href: 05-inferencia/clase-05.html
+        - text: "Clase 6: Regresión I"
+          href: 06-regresion1/clase-06.html
+        - text: "Clase 7: Regresión II"
+          href: 07-regresion2/clase-07.html
+        - text: "Clase 8: Taller de cierre"
+          href: 08-eda/clase-08.html
 
 format:
   html:
-    theme: cosmo
+    theme: minty
     toc: true
