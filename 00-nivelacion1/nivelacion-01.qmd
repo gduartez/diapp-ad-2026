@@ -106,7 +106,10 @@ options(
 
 ## Información General de la Nivelación {.smaller}
 
-- 🕐 **2 clases** en total con una duración de 2:00 hrs cada una.
+- 🕐 **2 clases** en total con una duración de 2:30 hrs cada una:
+
+  - Clase 1: **Martes 02 de junio** de 18:30 a 21:00
+  - Clase 2: **Jueves 04 de junio** de 18:30 a 21:00
 
 - La clase se divide en diferentes secciones:
 
@@ -128,22 +131,17 @@ options(
 - 📤 La presentación y grabación se subirán a **Webcursos** al finalizar
   cada clase.
 
-- 2 clases:
-
-  - Clase 1: **Martes 02 de junio** de 18:30 a 21:00
-  - Clase 2: **Jueves 04 de junio** de 18:30 a 21:00
-
 ## Reglas Generales
 
-- Durante las clases se debe mantener la **cámara prendida**. Quienes no
-  puedan hacerlo por algún motivo deben avisar mediante correo
+- Durante las clases se debe mantener la **cámara encendida**. Quienes
+  no puedan hacerlo por algún motivo deben avisar mediante correo
   electrónico o chat privado de zoom al ayudante.
 
 - ¡Siéntanse libres de hacer consultas! De todos modos, el mayor
   aprendizaje se adquiere a través de la **práctica**: Ensayo y error.
 
 - Toda comunicación y consultas fuera de clase deben realizarse a través
-  del foro de ***webcursos***: No solo se beneficiarán ustedes, sino que
+  del foro de ***Webcursos***: No solo se beneficiarán ustedes, sino que
   también sus compañeras/os!
 
 - Este módulo **no** tiene evaluaciones.
@@ -366,8 +364,7 @@ variabilidad, así como para tomar decisiones en presencia de ella.
 
 ## Estadística Inferencial: Evaluación de Programas
 
-[![Fuente:
-](img/evaluacion-mi-abogado.png){width="70%"}](https://www.dipres.gob.cl/597/articles-266613_r_ejecutivo_institucional.pdf)
+[![Fuente:](img/evaluacion-mi-abogado.png){width="70%"}](https://www.dipres.gob.cl/597/articles-266613_r_ejecutivo_institucional.pdf)
 
 ## 🧠 Pregunta N° 1 {.quiz-question .smaller}
 
@@ -823,7 +820,6 @@ mean(c(1,2,NA,4,5), na.rm = T)
 - La formula matemática de la mediana es la siguiente:
 
 ::: {.fragment .fade-in}
-
 $$Mediana =
 \begin{cases}
  \frac{x_\frac{n}{2} + x_{\frac{n}{2}+1}}{2} \text{, si n es par} \\
@@ -861,7 +857,7 @@ median(c(1,2,3,4,5))
 Vemos que la mediana puede mantenerse igual pese a que los valores de
 los extremos de la variable cambien:
 
-```{r median2, echo=TRUE}
+```{r median2}
 #| echo: true
 median(c(2,2,3,5,5))
 ```
@@ -954,7 +950,6 @@ $$s^2 = \frac{\sum(y_i - \bar{y})^2}{n-1} = \frac{(y_1-\bar{y})^2 + (y_2-\bar{y}
 var(penguins$body_mass, na.rm = T)
 ```
 :::
-
 
 ## 📊 Desviación Estándar {.medium}
 
@@ -1061,7 +1056,7 @@ ggplot(data.frame(x = c(-4, 4)), aes(x)) +
         axis.text.x  = element_text(size = 10))
 ```
 
-## 📊 🧠 Pregunta N° 3
+## 📊 🧠 Pregunta N° 3 {.quiz-question}
 
 La nota promedio de un examen es $\bar{y} = 4$ y su desviación estándar
 es $s = 1$. Suponiendo que la distribución de notas tiene forma de
@@ -1071,13 +1066,13 @@ es $s = 1$. Suponiendo que la distribución de notas tiene forma de
 ***¿Entre qué notas se concentra el 95% de los estudiantes?***
 
 - [Entre 2 y 6.]{.correct
-  data-explanation="Correcto. Por la Regla Empírica, el 95% de los datos cae entre $\\bar{y} \\pm 2s = 4 \\pm 2(1)$, es decir, entre 2 y 6."}
+  data-explanation="Correcto. Por la Regla Empírica, el 95% de los datos cae entre ym ±  2s = 4 ±  2(1), es decir, entre 2 y 6."}
 - [Entre 3 y
-  5.]{data-explanation="Ese rango corresponde a $\\bar{y} \\pm 1s$, que concentra aproximadamente el 68% de los estudiantes, no el 95%."}
+  5.]{data-explanation="Ese rango corresponde a ym ±  1s, que concentra aproximadamente el 68% de los estudiantes, no el 95%."}
 - [Entre 1 y
-  7.]{data-explanation="Ese rango corresponde a $\\bar{y} \\pm 3s$, que concentra el 99.7% de los estudiantes, no el 95%."}
+  7.]{data-explanation="Ese rango corresponde a ym ±  3s, que concentra el 99.7% de los estudiantes, no el 95%."}
 - [Entre 3,5 y
-  4,5.]{data-explanation="Ese rango es demasiado estrecho. Con $s = 1$, un rango de solo ±0,5 concentraría aproximadamente el 38% de los estudiantes."}
+  4,5.]{data-explanation="Ese rango es demasiado estrecho. Con s = 1, un rango de solo ± 0,5 concentraría una proporción mucho menor de estudiantes."}
 :::
 
 ## 📏 Percentiles y Cuartiles {.medium}
@@ -1212,11 +1207,12 @@ $$z = \frac{y_i - \bar{y}}{s} = \frac{\text{observación} - \text{media}}{\text{
 
 ## 💻 📏 Puntaje Z {.medium}
 
-Utilizando el dataset `bdims` que contiene 507 medidas físicas de
-individuos activos, calcule el puntaje Z para una persona que tiene
-tiene una altura (`hgt`) de 2 metros (200 en la escala de la variable)
-¿Qué puede concluir a partir de este puntaje asumiendo que la
-distribución de la altura tiene forma de campana?
+Utilizando el dataset `bdims` de la librería `openintro`
+[@çetinkaya-rundel2024] que contiene 507 medidas físicas de individuos
+activos, calcule el puntaje Z para una persona que tiene tiene una
+altura (`hgt`) de 2 metros (200 en la escala de la variable) ¿Qué puede
+concluir a partir de este puntaje asumiendo que la distribución de la
+altura tiene forma de campana?
 
 ```{webr}
 #|exercise: ex_5
@@ -1353,7 +1349,8 @@ cor(gapminder_num)
 
 ## 💻 Gráfico de Dispersión (*Scatterplot*) {.smaller}
 
-Utilizando el dataset de `gapminder` realice un gráfico de dispersión entre `lifeExp` (eje y) y  `gdpPercap` (eje x)
+Utilizando el dataset de `gapminder` realice un gráfico de dispersión
+entre `lifeExp` (eje y) y `gdpPercap` (eje x)
 
 ```{webr}
 #|exercise: ex_6
@@ -1365,7 +1362,10 @@ gapminder |>
 
 ## 💻 Gráfico de Dispersión (*Scatterplot*) + Recta
 
-La función `geom_smooth` permite ajustar visualmente una función a la distribución de los datos. Con su argumento `method = lm` permite ajustar una recta que ayuda a visualizar la relación lineal entre ambas variables.
+La función `geom_smooth` permite ajustar visualmente una función a la
+distribución de los datos. Con su argumento `method = lm` permite
+ajustar una recta que ayuda a visualizar la relación lineal entre ambas
+variables.
 
 ```{webr}
 #|exercise: ex_7
@@ -1376,9 +1376,13 @@ gapminder |>
   ______(method = ______)
 ```
 
-## 💻 Matriz de Correlaciones
+## 💻 Matriz de Correlaciones {.medium}
 
-Por último, la librería `corrplot` permite visualizar de manera más efectiva las matrices de correlación. Su función homónima `corrplot()` recibe como argumento una matriz de correlaciones y permite ajustar diferentes parámetros visuales. Utilizando el dataset `USArrests` realice un corrplot de todas sus variables.
+Por último, la librería `corrplot` permite visualizar de manera más
+efectiva las matrices de correlación. Su función homónima `corrplot()`
+recibe como argumento una matriz de correlaciones y permite ajustar
+diferentes parámetros visuales. Utilizando el dataset `USArrests`
+realice un corrplot de todas sus variables.
 
 ```{webr}
 #|exercise: ex_8
@@ -1386,17 +1390,18 @@ ______(USArrests) #Verifique que las variables sean todas cuantitativas
 
 ```
 
-
 ```{webr}
 #|exercise: ex_9
 library(corrplot)
 m <- ______(______) #Genere matriz de correlaciones
 ______(m,method = 'number',type="lower",tl.col="black",pch.col = "black",) #Genere corrplot
 ```
+
 ## Resumen Estadística Descriptiva {.medium}
 
-::: callout-tip
+:::: callout-tip
 ## Conceptos Importantes
+
 - La métrica básica para tendencias centrales es la media, pero puede
   ser sensible a valores atípicos (*outliers*).
 - Otras métricas como la mediana son menos sensibles a valores atípicos
@@ -1416,6 +1421,35 @@ ______(m,method = 'number',type="lower",tl.col="black",pch.col = "black",) #Gene
 :::
 
 # Cierre
+
+## Resumen: Lo esencial de la clase {.smaller}
+
+::: callout-tip
+## Resumen Clase 1
+
+::: {.fragment}
+**Estadística y datos**
+
+- La estadística tiene dos ramas: la **descriptiva** (resume y describe datos de una muestra) y la **inferencial** (usa datos muestrales para hacer predicciones sobre la población).
+- Los datos rectangulares organizan la información en filas (observaciones) y columnas (variables). Las variables son **cuantitativas** (numéricas, continuas o discretas) o **cualitativas** (nominales u ordinales).
+:::
+
+::: {.fragment}
+**Estadística descriptiva**
+
+- Para variables categóricas: **frecuencias absolutas y relativas**.
+- Para variables numéricas, existen cuatro familias de medidas: **tendencia central** (media y mediana), **variabilidad** (desviación estándar e IQR), **posición** (percentiles y puntaje $z$) y **asociación** (correlación).
+- La mediana es una medida de tendencia central más robusta que la media en presencia de *outliers*.
+- La **desviación estándar** $s$ describe la distancia típica de una observación respecto a la media. Para distribuciones en forma de campana, la **Regla Empírica** establece que el 68%, 95% y 99.7% de los datos caen dentro de 1, 2 y 3 desviaciones estándar de la media, respectivamente.
+- La **correlación** $r$ mide la fuerza y dirección de la asociación lineal entre dos variables cuantitativas. Siempre está entre $-1$ y $1$ y se visualiza con un **scatterplot**.
+:::
+
+::: {.fragment}
+**Estadístico vs. parámetro**
+
+- Un **estadístico** resume datos de una muestra; un **parámetro** resume a toda la población. La inferencia estadística usa estadísticos para estimar parámetros.
+:::
+::::
 
 ## Próxima Clase
 

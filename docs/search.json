@@ -16,7 +16,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#información-general-de-la-nivelación",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "Información General de la Nivelación",
-    "text": "Información General de la Nivelación\n\n🕐 2 clases en total con una duración de 2:00 hrs cada una.\n\nLa clase se divide en diferentes secciones:\n\n👨‍🏫 Exposición: Láminas de contenido que resumen el conocimiento principal esperado como resultado de aprendizaje, junto con código de ejemplo.\n🧠 Preguntas: A lo largo de la clase se realizarán preguntas que pueden ir contestando en línea para evaluar el aprendizaje de cada sección.\n💻 Ejercicio guiado: Ejercicio práctico resuelto de manera simultánea por el profesor junto con los alumnos. \n\n🔒 Cierre: Resumen de los aspectos más relevantes y espacio final de preguntas.\n\n\n📝 Cada sesión cuenta con una guía de ejercicios para reforzar el aprendizaje de manera autónoma.\n📤 La presentación y grabación se subirán a Webcursos al finalizar cada clase.\n\n2 clases:\n\nClase 1: Martes 02 de junio de 18:30 a 21:00\nClase 2: Jueves 04 de junio de 18:30 a 21:00",
+    "text": "Información General de la Nivelación\n\n\n🕐 2 clases en total con una duración de 2:30 hrs cada una:\n\nClase 1: Martes 02 de junio de 18:30 a 21:00\nClase 2: Jueves 04 de junio de 18:30 a 21:00\n\n\n\nLa clase se divide en diferentes secciones:\n\n👨‍🏫 Exposición: Láminas de contenido que resumen el conocimiento principal esperado como resultado de aprendizaje, junto con código de ejemplo.\n🧠 Preguntas: A lo largo de la clase se realizarán preguntas que pueden ir contestando en línea para evaluar el aprendizaje de cada sección.\n💻 Ejercicio guiado: Ejercicio práctico resuelto de manera simultánea por el profesor junto con los alumnos. \n\n🔒 Cierre: Resumen de los aspectos más relevantes y espacio final de preguntas.\n\n\n📝 Cada sesión cuenta con una guía de ejercicios para reforzar el aprendizaje de manera autónoma.\n📤 La presentación y grabación se subirán a Webcursos al finalizar cada clase.",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -28,7 +28,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#reglas-generales",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "Reglas Generales",
-    "text": "Reglas Generales\n\nDurante las clases se debe mantener la cámara prendida. Quienes no puedan hacerlo por algún motivo deben avisar mediante correo electrónico o chat privado de zoom al ayudante.\n¡Siéntanse libres de hacer consultas! De todos modos, el mayor aprendizaje se adquiere a través de la práctica: Ensayo y error.\nToda comunicación y consultas fuera de clase deben realizarse a través del foro de webcursos: No solo se beneficiarán ustedes, sino que también sus compañeras/os!\nEste módulo no tiene evaluaciones.",
+    "text": "Reglas Generales\n\nDurante las clases se debe mantener la cámara encendida. Quienes no puedan hacerlo por algún motivo deben avisar mediante correo electrónico o chat privado de zoom al ayudante.\n¡Siéntanse libres de hacer consultas! De todos modos, el mayor aprendizaje se adquiere a través de la práctica: Ensayo y error.\nToda comunicación y consultas fuera de clase deben realizarse a través del foro de Webcursos: No solo se beneficiarán ustedes, sino que también sus compañeras/os!\nEste módulo no tiene evaluaciones.",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -616,7 +616,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#puntaje-z",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "💻 📏 Puntaje Z",
-    "text": "💻 📏 Puntaje Z\nUtilizando el dataset bdims que contiene 507 medidas físicas de individuos activos, calcule el puntaje Z para una persona que tiene tiene una altura (hgt) de 2 metros (200 en la escala de la variable) ¿Qué puede concluir a partir de este puntaje asumiendo que la distribución de la altura tiene forma de campana?",
+    "text": "💻 📏 Puntaje Z\nUtilizando el dataset bdims de la librería openintro (Çetinkaya-Rundel y Hardin 2024) que contiene 507 medidas físicas de individuos activos, calcule el puntaje Z para una persona que tiene tiene una altura (hgt) de 2 metros (200 en la escala de la variable) ¿Qué puede concluir a partir de este puntaje asumiendo que la distribución de la altura tiene forma de campana?",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -756,6 +756,18 @@
     ]
   },
   {
+    "objectID": "00-nivelacion1/nivelacion-01.html#resumen-lo-esencial-de-la-clase",
+    "href": "00-nivelacion1/nivelacion-01.html#resumen-lo-esencial-de-la-clase",
+    "title": "Clase 1: Estadística Descriptiva",
+    "section": "Resumen: Lo esencial de la clase",
+    "text": "Resumen: Lo esencial de la clase\n\n\n\n\n\n\nResumen Clase 1\n\n\n\nEstadística y datos\n\nLa estadística tiene dos ramas: la descriptiva (resume y describe datos de una muestra) y la inferencial (usa datos muestrales para hacer predicciones sobre la población).\nLos datos rectangulares organizan la información en filas (observaciones) y columnas (variables). Las variables son cuantitativas (numéricas, continuas o discretas) o cualitativas (nominales u ordinales).\n\n\n\nEstadística descriptiva\n\nPara variables categóricas: frecuencias absolutas y relativas.\nPara variables numéricas, existen cuatro familias de medidas: tendencia central (media y mediana), variabilidad (desviación estándar e IQR), posición (percentiles y puntaje \\(z\\)) y asociación (correlación).\nLa mediana es una medida de tendencia central más robusta que la media en presencia de outliers.\nLa desviación estándar \\(s\\) describe la distancia típica de una observación respecto a la media. Para distribuciones en forma de campana, la Regla Empírica establece que el 68%, 95% y 99.7% de los datos caen dentro de 1, 2 y 3 desviaciones estándar de la media, respectivamente.\nLa correlación \\(r\\) mide la fuerza y dirección de la asociación lineal entre dos variables cuantitativas. Siempre está entre \\(-1\\) y \\(1\\) y se visualiza con un scatterplot.\n\n\n\nEstadístico vs. parámetro\n\nUn estadístico resume datos de una muestra; un parámetro resume a toda la población. La inferencia estadística usa estadísticos para estimar parámetros.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 1: Estadística Descriptiva"
+    ]
+  },
+  {
     "objectID": "00-nivelacion1/nivelacion-01.html#próxima-clase",
     "href": "00-nivelacion1/nivelacion-01.html#próxima-clase",
     "title": "Clase 1: Estadística Descriptiva",
@@ -772,7 +784,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#bibliografía",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "Bibliografía",
-    "text": "Bibliografía\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAgresti, Alan. 2018. Statistical methods for the social sciences. Fifth edition, global edition. Harlow: Pearson Education, Limited.\n\n\nBryan, Jennifer. 2025. «gapminder: Data from Gapminder». https://doi.org/10.32614/CRAN.package.gapminder.\n\n\nDevore, Jay L. 2016. Probabilidad y estadística para ingeniería y ciencias (9a. ed.). Distrito Federal: CENGAGE Learning.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, y Garrett Grolemund. 2023. R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. https://r4ds.hadley.nz/.",
+    "text": "Bibliografía\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAgresti, Alan. 2018. Statistical methods for the social sciences. Fifth edition, global edition. Harlow: Pearson Education, Limited.\n\n\nBryan, Jennifer. 2025. «gapminder: Data from Gapminder». https://doi.org/10.32614/CRAN.package.gapminder.\n\n\nÇetinkaya-Rundel, Mine, y Johanna Hardin. 2024. Introduction to modern statistics. 2e ed. Vereinigte Staaten: OpenIntro, Inc. https://openintro-ims.netlify.app/.\n\n\nDevore, Jay L. 2016. Probabilidad y estadística para ingeniería y ciencias (9a. ed.). Distrito Federal: CENGAGE Learning.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, y Garrett Grolemund. 2023. R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. https://r4ds.hadley.nz/.",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -784,7 +796,14 @@
     "href": "index.html",
     "title": "DIAPP 2026 · Análisis de Datos y Estadística Computacional",
     "section": "",
-    "text": "Bienvenidos al sitio del Módulo II del Diplomado en Herramientas de Inteligencia Artificial para Políticas Públicas (DIAPP 2026), Universidad Adolfo Ibáñez.\n\n\n\nProfesor\nGabriel Duarte Zúñiga\n\n\nAyudante\nJean Paul Sepúlveda\n\n\nModalidad\nZoom, martes 18:30\n\n\nPlataforma\nWebcursos"
+    "text": "Bienvenidos al sitio del Módulo II del Diplomado en Herramientas de Inteligencia Artificial para Políticas Públicas (DIAPP 2026), Universidad Adolfo Ibáñez.\n:: {.grid} ::: {.g-col-12 .g-col-md-6} | | | |—|—| | Módulo | Nivelación Estadística | | Carácter | Optativo | | Profesor | Gabriel Duarte | | Ayudante | Jean Paul Sepúlveda | | Modalidad | En vivo, vía Zoom | | Plataforma | Webcursos | | Evaluación | Sin evaluaciones | ::: ::: {.g-col-12 .g-col-md-6} | N° | Fecha | Hora | |—|—|—| | Clase 1 | Martes 02-06-2026 | 18:30 a 21:00 | | Clase 2 | Jueves 04-06-2026 | 18:30 a 21:00 | ::: :::\n📋 Programa 📊 Clase 1: Estadística Descriptiva 📊 Clase 2: Inferencia Estadística"
+  },
+  {
+    "objectID": "index.html#módulo-ii-análisis-de-datos-y-estadística-computacional",
+    "href": "index.html#módulo-ii-análisis-de-datos-y-estadística-computacional",
+    "title": "DIAPP 2026 · Análisis de Datos y Estadística Computacional",
+    "section": "Módulo II: Análisis de Datos y Estadística Computacional",
+    "text": "Módulo II: Análisis de Datos y Estadística Computacional\n\n\n\n\n\nMódulo\nII\n\n\nPrerrequisito\nIntroducción a R\n\n\nAsistencia\n75%\n\n\nProfesor\nGabriel Duarte\n\n\nAyudante\nJean Paul Sepúlveda\n\n\nModalidad\nEn vivo, vía Zoom\n\n\nPlataforma\nWebcursos\n\n\n\n\n\n\n\n\nN°\nFecha\nHora\n\n\n\n\nClase 1\nMartes 09-06-2026\n18:30 a 21:50\n\n\nClase 2\nSábado 13-06-2026\n09:00 a 12:20\n\n\nClase 3\nMartes 16-06-2026\n18:30 a 21:50\n\n\nClase 4\nSábado 20-06-2026\n09:00 a 12:20\n\n\nClase 5\nMartes 23-06-2026\n18:30 a 21:50\n\n\nClase 6\nSábado 04-07-2026\n09:00 a 12:20\n\n\nClase 7\nMartes 07-07-2026\n18:30 a 21:50\n\n\nClase 8\nSábado 11-07-2026\n09:00 a 12:20\n\n\n\n\n\nAyudantías:\n\n\n\nN°\nFecha\nHora\n\n\n\n\nAyudantía 1\nJueves 25-06-2026\n18:30\n\n\nAyudantía 2\nMartes 14-07-2026\n18:30\n\n\n\n📋 Programa Módulo II\n\n\n\nClase\nTema\nMaterial\n\n\n\n\n1\nImportación y cruce de datos\nVer clase\n\n\n2\nTransformación de datos\nPróximamente\n\n\n3\nVisualización de datos\nPróximamente\n\n\n4\nComunicar con R e IA\nPróximamente\n\n\n5\nInferencia estadística\nPróximamente\n\n\n6\nRegresión lineal I\nPróximamente\n\n\n7\nRegresión lineal II\nPróximamente\n\n\n8\nTaller de cierre\nPróximamente"
   },
   {
     "objectID": "00-nivelacion1/index.html",
