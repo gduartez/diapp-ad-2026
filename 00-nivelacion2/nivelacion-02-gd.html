@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<script src="nivelacion-02-gd_files/libs/clipboard/clipboard.min.js"></script>
+<script src="nivelacion-02-gd_files/libs/quarto-html/tabby.min.js"></script>
+<script src="nivelacion-02-gd_files/libs/quarto-html/popper.min.js"></script>
+<script src="nivelacion-02-gd_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="nivelacion-02-gd_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="nivelacion-02-gd_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="nivelacion-02-gd_files/libs/quarto-html/quarto-syntax-highlighting-0626ff4d7a71b55c8707dcae1d04a9b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="nivelacion-02-gd_files/libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="nivelacion-02-gd_files/libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.39">
+<meta name="author" content="Prof.&nbsp;Gabriel Duarte Zúñiga">
+<title>Clase 2: Probabilidades y Estadística Inferencial</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="nivelacion-02-gd_files/libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="nivelacion-02-gd_files/libs/revealjs/dist/reveal.css">
+<style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #24292e;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #24292e; } /* Normal */
+    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
+    code span.an { color: #6a737d; } /* Annotation */
+    code span.at { color: #d73a49; } /* Attribute */
+    code span.bn { color: #005cc5; } /* BaseN */
+    code span.bu { color: #d73a49; } /* BuiltIn */
+    code span.cf { color: #d73a49; } /* ControlFlow */
+    code span.ch { color: #032f62; } /* Char */
+    code span.cn { color: #005cc5; } /* Constant */
+    code span.co { color: #6a737d; } /* Comment */
+    code span.cv { color: #6a737d; } /* CommentVar */
+    code span.do { color: #6a737d; } /* Documentation */
+    code span.dt { color: #d73a49; } /* DataType */
+    code span.dv { color: #005cc5; } /* DecVal */
+    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
+    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
+    code span.fl { color: #005cc5; } /* Float */
+    code span.fu { color: #6f42c1; } /* Function */
+    code span.im { color: #032f62; } /* Import */
+    code span.in { color: #6a737d; } /* Information */
+    code span.kw { color: #d73a49; } /* Keyword */
+    code span.op { color: #24292e; } /* Operator */
+    code span.ot { color: #6f42c1; } /* Other */
+    code span.pp { color: #d73a49; } /* Preprocessor */
+    code span.re { color: #6a737d; } /* RegionMarker */
+    code span.sc { color: #005cc5; } /* SpecialChar */
+    code span.ss { color: #032f62; } /* SpecialString */
+    code span.st { color: #032f62; } /* String */
+    code span.va { color: #e36209; } /* Variable */
+    code span.vs { color: #032f62; } /* VerbatimString */
+    code span.wa { color: #ff5555; } /* Warning */
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+<link rel="stylesheet" href="nivelacion-02-gd_files/libs/revealjs/dist/theme/quarto-39e682620bd26b50951c1e36b0e06a1a.css">
+<link href="nivelacion-02-gd_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="nivelacion-02-gd_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="nivelacion-02-gd_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="nivelacion-02-gd_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+<link href="nivelacion-02-gd_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+<link href="nivelacion-02-gd_files/libs/revealjs/plugin/reveal-quiz/quiz.css" rel="stylesheet">
+<link href="nivelacion-02-gd_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+<script type="module" src="nivelacion-02-gd_files/libs/quarto-ojs/quarto-ojs-runtime.js"></script><link href="nivelacion-02-gd_files/libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center"><h1 class="title">Clase 2: Probabilidades y Estadística Inferencial</h1>
+  <p class="subtitle"><strong>Nivelación Estadística</strong></p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+<strong>Prof.&nbsp;Gabriel Duarte Zúñiga</strong> 
+</div>
+        <p class="quarto-title-affiliation">
+            Universidad Adolfo Ibáñez | DIAPP-2026
+          </p>
+    </div>
+</div>
+
+  <p class="date">4 de junio de 2026</p>
+</section><section><section id="bienvenidas-y-bienvenidos-a-la-clase-2" class="title-slide slide level1 center"><h1>¡Bienvenidas y Bienvenidos a la Clase 2!</h1>
+
+</section><section id="repaso-clase-1-estadísticas-descriptivas-en-r" class="slide level2 smaller"><h2>🔁 Repaso Clase 1: Estadísticas Descriptivas en <code>R</code>
+</h2>
+<div class="fragment">
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 26%">
+<col style="width: 21%">
+<col style="width: 30%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">Concepto</th>
+<th style="text-align: left;">Definición</th>
+<th style="text-align: left;">Función en <code>R</code>
+</th>
+<th style="text-align: left;">Ejemplo de uso</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Media</strong></td>
+<td style="text-align: left;">Promedio aritmético: suma de los valores dividida por <span class="math inline">\(n\)</span>
+</td>
+<td style="text-align: left;"><code>mean(x, na.rm = T)</code></td>
+<td style="text-align: left;"><code>mean(gapminder$lifeExp, na.rm = T)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Mediana</strong></td>
+<td style="text-align: left;">Valor central de los datos ordenados; más robusta ante <em>outliers</em>
+</td>
+<td style="text-align: left;"><code>median(x, na.rm = T)</code></td>
+<td style="text-align: left;"><code>median(gapminder$lifeExp, na.rm = T)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Desv. Estándar</strong></td>
+<td style="text-align: left;">Distancia <em>típica</em> de cada observación respecto a la media</td>
+<td style="text-align: left;"><code>sd(x, na.rm = T)</code></td>
+<td style="text-align: left;"><code>sd(gapminder$lifeExp, na.rm = T)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Percentil</strong></td>
+<td style="text-align: left;">Valor bajo el cual cae el <span class="math inline">\(p\)</span>% de los datos</td>
+<td style="text-align: left;"><code>quantile(x, probs = p)</code></td>
+<td style="text-align: left;"><code>quantile(gapminder$lifeExp, probs = c(.25, .75))</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Puntaje Z</strong></td>
+<td style="text-align: left;">N° de desviaciones estándar que separan una observación de la media</td>
+<td style="text-align: left;"><code>(x - mean(x)) / sd(x)</code></td>
+<td style="text-align: left;"><code>(200 - mean(bdims$hgt)) / sd(bdims$hgt)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Correlación</strong></td>
+<td style="text-align: left;">Fuerza y dirección de la asociación lineal entre dos variables cuantitativas (<span class="math inline">\(-1\)</span> a <span class="math inline">\(+1\)</span>)</td>
+<td style="text-align: left;">
+<code>cor(x, y)</code> <code>geom_point()</code>
+</td>
+<td style="text-align: left;"><code>cor(gapminder$gdpPercap, gapminder$lifeExp)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section><section id="repaso-clase-1-estadísticas-descriptivas-en-r-1" class="slide level2 medium"><h2>🔁 Repaso Clase 1: Estadísticas Descriptivas en <code>R</code>
+</h2>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Para obtenerlas todas de una vez: <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code></strong></p>
+</div>
+<div class="callout-content">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>gapminder <span class="sc">|&gt;</span> <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">|&gt;</span> <span class="fu">select</span>(lifeExp, gdpPercap) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    lifeExp        gdpPercap      
+ Min.   :39.61   Min.   :  277.6  
+ 1st Qu.:57.16   1st Qu.: 1624.8  
+ Median :71.94   Median : 6124.4  
+ Mean   :67.01   Mean   :11680.1  
+ 3rd Qu.:76.41   3rd Qu.:18008.8  
+ Max.   :82.60   Max.   :49357.2  </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section></section><section><section id="introducción-a-la-probabilidad" class="title-slide slide level1 center" data-background="#E49B0F"><h1><span style="color:white">Introducción a la Probabilidad</span></h1>
+
+</section><section id="probabilidad" class="slide level2 smaller"><h2>Probabilidad</h2>
+<ul>
+<li class="fragment"><p>El término probabilidad se refiere al estudio del azar y la incertidumbre en cualquier situación en la que diferentes sucesos pueden ocurrir.</p></li>
+<li class="fragment"><p><strong>Definición <em>frecuentista</em>:</strong> La probabilidad de un resultado está definida por la <strong>proporción de veces</strong> que ese resultado es observado a través de un <strong>alto número de repeticiones de procesos aleatorios</strong>:</p></li>
+</ul>
+<div class="fragment fade-in smaller">
+<p><span class="math display">\[Probabilidad = \frac{\#Eventos\ Favorables}{\#Eventos\ Totales}\]</span></p>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Estadística <span class="citation" data-cites="agresti2018">(<a href="#/bibliografía" role="doc-biblioref" onclick="">Agresti 2018</a>)</span></strong></p>
+</div>
+<div class="callout-content">
+<p>En una muestra o experimento aleatorio, la probabilidad de que una observación tenga un resultado particular es la <span style="color: darkblue;"><strong>proporción de veces</strong></span> que ese resultado ocurriría en una secuencia <strong>muy larga</strong> de observaciones similares.</p>
+</div>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">Dado que definimos probabilidad como una <strong>proporción</strong>, es un número entre 0 y 1 (o 0 y 100 si se expresan en %)</li>
+<li class="fragment">Otro aspecto relevante a destacar que las probabilidades se interpretan bajo un contexto de <strong>largo plazo</strong>. Por ejemplo, si un meteorólogo dice que la probabilidad de lluvia hoy es del 70%, esto significa que en una <strong>larga serie de días con condiciones atmosféricas como las de hoy</strong>, llueve el 70% de los días.</li>
+</ul></section><section id="proceso-aleatorio" class="slide level2"><h2>Proceso Aleatorio</h2>
+<ul>
+<li class="fragment"><p>En un proceso aleatorio hay más de una posibilidad de resultado y la predicción de algún resultado está sujeto a variabilidad:</p></li>
+<li class="fragment">
+<p>Clásicos ejemplos:</p>
+<ul>
+<li class="fragment">Tirar una moneda.</li>
+<li class="fragment">Tirar un dado.</li>
+</ul>
+</li>
+<li class="fragment"><p>Se puede pensar como un proceso donde el resultado es <strong>probabilístico</strong> (o estocástico) y no determinístico. Es decir, hay <strong>incertidumbre</strong> en el resultado.</p></li>
+</ul></section><section id="espacio-muestral" class="slide level2"><h2>Espacio Muestral</h2>
+<ul>
+<li class="fragment">Es el conjunto de todos los posibles resultados de un proceso aleatorio. Se denota con el símbolo <span class="math inline">\(S\)</span>
+<ul>
+<li class="fragment">Dados: <span class="math inline">\(S=\{1,2,3,4,5,6\}\)</span>.</li>
+<li class="fragment">Moneda: <span class="math inline">\(S=\{C,S\}\)</span>.</li>
+</ul>
+</li>
+</ul></section><section id="evento" class="slide level2"><h2>Evento</h2>
+<ul>
+<li class="fragment"><p>Un <strong>evento</strong> un subconjunto del espacio muestral.</p></li>
+<li class="fragment"><p>Para el caso del dado, digamos que:</p></li>
+<li class="fragment"><p><span class="math inline">\(A\)</span> representa el evento de que al tirar un dado el resultado sea un número par: <span class="math inline">\(A=\{2,4,6\}\)</span>.</p></li>
+<li class="fragment"><p><span class="math inline">\(B\)</span> representa el evento de que al tirar un dado el resultado sea un número impar: <span class="math inline">\(B=\{1,3,5\}\)</span>.</p></li>
+<li class="fragment"><p><span class="math inline">\(C\)</span> representa el evento de que al tirar un dado el resultado sea un número primo: <span class="math inline">\(C=\{2,3,5\}\)</span>.</p></li>
+</ul></section><section id="reglas-básicas-de-probabilidad" class="slide level2 smaller justify"><h2>Reglas Básicas de Probabilidad</h2>
+<ul>
+<li class="fragment">
+<span class="math inline">\(0 \leq P(A) \leq 1\)</span>: La probabilidad de cualquier evento se encuentra entre cero y uno.</li>
+<li class="fragment">La probabilidad de un evento nulo es igual 0 (<span class="math inline">\(P(\phi) = 0\)</span>).</li>
+<li class="fragment">
+<span class="math inline">\(P(S)=1\)</span>: El conjunto de todos los eventos posibles es igual a 1.</li>
+<li class="fragment">
+<strong>Probabilidad de eventos complementarios:</strong> <span class="math inline">\(P(A)+P(A^c)=1\)</span>. Por ejemplo, si sabemos que la <strong>probabilidad de que llueva es 0.1</strong>, entonces sabemos también que la <strong>probabilidad de que no llueva es 0.9</strong>.</li>
+<li class="fragment">
+<strong>Regla de Independencia y Multiplicación:</strong> Dos procesos son independientes si el saber el resultado de uno no afecta el resultado de otro. Por ejemplo, tirar dos monedas al aire. Si el evento <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son independientes, entonces: <span class="math inline">\(P(A \cap B)=P(A) \times P(B)\)</span>.</li>
+<li class="fragment">La probabilidad de sacar dos <em>caras</em> en dos lanzamientos de una misma moneda es: <span class="math inline">\(\frac{1}{2} \times \frac{1}{2}=\frac{1}{4}\)</span>.</li>
+</ul></section><section id="diagrama-de-venn" class="slide level2 smaller justify"><h2>Diagrama de Venn</h2>
+<ul>
+<li class="fragment">Un diagrama de Venn usa círculos que se superponen para ilustrar las relaciones lógicas entre dos o más <strong>conjuntos</strong> de elementos. Consideremos el siguiente diagrama de Venn:</li>
+</ul>
+<div class="fragment fade-in smaller">
+<p><img data-src="img/venn.jpg" style="width:80.0%"></p>
+</div>
+</section><section id="complemento-de-un-evento" class="slide level2 smaller justify"><h2>Complemento de un Evento</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="fragment fade-in">
+<ul>
+<li class="fragment"><p><strong>Definición</strong>: El complemento de un evento son todos los resultados en el espacio muestral que no corresponden al evento mismo.</p></li>
+<li class="fragment"><p><strong>Ejemplo</strong>: el complemento del evento <span class="math inline">\(C\)</span> es el conjunto de resultados de tirar un dado que <strong>no</strong> corresponden a números primos.</p></li>
+<li class="fragment"><p><strong>Notación</strong>: <span class="math inline">\(\Large C^c\)</span>.</p></li>
+<li class="fragment"><p><span class="math inline">\(\Large C^c:\{1,4,6\}\)</span>.</p></li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="fragment fade-in">
+<p><img data-src="imagenes/venn.jpg" style="width:100.0%"></p>
+</div>
+</div></div>
+</section><section id="complemento-de-un-evento-1" class="slide level2 smaller justify"><h2>Complemento de un Evento</h2>
+<ul>
+<li class="fragment">Definamos los tres conjuntos anteriores a partir de <em>vectores</em> en R: <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, <span class="math inline">\(C\)</span>.</li>
+</ul>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>)</span>
+<span id="cb3-2"><a href=""></a>B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)</span>
+<span id="cb3-3"><a href=""></a>C <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<ul>
+<li class="fragment">Definamos un vector que contenga los elementos de <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>: Para ello, utilizamos la función <code><a href="https://rdrr.io/r/base/sets.html">union()</a></code>.</li>
+</ul>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>AyB <span class="ot">&lt;-</span> <span class="fu">union</span>(A, B)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<ul>
+<li class="fragment">Ver que elementos que están en <span class="math inline">\(A\)</span> o <span class="math inline">\(B\)</span>, no están en <span class="math inline">\(C\)</span>: Para ello, utilizamos la función <code><a href="https://rdrr.io/r/base/sets.html">setdiff()</a></code>.</li>
+</ul>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="fu">setdiff</span>(AyB, C)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4 6 1</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment fade-in">
+<ul>
+<li class="fragment">Recordar que para ver qué hace una función (por ejemplo <code><a href="https://rdrr.io/r/base/sets.html">setdiff()</a></code>), pueden usar <code><a href="https://rdrr.io/r/base/sets.html">?setdiff</a></code>.</li>
+</ul>
+</div>
+</section><section id="eventos-mutuamente-excluyentes" class="slide level2 smaller justify"><h2>Eventos Mutuamente Excluyentes</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="fragment fade-in">
+<ul>
+<li class="fragment"><p><strong>Definición</strong>: Los eventos mutuamente excluyentes son eventos que no pueden ocurrir al mismo tiempo.</p></li>
+<li class="fragment"><p><strong>Ejemplo</strong>: El evento <span class="math inline">\(A\)</span> y el evento <span class="math inline">\(B\)</span> son mutuamente excluyentes porque el resultado de tirar un dado no puede ser par e impar al mismo tiempo.</p></li>
+<li class="fragment"><p>Los eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(C\)</span> no son mutuamente excluyentes solamente porque 2 es tanto par como primo.</p></li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="fragment fade-in">
+<p><img data-src="imagenes/venn.jpg" style="width:100.0%"></p>
+</div>
+</div></div>
+</section><section id="eventos-mutuamente-excluyentes-1" class="slide level2 smaller justify"><h2>Eventos Mutuamente Excluyentes</h2>
+<ul>
+<li class="fragment">¿Existe al menos un elemento de <span class="math inline">\(A\)</span> igual a un elemento en <span class="math inline">\(C\)</span>?: Para ello, utilizamos la función <code><a href="https://rdrr.io/r/base/sets.html">intersect()</a></code>.</li>
+</ul>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">intersect</span>(A, C)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment"><p><span class="math inline">\(A\)</span> y <span class="math inline">\(C\)</span> <strong>no</strong> son mutuamente excluyentes</p></li>
+<li class="fragment"><p>¿Existe al menos un elemento de <span class="math inline">\(B\)</span> igual a un elemento en <span class="math inline">\(C\)</span>?</p></li>
+</ul>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">intersect</span>(B, C)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 5</code></pre>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment"><p><span class="math inline">\(B\)</span> y <span class="math inline">\(C\)</span> <strong>no</strong> son mutuamente excluyentes</p></li>
+<li class="fragment"><p>¿Existe al menos un elemento de <span class="math inline">\(A\)</span> igual a un elemento en <span class="math inline">\(B\)</span>?</p></li>
+</ul>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">intersect</span>(A, B)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>numeric(0)</code></pre>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">
+<span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> <strong>sí</strong> son mutuamente excluyentes</li>
+</ul>
+<!-- ## Notación de conjuntos --><!-- ::: {.fragment .fade-in} --><!-- |Descripción |Notación    |Lectura  |Elementos| --><!-- | -------    |:-------    |:------- |:------- | --><!-- |Unión       | $A \cup C$ |A o C    | $\{2,3,4,5,6\}$ | --><!-- |Intersección| $A \cap C$ |A y C    | $\{2\}$ | --><!-- ::: --><!-- ::: {.fragment .fade-in} --><!-- ![](imagenes/venn.jpg){width="50%"} --><!-- ::: --></section><section id="notación-de-conjuntos" class="slide level2 r-stack smaller"><h2>Notación de Conjuntos</h2>
+<div class="fragment fade-in">
+<table class="caption-top">
+<thead><tr class="header">
+<th>Descripción</th>
+<th style="text-align: left;">Notación</th>
+<th style="text-align: left;">Lectura</th>
+<th style="text-align: left;">Elementos</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Unión</td>
+<td style="text-align: left;"><span class="math inline">\(A \cup C\)</span></td>
+<td style="text-align: left;">A o C</td>
+<td style="text-align: left;"><span class="math inline">\(\{2,3,4,5,6\}\)</span></td>
+</tr>
+<tr class="even">
+<td>Intersección</td>
+<td style="text-align: left;"><span class="math inline">\(A \cap C\)</span></td>
+<td style="text-align: left;">A y C</td>
+<td style="text-align: left;"><span class="math inline">\(\{2\}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">union</span>(A, C)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 4 6 3 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">intersect</span>(A, C)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment fade-in">
+<p><img data-src="imagenes/venn.jpg" style="width:40.0%"></p>
+</div>
+</section><section id="resumen-probabilidad-i" class="slide level2 smaller justify"><h2>Resumen Probabilidad I</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Conceptos Importantes <span class="citation" data-cites="devore2016">(<a href="#/bibliografía" role="doc-biblioref" onclick=""><strong>devore2016?</strong></a>)</span></strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li class="fragment">Un <strong>proceso aleatorio</strong> (en libros de estadística, llamado también <em>experimento</em>) es cualquier acción o proceso cuyo resultado está sujeto a la incertidumbre.</li>
+<li class="fragment">El <strong>espacio muestral</strong> de un experimento, denotado por <span class="math inline">\(S\)</span>, es el conjunto de todos los posibles resultados de dicho experimento.</li>
+<li class="fragment">Un <strong>evento</strong> es cualquier recopilación (subconjunto) de resultados contenidos en el espacio muestral <span class="math inline">\(S\)</span>.</li>
+<li class="fragment">Sea que <span class="math inline">\(\phi\)</span> denote el evento nulo (el evento sin resultados). Cuando <span class="math inline">\(A \cap B = \phi\)</span>, se dice que A y B son eventos mutuamente excluyentes o disjuntos.</li>
+<li class="fragment">El <strong>complemento</strong> de un evento <span class="math inline">\(A\)</span>, denotado por <span class="math inline">\(A'\)</span>, es el conjunto de todos los resultados en S que no están contenidos en A.</li>
+<li class="fragment">La <strong>unión</strong> de dos eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>, denotados por <span class="math inline">\(A \cup B\)</span> y leída como <em>A o B</em>, es el evento que consiste en todos los resultados que están en A o en B o en ambos eventos, es decir, todos los resultados en al menos uno de los eventos: <span class="math inline">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span>. También <span class="math inline">\(A \cup B\)</span> se puede descomponer en dos eventos excluyentes: <span class="math inline">\(A\)</span> y <span class="math inline">\(B \cap A'\)</span>; la última es la parte de <span class="math inline">\(B\)</span> que queda afuera de <span class="math inline">\(A\)</span>, por lo que <span class="math inline">\(P(A \cup B) = P(A) + P(B \cap A')\)</span>.</li>
+<li class="fragment">La <strong>intersección</strong> de dos eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>, denotada por <span class="math inline">\(A \cap B\)</span> y leída como <em>A y B</em>, es el evento que consiste en todos los resultados que están tanto en A como en B.</li>
+</ul>
+</div>
+</div>
+</div>
+</section><section id="resumen-probabilidad-i-1" class="slide level2"><h2>Resumen Probabilidad I</h2>
+<div class="fragment fade-in">
+<div class="quarto-figure quarto-figure-center">
+<figure><p><img data-src="imagenes/venn2.png" class="quarto-figure quarto-figure-center" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</section><section id="aplicando-los-conceptos" class="slide level2"><h2>Aplicando los Conceptos</h2>
+<ul>
+<li class="fragment">Asumamos que repetimos el proceso aleatorio de tirar una moneda y que registramos como evento <span class="math inline">\(X\)</span> el número de veces que sale <em>cara</em> en <span class="math inline">\(n\)</span> lanzamientos de moneda. Entonces:</li>
+</ul>
+<div class="fragment fade-in">
+<p><span class="math display">\[\Large P(Cara)=\lim_{n\to\infty}\frac{X}{n}\]</span></p>
+</div>
+<div class="fragment fade-in">
+<p><span class="math display">\[\Large P(Cara)=\frac{1}{2}\]</span></p>
+</div>
+</section><section id="lanzar-1-vez-una-moneda" class="slide level2 smaller justify"><h2>Lanzar 1 Vez una Moneda</h2>
+<ul>
+<li class="fragment">Definamos un vector <em>moneda</em> con los posibles eventos y simulemos un solo lanzamiento de esa moneda.</li>
+<li class="fragment">Para hacerlo en R, debemos utilizar la función <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code> considerando los siguientes argumentos:
+<ul>
+<li class="fragment">
+<code>x</code>: Un vector de uno o más elementos entre los cuales elegir, o un número entero positivo.</li>
+<li class="fragment">
+<code>size</code>: Un número entero no negativo que indica el número de elementos a elegir.</li>
+<li class="fragment">
+<code>replace</code>: Un valor lógico que indica si es que el muestreo debe ser con reposición (<code>= T</code>) o no (<code>= F</code>).</li>
+</ul>
+</li>
+<li class="fragment">Además, <em>seteamos una semilla</em> con la función <code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code> para proceso definir un proceso pseudo-aleatorio que nos permita replicar los mismos resultados. En la medida que se utilice la misma semilla, todos los procesos aleatorios que se hagan en adelante serán replicables siempre y cuando utilicen la misma semilla (en la práctica, cualquier número natural).</li>
+</ul>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb17-2"><a href=""></a>moneda <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"cara"</span>, <span class="st">"sello"</span>)</span>
+<span id="cb17-3"><a href=""></a><span class="fu">sample</span>(moneda, <span class="at">size =</span> <span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "cara"</code></pre>
+</div>
+</div>
+</div>
+</section><section id="repitamos-5-veces-este-proceso" class="slide level2"><h2>Repitamos 5 Veces Este Proceso</h2>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>tirar_moneda <span class="ot">&lt;-</span> <span class="fu">sample</span>(moneda, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-2"><a href=""></a><span class="fu">table</span>(tirar_moneda)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tirar_moneda
+ cara sello 
+    3     2 </code></pre>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">Dados estos resultados, vemos que <span class="math inline">\(P(Cara)=\frac{3}{5}=60\%\)</span>
+</li>
+</ul></section><section id="repitamos-5.000-veces-este-proceso" class="slide level2"><h2>Repitamos 5.000 Veces Este Proceso</h2>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>tirar_moneda <span class="ot">&lt;-</span> <span class="fu">sample</span>(moneda, <span class="at">size =</span> <span class="dv">5000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-2"><a href=""></a><span class="fu">table</span>(tirar_moneda)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tirar_moneda
+ cara sello 
+ 2497  2503 </code></pre>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">En este caso vemos que <span class="math inline">\(P(Cara)=\frac{2497}{5000}=49,94\%\)</span>
+</li>
+</ul></section><section id="obtengamos-la-frecuencia-relativa-acumulada-de-10.000-repeticiones" class="slide level2"><h2>Obtengamos la Frecuencia Relativa Acumulada de 10.000 repeticiones</h2>
+
+<img data-src="nivelacion-02-gd_files/figure-revealjs/simularmoneda-1.png" width="768" class="r-stretch"></section><section id="probabilidades-de-una-distribución-normal" class="slide level2"><h2>Probabilidades de una distribución normal</h2>
+</section><section id="qué-representa-el-puntaje-z-z-score" class="slide level2"><h2>¿Qué representa el Puntaje Z (<em>Z-Score</em>)?</h2>
+</section><section id="significancia-estadística-vs-significancia-práctica" class="slide level2"><h2>Significancia estadística V/S significancia práctica</h2>
+</section><section id="las-pruebas-de-significancia-son-menos-útiles-que-los" class="slide level2"><h2>Las pruebas de significancia son menos útiles que los</h2>
+<p>intervalos de confianza</p>
+</section></section><section><section id="cierre" class="title-slide slide level1 center"><h1>Cierre</h1>
+
+</section><section id="bibliografía" class="slide level2 smaller scrollable"><h2>Bibliografía</h2>
+<!-- ## 🧠 Pregunta {.quiz-question .smaller .nonincremental} -->
+<!-- El INE publica que el **ingreso mediano mensual en Chile es $650.000** -->
+<!-- basándose en la Encuesta Suplementaria de Ingresos 2024, que encuestó -->
+<!-- a 80.000 hogares del total nacional. -->
+<!-- ¿Qué tipo de estadística representa este resultado? -->
+<!-- ::: {.nonincremental} -->
+<!-- - [Estadística descriptiva, porque resume los datos de la muestra encuestada.]{.correct -->
+<!--   data-explanation="Correcto. El valor $650.000 describe los datos recolectados en la muestra de 80.000 hogares. Es un resumen del conjunto de datos observado."} -->
+<!-- - [Estadística inferencial, porque permite hacer conclusiones sobre todos los chilenos.]{data-explanation="No exactamente. La estadística inferencial ocurre cuando *usamos* ese valor muestral para hacer estimaciones o pruebas sobre la población. Publicar el valor de la muestra es descriptivo."} -->
+<!-- - [Ambas, porque describe la muestra y también representa a la población.]{data-explanation="El valor describe la muestra. Usarlo para inferir sobre la población sería estadística inferencial, pero eso requiere un paso adicional de estimación con incertidumbre."} -->
+<!-- - [Ninguna, porque los datos de encuesta no son estadísticamente válidos.]{data-explanation="Las encuestas con diseño muestral adecuado son una fuente válida y estándar en estadística. La ESI del INE sigue protocolos rigurosos de muestreo."} -->
+<!-- ::: -->
+<!-- ## 🧠 Pregunta N° 1 {.smaller} -->
+<!-- La **Encuesta CEP N°95 (septiembre-octubre 2025)** preguntó a 1.217 personas en 100 comunas de Chile cuáles son los 3 problemas a los que debería dedicar el mayor esfuerzo el gobierno. A partir de esta información responda la siguiente pregunta: -->
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- library(rquiz) -->
+<!-- dark <- rquizTheme( -->
+<!--   fontFamily = "serif", -->
+<!--   fontSize = 18, -->
+<!--   titleCol = "#E0E0E0", titleBg = "#1A1A2E", -->
+<!--   questionCol = "#FFFFFF", questionBg = "#16213E", -->
+<!--   mainCol = "#E0E0E0", mainBg = "#1A1B2E", -->
+<!--   optionBg = "#252540", -->
+<!--   navButtonCol = "#FFFFFF", navButtonBg = "#E94560", -->
+<!--   tipButtonCol = "#E0E0E0", tipButtonBg = "#2C2C3E", -->
+<!--   solutionButtonCol = "#E0E0E0", solutionButtonBg = "#2C2C3E" -->
+<!-- ) -->
+<!-- question1 <- list( -->
+<!--   question = "La <strong>Encuesta CEP N°95 (septiembre-octubre 2025)</strong> muestra que el 61% mencionó la delincuencia, asaltos y robos en primer lugar. ¿Qué tipo de estadística representa este 61%?", -->
+<!--   options = c( -->
+<!--     "Estadística descriptiva para una muestra.", -->
+<!--     "Estadística inferencial sobre la población chilena.", -->
+<!--     "Un parámetro poblacional.", -->
+<!--     "Estadística descriptiva para la población chilena." -->
+<!--   ), -->
+<!--   answer = 1, -->
+<!--   tip = "Piensa en quién respondió la encuesta: ¿toda la población o una parte de ella?" -->
+<!-- ) -->
+<!-- singleQuestion( -->
+<!--   x = question1, -->
+<!--   language = "es", -->
+<!--   # theme = dark, -->
+<!--   title = "Pregunta", -->
+<!--   scroll = TRUE, -->
+<!--   height = "420px" -->
+<!-- ) -->
+<!-- ``` -->
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script><div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script><script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script><div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-agresti2018" class="csl-entry" role="listitem">
+Agresti, Alan. 2018. <em>Statistical methods for the social sciences</em>. Fifth edition, global edition. Harlow: Pearson Education, Limited.
+</div>
+</div>
+</section></section>
+</div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="img/logo-26.png" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="nivelacion-02-gd_files/libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="nivelacion-02-gd_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="nivelacion-02-gd_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="nivelacion-02-gd_files/libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="nivelacion-02-gd_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="nivelacion-02-gd_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script><script src="nivelacion-02-gd_files/libs/revealjs/plugin/reveal-quiz/quiz.js"></script><script src="nivelacion-02-gd_files/libs/revealjs/plugin/quarto-support/support.js"></script><script src="nivelacion-02-gd_files/libs/revealjs/plugin/notes/notes.js"></script><script src="nivelacion-02-gd_files/libs/revealjs/plugin/search/search.js"></script><script src="nivelacion-02-gd_files/libs/revealjs/plugin/zoom/zoom.js"></script><script src="nivelacion-02-gd_files/libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'quiz': {"checkKey":"c","resetKey":"r","shuffleKey":"t","allowNumberKeys":true,"disableOnCheck":false,"shuffleOptions":false,"defaultCorrect":"✅ ¡Correcto!","defaultIncorrect":"❌ Incorrecto, intenta de nuevo.","includeScore":false,"disableReset":false},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, RevealQuiz, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script><script type="ojs-module-contents">
+    eyJjb250ZW50cyI6W119
+    </script><script type="module">
+    if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+    window._ojs.paths.runtimeToDoc = "../../..";
+    window._ojs.paths.runtimeToRoot = "../../..";
+    window._ojs.paths.docToRoot = "";
+    window._ojs.selfContained = false;
+    window._ojs.runtime.interpretFromScriptTags();
+    </script><script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+    
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+    
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+    
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+    
+      })();
+    </script><script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copiado");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copiado");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+
+
+</body></html>

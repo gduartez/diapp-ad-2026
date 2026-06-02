@@ -1,0 +1,85 @@
+/*-- scss:defaults --*/
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Source+Sans+3:wght@400;600;700&display=swap');
+
+$font-family-sans-serif: "Source Sans 3", -apple-system, sans-serif;
+$headings-font-family:   "Newsreader", Georgia, serif;
+
+// ===== Paleta cálida con capas diferenciadas =====
+$cream:        #FBF7F0;   // capa 1: fondo de página
+$sand:         #F3EAD9;   // capa 2: bloques de código
+$sand-border:  #E3D4B7;   // borde de los bloques de código
+$paper:        #FFFFFF;   // capa 3: resultados / output
+$paper-border: #E8E0D2;   // borde de resultados y tablas
+$ink:          #3A332C;   // texto principal (marrón oscuro)
+$terracotta:   #C0673B;   // acentos / enlaces
+
+$body-bg:    $cream;
+$body-color: $ink;
+$link-color: $terracotta;
+
+/*-- scss:rules --*/
+body {
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+// Refuerza el fondo crema por encima del tema
+body, .quarto-container, main.content, #quarto-document-content {
+  background-color: $cream !important;
+}
+
+// Títulos
+h1, h2, h3, h4 {
+  font-family: $headings-font-family;
+  letter-spacing: -0.01em;
+}
+
+// Texto justificado
+main p, main li {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+// ===== CAPA 2: bloques de código =====
+div.sourceCode, pre.sourceCode, pre {
+  background-color: $sand !important;
+  border: 1px solid $sand-border !important;
+  border-radius: 10px;
+}
+
+// Código en línea (dentro del texto)
+p code, li code, td code {
+  background-color: $sand !important;
+  border: 1px solid $sand-border;
+  border-radius: 5px;
+  padding: 0.1em 0.35em;
+  color: #8A4B2A;
+}
+
+// ===== CAPA 3: resultados / output =====
+.cell-output, .cell-output-stdout, .cell-output pre {
+  background-color: $paper !important;
+  border: 1px solid $paper-border !important;
+  border-radius: 10px;
+}
+
+// Tablas con borde y striping cálido
+table, .table {
+  background-color: $paper;
+  border: 1px solid $paper-border;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.table > :not(caption) > * > * {
+  background-color: transparent;
+}
+.table > tbody > tr:nth-of-type(odd) > * {
+  background-color: rgba(195, 165, 110, 0.08);
+}
+
+// Callouts con borde definido
+.callout {
+  border: 1px solid $sand-border;
+  border-radius: 10px;
+}

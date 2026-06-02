@@ -1,0 +1,575 @@
+---
+title: "Guía de Ejercicios N°1 - Nivelación Estadística"
+subtitle: "Estadística Descriptiva con R"
+author: "Prof. Gabriel Duarte Zúñiga"
+institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
+date: "2026-06-02"
+lang: es
+format:
+  html:
+    toc: true
+    toc-title: "Contenidos"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+    theme: [united, styles_ex.scss]
+    highlight-style: github
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    df-print: paged
+    fig-align: center
+    fig-width: 8
+    fig-height: 5
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(wooldridge)
+library(corrplot)
+
+# Tema global para todos los gráficos: así los chunks de los
+# ejercicios no necesitan repetir theme_classic() ni distraer
+# con código de personalización (eso se verá en el Módulo 2).
+theme_set(theme_classic(base_size = 13))
+```
+
+---
+
+## Introducción
+
+La presente guía de ejercicios complementa los contenidos abordados en la **Clase 1 de Nivelación Estadística** del programa DIAPP 2026. Su propósito es consolidar, mediante la práctica autónoma en lenguaje `R`, las habilidades desarrolladas durante la sesión, en particular aquellas vinculadas al manejo de datos ordenados, la aplicación de estadísticas descriptivas y su respectiva visualización.
+
+Para estos ejercicios utilizaremos el dataset **`wage1`**, disponible en el
+paquete `wooldridge` de `R`. Este conjunto de datos proviene del libro
+*Introductory Econometrics* de Jeffrey Wooldridge y corresponde a una muestra
+de **526 trabajadores** de Estados Unidos recopilada en el año **1976** a
+partir de la *Current Population Survey*. 
+
+En particular, trabajaremos con las siguientes cuatro variables:
+
+| Variable | Descripción |
+|----------|-------------|
+| `wage`   | Salario promedio por hora, en dólares de 1976 |
+| `educ`   | Años de educación formal completados |
+| `exper`  | Años de experiencia laboral potencial |
+| `female` | Variable binaria de sexo: 1 si la persona es mujer, 0 si es hombre |
+
+::: {.callout-tip}
+## Explorar la documentación del dataset
+
+Para revisar el detalle completo de todas las variables del dataset, puede
+consultar su documentación oficial ejecutando en la consola de R:
+
+```r
+help(wage1)
+```
+:::
+
+::: {.callout-important}
+## Antes de comenzar
+
+Asegúrese de tener instalados los siguientes paquetes. En caso de no tenerlos, puede instalarlos ejecutando `install.packages("nombre_paquete")` en la consola de R.
+
+```{r}
+#| eval: false
+install.packages("tidyverse")
+install.packages("wooldridge")
+install.packages("corrplot")
+```
+
+Una vez instalados, cárguelos al inicio de su script:
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(wooldridge)
+library(corrplot)
+```
+:::
+
+---
+
+## Ejercicios
+
+### Pregunta 1 {#sec-p1}
+
+Cargue el dataset `wage1` desde el paquete `wooldridge` y examine su **estructura general**. Utilice las funciones `str()` y/o `glimpse()` e indique: ¿cuántas observaciones y variables contiene el dataframe? ¿Qué tipos de variables reconoce R en este conjunto de datos?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+str(wage1)
+```
+
+```{r}
+glimpse(wage1)
+```
+
+El dataset `wage1` contiene **526 observaciones** y **24 variables**. La función `str()` permite visualizar el tipo de dato que R asigna a cada columna (numérico entero `int`, numérico continuo `num`, etc.), mientras que `glimpse()` ofrece una vista más compacta y legible con los primeros valores de cada variable.
+:::
+
+---
+
+### Pregunta 2 {#sec-p2}
+
+Cree un nuevo objeto llamado `salarios` que contenga **únicamente** las variables `wage`, `educ`, `exper` y `female`, utilizando la función `select()`. A continuación, examine la estructura de este subconjunto de datos con `glimpse()`.
+
+¿Qué tipo de dato le asigna R a la variable `female`? ¿Le parece apropiada esta clasificación considerando la naturaleza conceptual de dicha variable? Justifique su respuesta.
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+salarios <- wage1 |> 
+  select(wage, educ, exper, female)
+
+glimpse(salarios)
+```
+
+R clasifica `female` como una variable de tipo **numérico entero** (`int`), ya que en el dataset original está codificada como 0 (Hombre) y 1 (Mujer). Sin embargo, conceptualmente esta variable es de naturaleza **cualitativa nominal**, dado que representa una categoría sin orden intrínseco. La clasificación asignada por R **no refleja adecuadamente** el tipo de variable, lo que puede conducir a errores en el manejo de esta variable.
+:::
+
+---
+
+### Pregunta 3 {#sec-p3}
+
+Clasifique cada una de las cuatro variables seleccionadas (`wage`, `educ`, `exper`, `female`) según la taxonomía de variables vista en clases. Para cada variable, indique si es **cuantitativa** (continua o discreta) o **cualitativa** (nominal u ordinal), y fundamente brevemente su clasificación.
+
+Para convertir la variable `female` a una categórica, utilice el siguiente código:
+
+```{r}
+#| collapse: FALSE
+salarios$female <- factor(salarios$female, 
+                          levels = c(0, 1), 
+                          labels = c("Hombre", "Mujer"))
+```
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+| Variable | Tipo | Subtipo | Justificación |
+|----------|------|---------|---------------|
+| `wage`   | Cuantitativa | Continua | Puede tomar cualquier valor positivo en los reales (salario en dólares) |
+| `educ`   | Cuantitativa | Discreta | Corresponde a años de educación, valores enteros no negativos |
+| `exper`  | Cuantitativa | Continua | Años de experiencia, puede expresarse con decimales |
+| `female` | Cualitativa  | Nominal  | Variable binaria que indica sexo, sin orden natural entre categorías |
+
+Antes de proceder, es recomendable convertir `female` a un factor con etiquetas explícitas:
+
+```{r}
+str(salarios)
+```
+:::
+
+---
+
+### Pregunta 4 {#sec-p4}
+
+Calcule el **salario promedio por hora** de los trabajadores presentes en el dataset. ¿Cuánto gana en promedio un trabajador de esta muestra?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+mean(salarios$wage)
+```
+
+El salario promedio por hora es de aproximadamente **\$5.90 dólares**. Cabe recordar que este dato corresponde a una muestra de trabajadores estadounidenses, con valores que deben interpretarse en el contexto histórico del dataset.
+:::
+
+---
+
+### Pregunta 5 {#sec-p5}
+
+Calcule la **mediana del salario por hora**. ¿En qué se diferencia conceptualmente la mediana de la media? ¿Cuál de las dos medidas considera más representativa para esta variable y por qué?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+median(salarios$wage)
+```
+
+La mediana del salario es de aproximadamente **\$4.65 dólares**. Mientras que la media aritmética suma todos los valores y los divide por el número de observaciones, la mediana corresponde al valor central cuando los datos se ordenan de menor a mayor, siendo por tanto **más robusta frente a valores extremos** (*outliers*). Dado que la media (\$5.90) es notablemente mayor que la mediana (\$4.65), esto sugiere que la distribución presenta valores atípicamente altos que elevan la media, haciendo a la mediana una medida más representativa del trabajador típico.
+:::
+
+---
+
+### Pregunta 6 {#sec-p6}
+
+A partir de los resultados obtenidos en las preguntas 4 y 5, ¿es la distribución del salario por hora **simétrica**? En caso de no serlo, indique el **signo de la asimetría** y describa la forma que tendría la distribución (hacia qué lado apunta la cola).
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+La distribución **no es simétrica**. Dado que la media (\$5.90) es **mayor** que la mediana (\$4.65), la distribución presenta **asimetría positiva** (o asimetría hacia la derecha), lo que significa que la cola se extiende hacia los valores altos. Esto es consistente con la presencia de un pequeño grupo de trabajadores con salarios muy elevados que "tiran" la media hacia arriba, mientras la mayoría de los trabajadores se concentra en salarios más bajos.
+
+> **Regla práctica:** Si media > mediana → asimetría positiva (cola a la derecha). Si media < mediana → asimetría negativa (cola a la izquierda).
+:::
+
+---
+
+### Pregunta 7 {#sec-p7}
+
+Elabore un **gráfico de densidad** (*density plot*) del salario por hora utilizando `ggplot2`. El gráfico debe incluir títulos de ejes y un título principal descriptivo. ¿El gráfico obtenido es consistente con la respuesta dada en la pregunta anterior?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+salarios |> 
+  ggplot(aes(x = wage)) +
+  geom_density(fill = "lightpink3", color = "black", alpha = 0.5) +
+  labs(
+    title    = "Distribución del salario promedio por hora",
+    subtitle = "526 trabajadores — Dataset wage1 (Wooldridge)",
+    x        = "Salario por hora (USD)",
+    y        = "Densidad"
+  )
+```
+
+El gráfico confirma la **asimetría positiva** identificada en la pregunta anterior: la distribución presenta una cola pronunciada hacia la derecha, con la mayor concentración de trabajadores en salarios bajos y una minoría con salarios considerablemente más altos. Esta forma es característica de las distribuciones de ingresos y salarios en economía.
+:::
+
+---
+
+### Pregunta 8 {#sec-p8}
+
+Calcule la **desviación estándar** del salario por hora. Interprete el resultado en términos sustantivos: ¿qué nos dice este número sobre la variabilidad de los salarios en esta muestra?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+sd(salarios$wage)
+```
+
+La desviación estándar del salario es de aproximadamente **\$3.69 dólares**. Esto significa que, en promedio, los salarios de los trabajadores de esta muestra se alejan **\$3.69** del salario medio (\$5.90). Dicho de otro modo, la variabilidad de los salarios es bastante considerable en relación con la media, lo que refleja una marcada heterogeneidad en los ingresos de los trabajadores.
+
+Bajo el supuesto de distribución normal (campana), la **regla empírica** indica que aproximadamente el 68% de los trabajadores ganaría entre \$2.21 y \$9.59 por hora (media ± 1 desviación estándar).
+:::
+
+---
+
+### Pregunta 9 {#sec-p9}
+
+Mediante un **único comando**, obtenga un resumen de las principales estadísticas descriptivas del objeto `salarios`. Identifique los valores mínimo, máximo, cuartiles y media para cada variable.
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+summary(salarios)
+```
+
+La función `summary()` entrega para cada variable cuantitativa: el mínimo, el primer cuartil (Q1), la mediana (Q2), la media, el tercer cuartil (Q3) y el máximo. Para la variable `female` (ahora factor), entrega la frecuencia de cada categoría. Estos valores permiten tener una visión panorámica rápida de la distribución de cada variable.
+:::
+
+---
+
+### Pregunta 10 {#sec-p10}
+
+Calcule el **puntaje Z** (*z-score*) correspondiente a un trabajador que gana **15 dólares por hora**. Interprete el resultado: ¿cuántas desviaciones estándar se aleja este salario de la media? Asumiendo que la distribución de salarios tiene forma de campana (distribución normal), ¿podría considerarse este trabajador un *outlier*? Justifique aplicando la regla empírica.
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+media <- mean(salarios$wage)
+desv  <- sd(salarios$wage)
+
+z <- (15 - media) / desv
+z
+```
+
+El puntaje Z obtenido es de aproximadamente **2.47**, lo que indica que un salario de \$15/hora se ubica a **2.47 desviaciones estándar por encima** de la media.
+
+Recordando que el **puntaje Z** se define como:
+
+$$z = \frac{x - \bar{x}}{s}$$
+
+Bajo el supuesto de normalidad, la **regla empírica** establece que el 99.7% de las observaciones se encuentra dentro de ±3 desviaciones estándar de la media. Dado que $|z| = 2.47 < 3$, este trabajador **no califica formalmente como outlier** bajo esta regla. Sin embargo, con $|z| > 2$, se encuentra en el 5% de los salarios más altos, lo que lo convertiría en un valor inusualmente alto dentro de la muestra (asumiendo una distribución con forma de campana).
+:::
+
+---
+
+### Pregunta 11 {#sec-p11}
+Calcule los **percentiles** 10, 25, 50, 75, 90, 95 y 99 de la distribución del
+salario por hora utilizando la función `quantile()` con su argumento `probs`.
+A partir de estos percentiles, determine **entre qué dos percentiles se ubica**
+un salario de \$15 por hora y calcule qué **proporción de trabajadores** gana
+efectivamente \$15 o más.
+
+Compare este resultado empírico con lo que predeciría la **Regla Empírica** a
+partir del puntaje Z obtenido en la pregunta anterior:
+¿es la Regla Empírica una herramienta adecuada para describir la posición de
+\$15 en *esta* distribución? Justifique su respuesta conectándola con la forma
+de la distribución analizada en las preguntas 6 y 7. Considere que ($z \approx 2.47$) si la distribución del salario tuviera forma de campana (la misma forma idealizada que sustenta la regla empírica), un puntaje $z \approx 2.47$ dejaría por debajo de sí aproximadamente al 99,3% de los trabajadores (es decir, que este puntaje z se sitúa aproximadamente en el percentil 99,3).
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+# Percentiles de la distribución del salario
+quantile(salarios$wage, probs = c(0.10, 0.25, 0.50, 0.75, 0.90, 0.95, 0.99))
+```
+
+```{r}
+# Proporción de trabajadores que gana 15 dólares o más
+mean(salarios$wage >= 15) #devuelve un factor lógico con TRUE(=1)/FALSE(=0)
+
+# Es igual a hacer:
+# Cantidad de trabajadores que gana 10 dólares o más
+n_mayor <- sum(salarios$wage >= 15)
+n_mayor
+
+# Total de la muestra
+n_total <- nrow(salarios)
+n_total
+
+# Proporción
+n_mayor / n_total
+```
+
+Los percentiles obtenidos son:
+
+| p10 | p25 | p50 | p75 | p90 | p95 | p99 |
+|-----|-----|-----|-----|-----|-----|-----|
+| 2.92 | 3.33 | 4.65 | 6.88 | 10.00 | 12.88 | 20.00 |
+
+Un salario de \$15 por hora se ubica **entre el percentil 95 (\$12.88) y el
+percentil 99 (\$20.00)**. El cálculo empírico muestra que aproximadamente un
+**3.6%** de los trabajadores gana \$15 o más (19 de 526 personas), por lo que
+\$15 corresponde aproximadamente al **percentil 96** de la distribución.
+
+**Contraste con la Regla Empírica.** Si la distribución fuera acampanada
+(normal), un valor con $z \approx 2.47$ dejaría por encima de sí cerca del
+**0.7%** de las observaciones; es decir, la Regla Empírica predeciría que \$15
+es un salario casi tan extremo como un evento de 3 desviaciones estándar.
+Sin embargo, los datos muestran que ese salario lo alcanza un **3.6%** de los
+trabajadores: cinco veces más de lo que anticipa la aproximación mediante una distribución normal.
+
+**Conclusión.** La Regla Empírica **no es adecuada** para esta distribución.
+Como se estableció en las preguntas 6 y 7, el salario presenta una 
+**asimetría positiva** (cola pesada hacia la derecha), por lo que la suposición
+de simetría que subyace a la Regla Empírica falla. En consecuencia, la interpretación del
+puntaje Z de la pregunta anterior debe tomarse con cautela, ya que el supuesto
+de normalidad (distribución con forma de campana) no se cumple. Los percentiles, al no depender de ese supuesto, ofrecen una descripción más fiel de la posición de \$15 en la distribución.
+:::
+
+---
+
+### Pregunta 12 {#sec-p12}
+
+Elabore un **gráfico de caja** (*boxplot*) que permita comparar la distribución
+del salario por hora entre **hombres y mujeres**. A partir de la visualización,
+analice las diferencias entre ambos grupos en términos de su **mediana**,
+**dispersión** (rango intercuartílico) y presencia de **valores atípicos**.
+¿Qué puede concluir respecto a la relación entre el sexo y el salario en esta
+muestra?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+salarios |> 
+  ggplot(aes(x = female, y = wage)) +
+  geom_boxplot(fill = "lightpink3", alpha = 0.6) +
+  labs(
+    title = "Distribución del salario por hora según sexo",
+    x     = "Sexo",
+    y     = "Salario por hora (USD)"
+  )
+```
+
+El gráfico de caja revela una **diferencia salarial sistemática** entre ambos
+grupos. La **mediana** de los hombres (≈ \$6.00) es notablemente superior a la
+de las mujeres (≈ \$3.75), y la caja completa de los hombres (Q1 ≈ \$4.14,
+Q3 ≈ \$8.77) se ubica desplazada hacia arriba respecto a la de las mujeres
+(Q1 ≈ \$3.00, Q3 ≈ \$5.51). Además, la **dispersión** es mayor entre los
+hombres: su rango intercuartílico es más amplio, lo que indica salarios más
+heterogéneos.
+
+En ambos grupos se observan **valores atípicos** en la parte superior (puntos
+por encima del bigote), consistentes con la asimetría positiva ya identificada:
+existen trabajadores —especialmente hombres— con salarios muy por encima del
+resto.
+
+**Conclusión.** En esta muestra de 1976, los hombres perciben salarios por hora
+mayores que las mujeres, tanto en su valor típico (mediana) como en su techo,
+lo que sugiere la existencia de una **brecha salarial de género**. Cabe señalar
+que este gráfico es de naturaleza **descriptiva**: muestra una asociación,
+pero no permite por sí solo atribuir la diferencia exclusivamente al sexo, ya
+que podrían intervenir otros factores como la educación o la experiencia.
+:::
+
+### Pregunta 13 {#sec-p13}
+
+Calcule el **coeficiente de correlación de Pearson** entre las siguientes pares de variables:
+
+a) Salario (`wage`) y experiencia laboral (`exper`)
+b) Salario (`wage`) y años de educación (`educ`)
+
+Para cada caso, interprete el valor numérico obtenido en términos de la **dirección** y la **fuerza** de la asociación lineal. ¿Cuál de las dos relaciones lineales es más fuerte?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+cor(salarios$wage, salarios$exper)
+cor(salarios$wage, salarios$educ)
+```
+
+| Par de variables | Correlación | Interpretación |
+|-----------------|-------------|----------------|
+| `wage` – `exper` | ≈ 0.113 | Correlación positiva **muy débil** |
+| `wage` – `educ`  | ≈ 0.406 | Correlación positiva **débil a moderada** |
+
+Ambas correlaciones son positivas, lo que indica que tanto la experiencia como la educación se asocian con mayores salarios. Sin embargo, la **relación entre salario y educación es notablemente más fuerte** que entre salario y experiencia. Siguiendo los rangos vistos en clases (Devore, 2016), una correlación de 0.41 se clasifica como **débil a moderada** ($0 < |r| \leq 0.5$), mientras que 0.11 es una correlación **débil**.
+:::
+
+---
+
+### Pregunta 14 {#sec-p14}
+
+Genere una **matriz de correlaciones** para las tres variables cuantitativas (`wage`, `educ`, `exper`) y visualícela mediante un **corrplot** numérico. ¿Los valores de la matriz coinciden con los calculados individualmente en la pregunta anterior?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+salarios_num <- salarios |> 
+  select(wage, exper, educ)
+
+m <- cor(salarios_num)
+print(m)
+```
+
+```{r}
+corrplot(m, 
+         method  = "number", 
+         type    = "lower",
+         tl.col  = "black",
+         pch.col = "black")
+```
+
+Los valores de la matriz **coinciden exactamente** con los calculados en la pregunta anterior. La matriz de correlaciones es simétrica (la correlación de X con Y es igual a la de Y con X), y la diagonal siempre vale 1 (toda variable está perfectamente correlacionada consigo misma). El corrplot facilita la lectura visual de estas asociaciones, especialmente cuando se trabaja con muchas variables simultáneamente.
+:::
+
+---
+
+### Pregunta 15 {#sec-p15}
+
+Elabore **dos gráficos de dispersión** (*scatterplots*) utilizando `ggplot2`, diferenciando por sexo (`female`) mediante color:
+
+a) Salario (`wage`) en el eje Y y experiencia laboral (`exper`) en el eje X
+b) Salario (`wage`) en el eje Y y años de educación (`educ`) en el eje X
+
+¿Los gráficos son consistentes con los coeficientes de correlación calculados en la pregunta 11? ¿Observa algún patrón diferencial entre hombres y mujeres?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+# Scatterplot: salario vs experiencia
+salarios |> 
+  ggplot(aes(x = exper, y = wage, color = female)) +
+  geom_point(alpha = 0.6) +
+  labs(
+    title    = "Salario por hora según experiencia laboral",
+    subtitle = "Diferenciado por sexo",
+    x        = "Años de experiencia laboral",
+    y        = "Salario por hora (USD)",
+    color    = "Sexo"
+  )
+```
+
+```{r}
+# Scatterplot: salario vs educación
+salarios |> 
+  ggplot(aes(x = educ, y = wage, color = female)) +
+  geom_point(alpha = 0.6) +
+  labs(
+    title    = "Salario por hora según años de educación",
+    subtitle = "Diferenciado por sexo",
+    x        = "Años de educación",
+    y        = "Salario por hora (USD)",
+    color    = "Sexo"
+  )
+```
+
+Ambos gráficos son consistentes con los coeficientes de correlación: en el caso de educación se aprecia una tendencia positiva más clara, mientras que en experiencia la nube de puntos es más dispersa y sin patrón evidente. Adicionalmente, es posible observar que los salarios más altos están predominantemente concentrados en hombres, lo que sugiere una **brecha salarial de género** en esta muestra.
+:::
+
+---
+
+### Pregunta 16 {#sec-p16}
+
+Reproduzca el gráfico de dispersión entre salario (`wage`) y años de educación (`educ`), incorporando ahora una **recta de regresión ajustada** mediante `geom_smooth(method = lm)`, diferenciada por sexo. ¿Cuál es la **pendiente** de cada recta? ¿A qué se debe que las rectas tengan pendiente positiva? ¿Observa alguna diferencia entre la recta de hombres y mujeres?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+salarios |> 
+  ggplot(aes(x = educ, y = wage, color = female)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = lm, se = TRUE) +
+  labs(
+    title    = "Relación entre salario y educación con recta ajustada",
+    subtitle = "Diferenciado por sexo",
+    x        = "Años de educación",
+    y        = "Salario por hora (USD)",
+    color    = "Sexo"
+  ) +
+  theme_classic(base_size = 13)
+```
+
+Las rectas presentan **pendiente positiva** en ambos casos, lo que es consistente con la correlación positiva entre salario y educación calculada anteriormente: a mayor educación, mayor es el salario esperado. Conceptualmente, esto refleja el **retorno a la educación**: cada año adicional de estudio se asocia con un incremento en el salario por hora.
+
+Al diferenciar por sexo, se observa que la recta de los hombres se ubica **por encima** de la de las mujeres a iguales niveles de educación, lo que es consistente con la existencia de una brecha salarial de género. Ambas rectas tienen pendientes similares, sugiriendo que el retorno a la educación es comparable entre hombres y mujeres, pero que existe una diferencia en el nivel base del salario.
+
+> **Nota pedagógica:** El análisis de estas rectas es una introducción visual a la **regresión lineal simple**, cuya formalización será abordada en el módulo de Análisis de Datos y Estadística Computacional.
+:::
+
+---
+
+## Resumen de Funciones Utilizadas
+
+A continuación se presenta un resumen de las principales funciones empleadas en esta guía:
+
+| Función | Paquete | Descripción |
+|---------|---------|-------------|
+| `str()` | utils (Base) | Estructura del dataframe |
+| `glimpse()` | dplyr | Vista compacta del dataframe |
+| `select()` | dplyr | Selección de columnas |
+| `factor()` | base R | Conversión a variable categórica |
+| `mean()` | base R | Media aritmética |
+| `median()` | stats (Base) | Mediana |
+| `sd()` | stats (Base) | Desviación estándar |
+| `summary()` | base R | Resumen de estadísticas descriptivas |
+| `quantile()` | stats (Base)| Cálculo de percentiles |
+| `cor()` | stats (Base)| Coeficiente de correlación de Pearson |
+| `geom_density()` | ggplot2 | Gráfico de densidad |
+| `geom_point()` | ggplot2 | Gráfico de dispersión |
+| `geom_smooth()` | ggplot2 | Recta/curva de tendencia ajustada |
+| `corrplot()` | corrplot | Visualización de matrices de correlación |
+
+---
+
+::: {.callout-note}
+## Bibliografía de Referencia
+
+- Wooldridge, J. M. (2019). *Introductory Econometrics: A Modern Approach* (7th ed.). Cengage Learning.
+- Heiss, F. (2020). Using R for introductory econometrics. Disponible en: https://www.urfie.net/
+- Agresti, A. (2018). *Statistical Methods for the Social Sciences* (5th ed.). Pearson.
+- Devore, Jay L. 2016. *Probabilidad y estadística para ingeniería y ciencias* (9a. ed.). Distrito Federal: CENGAGE Learning.
+:::

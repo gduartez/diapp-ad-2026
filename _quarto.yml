@@ -56,5 +56,5 @@ website:
 
 format:
   html:
-    theme: sandstone
+    theme: united
     toc: true
