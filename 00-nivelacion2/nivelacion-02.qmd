@@ -1,10 +1,10 @@
 ---
-title: "Clase 1: Estadística Descriptiva"
+title: "Clase 2: Probabilidad e Inferencia"
 subtitle: "**Nivelación Estadística**"
 institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
 author: '**Prof. Gabriel Duarte Zúñiga**'
 lang: es
-date: "06-02-2026"
+date: "06-04-2026"
 
 format:
   live-revealjs: 
@@ -29,8 +29,6 @@ format:
       resetKey: 'r'
       shuffleOptions: false    # false para que el orden sea el que defines
       disableOnCheck: false
-      defaultCorrect: "✅ ¡Correcto!"
-      defaultIncorrect: "❌ Incorrecto, intenta de nuevo."
       includeScore: false
 
 revealjs-plugins:
@@ -44,8 +42,6 @@ webr:
   packages:
     - dplyr
     - ggplot2
-    - gapminder
-    - janitor
     - openintro
     
 editor: 
@@ -59,24 +55,16 @@ bibliography: references.bib
 ```{r}
 #| include: false
 library(tidyverse)
-library(gapminder)
 library(MetBrewer)
 theme_set(
   theme_classic(base_size = 16) +
   theme(
-    # Título
     plot.title    = element_text(face = "bold", size = 16, 
                                  color = "black", hjust = 0),
-    # Subtítulo
     plot.subtitle = element_text(size = 14, color = "#6B7C93", 
                                  hjust = 0, margin = margin(t = 2, b = 8)),
-    # Caption
     plot.caption  = element_text(size = 10, color = "#868e96", 
                                  hjust = 1, face = "italic"),
-    # Ejes
-    # axis.title    = element_text(color = "gray20"),
-    # axis.text     = element_text(color = "gray20"),
-    # Leyenda
     legend.title  = element_text(face = "bold")
   )
 )
@@ -89,1325 +77,93 @@ options(
 
 # ¡Bienvenidas y Bienvenidos!
 
-## Nivelación Estadística
 
-- El objetivo de este módulo es introducir los conceptos básicos de
-  probabilidad y estadística mediante la ejecución de código en lenguaje
-  `R`.
-
-- Al finalizar este curso, las y los estudiantes serán capaces de
-  emplear estadísticas descriptivas para un conjunto de [datos
-  ordenados]{.underline} *(tidy)* y entender la importancia de la
-  inferencia estadística para extraer conclusiones a partir de
-  información muestral u observacional (no experimental).
-
-- Si bien la nivelación estadística es **optativa**, los contenidos
-  abordados serán fundamentales para los temas tratados en el módulo 2
-  de Análisis de Datos y Estadística Computacional.
-
-## Información General de la Nivelación {.smaller}
-
-- 🕐 **2 clases** en total con una duración de 2:00 hrs cada una.
-
-- La clase se divide en diferentes secciones:
-
-  i.  👨‍🏫 **Exposición:** Láminas de contenido que resumen el
-      conocimiento principal esperado como resultado de aprendizaje,
-      junto con código de ejemplo.
-  ii. 🧠 **Preguntas:** A lo largo de la clase se realizarán preguntas
-      que pueden ir contestando en línea para evaluar el aprendizaje de
-      cada sección.
-  iii. 💻 **Ejercicio guiado:** Ejercicio práctico resuelto de manera
-       simultánea por el profesor junto con los alumnos.
-       <!-- i. 👥 **Ejercicio grupal:** Ejercicios en grupos de 4-6 personas para resolver en conjunto los problemas propuestos. El profesor y ayudante pasarán por las salas recurrentemente. -->
-  iv. 🔒 **Cierre:** Resumen de los aspectos más relevantes y espacio
-      final de preguntas.
-
-- 📝 Cada sesión cuenta con una **guía de ejercicios** para reforzar el
-  aprendizaje de manera autónoma.
-
-- 📤 La presentación y grabación se subirán a **Webcursos** al finalizar
-  cada clase.
-
-- 2 clases:
-
-  - Clase 1: **Martes 02 de junio** de 18:30 a 20:30
-  - Clase 2: **Jueves 04 de junio** de 18:30 a 20:30
-
-## Calendario
-
-- Clase 1: **Martes 02 de junio** de 18:30 a 20:30
-- Clase 2: **Jueves 04 de junio** de 18:30 a 20:30
-
-## Reglas Generales
-
-- Durante las clases se debe mantener la **cámara prendida**. Quienes no
-  puedan hacerlo por algún motivo deben avisar mediante correo
-  electrónico o chat privado de zoom al ayudante.
-
-- ¡Siéntanse libres de hacer consultas! De todos modos, el mayor
-  aprendizaje se adquiere a través de la **práctica**: Ensayo y error.
-
-- Toda comunicación y consultas fuera de clase deben realizarse a través
-  del foro de ***webcursos***: No solo se beneficiarán ustedes, sino que
-  también sus compañeras/os!
-
-- Este módulo **no** tiene evaluaciones.
-
-## 🎯 Objetivos Clase 1
-
-Los objetivos específicos de la clase 1 son:
-
-- Comprender **qué es la estadistica** y cuál es su relevancia para los
-  cientistas sociales.
-- Distinguir los **objetivos** de las **dos ramas** principales de la
-  estadística y cómo se utilizan en ciencias sociales para procesar y
-  analizar información.
-- Aplicar mediante lenguaje `R` **estadísticas descriptivas** para
-  diversos conjuntos de datos.
-  <!-- - Introducir las nociones básicas de **probabilidad**. -->
-
-# [Introducción a la Estadística]{style="color:white"} {background="#416fc4"}
-
-## Definiciones de Estadística
-
-En términos generales, la estadística se define como una disciplina que,
-basada en determinadas metodologías y conceptos, consiste en **producir,
-analizar, procesar, interpretar y presentar un conjunto de datos**.
-
-Así, la definición que usaremos a lo largo de la nivelación y del módulo
-2 del DIAPP será la siguiente:
-
-:::: fragment
-::: callout-note
-## Estadística [@agresti2018]
-
-La estadística consiste en un conjunto de métodos para **obtener** y
-**analizar** [**datos**]{style="color: darkblue;"}.
-:::
-::::
-
-## ¿Qué Son Los Datos? {.smaller}
-
-- La recopilación de información está en el centro de toda conocimiento
-  ciéntifico.
-- Esta recopilación entrega *observaciones*, las cuales son usadas en el
-  análisis estadístico.
-- A las observaciones recolectadas sobre características de interés se
-  les conoce como **datos**.
-- Analizar los datos de manera correcta nos permite aprender cómo estas
-  características recolectadas están asociadas y responder preguntas
-  relevantes para la ciencia social, como por ejemplo:
-  - ¿Los trabajadores que tienen mayor educación suelen ganar más?
-    ¿Cuánto más?
-  - ¿Qué variables permiten explicar de mejor manera los altos niveles
-    violencia en ciertos territorios?
-  - ¿Cuál es el efecto de un programa social en la reincidencial
-    delictual de niños, niñas y adolescentes?
-
-## Datos Ordenados o *Tidy Data* {.smaller}
-
-A lo largo de este módulo y el siguiente, trabajaremos principalmente
-con datos rectangulares u ordenados (o en su defecto, haremos las
-transformaciones correspondientes para conseguir esta estructura). En
-`R`, a estos objetos se le conocen como **dataframes** (o **tibbles**
-dentro del entorno `tidyverse`). Algunas deficiniones esenciales para
-entender esta estructura son las siguientes:
-
-- [**Dataframe:**]{.underline} Corresponde a una tabla de **datos
-  rectangulares** (aquellos que comúnmente asociamos a una hoja de
-  cálculo). Son la estructura de datos básica para los modelos
-  estadísticos.
-- [**Variables:**]{.underline} Corresponde a las **columnas** de la
-  tabla de datos y definen las características de nuestra unidad de
-  observación. Por definición, los valores que toman las variables
-  pueden **variar** entre los sujetos de una muestra o población. A la
-  variable de interés en un estudio se le conoce como **variable
-  dependiente** o *outcome* ($y$).
-- [**Observaciones:**]{.underline} Corresponde a las **filas** de una
-  tabla de datos, en donde cada una de ellas representa un caso o unidad
-  de análisis del conjunto de datos (una persona, un hogar, un país,
-  etc.).
-- [**Valores:**]{.underline} Son los datos concretos dentro de cada
-  celda, es decir, el valor que toma cada variable para cada
-  observación.
-
-## Datos Ordenados o *Tidy Data*
-
-::: {.fragment .fade-in}
-![Fuente: Data tidying [@wickham2023]](img/tidydata.png){width="100%"
-fig-align="center"}
-:::
-
-## 💻 Datos Ordenados o *Tidy Data* {.smaller}
-
-- Con la función `head()` es posible mostrar las primeras 6
-  observaciones de un dataframe (u otro objeto) en `R`.
-
-- Para ejemplificar, veamos un caso concreto con información almacenada
-  dentro del paquete gapminder [@gapminder] en `R`. Este dataset
-  proporciona información sobre indicadores económicos y demográficos de
-  142 países cada cinco años entre 1952 y 2007:
+## 🔁 Repaso Clase 1: Estadísticas Descriptivas en `R` {.smaller}
 
 ::: fragment
-```{webr}
-#| exercise: ex_1
-library(gapminder) #paquete que contiene los datos
-______(gapminder) #mostramos las primeras 6 observaciones
-
-```
+| Concepto | Definición | Función en `R` | Ejemplo de uso |
+|:---------------|:------------------|:---------------|:---------------------|
+| **Media** | Promedio aritmético: suma de los valores dividida por $n$ | `mean(x, na.rm = T)` | `mean(gapminder$lifeExp, na.rm = T)` |
+| **Mediana** | Valor central de los datos ordenados; más robusta ante *outliers* | `median(x, na.rm = T)` | `median(gapminder$lifeExp, na.rm = T)` |
+| **Desv. Estándar** | Distancia *típica* de cada observación respecto a la media | `sd(x, na.rm = T)` | `sd(gapminder$lifeExp, na.rm = T)` |
+| **Percentil** | Valor bajo el cual cae el $p$% de los datos | `quantile(x, probs = p)` | `quantile(gapminder$lifeExp, probs = c(.25, .75))` |
+| **Puntaje Z** | N° de desviaciones estándar que separan una observación de la media | `(x - mean(x)) / sd(x)` | `(200 - mean(bdims$hgt)) / sd(bdims$hgt)` |
+| **Correlación** | Fuerza y dirección de la asociación lineal entre dos variables cuantitativas ($-1$ a $+1$) | `cor(x, y)` `geom_point()` | `cor(gapminder$gdpPercap, gapminder$lifeExp)` |
 :::
 
-## Datos Ordenados o *Tidy Data* {.smaller}
-
-```{r}
-library(DT)
-datatable(gapminder, options = list(pageLength = 6))
-```
-
-::: {.cuadro-pregunta .fragment}
-¿Cuál sería una definición apropiada de una observación para este
-dataset?
-:::
-
-## ¿Para Qué Sirve la Estadística? {.smaller}
-
-::: fragment
-En este sentido, la estadística provee métodos para:
-:::
-
-1.  [**Diseñar:**]{.underline} Planear como obtener datos para un
-    estudio de investigación, de manera que sean **informativos**.
-    - Ejemplo: Cómo seleccionar a la gente para una encuesta y cómo
-      diseñar sus preguntas.
-2.  [**Describir:**]{.underline} Resumir y entender los datos obtenidos
-    y de manera simple y sin distorsionar o perder mucha información.
-    - Ejemplo: Presentar estadísticas descriptivas o gráficos de barra
-      con el objetivo de mostrar los datos de manera simple y
-      entendible, sin distorsionar o perder mucha información.
-3.  [**Inferir:**]{.underline} Para hacer **predicciones** basadas en
-    los datos, manejando la incertidumbre de una estimación de manera
-    objetiva.
-    - Ejemplo: Estimar los rangos en que oscila el efecto de un programa
-      de manera confiable.
-
-## Población y Muestra {.smaller}
-
-Gran parte de la estadística se basa en cómo extraer conclusiones a
-partir de un conjunto **parcial** de datos sobre una población de
-estudio. Es relevante entender que la población no solamente pueden ser
-personas, sino que también hogares, unidades territoriales, etc.
-
-:::: fragment
-::: callout-note
-## Población y Muestra [@agresti2018]
-
-La población es el conjunto **total** de sujetos de interés en un
-estudio. Una muestra, es un **subconjunto de la población** sobre la
-cual se recolectan datos.
-:::
-::::
-
-::: fragment
-![Fuente: Elaboración propia con IA (ChatGPT,
-2026)](img/poblacion-muestra-ChatGPT.png){width="50%"}
-:::
-
-## Estadística Descriptiva e Inferencial {.medium}
-
-Las principales formas de analizar datos son la **estadística
-descriptiva** y la **estadística inferencial**, las cuales conforman las
-principales dos ramas de esta ciencia.
-
-:::: fragment
-::: callout-note
-## Estadística Descriptiva [@agresti2018]
-
-La estadística descriptiva **resume** información en un conjunto de
-datos mediante gráficos, tablas y números como promedios y porcentajes.
-:::
-::::
-
-:::: fragment
-::: callout-note
-## Estadística Inferencial [@agresti2018]
-
-La estadística inferencial entrega **predicciones** respecto a la
-población a partir de una muestra de datos.
-:::
-::::
-
-::: fragment
-Un **estadístico** descriptivo corresponde a una medida numérica de
-resumen de una **muestra** de datos, mientras que una medida resumen de
-la **población** se conoce como **parámetro**.
-:::
-
-:::: fragment
-::: callout-note
-## Parámetro [@agresti2018]
-
-Un **parámetro** es un resumen numérico de la **población**.
-:::
-::::
-
-## Estadística Descriptiva: Ingresos en Chile
-
-Dos conceptos fundamentales en el campo de la estadística son la
-**incertidumbre** y la **variación**. En este sentido, la estadística y
-la probabilidad se basan en métodos tanto para describir y modelar esta
-variabilidad, así como para tomar decisiones en presencia de ella.
-
-::::: {.columns .img-full}
-::: {.column .fragment .fade-in width="50%"}
-[![Fuente: Encuesta Suplementaria de Ingresos
-2024](img/ingreso-medio-ine-2024.png)](https://www.ine.gob.cl/docs/default-source/encuesta-suplementaria-de-ingresos/publicaciones-y-anuarios/s%C3%ADntesis-de-resultados/2024/esi2024.pdf?sfvrsn=68833405_4)
-:::
-
-::: {.column .fragment .fade-in width="50%"}
-[![Fuente: Encuesta Suplementaria de Ingresos
-2024](img/ingreso-mediano-ine-2024.png)](https://www.ine.gob.cl/docs/default-source/encuesta-suplementaria-de-ingresos/publicaciones-y-anuarios/s%C3%ADntesis-de-resultados/2024/esi2024.pdf?sfvrsn=68833405_4)
-:::
-:::::
-
-## Estadística Inferencial: Evaluación de Programas
-
-[![Fuente:
-](img/evaluacion-mi-abogado.png){width="70%"}](https://www.dipres.gob.cl/597/articles-266613_r_ejecutivo_institucional.pdf)
-
-## 🧠 Pregunta N° 1 {.quiz-question .smaller}
-
-La **Encuesta CEP N°95 (septiembre-octubre 2025)** preguntó a 1.217
-personas en 100 comunas de Chile cuáles son los 3 problemas a los que
-debería dedicar el mayor esfuerzo el gobierno. El **61%** mencionó la
-delincuencia, asaltos y robos en primer lugar.
-
-::: nonincremental
-***¿Qué tipo de estadística representa este 61%?***
-
-- [Estadística descriptiva para una muestra.]{.correct
-  data-explanation="Correcto. El 61% resume y describe los datos recolectados en la muestra de 1.217 personas encuestadas en 100 comunas."}
-- [Estadística inferencial sobre la población
-  chilena.]{data-explanation="No exactamente. Para hacer inferencia necesitaríamos un paso adicional: estimar con qué nivel de confianza ese 60% representa a todos los chilenos mayores de 18 años."}
-- [Un parámetro
-  poblacional.]{data-explanation="Un parámetro describe a toda la población. Este 60% proviene de una muestra de 1.217 personas, no de todos los chilenos, por lo que es un estadístico muestral, no un parámetro poblacional."}
-- [Estadística descriptiva para la población
-  chilena.]{data-explanation="La estadística descriptiva es correcta, pero el resultado describe la muestra encuestada, no la población completa. Para describir a toda la población habría que haber consultado a todos los chilenos mayores de 18 años."}
-:::
-
-## Variables y su Clasificación
-
-- Como vimos anteriormente, diferentes sujetos o unidades de análisis
-  pueden tener diferentes valores para una variable. Por ejemplo, en una
-  muestra, para la variable sexo podemos tener tanto hombres como
-  mujeres.
-
-- Los valores que puede tomar una variable define su **escala de
-  medición** (*measurement scale*). Los métodos estadísticos válidos
-  para una variable dependen de esta definición.
-
-- La primera clasificación para las escalas de medición de las variables
-  es distinguir si son **números** o **categorías**. En segundo lugar,
-  se debe reconocer el **número de niveles** que hay dentro de cada una
-  de ellas.
-
-## Variables y su Clasificación {.smaller}
-
-- **Numéricos:** Variables cuya escala de medición tiene valores
-  numéricos que representan diferentes magnitudes. Pueden clasificarse
-  en:
-  - [Continuos:]{.underline} Datos que pueden tomar cualquier valor en
-    un intervalo, es decir, pueden tomar [infinitos valores
-    posibles]{style="color: darkred;"} dentro de los números reales.
-    Ejemplo de variables continuas son la altura, el peso o el tiempo
-    entre dos ciudadaes.
-  - [Discretos:]{.underline} Datos que sus posibles valores forman un
-    conjunto de números separados, tales como los recuentos (0, 1, 2, 3,
-    ...). Un ejemplo de variables discretas es el número de hermanos.
-- **Categóricos:** Variables que solo pueden tomar valores específicos
-  sobre un set de posibles categorías. Pueden clasificarse en:
-  - [Nominales:]{.underline} Categorías que [no se pueden
-    ordenar]{style="color: darkred;"}, es decir, que ninguna categoría
-    es mayor ni menor que ninguna otra categoría. Por ejemplo: Blanco,
-    Verde y Rojo.
-    - [Binarios:]{.underline} Un caso especial de datos categóricos con
-      solo **2** categorías de valores, por ejemplo: hombre/mujer, 0/1,
-      verdadero/falso, presente/ausente, etc.
-  - [Ordinales:]{.underline} Datos categóricos que tienen un **orden**
-    explícito. A diferencia de las cuantitativas, hay un orden pero no
-    un valor numérico que permite medir cuánta es la distancia entre
-    cada categoría. Ej: primer, segundo y tercer lugar; clase alta,
-    media o baja; siempre, ocasionalmente o nunca; etc.
-
-## Variables y su Clasificación
-
-:::: fragment
-::: callout-important
-Hay casos en los que una variable numérica puede ser ***tratada*** como
-continua o discreta, lo cual depende del criterio del investigador, de
-la naturaleza del dato y de la pregunta de investigación. Esta
-definición, puede tener implicancias en el método o técnica cuantitativa
-que se utilice para analizar los datos.
-:::
-::::
-
-## Tipos de Datos {.smaller}
-
-```{mermaid}
-flowchart TD
-  A[Variables] --> B[Cuantitativas o Numéricas]
-  A --> C[Cualitativas o Categóricas]
-  B --> D[Discretas]
-  B --> E[Continuas]
-  C --> F[Ordinales]
-  C --> G[Nominales]
-
-  style A fill:#adb5bd 
-  style B fill:#e9ecef
-  style C fill:#e9ecef
-```
-
-::: fragment
-En `R` las variables de un conjunto de datos o *dataframe* poseen
-**clases** que permiten *asociar* la tipificación anterior:
-
-| Clase | Significado | Tipo de Variable Asociada |
-|-------------------|---------------------------|---------------------------|
-| `int` | *integer* o números enteros (sin decimales) | Cuantitativa / Discreta o Continua |
-| `num` | *numeric* o números reales (aquellos que pueden tener decimales) | Cuantitativa / Continua |
-| `factor` | *factor* o variables categóricas con niveles (valores únicos) | Cualitativa / Ordinal o Nominal |
-:::
-
-## 💻 Ejemplo en `R` {.smaller}
-
-Con la función `str()` es posible identificar clase de cada variable que
-`R` reconoce para un conjunto de datos:
-
-::: fragment
-```{webr}
-#| exercise: ex_2
-library(gapminder)
-______(gapminder) #muestro la estructura y clases de las variables del dataframe
-```
-:::
-
-## Ejemplo en `R` {.smaller}
-
-Otra forma más elegante obtener esta información es con la función
-`glimpse <dplyr>`:
-
-::: fragment
-```{r}
-#| echo: true
-library(dplyr) #Cargo paquete para usar función glimpse
-glimpse(gapminder)
-```
-:::
-
-::: fragment
-Del resultado anterior vemos que:
-
-- [country]{.mark} es una variable tipo `factor`.
-- [continent]{.mark} es una variable tipo `factor`.
-- [year]{.mark} es una variable tipo `int`.
-- [lifeExp]{.mark} es una variable tipo `num`.
-- [pop]{.mark} es una variable tipo `int`.
-- [gdpPercap]{.mark} es una variable tipo `num`.
-:::
-
-## Resumen {.medium}
-
-::: callout-tip
-## Conceptos Importantes [@agresti2018]
-
-- El campo de la estadística guarda relación con la recopilación,
-  análisis y uso de datos para tomar decisiones y resolver problemas.
-- Las 2 ramas principales de la estadística son la **descriptiva** y la
-  **inferencial**.
-- La [**estadística descriptiva**]{style="color: darkred;"} consiste en
-  métodos para **organizar y resumir datos**.
-- La [**estadística inferencial**]{style="color: darkblue;"} consiste en
-  métodos para obtener conclusiones o predicciones objetivas a partir de
-  una **muestra** de datos.
-- Los datos corresponden observaciones que se recolectan sobre
-  características de interés. Los datos que usaremos en este curso
-  corresponden a datos ordenados o rectangulares en donde cada fila es
-  una observación de la unidad de análisis, cada columna una variable o
-  característica de interés y cada celda es un valor específico para una
-  observación y una característica determinada.
-- Los métodos estadísticos analizan datos de **variables**
-  (características que varían entre sujetos o unidades de observación) y
-  pueden definirse como **cuantitativas** (variables que son medidas en
-  un intervalo) o **cualitativas** (variables que toman un valor
-  específico dentro de un conjunto de categorías).
-- Las [**variables cuantitativas**]{style="color: darkgreen;"} pueden
-  clasificarse en dos: Discretas (cuyos valores posibles son finitos) y
-  continuas (cuyos valores posibles son infinitos dentro un rango
-  determinado). Las [**variables
-  cualitativas**]{style="color: darkorange;"} por su parte, pueden ser
-  nominales (categorías sin orden) y ordinales (categorías con un orden
-  definido que indica mayor o menor medida de algo sin especificar
-  *cuánto*).
-:::
-
-## 🧠 Pregunta N°2: Tipos de Variables (1/3) {.quiz-question}
-
-La encuesta CEP pregunta: *¿Cuál es su nivel educacional?* con las
-opciones: Sin estudios, Básica, Media, Técnica, Universitaria.
-
-¿Qué tipo de variable es?
-
-::: nonincremental
-- [Nominal]{data-explanation="Las categorías nominales no tienen orden. Aquí sí existe un orden natural (de menor a mayor nivel educativo), por lo que nominal no es correcto."}
-- [Ordinal]{.correct
-  data-explanation="Correcto. Las categorías tienen un orden definido (de menor a mayor nivel educativo), pero no podemos medir cuánta es la distancia entre cada nivel. Es una variable cualitativa ordinal."}
-- [Cuantitativa]{data-explanation="Las variables cuantitativas toman valores numéricos con distancias medibles entre ellos. El nivel educacional es una categoría, no un número."}
-:::
-
-## 🧠 Pregunta N°2: Tipos de Variables (2/3) {.quiz-question}
-
-La encuesta CEP pregunta: *¿Cuántos años tiene usted?*
-
-¿Qué tipo de variable es?
-
-::: nonincremental
-- [Nominal]{data-explanation="Las variables nominales son categorías sin orden. La edad es un número con distancias medibles entre valores, no una categoría."}
-- [Ordinal]{data-explanation="Las variables ordinales tienen orden pero sin distancias medibles. La edad sí tiene distancias medibles: 10 años es exactamente el doble de 5 años."}
-- [Cuantitativa]{.correct
-  data-explanation="Correcto. La edad es un número continuo con distancias medibles entre valores. Es una variable cuantitativa continua."}
-:::
-
-## 🧠 Pregunta N°2: Tipos de Variables (3/3) {.quiz-question}
-
-La encuesta CEP pregunta: *¿Con qué partido político se identifica?* con
-opciones: UDI, RN, PDG, PPD, PS, PC, Ninguno, Otro.
-
-¿Qué tipo de variable es?
-
-::: nonincremental
-- [Nominal]{.correct
-  data-explanation="Correcto. Los partidos políticos son categorías sin ningún orden natural entre ellas. Ningún partido es 'mayor' ni 'menor' que otro. Es una variable cualitativa nominal."}
-- [Ordinal]{data-explanation="Las variables ordinales tienen un orden definido entre categorías. Los partidos políticos no tienen un orden intrínseco, aunque a veces se les ubica en un eje izquierda-derecha, eso es una interpretación, no una propiedad del dato."}
-- [Cuantitativa]{data-explanation="Las variables cuantitativas toman valores numéricos medibles. Un partido político es una categoría, no un número."}
-:::
-
-# [Estadística Descriptiva]{style="color:white"} {background-color="#22226c"}
-
-## Estadística Descriptiva {.smaller}
-
-- El objetivo de la estadística descriptiva es resumir datos para
-  facilitar su comprensión y puede usarse tanto para datos
-  **cuantitativos** como **cualitativos**.
-- Para variables **cualitativas**, generalmente se utilizan las
-  frecuencias absolutas y relativas de cada categoría.
-- Para las variables **cuantitativas** el espectro de medidas es más
-  amplio, pudiendo distinguir cuatro grandes tipos:
-  1.  Medidas de **tendencia central** (🎯): Media, Mediana y Moda.
-  2.  Medidas de **variabilidad** (📊): Varianza y Desviación Estándar.
-  3.  Medidas de **posición** (📏): Percentiles, Rango Intercuartil
-      (IQR).
-  4.  Medidas de **asociación** (📈) para datos cuantitativos
-      bivariados: Correlación.
+## 🔁 Repaso Clase 1: Estadísticas Descriptivas en `R` {.medium}
 
 :::: fragment
 ::: callout-tip
-## Conocimiento Relevante [@agresti2018]
+## Para obtenerlas todas de una vez: `summary()`
 
-Las estadísticas descriptivas para una variable cuantiativa poseen dos
-atributos principales para describirlas numéricamente: El **centro** o
-su observación típica (por ejemplo, a través de la **media**) y su
-**variabilidad** (por ejemplo, a través de la **desviación estándar**).
+```{r}
+#| echo: true
+gapminder |> filter(year == 2007) |> select(lifeExp, gdpPercap) |> summary()
+```
 :::
 ::::
 
-## Distribuciones de Frecuencia {.smaller}
+## Repaso: ¿Dónde Quedamos? {.smaller}
 
-- Una de las formas más básicas de resumir información es mediante
-  tablas y gráficos que muestren una distribución de frecuencia, ya sea
-  de una variable cualitativa o cuantitativa.
+En la **Clase 1** aprendimos a **describir** datos:
 
-:::: fragment
+- Medidas de **tendencia central** (media, mediana) y **variabilidad**
+  (varianza, desviación estándar).
+- **Visualización** (histograma, densidad, boxplot) y **asociación**
+  (correlación, scatterplot).
+
+. . .
+
+Pero la estadística descriptiva solo resume **los datos que tenemos a
+mano** (una muestra). La gran pregunta que abordaremos hoy es:
+
+::: {.cuadro-pregunta}
+¿Cómo pasamos de lo que observamos en **una muestra** a conclusiones
+sobre **toda la población**?
+:::
+
+. . .
+
+La herramienta que nos permite dar ese salto es la **probabilidad**.
+
+
+## 🎯 Objetivos Clase 2 {.smaller}
+
+Los objetivos específicos de la clase 2 son:
+
+- Comprender las **nociones básicas de probabilidad** y aplicarlas a
+  ejemplos concretos.
+- Conectar la probabilidad con las **variables aleatorias** y sus
+  **distribuciones** (binomial y normal).
+- Entender por qué una muestra genera **incertidumbre** y cómo el
+  **Teorema del Límite Central** nos ayuda a manejarla.
+- Construir e interpretar **intervalos de confianza**.
+- Plantear una **prueba de hipótesis** sencilla, interpretar el
+  **p-valor** y **concluir**.
+
+## ¿Qué Veremos Hoy? {.smaller}
+
+
+1.  **Probabilidad** y ejemplos concretos.
+2.  **Variables aleatorias** y distribuciones conocidas (binomial).
+3.  La **distribución normal**.
+4.  **Muestreo, Teorema del Límite Central** y error estándar.
+5.  **Intervalos de confianza**, **p-valor** y **prueba de hipótesis**
+    (*t-test*).
+
+. . .
+
 ::: callout-note
-## Distribución de Frecuencia [@agresti2018]
+## Metodología
 
-Una distribución de frecuencias es una lista de los posibles valores de
-una variable, junto con el número de observaciones para cada valor.
-:::
-::::
-
-- Las distribuciones de frecuencia se pueden visualizar mediante
-  ***gráficos de barra (barplots)*** para datos cualitativos y mediante
-  ***histogramas (histograms)*** en el caso de datos cuantitativos.
-
-::: fragment
-Para resumir datos categóricos, una forma sencilla de hacerlo sería:
-
-1.  Listar los distitos valores de cada categoría.
-2.  Contar los casos (observaciones) que hay dentro de cada una de
-    ellas.
-3.  Construir un indicador de frecuencia relativa (o porcentaje) de cada
-    categoría que permita entender rápidamente el peso de cada una sobre
-    el total.
+Igual que en la Clase 1, alternaremos **exposición** breve con
+**preguntas** 🧠 y **ejercicios guiados** 💻 que resolveremos juntos.
 :::
 
-## Ejemplo de Frecuencias de Datos Cualitativos {.smaller}
+# [Probabilidad]{style="color:white"} {background="#416fc4"}
 
-- El dataset `penguins` contiene datos de 344 pingüinos adultos de tres
-  especies que habitan en tres islas del archipiélago Palmer, en la
-  Antártida, incluyendo su tamaño (longitud de las aletas, masa
-  corporal, dimensiones del pico) y sexo.
-
-- Analicemos la frecuencia abosluta y relativa de las especies y
-  presentémosla en una tabla:
-
-::: fragment
-```{r}
-#| echo: true
-
-library(janitor) #para agrupar datos de manera más sencilla
-library(knitr)
-penguins |> 
-  tabyl(species) |> 
-  adorn_totals("row") |> 
-  adorn_pct_formatting(digits = 1) |> 
-  rename(Especie = species, Frecuencia = n, Porcentaje = percent) |> 
-  kable()
-```
-:::
-
-## Visualización de Datos Cualitativos {.smaller}
-
-Para visualizar datos categóricos sencillos como el ejemplo anterior, un
-gráfico de barras es una de las soluciones más adecuadas:
-
-```{r}
-#| echo: true
-#| classes: r-stretch
-#| out-width: "100%"
-
-library(ggplot2)
-penguins |>
-  ggplot(aes(x = species)) +
-  geom_bar(fill = "cyan4") +
-  labs(x = "Especies", y = "Frecuencia", title = "Gráfico de Barras",
-       subtitle = "Frecuencia absoluta de pingüinos por especie")
-```
-
-## Distribución de Frecuencias Cuantitativas {.medium}
-
-- Un **histograma** es un gráfico de distribución de frecuencia para una
-  variable **cuantitativa**.
-- A diferencia de los gráficos de barra en donde a una cantidad finita
-  de valores posibles a contabilizar, los histogramas requieren definir
-  la cantidad de intervalos o barras (*bins*) con que se construirá el
-  gráfico.
-- Si se ocupan muy pocos intervalos o barras, se pierde mucha
-  información. Si se ocupan muchos intervalos, la información se torna
-  dificil de interpretar e incluso puede ocultar los patrones generales
-  que se quieren mostrar.
-- Una alternativa para mostrar la distribución completa de una variable
-  es hacer gráficos de densidad (*density plots*)
-- En `R` esto se puede lograr mediante `geom_histogram()` y
-  `geom_density()`
-
-## Histogramas y Gráficos de Densidad {.smaller}
-
-::::: columns
-::: {.column .fragment .fade-in width="50%"}
-```{r}
-#| echo: true
-#| classes: r-stretch
-#| out-width: "100%"
-#| code-line-numbers: "3,4"
-library(ggplot2)
-penguins |>
-  ggplot(aes(x = flipper_len)) +
-  geom_histogram(fill = "green4", color = "black", alpha = .5) +
-  labs(x = "Largo de la Aleta", y = "Frecuencia", title = "Gráfico de Densidad del Largo de la Aleta",
-       subtitle = "344 Pingüinos del dataset penguins")
-```
-:::
-
-::: {.column .fragment .fade-in width="50%"}
-```{r}
-#| echo: true
-#| classes: r-stretch
-#| out-width: "100%"
-#| code-line-numbers: "4"
-library(ggplot2)
-penguins |>
-  ggplot(aes(x = flipper_len)) +
-  geom_density(fill = "purple4", color = "black", alpha = .5) +
-  labs(x = "Largo de la Aleta", y = "Frecuencia", title = "Histograma del Largo de la Aleta",
-       subtitle = "344 Pingüinos del dataset penguins")
-```
-:::
-:::::
-
-## 🎯 Media (*Mean*) {.smaller}
-
-::: callout-tip
-## Media (*mean or average*)
-
-La media es la suma de todos los valores dividido por la cantidad de
-valores observados (n = cantidad total de observaciones)
-:::
-
-$$Media(y) = \bar{y} = {\frac {1}{n}}\sum _{i=1}^{n}y_{i}={\frac {y_{1}+y_{2}+\cdots +y_{n}}{n}}$$
-
-::: fragment
-Supongamos que tenemos los números del 1 al 5 guardados en un vector:
-$V_1 =\{1,2,3,4,5\}$
-:::
-
-::: {.cuadro-pregunta .fragment}
-¿Cuál sería la media de $V_1$?
-:::
-
-::: {.fragment .fade-in}
-Para resolver, bastaría con aplicar la fórmula:
-$\bar{V_1} ={\frac {1+2+3+4+5}{5}} = 3$
-
-En `R`, esto se realiza con la función `mean()`
-
-```{r}
-#| echo: true
-mean(c(1,2,3,4,5))
-```
-:::
-
-## 💻 🎯 Media: Aplicación
-
-Calcule el **promedio** de víctimas de homicidio consumado **mensuales**
-del año 2025 a partir del
-[informe](https://prevenciondehomicidios.cl/wp-content/uploads/2026/03/Informe_de_victimas_de_homicidios_consumados_2025_VF.pdf)
-elaborado por el Centro para la Prevención de Homicidios y Delitos
-Violentos ¿cuántas víctimas de homicidios hubo durante 2025? (*Hint: la
-función `sum()` permite sumar los elementos de un vector*)
-
-```{webr}
-#|exercise: ex_3
-homicidios_2025 <- c(97,103,77,82,85,69,98,103,94,107,89,87)
-
-______(homicidios_2025) #promedio de víctimas mensual en 2025
-______(______) #total de víctimas 2025
-```
-
-## 🎯 Media y Valores Faltantes
-
-::: fragment
-Es importante señalar que en R, cuando se intenta calcular la media y
-existen valores faltantes, el resultado será siempre `NA`:
-:::
-
-::: fragment
-```{r media_na1}
-#| echo: true
-mean(c(1,2,NA,4,5))
-```
-:::
-
-::: fragment
-Para calcular la media de los valores válidos o existentes en estas
-situaciones, se debe utilizar el argumento `na.rm = T`:
-:::
-
-::: {.fragment .fade-in}
-```{r media_na2}
-#| echo: true
-mean(c(1,2,NA,4,5), na.rm = T)
-```
-:::
-
-## 🎯 Mediana
-
-- La mediana es el número central en una lista **ordenada** de datos.
-- Si hay un número par de valores de datos, el valor central en realidad
-  no se encuentra en el conjunto de datos, sino que se obtiene a partir
-  del promedio de los dos valores que dividen los datos ordenados en la
-  mitad superior e inferior.
-- La formula matemática de la mediana es la siguiente:
-
-::: {.fragment .fade-in}
-
-$$Mediana =
-\begin{cases}
- \frac{x_\frac{n}{2} + x_{\frac{n}{2}+1}}{2} \text{, si n es par} \\
- x_\frac{n+1}{2}\text{, si n es impar}
- \end{cases}       $$
-:::
-
-## 🎯 Mediana
-
-- En comparación con la media, que utiliza todas las observaciones, la
-  mediana depende sólo de los valores en el **centro** de los datos
-  ordenados.
-- Si bien esto puede parecer una desventaja, dado que **la media es
-  mucho más sensible a los valores extremos**, hay muchos casos en los
-  que la mediana es una mejor métrica para describir la tendencia
-  central de los datos.
-
-::: fragment
-En `R` la función para calcular la mediana es: `median()`
-:::
-
-## 🎯 Mediana: Aplicación {.smaller}
-
-::: fragment
-Con **N impar** la mediana es justo el valor en la posición central una
-vez habiendo ordenado los datos de menor a mayor:
-
-```{r median}
-#| echo: true
-median(c(1,2,3,4,5))
-```
-:::
-
-::: fragment
-Vemos que la mediana puede mantenerse igual pese a que los valores de
-los extremos de la variable cambien:
-
-```{r median2, echo=TRUE}
-#| echo: true
-median(c(2,2,3,5,5))
-```
-:::
-
-::: fragment
-Cuando **N es par** la mediana es el promedio de los dos valores
-centrales del conjunto ordenado:
-
-```{r median3, echo=TRUE}
-median(c(1,2,3,4))
-```
-:::
-
-## 📊 Varianza {.smaller}
-
-Las medidas de tendencia central por sí solas **no son suficientes**
-para describir numéricamente los datos de una variable cuantitativa. Si
-bien describen un valor típico, no permiten resumir la **dispersión** de
-los datos alrededor de ese valor típico.
-
-::: fragment
-```{r}
-#| echo: false
-#| fig-height: 5
-#| fig-width: 9
-#| out-width: "95%"
-library(gapminder)
-library(tidyverse)
-
-# Simular datos
-set.seed(123)
-datos <- tibble(
-  valor = c(
-    rnorm(100000, mean = 400, sd = 100),   # País A: dispersa
-    rnorm(100000, mean = 400, sd = 20)    # País B: concentrada
-  ),
-  grupo = rep(c("Continente A", "Continente B"), each = 100000)
-)
-
-ggplot(datos, aes(x = valor, color = grupo, fill = grupo)) +
-  geom_density(alpha = 0.3, linewidth = 1) +
-  geom_vline(xintercept = 400, linetype = "dashed", 
-             color = "gray40", linewidth = 0.8) +
-  labs(
-    x = "PIB Anual (Miles de Millones de Dólares)",
-    y = "Frecuencia relativa",
-    title = "Distribuciones simuladas con la misma media pero distinta variabilidad",
-    color = NULL,
-    fill  = NULL
-  ) +
-  scale_color_manual(values = c("Continente A" = "#e74c3c",
-                                "Continente B" = "#2980b9")) +
-  scale_fill_manual(values  = c("Continente A" = "#e74c3c",
-                                "Continente B" = "#2980b9")) +
-  annotate("text", x = 580, y = 0.005, 
-           label = "Continente A\n(sd = 10)", color = "#e74c3c") +
-  annotate("text", x = 550, y = 0.01, 
-           label = "Continente B\n(sd = 2)", color = "#2980b9")
-```
-:::
-
-## 📊 Varianza {.smaller}
-
-- La medida de variabilidad más útil se basa en las **desviaciones** de
-  cada observación respecto a la media $\bar{y}$:
-
-::: fragment
-$$\text{Desviación}_i = y_i - \bar{y}$$
-:::
-
-- La suma de todas las desviaciones siempre es **cero**:
-  $\sum(y_i - \bar{y}) = 0$, por lo que se usan los **cuadrados** de las
-  desviaciones para poder obtener una medida de variabilidad de una
-  variable completa (y no solo la desviación de cada uno de sus
-  valores).
-
-- La **varianza** $s^2$ es aproximadamente el promedio de las
-  desviaciones al cuadrado:
-
-::: fragment
-$$s^2 = \frac{\sum(y_i - \bar{y})^2}{n-1} = \frac{(y_1-\bar{y})^2 + (y_2-\bar{y})^2 + \cdots + (y_n-\bar{y})^2}{n-1}$$
-:::
-
-## 📊 Desviación Estándar {.medium}
-
-- La **desviación estándar** $s$ es la raíz cuadrada de la varianza:
-
-::: fragment
-$$s = \sqrt{\frac{\sum(y_i - \bar{y})^2}{n-1}}$$
-:::
-
-- $s$ representa la distancia *típica* de una observación respecto a la
-  media: **a mayor** $s$, mayor dispersión de los datos.
-
-- En `R` se puede calcular usando la función `sd()`
-
-::: fragment
-```{r}
-#| echo: true
-sd(penguins$body_mass, na.rm = T)
-```
-:::
-
-## 📊 Desviación Estándar: Propiedades [@agresti2018] {.medium}
-
-1.  La desviación estándar no puede ser negativa: $s\geq0$.
-2.  $s=0$ solo cuando **todas** las observaciones tienen el **mismo
-    valor**.
-3.  A mayor variabilidad en torno a la media, mayor valor de $s$.
-4.  Se usa $n-1$ en el denominador (en lugar de $n$) porque con datos de
-    una **muestra** esto entrega una mejor estimación de la variabilidad
-    real de la **población**.
-5.  Si los datos cambian de **escala**, la desviación estándar cambia
-    proporcionalmente. Por ejemplo, si los ingresos se expresan en miles
-    de pesos en lugar de pesos (es decir, 50 en lugar de 50.000 por
-    ejemplo), la desviación estándar también se divide por 1.000.
-
-## 📊 Desviación Estándar: Regla Empírica
-
-Para distribuciones con forma de **campana**, la desviación estándar
-permite ubicar las observaciones según los siguientes rangos:
-
-| Rango            | Observaciones            |
-|------------------|--------------------------|
-| $\bar{y} \pm s$  | \~**68%** de los datos   |
-| $\bar{y} \pm 2s$ | \~**95%** de los datos   |
-| $\bar{y} \pm 3s$ | \~**99.7%** de los datos |
-
-## 📊 Desviación Estándar: Regla Empírica
-
-```{r}
-#| echo: false
-#| fig-width: 9
-#| fig-height: 5
-#| classes: r-stretch
-library(ggplot2)
-
-ggplot(data.frame(x = c(-4, 4)), aes(x)) +
-  # Área 99.7%
-  stat_function(fun = dnorm, xlim = c(-3, 3),
-                geom = "area", fill = "#a8d8ea", alpha = 0.8) +
-  # Área 95%
-  stat_function(fun = dnorm, xlim = c(-2, 2),
-                geom = "area", fill = "#4a90d9", alpha = 0.7) +
-  # Área 68%
-  stat_function(fun = dnorm, xlim = c(-1, 1),
-                geom = "area", fill = "#22226c", alpha = 0.8) +
-  # Curva normal encima
-  stat_function(fun = dnorm, linewidth = 1, color = "#22226c") +
-  # Líneas verticales en ±1s, ±2s, ±3s
-  geom_vline(xintercept = c(-3, -2, -1, 1, 2, 3),
-             linetype = "dashed", color = "gray40", linewidth = 0.5) +
-  # Línea media
-  geom_vline(xintercept = 0, linetype = "dashed",
-             color = "#22226c", linewidth = 0.8) +
-  # Flechas y etiquetas de porcentaje
-  annotate("segment", x = -1, xend = 1,
-           y = 0.28, yend = 0.28,
-           arrow = arrow(ends = "both", length = unit(0.2, "cm")),
-           color = "#22226c", linewidth = 0.7) +
-  annotate("text", x = 0, y = 0.30, label = "68%",
-           fontface = "bold", size = 4, color = "white") +
-  annotate("segment", x = -2, xend = 2,
-           y = 0.18, yend = 0.18,
-           arrow = arrow(ends = "both", length = unit(0.2, "cm")),
-           color = "#4a90d9", linewidth = 0.7) +
-  annotate("text", x = 0, y = 0.20, label = "95%",
-           fontface = "bold", size = 4, color = "white") +
-  annotate("segment", x = -3, xend = 3,
-           y = 0.08, yend = 0.08,
-           arrow = arrow(ends = "both", length = unit(0.2, "cm")),
-           color = "#a8d8ea", linewidth = 0.7) +
-  annotate("text", x = 0, y = 0.10, label = "99.7%",
-           fontface = "bold", size = 4, color = "white") +
-  # Etiquetas eje x
-  scale_x_continuous(
-    breaks = -3:3,
-    labels = c(expression(bar(y)-3*s), expression(bar(y)-2*s),
-               expression(bar(y)-s),   expression(bar(y)),
-               expression(bar(y)+s),   expression(bar(y)+2*s),
-               expression(bar(y)+3*s))
-  ) +
-  labs(x = NULL, y = NULL) +
-  theme(axis.text.y  = element_blank(),
-        panel.grid   = element_blank(),
-        axis.text.x  = element_text(size = 10))
-```
-
-## 📊 🧠 Pregunta N° 3
-
-La nota promedio de un examen es $\bar{y} = 4$ y su desviación estándar
-es $s = 1$. Suponiendo que la distribución de notas tiene forma de
-**campana**:
-
-::: nonincremental
-***¿Entre qué notas se concentra el 95% de los estudiantes?***
-
-- [Entre 2 y 6.]{.correct
-  data-explanation="Correcto. Por la Regla Empírica, el 95% de los datos cae entre $\\bar{y} \\pm 2s = 4 \\pm 2(1)$, es decir, entre 2 y 6."}
-- [Entre 3 y
-  5.]{data-explanation="Ese rango corresponde a $\\bar{y} \\pm 1s$, que concentra aproximadamente el 68% de los estudiantes, no el 95%."}
-- [Entre 1 y
-  7.]{data-explanation="Ese rango corresponde a $\\bar{y} \\pm 3s$, que concentra el 99.7% de los estudiantes, no el 95%."}
-- [Entre 3,5 y
-  4,5.]{data-explanation="Ese rango es demasiado estrecho. Con $s = 1$, un rango de solo ±0,5 concentraría aproximadamente el 38% de los estudiantes."}
-:::
-
-## 📏 Percentiles y Cuartiles {.medium}
-
-Otra forma de describir una distribución es mediante **medidas de
-posición**. Esto nos permite identificar el punto en el cual cierto
-porcentaje de los datos se ubican debajo (o sobre) tal punto.
-
-:::: fragment
-::: callout-note
-## Percentiles y Cuartiles
-
-El **percentil** $p$ es el valor tal que el $p\%$ de las observaciones
-cae por debajo o en ese punto, y el $(100-p)\%$ cae por encima.
-
-Los **cuartiles** ($Q_n$) se obtienen a partir de la definición de
-percentil cuando se define $p = 25$ y $p = 75$. Los cuartiles, junto con
-la mediana, dividen la distribución en cuatro partes, cada una de las
-cuales contiene una cuarta parte de las observaciones.
-
-| Percentil | Nombre                     | Interpretación                  |
-|-----------|----------------------------|---------------------------------|
-| 25°       | **Cuartil inferior** $Q_1$ | 25% de los datos cae por debajo |
-| 50°       | **Mediana** $Q_2$          | 50% de los datos cae por debajo |
-| 75°       | **Cuartil superior** $Q_3$ | 25% de los datos cae por encima |
-
-El **Rango Intercuartil** $IQR = Q_3 - Q_1$ mide la dispersión del 50%
-central de los datos y es la base de para la construcción del gráfico
-conocido como *boxplot* o de caja y bigotes.
-:::
-::::
-
-## 📏 Percentiles: Boxplot {.medium}
-
-- El boxplot es uno de los gráficos más comunes para identificar
-  rápidamente las medidas de posición de una variable ya que se compone
-  de los siguientes elementos:
-  - **La caja:** Cuyo límite inferior es primer quintil ($Q_1$), su
-    línea central el segundo quintil (mediana) y su límite superior el
-    tercer quintil ($Q_3$).
-  - **Los bigotes:** Que representan la variabilidad fuera del 50%
-    central ($1,5 \times IQR$).
-  - **Los valores atípicos:** Todo aquello que está fuera de los
-    bigotes.
-
-:::: fragment
-::: callout-note
-## Outlier [@agresti2018]
-
-Una observación se considera un [**valor atípico**
-(*outlier*)]{style="color: darkred;"} cuando cae fuera de los siguientes
-límites:
-
-$$[\, Q_1 - 1{,}5 \times IQR \;,\; Q_3 + 1{,}5 \times IQR \,]$$
-
-Este criterio es una regla práctica para la **detección inicial** de
-valores inusuales, no una sentencia definitiva. Ante un valor atípico,
-siempre corresponde preguntarse:
-
-- ¿Es un **error de registro** o digitación?
-- ¿Es un valor **esperable** dado el contexto?
-- ¿Requiere una **transformación** o tratamiento especial?
-:::
-::::
-
-## 📏 Percentiles: Boxplot
-
-::: {.fragment .fade-in}
-![Fuente: [Conceptos
-Claros](https://conceptosclaros.com/como-ser-mas-rapido-boxplot-estadistica-descriptiva-parte2/)](img/boxplot.png){width="80%"
-fig-align="center"}
-:::
-
-## 📏 Boxplot en `R` {.smaller}
-
-Para hacer un boxplot en `R` se puede usar la función `geom_boxplot()`.
-Si se especifica una variable cuantitativa y otra cualitativa, es
-posible comparar distribuciones entre categorías
-
-::::: columns
-::: {.column .fragment .fade-in width="50%"}
-```{r}
-#| echo: true
-#| classes: r-stretch
-#| out-width: "100%"
-#| code-line-numbers: "3,4"
-gapminder |> 
-  filter(year == 2007) |> 
-  ggplot(aes(y = gdpPercap)) +
-    geom_boxplot(fill = "yellow4", alpha = .6) 
-```
-:::
-
-::: {.column .fragment .fade-in width="50%"}
-```{r}
-#| echo: true
-#| classes: r-stretch
-#| out-width: "100%"
-#| code-line-numbers: "3"
-gapminder |> 
-  filter(year == 2007) |> 
-  ggplot(aes(x = continent, y = gdpPercap)) +
-    geom_boxplot(fill = "orange4", alpha = .6) 
-```
-:::
-:::::
-
-## 💻 📏 Boxplot: Aplicación
-
-Ocupando el dataset `penguins`, haga un boxplot del peso de los 344
-pingüinos en gramos (`body_mass`) por especie (`species`):
-
-```{webr}
-#|exercise: ex_4
-penguins |> 
-  ggplot(aes(x = ______ , y = ______)) +
-  ______(fill = "purple4", color = "black", alpha = .5) +
-  labs(title = "Boxplot Peso de los Pingüinos por Especie")
-```
-
-## 📏 Puntaje Z: Regla Empírica
-
-El **puntaje** $z$ mide cuántas desviaciones estándar separan una
-observación de la media:
-
-$$z = \frac{y_i - \bar{y}}{s} = \frac{\text{observación} - \text{media}}{\text{desviación estándar}}$$
-
-- Un $z > 0$ indica que la observación está **sobre** la media.
-- Un $z < 0$ indica que la observación está **bajo** la media.
-- Un $|z| > 3$ es una señal de **valor atípico** (*outlier*) para
-  distribuciones con forma de campana.
-
-## 💻 📏 Puntaje Z {.medium}
-
-Utilizando el dataset `bdims` que contiene 507 medidas físicas de
-individuos activos, calcule el puntaje Z para una persona que tiene
-tiene una altura (`hgt`) de 2 metros (200 en la escala de la variable)
-¿Qué puede concluir a partir de este puntaje asumiendo que la
-distribución de la altura tiene forma de campana?
-
-```{webr}
-#|exercise: ex_5
-y <- ______(bdims$hgt) #Media
-s <- ______(______) #Desviación Estándar
-z <- (______ - ______ )/______ #Puntaje Z
-
-z
-```
-
-## 📈 Medidas de Asociación Bivariadas {.smaller}
-
-- Hasta el momento, hemos revisado como resumir variables cuantitativas
-  y cualitativas tanto numéricamente como con gráficos.
-
-- Generalmente los estudios requieren del manejo de más de una variable
-  en simultáneo, por ejemplo, para estudiar la asociación entre ellas.
-  En este contexto, se define una **variable de respuesta o resultado**
-  (típicamente $y$) y una (o más) **variable(s) explicativa(s)**
-  (típicamente $x$).
-
-- Los análisis que consideran la relación entre 2 variables se conocen
-  como **análisis bivariados**. Para variables cualitativas, una forma
-  sencilla de analizar su relación es construir **tablas de
-  contingencia**.
-
-- Las tablas de contingencia muestran la frecuencia de las observaciones
-  de forma cruzada en filas y columnas, permitiendo evaluar la
-  dependencia o asociación entre dichas variables. En `R` se puede usar
-  `tbl_cross()` del paquete `gtsummary`
-
-- Por su parte, en el caso de 2 variables cuantitativas, un gráfico de
-  dispersión (*scatterplot*) es una de las herramientas más intuitivas
-  para analizar la relación entre ellas. En `R` se puede usar
-  `geom_point()` junto con `aes(x = x, y = y)` para graficar un
-  *scatterplot*
-
-## 📈 Tablas de Contingencia {.smaller}
-
-```{r}
-#| echo: true
-library(gtsummary)
-penguins |>
-  tbl_cross(
-    row    = species,
-    col    = sex,
-    percent = "row",        # porcentajes por fila
-    missing = "no",          # excluye NA
-    label   = list(species ~ "Especie", sex ~ "Sexo")
-  ) |>
-    modify_caption("**Distribución de pingüinos por especie y sexo**") |> 
-  bold_labels()
-```
-
-## 📈 Gráficos de Dispersión {.smaller}
-
-```{r}
-#| classes: r-stretch
-#| out-width: "100%"
-#| echo: true
-penguins |> 
-  ggplot(aes(x = body_mass, y = flipper_len,
-             color = species)) +
-  geom_point() + 
-  labs(title = "Masa corporal de los pingüinos\nen comparación con la longitud de sus aletas.", x = "Masa Corporal", y = "Longitud de Aletas")
-```
-
-## 📈 Correlación {.medium}
-
-- Se dice que las variables $X$ e $Y$ (cada una con datos cuantitativos)
-  están correlacionadas **positivamente** si es que cuando aumenta $X$,
-  $Y$ también lo hace, y viceversa.\
-- Si cuando $X$ aumenta $Y$ disminuye, y viceversa, las variables están
-  correlacionadas **negativamente**.
-- Es importante notar que la correlación es una medida de **dependencia
-  lineal** entre dos variables **cuantitativas**. Esto quiere decir, que
-  puede ocurrir que 2 variables estén relacionadas de manera **no
-  lineal** y, por lo tanto, exista una baja o nula correlación de
-  pearson, lo que **no implica** que no haya asociaciónentre estas
-  variables.
-- Para calcular el coeficiente de correlación de Pearson, multiplicamos
-  las desviaciones de la media de la variable 1 por las de la variable 2
-  y las dividimos por el producto de las desviaciones estándar
-  respectivas:
-
-::: {.fragment .fade-in}
-$$r=\frac{\sigma_{xy}}{{\sigma _{x}\sigma _{y}}} = {\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{(n-1) s_{x}s_{y}}}$$
-:::
-
-## 📈 Correlación {.medium}
-
-- El valor numérico de la correlación de pearson nos indica 2 cosas: la
-  **fuerza** de la correlación (valor absoluto de la correlación: $|r|$)
-  y en qué **dirección** va la correlación (signo de la correlación:
-  $r <0$ o $r>0$).
-- El coeficiente de correlación es una métrica estandarizada, por lo que
-  siempre oscila entre –1 (correlación negativa perfecta) a +1
-  (correlación positiva perfecta). Un coeficiente de correlación de 0
-  indica que **no hay correlación** o asociación lineal entre las
-  variables.
-
-## 📈 Correlación {.smaller}
-
-- Es importante notar que no existe una única interpretación de la
-  fuerza de la correlación de pearson (en efecto, hay muchos rangos
-  utilizados dependiendo de la disciplina, por ejemplo [ver
-  aquí](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6107969/)). Sin
-  embargo una regla práctica es la siguiente [@devore2016]:
-  - $r = 0$: **No existe correlación**
-  - $0 < |r| \leq 0.5$: **Correlación Débil**
-  - $0.5 < |r| < 0.8$: **Correlación Moderada**
-  - $0.8 \leq  |r| < 1$: **Correlación Fuerte**
-  - $|r| = 1$: **Correlación Perfecta**
-
-## 📈 Matriz de Correlaciones {.smaller}
-
-- La matriz de correlaciones es una tabla donde las variables se
-  muestran tanto en filas como en columnas, y los valores de las celdas
-  son las correlaciones entre las variables.
-
-- Esta matriz es necesaria para realizar los gráficos de correlación o
-  `corplots`.
-
-- El comando en R para obtener esta matriz de correlaciones es `cor()`
-
-::: fragment
-```{r cor, echo=T}
-gapminder_num <- gapminder |> 
-  filter(year == 2007) |>  #Dejo observaciones del año más reciente
-  select(gdpPercap,lifeExp) #Selecciono solo variables cuantitativas
-cor(gapminder_num)
-```
-:::
-
-## 💻 Gráfico de Dispersión (*Scatterplot*) {.smaller}
-
-Utilizando el dataset de `gapminder` realice un gráfico de dispersión entre `lifeExp` (eje y) y  `gdpPercap` (eje x)
-
-```{webr}
-#|exercise: ex_6
-gapminder |> 
-  filter(year == 2007) |>  
-  ggplot(aes(x = ______, y = ______))+
-  ______(alpha = .7, color = "blue4")
-```
-
-## 💻 Gráfico de Dispersión (*Scatterplot*) + Recta
-
-La función `geom_smooth` permite ajustar visualmente una función a la distribución de los datos. Con su argumento `method = lm` permite ajustar una recta que ayuda a visualizar la relación lineal entre ambas variables.
-
-```{webr}
-#|exercise: ex_7
-gapminder |> 
-  filter(year == 2007) |>  
-  ggplot(aes(x = ______, y = ______))+
-  ______(alpha = .7, color = "blue4") +
-  ______(method = ______)
-```
-
-## 💻 Matriz de Correlaciones
-
-Por último, la librería `corrplot` permite visualizar de manera más efectiva las matrices de correlación. Su función homónima `corrplot()` recibe como argumento una matriz de correlaciones y permite ajustar diferentes parámetros visuales. Utilizando el dataset `USArrests` realice un corrplot de todas sus variables.
-
-```{webr}
-#|exercise: ex_8
-library(corrplot)
-______(USArrests) #Verifique que las variables sean todas cuantitativas
-m <- ______(______) #Genera matriz de correlaciones
-______(m,method = 'number',type="lower",tl.col="black",pch.col = "black",) #Genere corrplot
-```
-
-## Resumen {.medium}
-
-::: callout-tip
-- La métrica básica para tendencias centrales es la media, pero puede
-  ser sensible a valores atípicos (*outliers*).
-- Otras métricas como la mediana son menos sensibles a valores atípicos
-  y, por lo tanto, son más robustas en presencia de ellos.
-- La varianza es la medida más típica de dispersión pero tiene la
-  desventaja de no estar en escalas interpretables. Como alternativa, la
-  raíz cuadradada de la varianza (la desviación estándar) es mejor para
-  poder interpretar la magnitud de la variabilidad en la escala del
-  dato.
-- Los percentiles permiten conocer rápidamente que porcentaje de las
-  unidades de observación estan bajo cierto umbral.
-- La covarianza, es una medida de asociación entre dos variables
-  cuantitativas. De manera análoga a la desviación estándar, la
-  correlación es una medida que acota la escala entre -1 y 1 y permite
-  interpretar de manera más sencilla la fuerza y sentido de esta
-  asociación.
-:::
-
-# [Introducción a la Probabilidad]{style="color:white"} {background="#E49B0F"}
-
-## Probabilidad {.smaller .justify}
+## Probabilidad {.smaller}
 
 - El término probabilidad se refiere al estudio del azar y la
   incertidumbre en cualquier situación en la que diferentes sucesos
@@ -1421,15 +177,38 @@ ______(m,method = 'number',type="lower",tl.col="black",pch.col = "black",) #Gene
 $$Probabilidad = \frac{\#Eventos\ Favorables}{\#Eventos\ Totales}$$
 :::
 
-- **Definición *bayesiana*:** Al definir una probabilidad, además de
-  considerar el número de veces que un resultado ocurre, la aproximación
-  *bayesiana* considera información previa (*prior*) que se tenga sobre
-  ese resultado.
+:::: fragment
+::: callout-note
+## Probabilidad [@agresti2018]
 
-  - **No profundizaremos en este tema pero es importante mencionarlo
-    como antecedente.**
+En una muestra o experimento aleatorio, la probabilidad de que una
+observación tenga un resultado particular es la [**proporción de
+veces**]{style="color: darkblue;"} que ese resultado ocurriría en una
+secuencia **muy larga** de observaciones similares.
+:::
+::::
 
-## Proceso Aleatorio {.smaller .justify}
+## Probabilidad
+
+-  Dado que definimos probabilidad como una **proporción**, la probabilidad es un número entre 0 y 1 (o 0 y 100 si se expresan en %) que mide qué tan factible es que ocurra un resultado:
+  + $0$ = imposible
+  + $1$ = seguro
+  + $0.5$ = tan probable como no.
+
+- Una forma intuitiva de entenderla es como la **frecuencia relativa**
+  de un resultado cuando repetimos un experimento **muchas veces**. Esto implica que las probabilidades se interpretan bajo un contexto de **largo plazo**. Por ejemplo, si un meteorólogo dice que la probabilidad de lluvia hoy es del 70%, esto significa que en una **larga serie de días con condiciones atmosféricas como las de hoy**, llueve el 70% de los días.
+
+. . .
+
+::: callout-tip
+## Idea clave
+
+Si lanzamos una moneda equilibrada muchísimas veces, la **proporción**
+de caras se acercará a $0.5$. Esa proporción de largo plazo *es* la
+probabilidad.
+:::
+
+## Proceso Aleatorio
 
 - En un proceso aleatorio hay más de una posibilidad de resultado y la
   predicción de algún resultado está sujeto a variabilidad:
@@ -1440,426 +219,838 @@ $$Probabilidad = \frac{\#Eventos\ Favorables}{\#Eventos\ Totales}$$
   - Tirar un dado.
 
 - Se puede pensar como un proceso donde el resultado es
-  **probabilístico** (o estocástico) y no determinístico. Es decir, hay
+  **probabilístico** (o estocástico) y [**no determinístico**]{style="color: darkred;"} . Es decir, hay
   **incertidumbre** en el resultado.
 
-## Espacio Muestral {.justify}
+## Espacio Muestral
 
-- Es el conjunto de todos los posibles resultados de un proceso
-  aleatorio. Se denota con el símbolo $S$
+- El espacio muestral es el conjunto de todos los **posibles resultados** de un proceso
+  aleatorio. Se denota con el símbolo $S$. Por ejemplo:
   - Dados: $S=\{1,2,3,4,5,6\}$.
   - Moneda: $S=\{C,S\}$.
 
-## Evento {.smaller .justify}
+## Evento
 
 - Un **evento** un subconjunto del espacio muestral.
 
 - Para el caso del dado, digamos que:
 
 - $A$ representa el evento de que al tirar un dado el resultado sea un
-  número par: $A=\{2,4,6\}$.
+  **número par**: $A=\{2,4,6\}$.
 
 - $B$ representa el evento de que al tirar un dado el resultado sea un
-  número impar: $B=\{1,3,5\}$.
+  **número impar**: $B=\{1,3,5\}$.
 
 - $C$ representa el evento de que al tirar un dado el resultado sea un
-  número primo: $C=\{2,3,5\}$.
+  **número primo**: $C=\{2,3,5\}$.
 
-## Algunas Proposiciones Importantes {.smaller .justify}
+## El Espacio Muestral con un Diagrama de Venn {.smaller}
 
-- $0 \leq P(A) \leq 1$: La probabilidad de cualquier evento se encuentra
-  entre cero y uno.
-- La probabilidad de un evento nulo es igual 0 ($P(\phi) = 0$).
-- $P(S)=1$: El conjunto de todos los eventos posibles es igual a 1.
-- **Probabilidad de eventos complementarios:** $P(A)+P(A^c)=1$. Por
-  ejemplo, si sabemos que la **probabilidad de que llueva es 0.1**,
-  entonces sabemos también que la **probabilidad de que no llueva es
-  0.9**.
-- **Regla de Independencia y Multiplicación:** Dos procesos son
-  independientes si el saber el resultado de uno no afecta el resultado
-  de otro. Por ejemplo, tirar dos monedas al aire. Si el evento $A$ y
-  $B$ son independientes, entonces: $P(A \cap B)=P(A) \times P(B)$.
-- La probabilidad de sacar dos *caras* en dos lanzamientos de una misma
-  moneda es: $\frac{1}{2} \times \frac{1}{2}=\frac{1}{4}$.
+Definamos el siguiente proceso aleatorio como el lanzamiento de **dos monedas**. En este caso, el espacio muestral tiene 4 resultados igualmente probables:
 
-## Diagrama de Venn {.smaller .justify}
+. . .
 
-- Un diagrama de Venn usa círculos que se superponen para ilustrar las
-  relaciones lógicas entre dos o más **conjuntos** de elementos.
-  Consideremos el siguiente diagrama de Venn:
+$$S = \{CC,\ CS,\ SC,\ SS\}$$
 
-::: {.fragment .fade-in .smaller}
-![](imagenes/venn.jpg){width="80%"}
+. . .
+
+::: columns
+::: {.column width="55%"}
+Un **diagrama de Venn** nos ayuda a visualizar eventos dentro del espacio muestral $S$ (el rectángulo). Por ejemplo:
+
+- $A$ = "la **primera** es cara" $= \{CC, CS\}$
+- $B$ = "la **segunda** es cara" $= \{CC, SC\}$
+
+El resultado $CC$ está en **ambos** eventos (la intersección).
 :::
 
-## Complemento de un Evento {.smaller .justify}
-
-::::::: columns
-:::: {.column width="50%"}
-::: {.fragment .fade-in}
-- **Definición**: El complemento de un evento son todos los resultados
-  en el espacio muestral que no corresponden al evento mismo.
-
-- **Ejemplo**: el complemento del evento $C$ es el conjunto de
-  resultados de tirar un dado que **no** corresponden a números primos.
-
-- **Notación**: $\Large C^c$.
-
-- $\Large C^c:\{1,4,6\}$.
-:::
-::::
-
-:::: {.column width="50%"}
-::: {.fragment .fade-in}
-![](imagenes/venn.jpg){width="100%"}
-:::
-::::
-:::::::
-
-## Complemento de un Evento {.smaller .justify}
-
-- Definamos los tres conjuntos anteriores a partir de *vectores* en R:
-  $A$, $B$, $C$.
-
-::: {.fragment .fade-in}
-```{r complemento, echo=TRUE}
-A <- c(2,4,6)
-B <- c(1,3,5)
-C <- c(2,3,5)
+::: {.column width="45%"}
+```{r}
+#| echo: false
+#| fig-height: 4.2
+library(ggplot2)
+circle <- function(x0, r, n = 200){
+  t <- seq(0, 2*pi, length.out = n)
+  data.frame(x = x0 + r*cos(t), y = r*sin(t))
+}
+cA <- circle(-0.45, 0.85); cA$grupo <- "A"
+cB <- circle( 0.45, 0.85); cB$grupo <- "B"
+ggplot() +
+  annotate("rect", xmin = -1.8, xmax = 1.8, ymin = -1.2, ymax = 1.2,
+           fill = NA, color = "grey50") +
+  geom_polygon(data = cA, aes(x, y), fill = "#1d6996", alpha = 0.35) +
+  geom_polygon(data = cB, aes(x, y), fill = "#e17c05", alpha = 0.35) +
+  annotate("text", x = -0.9, y = 0, label = "CS", size = 6) +
+  annotate("text", x =  0,   y = 0, label = "CC", size = 6, fontface = "bold") +
+  annotate("text", x =  0.9, y = 0, label = "SC", size = 6) +
+  annotate("text", x =  1.45, y = -0.95, label = "SS", size = 6) +
+  annotate("text", x = -0.9, y = 0.95, label = "A", size = 7, color = "#1d6996") +
+  annotate("text", x =  0.9, y = 0.95, label = "B", size = 7, color = "#e17c05") +
+  coord_equal(xlim = c(-1.8, 1.8), ylim = c(-1.2, 1.2)) +
+  theme_void()
 ```
 :::
-
-- Definamos un vector que contenga los elementos de $A$ y $B$: Para
-  ello, utilizamos la función `union()`.
-
-::: {.fragment .fade-in}
-```{r complemento2, echo=TRUE}
-AyB <- union(A, B)
-```
 :::
 
-- Ver que elementos que están en $A$ o $B$, no están en $C$: Para ello,
-  utilizamos la función `setdiff()`.
+## Calculemos una Probabilidad Concreta {.smaller}
 
-::: {.fragment .fade-in}
-```{r complemento3, echo=TRUE}
-setdiff(AyB, C)
-```
-:::
+Con dos monedas, $S = \{CC,\ CS,\ SC,\ SS\}$ (4 resultados igualmente
+probables). Calculemos:
 
-::: {.fragment .fade-in}
-- Recordar que para ver qué hace una función (por ejemplo `setdiff()`),
-  pueden usar `?setdiff`.
-:::
+. . .
 
-## Eventos Mutuamente Excluyentes {.smaller .justify}
+- $P(\text{exactamente una cara}) = \dfrac{|\{CS, SC\}|}{4} = \dfrac{2}{4} = 0.5$
 
-::::::: columns
-:::: {.column width="50%"}
-::: {.fragment .fade-in}
-- **Definición**: Los eventos mutuamente excluyentes son eventos que no
-  pueden ocurrir al mismo tiempo.
+. . .
 
-- **Ejemplo**: El evento $A$ y el evento $B$ son mutuamente excluyentes
-  porque el resultado de tirar un dado no puede ser par e impar al mismo
-  tiempo.
+- $P(\text{al menos una cara})$: en vez de contar $\{CC, CS, SC\}$, usamos
+  el **complemento**. El único caso sin caras es $\{SS\}$:
 
-- Los eventos $A$ y $C$ no son mutuamente excluyentes solamente porque 2
-  es tanto par como primo.
-:::
-::::
+$$P(\text{al menos una cara}) = 1 - P(\text{ninguna cara}) = 1 - \tfrac{1}{4} = 0.75$$
 
-:::: {.column width="50%"}
-::: {.fragment .fade-in}
-![](imagenes/venn.jpg){width="100%"}
-:::
-::::
-:::::::
-
-## Eventos Mutuamente Excluyentes {.smaller .justify}
-
-- ¿Existe al menos un elemento de $A$ igual a un elemento en $C$?: Para
-  ello, utilizamos la función `intersect()`.
-
-::: {.fragment .fade-in}
-```{r mutuamente, echo=TRUE}
-intersect(A, C)
-```
-:::
-
-- $A$ y $C$ **no** son mutuamente excluyentes
-
-- ¿Existe al menos un elemento de $B$ igual a un elemento en $C$?
-
-::: {.fragment .fade-in}
-```{r mutuamente2, echo=TRUE}
-intersect(B, C)
-```
-:::
-
-- $B$ y $C$ **no** son mutuamente excluyentes
-
-- ¿Existe al menos un elemento de $A$ igual a un elemento en $B$?
-
-::: {.fragment .fade-in}
-```{r mutuamente3, echo=TRUE}
-intersect(A, B)
-```
-:::
-
-- $A$ y $B$ **sí** son mutuamente excluyentes
-
-<!-- ## Notación de conjuntos -->
-
-<!-- ::: {.fragment .fade-in} -->
-
-<!-- |Descripción |Notación    |Lectura  |Elementos| -->
-
-<!-- | -------    |:-------    |:------- |:------- | -->
-
-<!-- |Unión       | $A \cup C$ |A o C    | $\{2,3,4,5,6\}$ | -->
-
-<!-- |Intersección| $A \cap C$ |A y C    | $\{2\}$ | -->
-
-<!-- ::: -->
-
-<!-- ::: {.fragment .fade-in} -->
-
-<!-- ![](imagenes/venn.jpg){width="50%"} -->
-
-<!-- ::: -->
-
-## Notación de Conjuntos {.r-stack .smaller}
-
-::: {.fragment .fade-in}
-| Descripción  | Notación   | Lectura | Elementos       |
-|--------------|:-----------|:--------|:----------------|
-| Unión        | $A \cup C$ | A o C   | $\{2,3,4,5,6\}$ |
-| Intersección | $A \cap C$ | A y C   | $\{2\}$         |
-:::
-
-::: {.fragment .fade-in}
-```{r conjunto, echo=TRUE}
-union(A, C)
-intersect(A, C)
-```
-:::
-
-::: {.fragment .fade-in}
-![](imagenes/venn.jpg){width="40%"}
-:::
-
-## Resumen Probabilidad I {.smaller .justify}
+. . .
 
 ::: callout-tip
-## Conceptos Importantes [@devore2016]
+## Regla del complemento
 
-- Un **proceso aleatorio** (en libros de estadística, llamado también
-  *experimento*) es cualquier acción o proceso cuyo resultado está
-  sujeto a la incertidumbre.
-- El **espacio muestral** de un experimento, denotado por $S$, es el
-  conjunto de todos los posibles resultados de dicho experimento.
-- Un **evento** es cualquier recopilación (subconjunto) de resultados
-  contenidos en el espacio muestral $S$.
-- Sea que $\phi$ denote el evento nulo (el evento sin resultados).
-  Cuando $A \cap B = \phi$, se dice que A y B son eventos mutuamente
-  excluyentes o disjuntos.
-- El **complemento** de un evento $A$, denotado por $A'$, es el conjunto
-  de todos los resultados en S que no están contenidos en A.
-- La **unión** de dos eventos $A$ y $B$, denotados por $A \cup B$ y
-  leída como *A o B*, es el evento que consiste en todos los resultados
-  que están en A o en B o en ambos eventos, es decir, todos los
-  resultados en al menos uno de los eventos:
-  $P(A \cup B) = P(A) + P(B) - P(A \cap B)$. También $A \cup B$ se puede
-  descomponer en dos eventos excluyentes: $A$ y $B \cap A'$; la última
-  es la parte de $B$ que queda afuera de $A$, por lo que
-  $P(A \cup B) = P(A) + P(B \cap A')$.
-- La **intersección** de dos eventos $A$ y $B$, denotada por $A \cap B$
-  y leída como *A y B*, es el evento que consiste en todos los
-  resultados que están tanto en A como en B.
+Muchas veces es más fácil calcular lo contrario de lo que buscamos:
+$P(A) = 1 - P(\text{no } A)$.
 :::
 
-::: {.fragment .fade-in}
-![](imagenes/venn2.png){width="40%" fig-align="center"}
-:::
+## Probabilidad como Frecuencia Relativa en `R` {.smaller}
 
-## Aplicando los Conceptos
+Comprobemos la idea de "frecuencia de largo plazo" **simulando** 10.000
+lanzamientos de una moneda:
 
-- Asumamos que repetimos el proceso aleatorio de tirar una moneda y que
-  registramos como evento $X$ el número de veces que sale *cara* en $n$
-  lanzamientos de moneda. Entonces:
-
-::: {.fragment .fade-in}
-$$\Large P(Cara)=\lim_{n\to\infty}\frac{X}{n}$$
-:::
-
-::: {.fragment .fade-in}
-$$\Large P(Cara)=\frac{1}{2}$$
-:::
-
-## Lanzar 1 Vez una Moneda {.smaller .justify}
-
-- Definamos un vector *moneda* con los posibles eventos y simulemos un
-  solo lanzamiento de esa moneda.
-- Para hacerlo en R, debemos utilizar la función `sample()` considerando
-  los siguientes argumentos:
-  - `x`: Un vector de uno o más elementos entre los cuales elegir, o un
-    número entero positivo.
-  - `size`: Un número entero no negativo que indica el número de
-    elementos a elegir.
-  - `replace`: Un valor lógico que indica si es que el muestreo debe ser
-    con reposición (`= T`) o no (`= F`).
-- Además, *seteamos una semilla* con la función `set.seed()` para
-  proceso definir un proceso pseudo-aleatorio que nos permita replicar
-  los mismos resultados. En la medida que se utilice la misma semilla,
-  todos los procesos aleatorios que se hagan en adelante serán
-  replicables siempre y cuando utilicen la misma semilla (en la
-  práctica, cualquier número natural).
-
-::: {.fragment .fade-in}
-```{r moneda, echo=TRUE}
+```{r}
+#| echo: true
 set.seed(123)
-moneda <- c("cara", "sello")
-sample(moneda, size = 1)
+lanzamientos <- sample(c("Cara", "Sello"), size = 10000, replace = TRUE)
+prop.table(table(lanzamientos))
 ```
+
+. . .
+
+La proporción de caras se acerca a **0.5**, tal como predice la teoría.
+A más repeticiones, **más cerca** del valor verdadero.
+
+## Eventos Independientes {.smaller}
+
+- Dos eventos son **independientes** cuando el resultado de uno **no
+  afecta** la probabilidad del otro.
+
+  - Que la primera moneda salga cara **no cambia** lo que pase con la
+    segunda.
+
+- Para eventos independientes, la probabilidad de que ocurran **ambos**
+  se **multiplica**:
+
+$$P(A \text{ y } B) = P(A) \times P(B)$$
+
+. . .
+
+- Ejemplo: $P(\text{dos caras seguidas}) = 0.5 \times 0.5 = 0.25$.
+
+. . .
+
+::: callout-note
+La **independencia** será la clave para conectar la probabilidad con las
+**distribuciones** que veremos a continuación.
 :::
 
-## Repitamos 5 Veces Este Proceso
+## 🧠 Pregunta N° 1 {.quiz-question .smaller}
 
-::: {.fragment .fade-in}
-```{r moneda2, echo=TRUE}
-tirar_moneda <- sample(moneda, size = 5, replace = TRUE)
-table(tirar_moneda)
-```
+Lanzamos un **dado** equilibrado de 6 caras una vez.
+
+::: nonincremental
+***¿Cuál es la probabilidad de obtener un número mayor que 4?***
+
+- [2/6 ≈ 0,33.]{.correct
+  data-explanation="Correcto. Los resultados mayores que 4 son {5, 6}, es decir 2 de los 6 resultados igualmente probables: 2/6 ≈ 0,33."}
+- [4/6 ≈
+  0,67.]{data-explanation="Eso correspondería a 'menor o igual que 4' = {1,2,3,4}. La pregunta pide estrictamente mayor que 4."}
+- [1/6 ≈
+  0,17.]{data-explanation="1/6 sería la probabilidad de un único número (por ejemplo, sacar un 5). Mayor que 4 incluye dos resultados: 5 y 6."}
+- [3/6 =
+  0,5.]{data-explanation="3/6 correspondería a tres resultados (por ejemplo {4,5,6}). Estrictamente mayor que 4 son solo {5,6}."}
 :::
 
-- Dados estos resultados, vemos que $P(Cara)=\frac{3}{5}=60\%$
+# [Variables Aleatorias y Distribuciones]{style="color:white"} {background-color="#22226c"}
 
-## Repitamos 5.000 Veces Este Proceso
+## De los Resultados a los Números {.smaller}
 
-::: {.fragment .fade-in}
-```{r moneda4, echo=TRUE}
-tirar_moneda <- sample(moneda, size = 5000, replace = TRUE)
-table(tirar_moneda)
-```
+- Una **variable aleatoria** ($X$) es una regla que asigna un **número**
+  a cada resultado de un experimento aleatorio.
+
+- Ejemplo: lancemos **3 monedas** y definamos
+  $X = \text{n° de caras}$.
+
+. . .
+
+- El espacio muestral tiene 8 resultados, y $X$ puede tomar los valores
+  $0, 1, 2, 3$:
+
+$$\{\underbrace{SSS}_{0},\ \underbrace{CSS, SCS, SSC}_{1},\ \underbrace{CCS, CSC, SCC}_{2},\ \underbrace{CCC}_{3}\}$$
+
+. . .
+
+Así pasamos de "caras y sellos" a **números** sobre los que podemos
+calcular probabilidades.
+
+## Distribución de Probabilidad {.smaller}
+
+La **distribución** de una variable aleatoria nos dice qué probabilidad
+tiene **cada valor posible**. Para $X = $ n° de caras en 3 lanzamientos:
+
+. . .
+
+| $x$ | 0 | 1 | 2 | 3 |
+|-----|-----|-----|-----|-----|
+| $P(X = x)$ | 1/8 | 3/8 | 3/8 | 1/8 |
+
+. . .
+
+- Todas las probabilidades son $\geq 0$.
+- La suma de todas las probabilidades es **1**.
+
+. . .
+
+::: callout-tip
+La función que asigna una probabilidad a cada valor de una variable
+**discreta** se llama **función de masa de probabilidad** (*pmf*).
 :::
 
-- En este caso vemos que $P(Cara)=\frac{2497}{5000}=49,94\%$
+## La Distribución Binomial {.smaller}
 
-## Obtengamos la Frecuencia Relativa Acumulada de 10.000 repeticiones
+El ejemplo de las monedas sigue una **distribución binomial**, que
+aparece cuando [@devore2016]:
 
-```{r simularmoneda, echo = FALSE}
+::: nonincremental
+1.  Repetimos un experimento un número **fijo** de veces ($n$).
+2.  Cada intento tiene solo **dos resultados** (éxito / fracaso).
+3.  Los intentos son **independientes**.
+4.  La probabilidad de éxito ($p$) es **constante**.
+:::
 
-tirar_moneda_10000 <- sample(moneda, 10000, replace = TRUE)
+. . .
 
-frec_cara <- cumsum(tirar_moneda_10000 == 'cara') / 1:10000
+Lanzar 3 monedas y contar caras cumple las 4 condiciones: $n = 3$,
+$p = 0.5$, éxito = "cara".
 
-as.data.frame(cbind(x = 1:10000, y = frec_cara)) %>%
-  ggplot(aes(x = x, y = y)) +
-  geom_hline(yintercept = 0.5, linetype = 2) +
-  geom_line(col = "red", size = 1) +
-  #geom_point() +
-  ylim(0, 1) +
-  labs(y = "Frecuencia relativa", x = "Número de tiros")
+## La Familia de Funciones de Distribución en `R` {.smaller}
 
+`R` tiene una familia de funciones para cada distribución. Para la
+binomial, el sufijo es `binom`:
+
+| Prefijo | Pregunta que responde | Función |
+|----|----|----|
+| `d` | ¿Probabilidad de un valor **exacto**? $P(X=x)$ | `dbinom()` |
+| `p` | ¿Probabilidad **acumulada**? $P(X \leq x)$ | `pbinom()` |
+| `q` | ¿Qué valor deja una probabilidad acumulada dada? | `qbinom()` |
+| `r` | Generar valores **aleatorios** | `rbinom()` |
+
+. . .
+
+::: callout-note
+El mismo patrón aplica a la normal (`dnorm`, `pnorm`, ...) y a otras
+distribuciones. ¡Solo cambia el sufijo!
+:::
+
+## 💻 Aplicación: `dbinom()` {.smaller}
+
+**¿Cuál es la probabilidad de obtener exactamente 2 caras en 3
+lanzamientos?** ($x = 2$, $n = 3$, $p = 0.5$)
+
+```{r}
+#| echo: true
+dbinom(2, size = 3, prob = 0.5)
 ```
 
-# Cierre
+. . .
 
-## Bibliografía
+El resultado es **0.375 = 3/8**, exactamente lo que habíamos contado en
+la tabla. `R` nos ahorra enumerar el espacio muestral.
 
-<!-- ## 🧠 Pregunta {.quiz-question .smaller .nonincremental} -->
+## 💻 Aplicación: `pbinom()` {.smaller}
 
-<!-- El INE publica que el **ingreso mediano mensual en Chile es $650.000** -->
+**¿Cuál es la probabilidad de obtener al menos 1 cara?** Usamos el
+**complemento**: $P(X \geq 1) = 1 - P(X = 0)$.
 
-<!-- basándose en la Encuesta Suplementaria de Ingresos 2024, que encuestó -->
+`pbinom(0, 3, 0.5)` entrega $P(X \leq 0)$, que aquí es igual a
+$P(X = 0)$:
 
-<!-- a 80.000 hogares del total nacional. -->
+```{r}
+#| echo: true
+1 - pbinom(0, size = 3, prob = 0.5)
+```
 
-<!-- ¿Qué tipo de estadística representa este resultado? -->
+. . .
 
-<!-- ::: {.nonincremental} -->
+El resultado es **0.875 = 7/8**: la misma lógica del complemento que
+usamos con las dos monedas, ahora con `R`.
 
-<!-- - [Estadística descriptiva, porque resume los datos de la muestra encuestada.]{.correct -->
+## 💻 Ejercicio Guiado: Binomial {.smaller}
 
-<!--   data-explanation="Correcto. El valor $650.000 describe los datos recolectados en la muestra de 80.000 hogares. Es un resumen del conjunto de datos observado."} -->
+Una prueba tiene **5 preguntas** de verdadero/falso. Un estudiante
+**responde al azar** ($p = 0.5$ de acertar cada una). Complete el código
+para calcular la probabilidad de acertar **exactamente 3**:
 
-<!-- - [Estadística inferencial, porque permite hacer conclusiones sobre todos los chilenos.]{data-explanation="No exactamente. La estadística inferencial ocurre cuando *usamos* ese valor muestral para hacer estimaciones o pruebas sobre la población. Publicar el valor de la muestra es descriptivo."} -->
+```{webr}
+#| exercise: ex_binom
+# x = 3 aciertos, n = 5 preguntas, p = 0.5
+______(______, size = ______, prob = ______)
+```
 
-<!-- - [Ambas, porque describe la muestra y también representa a la población.]{data-explanation="El valor describe la muestra. Usarlo para inferir sobre la población sería estadística inferencial, pero eso requiere un paso adicional de estimación con incertidumbre."} -->
+. . .
 
-<!-- - [Ninguna, porque los datos de encuesta no son estadísticamente válidos.]{data-explanation="Las encuestas con diseño muestral adecuado son una fuente válida y estándar en estadística. La ESI del INE sigue protocolos rigurosos de muestreo."} -->
+::: callout-tip
+## Pista
 
-<!-- ::: -->
+La pregunta dice "**exactamente** 3", así que usamos el prefijo `d`
+(`dbinom`).
+:::
 
-<!-- ## 🧠 Pregunta N° 1 {.smaller} -->
+## De lo Discreto a lo Continuo {.smaller}
 
-<!-- La **Encuesta CEP N°95 (septiembre-octubre 2025)** preguntó a 1.217 personas en 100 comunas de Chile cuáles son los 3 problemas a los que debería dedicar el mayor esfuerzo el gobierno. A partir de esta información responda la siguiente pregunta: -->
+- La binomial es **discreta**: $X$ toma valores separados (0, 1, 2, 3...).
 
-<!-- ```{r} -->
+- Pero muchas variables son **continuas**: pueden tomar **cualquier**
+  valor en un rango (altura, ingreso, temperatura).
 
-<!-- #| echo: false -->
+. . .
 
-<!-- library(rquiz) -->
+- En variables continuas ya no preguntamos por $P(X = x)$ exacto (es
+  prácticamente 0), sino por la probabilidad de caer en un **intervalo**,
+  que corresponde al **área bajo la curva** de su función de densidad.
 
-<!-- dark <- rquizTheme( -->
+. . .
 
-<!--   fontFamily = "serif", -->
+La distribución continua más importante —y la protagonista de la
+inferencia— es la **distribución normal**.
 
-<!--   fontSize = 18, -->
+# [La Distribución Normal]{style="color:white"} {background="#416fc4"}
 
-<!--   titleCol = "#E0E0E0", titleBg = "#1A1A2E", -->
+## La Distribución Normal {.smaller}
 
-<!--   questionCol = "#FFFFFF", questionBg = "#16213E", -->
+::: columns
+::: {.column width="60%"}
+- Es una distribución **continua** con forma de **campana** simétrica.
 
-<!--   mainCol = "#E0E0E0", mainBg = "#1A1B2E", -->
+- Se describe con **dos parámetros**:
+  - $\mu$ (media): dónde está el **centro**.
+  - $\sigma$ (desviación estándar): qué tan **ancha** es.
 
-<!--   optionBg = "#252540", -->
+- Se abrevia $X \sim \mathcal{N}(\mu, \sigma^2)$.
 
-<!--   navButtonCol = "#FFFFFF", navButtonBg = "#E94560", -->
+- En ella se cumple que **media = mediana = moda**.
+:::
 
-<!--   tipButtonCol = "#E0E0E0", tipButtonBg = "#2C2C3E", -->
+::: {.column width="40%"}
+```{r}
+#| echo: false
+#| fig-height: 4
+tibble(x = seq(-4, 4, 0.01), y = dnorm(x)) |>
+  ggplot(aes(x, y)) +
+  geom_area(fill = "#1d6996", alpha = 0.4) +
+  geom_line(linewidth = 1, color = "#1d6996") +
+  labs(x = "x", y = "Densidad") +
+  theme_classic(base_size = 14)
+```
+:::
+:::
 
-<!--   solutionButtonCol = "#E0E0E0", solutionButtonBg = "#2C2C3E" -->
+## El Efecto de los Parámetros {.smaller}
 
-<!-- ) -->
+$\mu$ **mueve** la curva; $\sigma$ la hace más **ancha o angosta**:
 
-<!-- question1 <- list( -->
+```{r}
+#| echo: false
+#| fig-height: 3.6
+library(dplyr)
+grid <- expand.grid(x = seq(40, 160, 0.5),
+                    dist = c("N(100, 10²)", "N(100, 20²)", "N(80, 10²)"))
+grid <- grid |>
+  mutate(y = case_when(
+    dist == "N(100, 10²)" ~ dnorm(x, 100, 10),
+    dist == "N(100, 20²)" ~ dnorm(x, 100, 20),
+    dist == "N(80, 10²)"  ~ dnorm(x, 80, 10)
+  ))
+ggplot(grid, aes(x, y, color = dist)) +
+  geom_line(linewidth = 1.1) +
+  labs(x = NULL, y = "Densidad", color = NULL) +
+  theme_classic(base_size = 14)
+```
 
-<!--   question = "La <strong>Encuesta CEP N°95 (septiembre-octubre 2025)</strong> muestra que el 61% mencionó la delincuencia, asaltos y robos en primer lugar. ¿Qué tipo de estadística representa este 61%?", -->
+## Ejemplo: La Altura de una Población {.smaller}
 
-<!--   options = c( -->
+Supongamos que la **altura** (en cm) de una población se distribuye de
+forma normal con media **177** y desviación estándar **10**:
 
-<!--     "Estadística descriptiva para una muestra.", -->
+$$X \sim \mathcal{N}(177,\ 10^2)$$
 
-<!--     "Estadística inferencial sobre la población chilena.", -->
+. . .
 
-<!--     "Un parámetro poblacional.", -->
+```{r}
+#| echo: false
+#| fig-height: 3.4
+tibble(x = seq(140, 215, 0.1), y = dnorm(x, 177, 10)) |>
+  ggplot(aes(x, y)) +
+  geom_area(fill = "#1d6996", alpha = 0.35) +
+  geom_line(linewidth = 1, color = "#1d6996") +
+  labs(x = "Altura (cm)", y = "Densidad") +
+  theme_classic(base_size = 14)
+```
 
-<!--     "Estadística descriptiva para la población chilena." -->
+Queremos calcular probabilidades sobre la altura usando `pnorm()`.
 
-<!--   ), -->
+## 💻 Calcular Probabilidades: `pnorm()` {.smaller}
 
-<!--   answer = 1, -->
+**¿Cuál es la probabilidad de que alguien mida menos de 160 cm?**
+`pnorm()` entrega el **área a la izquierda** (la cdf, $P(X \leq x)$):
 
-<!--   tip = "Piensa en quién respondió la encuesta: ¿toda la población o una parte de ella?" -->
+```{r}
+#| echo: true
+pnorm(160, mean = 177, sd = 10)
+```
 
-<!-- ) -->
+. . .
 
-<!-- singleQuestion( -->
+Hay un **4.5%** de probabilidad de medir menos de 160 cm.
 
-<!--   x = question1, -->
+. . .
 
-<!--   language = "es", -->
+**¿Y de medir más de 180 cm?** Es el área a la derecha (el complemento):
 
-<!--   # theme = dark, -->
+```{r}
+#| echo: true
+pnorm(180, mean = 177, sd = 10, lower.tail = FALSE)
+```
 
-<!--   title = "Pregunta", -->
+Un **38.2%** mide más de 180 cm.
 
-<!--   scroll = TRUE, -->
+## 💻 Ejercicio Guiado: Normal {.smaller}
 
-<!--   height = "420px" -->
+Con la misma distribución de altura $\mathcal{N}(177, 10^2)$, complete
+el código para calcular la probabilidad de medir **entre 160 y 180 cm**.
 
-<!-- ) -->
+*Pista: es el área a la izquierda de 180 menos el área a la izquierda de
+160.*
 
-<!-- ``` -->
+```{webr}
+#| exercise: ex_norm
+pnorm(______, 177, 10) - pnorm(______, 177, 10)
+```
+
+. . .
+
+El resultado es **0.573**: poco más de la mitad de la población mide
+entre 160 y 180 cm.
+
+## Puntaje Z y la Regla Empírica {.smaller}
+
+- Recordemos de la Clase 1 el **puntaje Z**, que mide a cuántas
+  desviaciones estándar está un valor de la media:
+  $$z = \frac{x - \mu}{\sigma}$$
+
+- En **cualquier** distribución con forma de campana se cumple la
+  **Regla Empírica**:
+
+. . .
+
+| Rango | % de los datos |
+|-------|----------------|
+| $\mu \pm 1\sigma$ | ≈ 68% |
+| $\mu \pm 2\sigma$ | ≈ 95% |
+| $\mu \pm 3\sigma$ | ≈ 99.7% |
+
+. . .
+
+Estos porcentajes son el área bajo la curva normal, y serán la base de
+los **intervalos de confianza**.
+
+## 🧠 Pregunta N° 2 {.quiz-question .smaller}
+
+La altura sigue una $\mathcal{N}(177, 10^2)$. Una persona mide **197
+cm**.
+
+::: nonincremental
+***¿Qué podemos decir de su puntaje Z?***
+
+- [z = 2: está a 2 desviaciones sobre la media, entre el 2,5% más
+  alto.]{.correct
+  data-explanation="Correcto. z = (197 − 177)/10 = 2. Por la Regla Empírica, el 95% está dentro de ±2σ, por lo que sobre +2σ queda cerca del 2,5% más alto."}
+- [z = 2: es un valor imposible bajo esta
+  distribución.]{data-explanation="z = 2 es perfectamente posible: cerca del 2,5% de la población supera ese valor. Improbable no es imposible."}
+- [z = 20: está muy lejos de la
+  media.]{data-explanation="Cuidado con la fórmula: z = (197 − 177)/10 = 2, no 20. Hay que dividir por la desviación estándar (10)."}
+- [z = 0,5: es un valor muy
+  común.]{data-explanation="z = (197 − 177)/10 = 2, no 0,5. La diferencia (20 cm) equivale a 2 desviaciones estándar."}
+:::
+
+# [Inferencia: De la Muestra a la Población]{style="color:white"} {background-color="#22226c"}
+
+## Población vs. Muestra {.smaller}
+
+- **Población** ($N$): el grupo **completo** que nos interesa (por
+  ejemplo, todos los hogares de Chile).
+
+- **Muestra** ($n$): un **subconjunto** de la población que efectivamente
+  observamos.
+
+. . .
+
+- Un **parámetro** describe a la población (la media real $\mu$). Casi
+  nunca lo conocemos.
+
+- Un **estadístico** se calcula desde la muestra (la media muestral
+  $\bar{x}$). Es nuestra **estimación** del parámetro.
+
+. . .
+
+::: callout-tip
+Hacemos **inferencia**: usamos el estadístico de una muestra para sacar
+conclusiones sobre el parámetro de la población.
+:::
+
+## El Problema: la Incertidumbre {.smaller}
+
+- Si tomamos **otra** muestra, obtendremos una media **distinta**. Y otra
+  más, otra distinta.
+
+- Cada muestra entrega una estimación algo diferente: existe
+  **variabilidad muestral**.
+
+. . .
+
+::: {.cuadro-pregunta}
+¿Cómo se comportan todas esas medias muestrales si repitiéramos el
+muestreo muchísimas veces?
+:::
+
+. . .
+
+La respuesta es uno de los resultados más importantes de la estadística:
+el **Teorema del Límite Central**.
+
+## Teorema del Límite Central (TLC) {.smaller}
+
+El **TLC** dice que, si tomamos muchas muestras de tamaño $n$ y
+calculamos la media de cada una:
+
+::: nonincremental
+- La distribución de **esas medias** tiende a una **normal**...
+- ...**aunque la población original no sea normal**,
+- centrada en la **media poblacional** $\mu$,
+- y **más angosta** mientras **mayor** sea $n$.
+:::
+
+. . .
+
+Veamos una breve animación que lo explica:
+
+. . .
+
+{{< video https://youtu.be/jvoxEYmQHNM width="560" height="315" >}}
+
+## 💻 Una Ilustración del TLC en `R` {.smaller}
+
+Partamos de una población **muy asimétrica** (nada normal). Tomamos
+10.000 muestras y graficamos sus **medias** para 3 tamaños de $n$:
+
+```{r}
+#| echo: false
+#| fig-height: 3.6
+set.seed(2026)
+poblacion <- rexp(100000, rate = 1)   # población asimétrica
+sim <- map_dfr(c(5, 30, 100), function(n){
+  medias <- replicate(10000, mean(sample(poblacion, n)))
+  tibble(n = paste0("n = ", n), media = medias)
+})
+sim$n <- factor(sim$n, levels = c("n = 5", "n = 30", "n = 100"))
+ggplot(sim, aes(media, fill = n)) +
+  geom_histogram(bins = 40, color = "white") +
+  facet_wrap(~ n, scales = "free_y") +
+  labs(x = "Media de la muestra", y = "Frecuencia") +
+  theme_classic(base_size = 13) +
+  theme(legend.position = "none")
+```
+
+. . .
+
+A mayor $n$, la distribución de las medias es **más normal y más
+angosta**, tal como predice el TLC.
+
+## El Error Estándar (SE) {.smaller}
+
+- El **error estándar** resume en un solo número cuánto **varían** las
+  medias muestrales.
+
+- Es, simplemente, la desviación estándar de la **distribución de las
+  medias**, y se estima como:
+
+$$SE = \frac{s}{\sqrt{n}}$$
+
+donde $s$ es la desviación estándar de la muestra y $n$ su tamaño.
+
+. . .
+
+::: callout-tip
+## La intuición central de la inferencia
+
+Mientras **más grande** es la muestra ($n$), **más pequeño** es el error
+estándar: nuestra estimación es **más precisa**.
+:::
+
+## 🧠 Pregunta N° 3 {.quiz-question .smaller}
+
+Dos equipos estiman el ingreso promedio de una comuna. El equipo A usa
+una muestra de **100** personas; el equipo B, de **1.000**.
+
+::: nonincremental
+***¿Qué estimación tendrá, en general, un menor error estándar?***
+
+- [La del equipo B, porque a mayor n menor es el error
+  estándar.]{.correct
+  data-explanation="Correcto. Como SE = s/√n, al aumentar n el error estándar disminuye: la muestra más grande entrega una estimación más precisa."}
+- [La del equipo A, porque usa menos
+  datos.]{data-explanation="Es al revés: menos datos implican más variabilidad en la estimación, es decir, un mayor error estándar."}
+- [Ambas tendrán el mismo error
+  estándar.]{data-explanation="No: el error estándar depende del tamaño muestral n. Con n distintos (100 vs 1.000), los errores estándar serán distintos."}
+- [No se puede saber sin conocer la
+  media.]{data-explanation="El error estándar (s/√n) depende de la dispersión y del tamaño muestral, no del valor de la media. Con mayor n, menor SE."}
+:::
+
+# [Intervalos de Confianza y Pruebas de Hipótesis]{style="color:white"} {background="#416fc4"}
+
+## Intervalo de Confianza (IC) {.smaller}
+
+- Una estimación puntual (como $\bar{x}$) casi nunca es **exactamente**
+  igual al parámetro. Por eso reportamos un **rango** de valores
+  plausibles.
+
+- Un **intervalo de confianza** es ese rango, construido para contener al
+  parámetro con un nivel de confianza dado (típicamente **95%**):
+
+$$\bar{x} \pm c \times SE$$
+
+donde $c$ es un valor crítico (cercano a **2** para el 95%, por la Regla
+Empírica).
+
+. . .
+
+::: callout-important
+## Interpretación correcta
+
+Si repitiéramos el muestreo muchas veces, cerca del **95%** de los
+intervalos construidos **contendría** el verdadero parámetro. **No** es
+que "hay 95% de probabilidad de que el parámetro esté en este intervalo
+particular".
+:::
+
+## 💻 Construyamos un IC en `R` {.smaller}
+
+Usaremos `bdims` (openintro), con 507 medidas físicas. Estimemos la
+**altura promedio** (`hgt`) con un IC al 95%:
+
+```{webr}
+#| exercise: ex_ic
+x_bar <- mean(bdims$hgt)            # media muestral
+s     <- sd(bdims$hgt)              # desviación estándar
+n     <- length(bdims$hgt)          # tamaño muestral
+se    <- s / sqrt(n)                # error estándar
+
+# Valor crítico t para 95% e intervalo
+c_t   <- qt(0.975, df = n - 1)
+x_bar + c_t * c(-se, se)
+```
+
+. . .
+
+El resultado es un **rango** alrededor de la media: nuestra estimación
+de la altura promedio **con su incertidumbre**.
+
+## La Lógica de una Prueba de Hipótesis {.smaller}
+
+Una **prueba de hipótesis** nos ayuda a decidir si los datos respaldan
+una afirmación. Siempre planteamos **dos** hipótesis:
+
+- **Hipótesis nula** ($H_0$): "no hay efecto / no hay diferencia". Es lo
+  que asumimos por defecto.
+
+- **Hipótesis alternativa** ($H_1$): "sí hay efecto / sí hay
+  diferencia". Es lo que queremos probar.
+
+. . .
+
+::: callout-tip
+## La idea
+
+Asumimos que $H_0$ es cierta y nos preguntamos: *¿qué tan sorprendentes
+serían estos datos si $H_0$ fuera verdad?* Si son **muy** sorprendentes,
+dudamos de $H_0$.
+:::
+
+## El p-valor {.smaller}
+
+- El **p-valor** mide esa "sorpresa": es la probabilidad de observar un
+  resultado **al menos tan extremo** como el nuestro **si $H_0$ fuera
+  cierta**.
+
+- Lo comparamos con un umbral $\alpha$ (habitualmente **0.05**):
+
+. . .
+
+::: nonincremental
+- **p-valor < 0.05** → resultado poco probable bajo $H_0$ →
+  **rechazamos $H_0$** (hay evidencia de un efecto).
+- **p-valor ≥ 0.05** → resultado compatible con $H_0$ → **no
+  rechazamos $H_0$** (no hay evidencia suficiente).
+:::
+
+. . .
+
+::: callout-important
+"No rechazar $H_0$" **no** prueba que $H_0$ sea verdad; solo significa
+que no tenemos evidencia suficiente en su contra.
+:::
+
+## La Prueba *t* (*t-test*) {.smaller}
+
+- La **prueba t** es una de las más usadas. Sirve, por ejemplo, para
+  comparar la **media de dos grupos**.
+
+- Pregunta clave: *¿la diferencia de medias que observo es real, o pudo
+  deberse al azar del muestreo?*
+
+. . .
+
+- Ejemplo con `bdims`: ¿difiere la **altura promedio** entre hombres y
+  mujeres?
+
+  - $H_0$: la altura promedio es **igual** en ambos grupos.
+  - $H_1$: la altura promedio es **distinta**.
+
+. . .
+
+En `R` esto se resuelve con **una sola función**: `t.test()`.
+
+## 💻 Aplicación: `t.test()` {.smaller}
+
+```{r}
+#| echo: true
+#| eval: false
+t.test(hgt ~ sex, data = bdims)
+```
+
+. . .
+
+Al ejecutarlo, nos fijamos en **dos resultados**:
+
+::: nonincremental
+- El **p-valor**: si es **< 0.05**, hay evidencia de una diferencia real.
+- El **intervalo de confianza** de la diferencia: si **no contiene el
+  0**, refuerza que la diferencia es significativa.
+:::
+
+. . .
+
+Para la altura por sexo, el p-valor es **muy pequeño** (≈ 0): rechazamos
+$H_0$ y concluimos que **sí** existe una diferencia de altura entre
+hombres y mujeres en estos datos.
+
+## 💻 Ejercicio Guiado: Plantear y Concluir {.smaller}
+
+Queremos saber si el **peso promedio** (`wgt`) difiere entre hombres y
+mujeres en `bdims`. Complete y ejecute la prueba:
+
+```{webr}
+#| exercise: ex_ttest
+# H0: el peso promedio es igual entre sexos
+# H1: el peso promedio es distinto entre sexos
+t.test(______ ~ ______, data = bdims)
+```
+
+. . .
+
+::: callout-tip
+## Para concluir, responda
+
+1.  ¿El **p-valor** es menor que 0.05?
+2.  Según eso, ¿**rechaza** o **no rechaza** $H_0$?
+3.  Redacte la conclusión en palabras simples.
+:::
+
+## 🧠 Pregunta N° 4 {.quiz-question .smaller}
+
+Una prueba t comparando dos grupos arroja un **p-valor de 0.32**.
+
+::: nonincremental
+***¿Qué concluimos (con $\alpha = 0.05$)?***
+
+- [No rechazamos H₀: no hay evidencia suficiente de una
+  diferencia.]{.correct
+  data-explanation="Correcto. Como 0,32 > 0,05, el resultado es compatible con la hipótesis nula: no hay evidencia suficiente para afirmar que los grupos difieren."}
+- [Rechazamos H₀: hay una diferencia
+  significativa.]{data-explanation="Solo rechazamos H₀ cuando el p-valor es menor que 0,05. Aquí 0,32 es bastante mayor, así que no se rechaza."}
+- [Probamos que los dos grupos son
+  idénticos.]{data-explanation="No rechazar H₀ no prueba que sean iguales; solo indica que no hay evidencia suficiente de diferencia. Ausencia de evidencia no es evidencia de ausencia."}
+- [El resultado es muy
+  extremo.]{data-explanation="Un p-valor de 0,32 indica un resultado bastante esperable bajo H₀, no extremo. Los resultados extremos tienen p-valores pequeños."}
+:::
+
+# [Cierre]{style="color:white"} {background-color="#22226c"}
+
+## Resumen: Lo Esencial de la Clase {.smaller}
+
+::: nonincremental
+- La **probabilidad** mide la factibilidad de un resultado y se conecta
+  con las **variables aleatorias** y sus **distribuciones** (binomial,
+  normal).
+
+- La **distribución normal** describe muchos fenómenos y permite calcular
+  probabilidades con `pnorm()`.
+
+- Por la **variabilidad muestral** existe incertidumbre; el **TLC** nos
+  dice que las medias muestrales se distribuyen de forma **normal**, con
+  menor **error estándar** a mayor $n$.
+
+- El **intervalo de confianza** entrega un rango de valores plausibles
+  para el parámetro.
+
+- La **prueba de hipótesis** y el **p-valor** nos permiten decidir, con
+  un criterio claro, si los datos respaldan una afirmación.
+:::
+
+## Próxima Etapa: Módulo 2 {.smaller}
+
+Estos fundamentos son la base de lo que viene en el **Módulo 2**:
+
+::: nonincremental
+- **Herramientas de Ciencia de Datos con R:** importar, ordenar,
+  transformar, visualizar y comunicar datos.
+
+- **Estadística Aplicada con R:** inferencia estadística, **regresión
+  lineal** y un caso aplicado a políticas públicas.
+:::
+
+. . .
+
+::: callout-tip
+## Para reforzar
+
+Recuerden que cada clase cuenta con una **guía de ejercicios** en
+Webcursos para practicar de forma autónoma. ¡La práctica es la mejor
+forma de aprender!
+:::
+
+## ¡Gracias! {.smaller}
+
+Espacio final para **preguntas**.
+
+- 📤 La presentación y grabación se subirán a **Webcursos**.
+- 📧 Consultas a través del **foro del curso**.
+
+## Bibliografía {.smaller}
+
+::: {#refs}
+:::

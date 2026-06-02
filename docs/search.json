@@ -376,7 +376,19 @@
     "href": "00-nivelacion1/nivelacion-01.html#histogramas-y-gráficos-de-densidad",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "Histogramas y Gráficos de Densidad",
-    "text": "Histogramas y Gráficos de Densidad\n\n\n\nlibrary(ggplot2)\npenguins |&gt;\n  ggplot(aes(x = flipper_len)) +\n  geom_histogram(fill = \"green4\", color = \"black\", alpha = .5) +\n  labs(x = \"Largo de la Aleta\", y = \"Frecuencia\", title = \"Gráfico de Densidad del Largo de la Aleta\",\n       subtitle = \"344 Pingüinos del dataset penguins\")\n\n\n\n\n\n\n\n\n\nlibrary(ggplot2)\npenguins |&gt;\n  ggplot(aes(x = flipper_len)) +\n  geom_density(fill = \"purple4\", color = \"black\", alpha = .5) +\n  labs(x = \"Largo de la Aleta\", y = \"Frecuencia\", title = \"Histograma del Largo de la Aleta\",\n       subtitle = \"344 Pingüinos del dataset penguins\")",
+    "text": "Histogramas y Gráficos de Densidad\n\n\n\nlibrary(ggplot2)\npenguins |&gt;\n  ggplot(aes(x = flipper_len)) +\n  geom_histogram(fill = \"blue4\", color = \"black\", alpha = .5) +\n  labs(x = \"Largo de la Aleta\", y = \"Frecuencia\", title = \"Histograma del Largo de la Aleta\",\n       subtitle = \"344 Pingüinos del dataset penguins\")\n\n\n\n\n\n\n\n\n\nlibrary(ggplot2)\npenguins |&gt;\n  ggplot(aes(x = flipper_len)) +\n  geom_density(fill = \"purple4\", color = \"black\", alpha = .5) +\n  labs(x = \"Largo de la Aleta\", y = \"Densidad\", title = \"Gráfico de Densidad del Largo de la Aleta\",\n       subtitle = \"344 Pingüinos del dataset penguins\")",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 1: Estadística Descriptiva"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion1/nivelacion-01.html#distribución-de-una-variable",
+    "href": "00-nivelacion1/nivelacion-01.html#distribución-de-una-variable",
+    "title": "Clase 1: Estadística Descriptiva",
+    "section": "Distribución de una Variable",
+    "text": "Distribución de una Variable",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -449,6 +461,18 @@
     "title": "Clase 1: Estadística Descriptiva",
     "section": "🎯 Mediana: Aplicación",
     "text": "🎯 Mediana: Aplicación\n\nCon N impar la mediana es justo el valor en la posición central una vez habiendo ordenado los datos de menor a mayor:\n\nmedian(c(1,2,3,4,5))\n\n[1] 3\n\n\n\n\nVemos que la mediana puede mantenerse igual pese a que los valores de los extremos de la variable cambien:\n\nmedian(c(2,2,3,5,5))\n\n[1] 3\n\n\n\n\nCuando N es par la mediana es el promedio de los dos valores centrales del conjunto ordenado:\n\nmedian(c(1,2,3,4))\n\n[1] 2.5",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 1: Estadística Descriptiva"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion1/nivelacion-01.html#distribuciones-asimétricas",
+    "href": "00-nivelacion1/nivelacion-01.html#distribuciones-asimétricas",
+    "title": "Clase 1: Estadística Descriptiva",
+    "section": "🎯📏 Distribuciones Asimétricas",
+    "text": "🎯📏 Distribuciones Asimétricas\n\nLos gráficos de densidad permiten visualizar no solo la forma de una distribución, sino también cómo se relacionan sus medidas de tendencia central y posición.\nUna regla práctica: la media siempre se desplaza hacia la cola más larga (Agresti 2018).",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -600,11 +624,59 @@
     ]
   },
   {
+    "objectID": "00-nivelacion1/nivelacion-01.html#percentiles-en-r-quantile",
+    "href": "00-nivelacion1/nivelacion-01.html#percentiles-en-r-quantile",
+    "title": "Clase 1: Estadística Descriptiva",
+    "section": "📏 Percentiles en R: quantile()\n",
+    "text": "📏 Percentiles en R: quantile()\n\nMás allá del boxplot, la función quantile() permite calcular cualquier percentil de una variable cuantitativa. Su sintaxis básica es:\n\n\n# Percentiles más comunes (cuartiles + mínimo y máximo)\nquantile(penguins$body_mass, na.rm = TRUE)\n\n  0%  25%  50%  75% 100% \n2700 3550 4050 4750 6300 \n\n\n\n\nEl argumento probs permite especificar exactamente qué percentiles calcular. Por ejemplo, para obtener el percentil 10, 25, 75 y 90:\n\nquantile(penguins$body_mass, probs = c(0.10, 0.25, 0.75, 0.90), na.rm = TRUE)\n\n 10%  25%  75%  90% \n3300 3550 4750 5400 \n\n\n\n\n\n\n\n\n\n\n¿Cómo interpretar estos resultados?\n\n\nUn resultado de 3300 en el percentil 10 significa que el 10% de los pingüinos pesa menos de 3300 gramos, mientras que el 90% restante pesa más. En términos generales: el percentil \\(p\\) indica que el \\(p\\%\\) de las observaciones cae por debajo de ese valor.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 1: Estadística Descriptiva"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion1/nivelacion-01.html#percentiles-aplicación",
+    "href": "00-nivelacion1/nivelacion-01.html#percentiles-aplicación",
+    "title": "Clase 1: Estadística Descriptiva",
+    "section": "💻 📏 Percentiles: Aplicación",
+    "text": "💻 📏 Percentiles: Aplicación\nUsando el dataset gapminder, calcule los percentiles 25, 50, 75 y 90 del PIB per cápita (gdpPercap) para el año 2007. ¿Qué puede concluir sobre la distribución del ingreso entre países?",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 1: Estadística Descriptiva"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion1/nivelacion-01.html#resumen-con-summary",
+    "href": "00-nivelacion1/nivelacion-01.html#resumen-con-summary",
+    "title": "Clase 1: Estadística Descriptiva",
+    "section": "📏 Resumen con summary()\n",
+    "text": "📏 Resumen con summary()\n\nUna forma rápida de obtener las estadísticas descriptivas más importantes de un conjunto de datos es mediante la función summary(). En una sola línea entrega el mínimo, máximo, cuartiles, media y mediana de cada variable numérica, y para variables categóricas muestra la frecuencia de cada nivel:\n\n\npenguins |&gt; \n  select(species, body_mass, flipper_len) |&gt; \n  summary()\n\n      species      body_mass     flipper_len   \n Adelie   :152   Min.   :2700   Min.   :172.0  \n Chinstrap: 68   1st Qu.:3550   1st Qu.:190.0  \n Gentoo   :124   Median :4050   Median :197.0  \n                 Mean   :4202   Mean   :200.9  \n                 3rd Qu.:4750   3rd Qu.:213.0  \n                 Max.   :6300   Max.   :231.0  \n                 NA's   :2      NA's   :2",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 1: Estadística Descriptiva"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion1/nivelacion-01.html#resumen-con-summary-1",
+    "href": "00-nivelacion1/nivelacion-01.html#resumen-con-summary-1",
+    "title": "Clase 1: Estadística Descriptiva",
+    "section": "📏 Resumen con summary()\n",
+    "text": "📏 Resumen con summary()\n\n\n\n\n\n\n\n\n¿Qué nos entrega summary()?\n\n\n\n\nEstadístico\nDescripción\n\n\n\nMin.\nValor mínimo de la variable\n\n\n1st Qu.\nPercentil 25 (\\(Q_1\\))\n\n\nMedian\nMediana o percentil 50 (\\(Q_2\\))\n\n\nMean\nMedia aritmética\n\n\n3rd Qu.\nPercentil 75 (\\(Q_3\\))\n\n\nMax.\nValor máximo de la variable\n\n\nNA's\nCantidad de valores faltantes (si los hay)\n\n\n\nNótese que cuando la media es mayor que la mediana, la distribución suele estar sesgada hacia la derecha (con valores altos extremos), como ocurre típicamente con variables de ingreso.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 1: Estadística Descriptiva"
+    ]
+  },
+  {
     "objectID": "00-nivelacion1/nivelacion-01.html#puntaje-z-medida-de-posición",
     "href": "00-nivelacion1/nivelacion-01.html#puntaje-z-medida-de-posición",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "📏 Puntaje Z: Medida de Posición",
-    "text": "📏 Puntaje Z: Medida de Posición\nEl puntaje \\(z\\) mide cuántas desviaciones estándar separan una observación de la media:\n\\[z = \\frac{y_i - \\bar{y}}{s} = \\frac{\\text{observación} - \\text{media}}{\\text{desviación estándar}}\\]\n\nUn \\(z &gt; 0\\) indica que la observación está sobre la media.\nUn \\(z &lt; 0\\) indica que la observación está bajo la media.\nUn \\(|z| &gt; 3\\) es una señal de valor atípico (outlier) para distribuciones con forma de campana.",
+    "text": "📏 Puntaje Z: Medida de Posición\nEl puntaje \\(z\\) mide cuántas desviaciones estándar separan una observación de la media:\n\\[z_i = \\frac{y_i - \\bar{y}}{s} = \\frac{\\text{observación}_i - \\text{media}}{\\text{desviación estándar}}\\]\n\nUn \\(z &gt; 0\\) indica que la observación está sobre la media.\nUn \\(z &lt; 0\\) indica que la observación está bajo la media.\nUn \\(|z| &gt; 3\\) es una señal de valor atípico (outlier) para distribuciones con forma de campana.",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",

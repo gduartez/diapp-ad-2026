@@ -713,8 +713,8 @@ penguins |>
 library(ggplot2)
 penguins |>
   ggplot(aes(x = flipper_len)) +
-  geom_histogram(fill = "green4", color = "black", alpha = .5) +
-  labs(x = "Largo de la Aleta", y = "Frecuencia", title = "Gráfico de Densidad del Largo de la Aleta",
+  geom_histogram(fill = "blue4", color = "black", alpha = .5) +
+  labs(x = "Largo de la Aleta", y = "Frecuencia", title = "Histograma del Largo de la Aleta",
        subtitle = "344 Pingüinos del dataset penguins")
 ```
 :::
@@ -729,12 +729,13 @@ library(ggplot2)
 penguins |>
   ggplot(aes(x = flipper_len)) +
   geom_density(fill = "purple4", color = "black", alpha = .5) +
-  labs(x = "Largo de la Aleta", y = "Frecuencia", title = "Histograma del Largo de la Aleta",
+  labs(x = "Largo de la Aleta", y = "Densidad", title = "Gráfico de Densidad del Largo de la Aleta",
        subtitle = "344 Pingüinos del dataset penguins")
 ```
 :::
 :::::
 
+## Distribución de una Variable
 ## 🎯 Media (*Mean*) {.smaller}
 
 ::: callout-tip
@@ -872,19 +873,80 @@ median(c(1,2,3,4))
 ```
 :::
 
+## 🎯📏 Distribuciones Asimétricas {.smaller}
+
+- Los gráficos de densidad permiten visualizar no solo la **forma** de una distribución, sino también cómo se relacionan sus medidas de
+  tendencia central y posición.
+- Una regla práctica: **la media siempre se desplaza hacia la cola más larga** [@agresti2018].
+
+::: fragment
+```{r asimetria}
+#| echo: false
+#| fig-width: 10
+#| fig-height: 4.5
+#| out-width: "100%"
+#| classes: r-stretch
+library(patchwork)
+
+set.seed(123)
+n      <- 150000
+x_der  <- rlnorm(n, meanlog = 0, sdlog = 0.65)
+p98    <- quantile(x_der, 0.98)
+x_der  <- x_der[x_der <= p98]   # recorto cola extrema para visualización
+x_izq  <- p98 - x_der           # reflejo: misma forma, sesgo opuesto
+
+m_der  <- mean(x_der);  md_der <- median(x_der)
+m_izq  <- mean(x_izq);  md_izq <- median(x_izq)
+
+df_der <- data.frame(x = x_der)
+df_izq <- data.frame(x = x_izq)
+
+# ── Panel 1: cola a la derecha ────────────────────────────────────────────────
+p1 <- ggplot(df_der, aes(x)) +
+  geom_density(fill = "grey82", color = "black", linewidth = 0.7, alpha = .6) +
+  geom_vline(xintercept = md_der, color = "#22226c", linewidth = 1) +
+  geom_vline(xintercept = m_der,  color = "#c0392b", linewidth = 1) +
+  coord_cartesian(clip = "off") +
+  annotate("text", x = md_der - 0.08, y = Inf, vjust = 1.8, hjust = 1,
+           label = "Mediana", color = "#22226c", fontface = "bold", size = 4) +
+  annotate("text", x = m_der  + 0.08, y = Inf, vjust = 1.8, hjust = 0,
+           label = "Media",   color = "#c0392b", fontface = "bold", size = 4) +
+  scale_x_continuous(labels = NULL) +
+  labs(title    = "Cola a la derecha (asimetría positiva)",
+       subtitle = "Ej: Ingresos del hogar",
+       x = "Valores de la variable", y = "Frecuencia relativa")
+
+# ── Panel 2: cola a la izquierda ──────────────────────────────────────────────
+p2 <- ggplot(df_izq, aes(x)) +
+  geom_density(fill = "grey82", color = "black", linewidth = 0.7, alpha = .6) +
+  geom_vline(xintercept = m_izq,  color = "#c0392b", linewidth = 1) +
+  geom_vline(xintercept = md_izq, color = "#22226c", linewidth = 1) +
+  coord_cartesian(clip = "off") +
+  annotate("text", x = m_izq  - 0.08, y = Inf, vjust = 1.8, hjust = 1,
+           label = "Media",   color = "#c0392b", fontface = "bold", size = 4) +
+  annotate("text", x = md_izq + 0.08, y = Inf, vjust = 1.8, hjust = 0,
+           label = "Mediana", color = "#22226c", fontface = "bold", size = 4) +
+  scale_x_continuous(labels = NULL) +
+  labs(title    = "Cola a la izquierda (asimetría negativa)",
+       subtitle = "Ej: Edad de fallecimiento",
+       x = "Valores de la variable", y = "Frecuencia relativa")
+
+# ── Combinar con patchwork ────────────────────────────────────────────────────
+p1 + p2
+```
+:::
+
 ## 📊 Varianza {.smaller}
 
 Las medidas de tendencia central por sí solas **no son suficientes**
-para describir numéricamente los datos de una variable cuantitativa. Si
-bien describen un valor típico, no permiten resumir la **dispersión** de
-los datos alrededor de ese valor típico.
+para describir numéricamente los datos de una variable cuantitativa. Si bien describen un valor típico, no permiten resumir la **dispersión** de los datos alrededor de ese valor típico.
 
 ::: fragment
 ```{r}
 #| echo: false
 #| fig-height: 5
 #| fig-width: 9
-#| out-width: "95%"
+#| out-width: "90%"
 library(gapminder)
 library(tidyverse)
 
@@ -1193,12 +1255,101 @@ penguins |>
   labs(title = "Boxplot Peso de los Pingüinos por Especie")
 ```
 
+## 📏 Percentiles en `R`: `quantile()` {.smaller}
+
+Más allá del boxplot, la función `quantile()` permite calcular
+**cualquier percentil** de una variable cuantitativa. Su sintaxis
+básica es:
+
+::: fragment
+```{r}
+#| echo: true
+# Percentiles más comunes (cuartiles + mínimo y máximo)
+quantile(penguins$body_mass, na.rm = TRUE)
+```
+:::
+
+::: fragment
+El argumento `probs` permite especificar exactamente qué percentiles
+calcular. Por ejemplo, para obtener el percentil 10, 25, 75 y 90:
+
+```{r}
+#| echo: true
+quantile(penguins$body_mass, probs = c(0.10, 0.25, 0.75, 0.90), na.rm = TRUE)
+```
+:::
+
+::: fragment
+::: callout-tip
+## ¿Cómo interpretar estos resultados?
+
+Un resultado de `3300` en el percentil 10 significa que el **10% de los
+pingüinos pesa [menos]{.underline} de 3300 gramos**, mientras que el 90% restante pesa
+más. En términos generales: el **percentil** $p$ indica que el $p\%$ de
+las observaciones cae por [**debajo**]{style="color: darkred;"} de ese valor.
+:::
+:::
+
+## 💻 📏 Percentiles: Aplicación {.smaller}
+
+Usando el dataset `gapminder`, calcule los percentiles 25, 50, 75 y 90
+del PIB per cápita (`gdpPercap`) para el año 2007. ¿Qué puede concluir
+sobre la distribución del ingreso entre países?
+
+```{webr}
+#| exercise: ex_5
+gdp_2007 <- gapminder |> 
+  filter(year == 2007) |>   
+  pull(gdpPercap)# extrae la variable como vector
+
+quantile(______, probs = c(______, ______, ______, ______), na.rm = TRUE)
+```
+
+## 📏 Resumen con `summary()` {.smaller}
+
+Una forma rápida de obtener las estadísticas descriptivas más
+importantes de un conjunto de datos es mediante la función `summary()`.
+En una sola línea entrega el **mínimo, máximo, cuartiles, media y
+mediana** de cada variable numérica, y para variables categóricas
+muestra la frecuencia de cada nivel:
+
+::: fragment
+```{r}
+#| echo: true
+penguins |> 
+  select(species, body_mass, flipper_len) |> 
+  summary()
+```
+:::
+
+## 📏 Resumen con `summary()` 
+
+::: {.fragment}
+::: callout-note
+## ¿Qué nos entrega `summary()`?
+
+| Estadístico | Descripción |
+|-------------|-------------|
+| `Min.`      | Valor mínimo de la variable |
+| `1st Qu.`   | Percentil 25 ($Q_1$) |
+| `Median`    | Mediana o percentil 50 ($Q_2$) |
+| `Mean`      | Media aritmética |
+| `3rd Qu.`   | Percentil 75 ($Q_3$) |
+| `Max.`      | Valor máximo de la variable |
+| `NA's`      | Cantidad de valores faltantes (si los hay) |
+
+Nótese que cuando la **media es mayor que la mediana**, la distribución
+suele estar **sesgada hacia la derecha** (con valores altos extremos),
+como ocurre típicamente con variables de ingreso.
+:::
+:::
+
 ## 📏 Puntaje Z: Medida de Posición
 
 El **puntaje** $z$ mide cuántas desviaciones estándar separan una
 observación de la media:
 
-$$z = \frac{y_i - \bar{y}}{s} = \frac{\text{observación} - \text{media}}{\text{desviación estándar}}$$
+$$z_i = \frac{y_i - \bar{y}}{s} = \frac{\text{observación}_i - \text{media}}{\text{desviación estándar}}$$
 
 - Un $z > 0$ indica que la observación está **sobre** la media.
 - Un $z < 0$ indica que la observación está **bajo** la media.
