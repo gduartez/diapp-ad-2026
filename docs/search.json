@@ -1,5 +1,868 @@
 [
   {
+    "objectID": "00-nivelacion2/nivelacion-02.html#repaso-clase-1-estadísticas-descriptivas-en-r",
+    "href": "00-nivelacion2/nivelacion-02.html#repaso-clase-1-estadísticas-descriptivas-en-r",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "🔁 Repaso Clase 1: Estadísticas Descriptivas en R\n",
+    "text": "🔁 Repaso Clase 1: Estadísticas Descriptivas en R\n\n\n\n\n\n\n\n\n\n\n\nConcepto\nDefinición\nFunción en R\n\nEjemplo de uso\n\n\n\nMedia\nPromedio aritmético: suma de los valores dividida por \\(n\\)\n\nmean(x, na.rm = T)\nmean(penguins$body_mass, na.rm = T)\n\n\nMediana\nValor central de los datos ordenados; más robusta ante outliers\n\nmedian(x, na.rm = T)\nmedian(penguins$body_mass, na.rm = T)\n\n\nDesv. Estándar\nDistancia típica de cada observación respecto a la media\nsd(x, na.rm = T)\nsd(penguins$body_mass, na.rm = T)\n\n\nPercentil\nValor bajo el cual cae el \\(p\\)% de los datos\nquantile(x, probs = p)\nquantile(penguins$body_mass, probs = c(.25, .75))\n\n\nPuntaje Z\nN° de desviaciones estándar que separan una observación de la media\n(x - mean(x)) / sd(x)\n(200 - mean(bdims$hgt)) / sd(bdims$hgt)\n\n\nCorrelación\nFuerza y dirección de la asociación lineal entre dos variables cuantitativas (\\(-1\\) a \\(+1\\))\n\ncor(x, y) geom_point()\n\ncor(penguins$body_mass, penguins$flipper_len)",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#repaso-clase-1-estadísticas-descriptivas-en-r-1",
+    "href": "00-nivelacion2/nivelacion-02.html#repaso-clase-1-estadísticas-descriptivas-en-r-1",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "🔁 Repaso Clase 1: Estadísticas Descriptivas en R\n",
+    "text": "🔁 Repaso Clase 1: Estadísticas Descriptivas en R\n\n\n\n\n\n\n\n\nPara obtener varias medidas de una sola vez utilizamos: summary()\n\n\n\nsummary(penguins)\n\n      species          island       bill_len        bill_dep    \n Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  \n Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  \n Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  \n                                 Mean   :43.92   Mean   :17.15  \n                                 3rd Qu.:48.50   3rd Qu.:18.70  \n                                 Max.   :59.60   Max.   :21.50  \n                                 NA's   :2       NA's   :2      \n  flipper_len      body_mass        sex           year     \n Min.   :172.0   Min.   :2700   female:165   Min.   :2007  \n 1st Qu.:190.0   1st Qu.:3550   male  :168   1st Qu.:2007  \n Median :197.0   Median :4050   NA's  : 11   Median :2008  \n Mean   :200.9   Mean   :4202                Mean   :2008  \n 3rd Qu.:213.0   3rd Qu.:4750                3rd Qu.:2009  \n Max.   :231.0   Max.   :6300                Max.   :2009  \n NA's   :2       NA's   :2",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#repaso-dónde-quedamos",
+    "href": "00-nivelacion2/nivelacion-02.html#repaso-dónde-quedamos",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "🔁 Repaso: ¿Dónde Quedamos?",
+    "text": "🔁 Repaso: ¿Dónde Quedamos?\nEn la Clase 1 aprendimos a describir datos:\n\nMedidas de tendencia central (media, mediana) y variabilidad (varianza, desviación estándar).\n\nVisualización (histograma, densidad, boxplot) y asociación (correlación, scatterplot).\n\n\nPero la estadística descriptiva solo resume los datos que tenemos a mano (una muestra). La gran pregunta que abordaremos hoy es:\n\n¿Cómo pasamos de lo que observamos en una muestra a conclusiones sobre toda la población?\n\n\n\nPara ello requerimos de la inferencia estadística: usar la información de una muestra para sacar conclusiones sobre la población. Y para hacerlo de forma rigurosa, reconociendo que toda muestra trae consigo cierta incertidumbre, primero necesitamos entender en qué consiste la probabilidad.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#objetivos-clase-2",
+    "href": "00-nivelacion2/nivelacion-02.html#objetivos-clase-2",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "🎯 Objetivos Clase 2",
+    "text": "🎯 Objetivos Clase 2\nLos objetivos específicos de la clase 2 son:\n\nComprender las nociones básicas de probabilidad y aplicarlas a ejemplos concretos.\nConectar la probabilidad con las variables aleatorias y sus distribuciones (binomial y normal).\nEntender por qué una muestra genera incertidumbre y cómo el Teorema del Límite Central nos ayuda a manejarla.\nConstruir e interpretar intervalos de confianza.\nPlantear una prueba de hipótesis sencilla, interpretar el p-valor y concluir.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#qué-veremos-hoy",
+    "href": "00-nivelacion2/nivelacion-02.html#qué-veremos-hoy",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "¿Qué Veremos Hoy?",
+    "text": "¿Qué Veremos Hoy?\n\n\nProbabilidad y ejemplos aplicados.\n\nVariables aleatorias y distribuciones conocidas (binomial).\nLa distribución normal.\n\nMuestreo, Teorema del Límite Central y error estándar.\n\nIntervalos de confianza, p-valor y prueba de hipótesis (t-test).\n\n\n\n\n\n\n\n\nMetodología\n\n\nIgual que en la Clase 1, alternaremos exposición breve con preguntas 🧠 y ejercicios guiados 💻 que resolveremos juntos.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#probabilidad-1",
+    "href": "00-nivelacion2/nivelacion-02.html#probabilidad-1",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Probabilidad",
+    "text": "Probabilidad\n\nEl término probabilidad se refiere al estudio del azar y la incertidumbre en cualquier situación en la que diferentes sucesos pueden ocurrir.\nDefinición frecuentista: La probabilidad de un resultado está definida por la proporción de veces que ese resultado es observado a través de un alto número de repeticiones de procesos aleatorios:\n\n\n\\[Probabilidad = \\frac{\\#Eventos\\ Favorables}{\\#Eventos\\ Totales}\\]\n\n\n\n\n\n\n\n\nProbabilidad (Agresti 2018)\n\n\nEn una muestra o experimento aleatorio, la probabilidad de que una observación tenga un resultado particular es la proporción de veces que ese resultado ocurriría en una secuencia muy larga de observaciones similares.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#probabilidad-2",
+    "href": "00-nivelacion2/nivelacion-02.html#probabilidad-2",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Probabilidad",
+    "text": "Probabilidad\n\nDado que definimos probabilidad como una proporción, la probabilidad es un número entre 0 y 1 (o 0 y 100 si se expresa en %) que mide qué tan factible es que ocurra un resultado\n\n\n\\(0\\) = imposible\n\n\\(1\\) = seguro\n\n\\(0.5\\) = tan probable como no.\n\n\nLa probabilidad puede entenderse como la frecuencia relativa de un resultado cuando repetimos un experimento muchas veces. Esto implica que las probabilidades se interpretan bajo un contexto de largo plazo. Por ejemplo, si un meteorólogo dice que la probabilidad de lluvia hoy es del 70%, esto significa que en una larga serie de días con condiciones atmosféricas como las de hoy, llueve el 70% de los días.\n\n\n\n\n\n\n\n\nIdea clave\n\n\nSi lanzamos una moneda equilibrada muchísimas veces, la proporción de caras se acercará a \\(0.5\\). Esa proporción de largo plazo es la probabilidad de obtener una cara.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#proceso-aleatorio",
+    "href": "00-nivelacion2/nivelacion-02.html#proceso-aleatorio",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Proceso Aleatorio",
+    "text": "Proceso Aleatorio\n\nEn un proceso aleatorio hay más de un posible resultado y la predicción de este está sujeto a variabilidad:\n\nEjemplos Clásicos:\n\nTirar una moneda.\nTirar un dado.\n\n\nSe puede pensar como un proceso donde el resultado es probabilístico (o estocástico) y no determinístico. Es decir, hay incertidumbre en el resultado.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#espacio-muestral",
+    "href": "00-nivelacion2/nivelacion-02.html#espacio-muestral",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Espacio Muestral",
+    "text": "Espacio Muestral\n\nEl espacio muestral es el conjunto de todos los posibles resultados de un proceso aleatorio. Se denota con el símbolo \\(S\\). Por ejemplo:\n\nDados: \\(S=\\{1,2,3,4,5,6\\}\\).\nMoneda: \\(S=\\{C,S\\}\\).",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#evento",
+    "href": "00-nivelacion2/nivelacion-02.html#evento",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Evento",
+    "text": "Evento\n\nUn evento es un subconjunto del espacio muestral.\n\nPara el caso del lanzamiento de un dado, digamos que:\n\n\n\\(A\\) representa el evento de que al tirar un dado el resultado sea un número par: \\(A=\\{2,4,6\\}\\).\n\n\\(B\\) representa el evento de que al tirar un dado el resultado sea un número impar: \\(B=\\{1,3,5\\}\\).\n\n\\(C\\) representa el evento de que al tirar un dado el resultado sea un número primo: \\(C=\\{2,3,5\\}\\).",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#diagrama-de-venn",
+    "href": "00-nivelacion2/nivelacion-02.html#diagrama-de-venn",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Diagrama de Venn",
+    "text": "Diagrama de Venn\nLo anterior se pueden representar visualmente mediante un Diagrama de Venn: Una gráfica que usa círculos superpuestos para ilustrar las relaciones lógicas entre dos o más conjuntos de elementos.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#pregunta-n-1",
+    "href": "00-nivelacion2/nivelacion-02.html#pregunta-n-1",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "🧠 Pregunta N° 1",
+    "text": "🧠 Pregunta N° 1\nLanzamos un dado equilibrado de 6 caras una vez.\n\n¿Cuál es la probabilidad de obtener un número mayor que 4?\n\n2/6 ≈ 0,33.\n4/6 ≈ 0,67.\n1/6 ≈ 0,17.\n3/6 = 0,5.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#complemento-de-un-evento",
+    "href": "00-nivelacion2/nivelacion-02.html#complemento-de-un-evento",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Complemento de un Evento",
+    "text": "Complemento de un Evento\n\n\n\n\nDefinimos estos eventos en R como vectores:\n\n\n\nA &lt;- c(2,4,6)\nB &lt;- c(1,3,5)\nC &lt;- c(2,3,5)\nS &lt;- 1:6\n\n\n\n\n\nDefinición: El complemento de un evento son todos los resultados en el espacio muestral que no corresponden al evento mismo.\n\nEjemplo: el complemento del evento \\(C\\) es el conjunto de resultados de tirar un dado que no corresponden a números primos.\n\nNotación: \\(C'\\).\n\n\\(\\Large C^c:\\{1,4,6\\}\\).\nEn R podemos usar la función setdiff() para obtener el complemento de un evento, especificando primero el espacio muestral y luego el evento:\n\n\n\nsetdiff(S,C)\n\n[1] 1 4 6",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#unión-de-eventos",
+    "href": "00-nivelacion2/nivelacion-02.html#unión-de-eventos",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Unión de Eventos",
+    "text": "Unión de Eventos\n\n\n\n\n\n\nDefinición: La unión de dos eventos \\(A\\) y \\(B\\) es el evento formado por todos los resultados que están en \\(A\\), en \\(B\\) o en ambos; es decir, los resultados que pertenecen a al menos uno de los dos eventos.\n\nEjemplo: La unión de los eventos \\(A\\) y \\(C\\) es el conjunto de resultados posibles de tirar un dado que son números pares, o primos, o ambos.\n\nNotación: \\(A \\cup C\\).\n\n\\(A \\cup C: \\{2,3,4,5,6\\}\\).\nEn R podemos usar la función union() para obtener la unión de dos eventos:\n\n\n\nunion(A,C)\n\n[1] 2 4 6 3 5",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#intersección-de-eventos",
+    "href": "00-nivelacion2/nivelacion-02.html#intersección-de-eventos",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Intersección de Eventos",
+    "text": "Intersección de Eventos\n\n\n\n\n\n\nDefinición: La intersección de dos eventos \\(A\\) y \\(B\\) es el evento que consiste en todos los resultados que están tanto en A como en B.\n\nEjemplo: La intersección de los eventos \\(A\\) y \\(C\\) es el conjunto de resultados posibles de tirar un dado que son números pares Y primos al mismo tiempo.\n\nNotación: \\(A \\cap C\\).\n\n\\(A \\cap C: \\{2\\}\\).\nEn R podemos usar la función intersect() para obtener la intersección de dos eventos:\n\n\n\nintersect(A,C)\n\n[1] 2",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#eventos-mutuamente-excluyentes",
+    "href": "00-nivelacion2/nivelacion-02.html#eventos-mutuamente-excluyentes",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Eventos Mutuamente Excluyentes",
+    "text": "Eventos Mutuamente Excluyentes\n\n\n\n\n\nDefinición: Los eventos mutuamente excluyentes son eventos que no pueden ocurrir al mismo tiempo.\nEjemplo: El evento \\(A\\) y el evento \\(B\\) son mutuamente excluyentes porque el resultado de tirar un dado no puede ser par e impar al mismo tiempo.\nNotación: \\(A \\cap B = \\emptyset\\)\nLos eventos \\(A\\) y \\(C\\) no son mutuamente excluyentes porque el número 2 es tanto par como primo.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#eventos-independientes",
+    "href": "00-nivelacion2/nivelacion-02.html#eventos-independientes",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Eventos Independientes",
+    "text": "Eventos Independientes\n\n\nDos eventos son independientes cuando el resultado de uno no afecta la probabilidad del otro.\n\nPor ejemplo: Que la primera moneda salga cara no afecta la probabilidad de que salga cara o sello en el segundo lanzamiento.\n\n\nPor definición, los eventos \\(A\\) y \\(B\\) son eventos independientes, si y solo si la probabilidad de que ocurran ambos (es decir, su intersección) corresponde a la multiplicación de sus probabilidades individuales:\n\n\n\\[P(A \\cap B) = P(A) \\times P(B)\\]\n\n\nEjemplo: \\(P(\\text{dos caras seguidas}) = 0.5 \\times 0.5 = 0.25\\).\n\n\n\n\n\n\n\n\nNota\n\n\nLa independencia será la clave para conectar la probabilidad con las distribuciones que veremos a continuación.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#pregunta-n-2",
+    "href": "00-nivelacion2/nivelacion-02.html#pregunta-n-2",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "🧠 Pregunta N° 2",
+    "text": "🧠 Pregunta N° 2\nLanzamos el mismo dado equilibrado dos veces seguidas. Cada lanzamiento es independiente del otro.\n\n¿Cuál es la probabilidad de obtener un número mayor que 4 en ambos lanzamientos?\n\n2/6 ≈ 0,33.\n4/6 ≈ 0,67.\n1/9 ≈ 0,11.\n1/36 ≈ 0,03.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#resumen-probabilidad",
+    "href": "00-nivelacion2/nivelacion-02.html#resumen-probabilidad",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Resumen Probabilidad",
+    "text": "Resumen Probabilidad\n\n\n\n\n\n\nConceptos Importantes (Devore 2016)\n\n\n\nUn proceso aleatorio (en libros de estadística, llamado también experimento) es cualquier acción o proceso cuyo resultado está sujeto a la incertidumbre.\nEl espacio muestral de un experimento, denotado por \\(S\\), es el conjunto de todos los posibles resultados de dicho experimento.\nUn evento es cualquier recopilación (subconjunto) de resultados contenidos en el espacio muestral \\(S\\).\nSea que \\(\\phi\\) denote el evento nulo (el evento sin resultados). Cuando \\(A \\cap B = \\phi\\), se dice que A y B son eventos mutuamente excluyentes o disjuntos.\nEl complemento de un evento \\(A\\), denotado por \\(A'\\), es el conjunto de todos los resultados en \\(S\\) que no están contenidos en A.\nLa unión de dos eventos \\(A\\) y \\(B\\), denotados por \\(A \\cup B\\) y leída como A o B, es el evento que consiste en todos los resultados que están en A o en B o en ambos eventos, es decir, todos los resultados en al menos uno de los eventos: \\(P(A \\cup B) = P(A) + P(B) - P(A \\cap B)\\). También \\(A \\cup B\\) se puede descomponer en dos eventos excluyentes: \\(A\\) y \\(B \\cap A'\\); la última es la parte de \\(B\\) que queda afuera de \\(A\\), por lo que \\(P(A \\cup B) = P(A) + P(B \\cap A')\\).\nLa intersección de dos eventos \\(A\\) y \\(B\\), denotada por \\(A \\cap B\\) y leída como A y B, es el evento que consiste en todos los resultados que están tanto en A como en B.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#resumen-probabilidad-1",
+    "href": "00-nivelacion2/nivelacion-02.html#resumen-probabilidad-1",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Resumen Probabilidad",
+    "text": "Resumen Probabilidad\n\nFuente: (Devore 2016)",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#aplicando-el-complemento",
+    "href": "00-nivelacion2/nivelacion-02.html#aplicando-el-complemento",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Aplicando el Complemento",
+    "text": "Aplicando el Complemento\n\nConsideremos el lanzamiento de 2 monedas. En este caso, el espacio muestral sería \\(S = \\{CC,\\ CS,\\ SC,\\ SS\\}\\) (4 resultados igualmente probables)\n\nCalculemos las siguientes probabilidades:\n\n\\(P(\\text{exactamente una cara (X=1)}) = \\dfrac{2}{4} = 0.5\\)\n\\(P(\\text{al menos una cara}(X \\geq 1))\\): en vez de contar \\(\\{CC, CS, SC\\}\\), usamos el complemento de ese evento (que en este caso, sería \\(P(X &lt; 1)\\). El único caso sin caras es \\(\\{SS\\}\\):\n\n\n\n\n\\[P(\\text{al menos una cara}) = 1 - P(\\text{ninguna cara}) = 1 - \\tfrac{1}{4} = 0.75\\]\n\n\n\n\n\n\n\n\nTip\n\n\nMuchas veces puede ser útil usar el complemento de un evento para calcular probabilidades: \\(P(A) = 1 - P(A')\\).",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#proceso-aleatorio-con-repeticiones",
+    "href": "00-nivelacion2/nivelacion-02.html#proceso-aleatorio-con-repeticiones",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Proceso Aleatorio con Repeticiones",
+    "text": "Proceso Aleatorio con Repeticiones\n\nAsumamos que repetimos el proceso aleatorio de tirar una moneda y que registramos como evento \\(X\\) el número de veces que sale cara en \\(n\\) lanzamientos de moneda. Entonces:\n\n\n\\[\\Large P(Cara)=\\lim_{n\\to\\infty}\\frac{X}{n}\\]\n\n\n\\[\\Large P(Cara)=\\frac{1}{2}\\]",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#lanzar-1-vez-una-moneda",
+    "href": "00-nivelacion2/nivelacion-02.html#lanzar-1-vez-una-moneda",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Lanzar 1 Vez una Moneda",
+    "text": "Lanzar 1 Vez una Moneda\n\nDefinamos un vector moneda con los posibles eventos y simulemos un solo lanzamiento de esa moneda.\nPara hacerlo en R, debemos utilizar la función sample() considerando los siguientes argumentos:\n\n\nx: Un vector de uno o más elementos entre los cuales elegir, o un número entero positivo.\n\nsize: Un número entero no negativo que indica el número de elementos a elegir.\n\nreplace: Un valor lógico que indica si es que el muestreo debe ser con reposición (= T) o no (= F).\n\n\nAdemás, seteamos una semilla con la función set.seed() para definir un proceso pseudo-aleatorio que nos permita replicar los mismos resultados. En la medida que se utilice la misma semilla, todos los procesos aleatorios que se hagan en adelante serán replicables siempre y cuando utilicen la misma semilla (en la práctica, cualquier número natural).\n\n\n\nset.seed(123)\nmoneda &lt;- c(\"cara\", \"sello\")\nsample(moneda, size = 1)\n\n[1] \"cara\"",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#repitamos-20-veces-este-proceso",
+    "href": "00-nivelacion2/nivelacion-02.html#repitamos-20-veces-este-proceso",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Repitamos 20 Veces Este Proceso",
+    "text": "Repitamos 20 Veces Este Proceso\n\n\nset.seed(123)\ntirar_moneda &lt;- sample(moneda, size = 20, replace = TRUE)\ntable(tirar_moneda)\n\ntirar_moneda\n cara sello \n   11     9 \n\n\n\n\nDados estos resultados, vemos que \\(P(Cara)=\\frac{11}{20}=55\\%\\)",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#repitamos-5.000-veces-este-proceso",
+    "href": "00-nivelacion2/nivelacion-02.html#repitamos-5.000-veces-este-proceso",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Repitamos 5.000 Veces Este Proceso",
+    "text": "Repitamos 5.000 Veces Este Proceso\n\n\nset.seed(123)\ntirar_moneda &lt;- sample(moneda, size = 5000, replace = TRUE)\ntable(tirar_moneda)\n\ntirar_moneda\n cara sello \n 2499  2501 \n\n\n\n\nEn este caso vemos que \\(P(Cara)=\\frac{2499}{5000}=49,98\\%\\)",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#frecuencia-relativa-acumulada-de-10.000-repeticiones",
+    "href": "00-nivelacion2/nivelacion-02.html#frecuencia-relativa-acumulada-de-10.000-repeticiones",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Frecuencia Relativa Acumulada de 10.000 repeticiones",
+    "text": "Frecuencia Relativa Acumulada de 10.000 repeticiones\n\n\nLa proporción de caras se acerca a 0.5 a medida que \\(n\\) crece, tal como vimos previamente. A más repeticiones, más cerca del valor verdadero. Recordar que la probabilidad implicaba pensar en un resultado de largo plazo, es decir, con varias repeticiones.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#simular-lanzamientos",
+    "href": "00-nivelacion2/nivelacion-02.html#simular-lanzamientos",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "💻 Simular lanzamientos",
+    "text": "💻 Simular lanzamientos\nAnteriormente ya calculamos que la probabilidad de obtener un número mayor que 4 en el lanzamiento de un dado es \\(2/6 \\approx 0{,}33\\). Confirmémoslo simulando 1000 lanzamientos de un dado y observando la frecuencia relativa de cada resultado (también puede usar la función prop.table() para sacar proporciones):",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#variables-aleatorias",
+    "href": "00-nivelacion2/nivelacion-02.html#variables-aleatorias",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Variables Aleatorias",
+    "text": "Variables Aleatorias\n\nEl concepto de variable aleatoria nos permite pasar de los resultados experimentales a una función numérica de los resultados.\n\nExisten fundamentalmente dos tipos diferentes de variables aleatorias:\n\nVariables aleatorias discretas\nVariables aleatorias continuas\n\n\nAsí, una función que asigna un resultado numérico a un proceso aleatorio se conoce como variable aleatoria.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#variables-aleatorias-discretas",
+    "href": "00-nivelacion2/nivelacion-02.html#variables-aleatorias-discretas",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Variables Aleatorias Discretas",
+    "text": "Variables Aleatorias Discretas\n\nPara una variable aleatoria discreta, estos resultados numéricos toman valores aislados (entre dos números no existe ninguno intermedio) y los posibles valores son finitos.\nUsaremos letras mayúsculas, como \\(X\\), \\(Y\\), y \\(Z\\), para representar variables aleatorias y minúsculas ( \\(x\\), \\(y\\), y \\(z\\)) para indicar los resultados observados.\nDefinamos el siguiente proceso aleatorio: Tirar 3 veces una misma moneda y \\(X = \\text{N° de caras}\\)\nEn este ejemplo, el espacio muestral tiene 8 resultados, y \\(X\\) puede tomar los valores \\(0, 1, 2, 3\\):\n\n\n\\[\\{\\underbrace{SSS}_{0},\\ \\underbrace{CSS, SCS, SSC}_{1},\\ \\underbrace{CCS, CSC, SCC}_{2},\\ \\underbrace{CCC}_{3}\\}\\]\n\n\nAsí pasamos de “caras y sellos” a números sobre los que podemos calcular probabilidades.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#distribución-de-probabilidad",
+    "href": "00-nivelacion2/nivelacion-02.html#distribución-de-probabilidad",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Distribución de Probabilidad",
+    "text": "Distribución de Probabilidad\nLa distribución de una variable aleatoria nos dice qué probabilidad tiene cada valor posible. Para \\(X = \\text{N° de caras en 3 lanzamientos}\\):\n\n\n\n\\(x\\)\n0\n1\n2\n3\n\n\n\\(P(X = x)\\)\n1/8\n3/8\n3/8\n1/8\n\n\n\nTodas las probabilidades son \\(\\geq 0\\).\nLa suma de todas las probabilidades es 1.\n\n\n\n\n\n\n\n\n\nFunción Masa de Probabilidad (pmf)\n\n\nLa función que asigna una probabilidad a cada valor de una variable discreta se llama función de masa de probabilidad (pmf).",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#pmf-y-cdf",
+    "href": "00-nivelacion2/nivelacion-02.html#pmf-y-cdf",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "PMF y CDF",
+    "text": "PMF y CDF\n\n\nPMF: La distribución de probabilidad o función de masa de probabilidad de una variable discreta se define para cada número \\(x\\) como \\(p(x) = P(X = x)\\)\n\nEs decir, para cada valor posible \\(x\\) de la variable aleatoria, la función de masa de probabilidad especifica la probabilidad de observar dicho valor cuando se realiza el proceso aleatorio\n\n\n\nCDF: La función de distribución acumulada \\(F(x)\\) de una variable aleatoria discreta \\(X\\) con función de masa de probabilidad \\(p(x)\\) se define para cada número \\(x\\) como: \\[F(x) = P(X \\leq x) = \\sum_{y: y\\leq x} p(y)\\]\n\nEs decir, que para cualquier número \\(x\\), \\(F(x)\\) es la probabilidad de que el valor observado de \\(X\\) sea menor o igual a \\(x\\).",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#aplicando-la-pmf",
+    "href": "00-nivelacion2/nivelacion-02.html#aplicando-la-pmf",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Aplicando la pmf",
+    "text": "Aplicando la pmf\n\nDigamos que \\(X\\) es una variable aleatoria discreta que representa el número total de caras en 3 tiros de moneda. ¿Cuál es \\(P(X=2)\\)?\n\n\n\\(P(X=2)=\\frac{3}{8}=0.375\\)\n\n\n\n\n\n\n\n\n\n\n\nx\n0\n1\n2\n3\n\n\n\\(\\small P(X=x)=f(x)\\)\n\n\\(f(0)\\)=0,125\n\n\\(f(1)\\)=0,375\n\n\\(f(2)\\)=0,375\n\n\\(f(3)\\)=0,125\n\n\n\n\nProbemos haciendo el experimento 10.000 veces:\n\n\n\nresultados &lt;- replicate(expr = sum(sample(moneda, 3, replace = TRUE) == \"cara\"), n = 10000)\ntable(resultados)/10000\n\nresultados\n     0      1      2      3 \n0.1283 0.3674 0.3758 0.1285",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#función-de-distribución-acumulada-cdf-y-pmf",
+    "href": "00-nivelacion2/nivelacion-02.html#función-de-distribución-acumulada-cdf-y-pmf",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Función de Distribución Acumulada (cdf) y pmf",
+    "text": "Función de Distribución Acumulada (cdf) y pmf\n\n\n\n\n\n\n\n\n\n\n\nx\n0\n1\n2\n3\n\n\n\npmf\n\\(\\small P(X=x)=f(x)\\)\n\n\\(f(0)\\)=0,125\n\n\\(f(1)\\)=0,375\n\n\\(f(2)\\)=0,375\n\n\\(f(3)\\)=0,125\n\n\ncdf\n\\(\\small P(X&lt;=x)=F(x)\\)\n\n\\(F(0)\\)=0,125\n\n\\(F(1)\\)=0,5\n\n\\(F(2)\\)=0,875\n\n\\(F(3)\\)=1",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#pmf-y-cdf-en-r",
+    "href": "00-nivelacion2/nivelacion-02.html#pmf-y-cdf-en-r",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "PMF y CDF en R\n",
+    "text": "PMF y CDF en R\n\n\nEl paquete stats permite calcular fácilmente las funciones de probabilidad (pmf) y las funciones de probabilidad acumulada (cdf). La sintaxis general es: prefijo \\(+\\) distr donde distr es el sufijo de la abreviación de la distribución de probabilidad (por ejemplo, binom para la binomial, norm para la normal, y así sucesivamente); mientras que el \\(prefijo\\) puede ser uno de los siguientes valores:\n\n\n\\(d\\) para la pmf/pdf. En R se le llama density\n\n\n\\(p\\) para la cdf. En R se le llama distribution function\n\n\n\\(q\\) para los cuantiles. En R se le llama quantile function\n\n\n\\(r\\) para generar números aleatorios según la distribución indicada. En R se le llama random variates o random generation",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#la-familia-de-funciones-de-distribución-en-r",
+    "href": "00-nivelacion2/nivelacion-02.html#la-familia-de-funciones-de-distribución-en-r",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "La Familia de Funciones de Distribución en R\n",
+    "text": "La Familia de Funciones de Distribución en R\n\nR tiene una familia de funciones para cada distribución. Para la binomial, el sufijo es binom:\n\n\n\n\n\n\n\nPrefijo\nPregunta que responde\nFunción Ejemplo\n\n\n\nd\n¿Probabilidad de un valor exacto? En el caso discreto \\(P(X=x)\\) y altura de la curva si es continua\ndbinom()\n\n\np\n¿Probabilidad acumulada? \\(P(X \\leq x)\\)\n\npbinom()\n\n\nq\n¿Qué valor deja una probabilidad acumulada dada?\nqbinom()\n\n\nr\nGenerar valores aleatorios\n\nrbinom()\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nRecuerden que el mismo patrón aplica a la distribución normal que veremos más adelante (dnorm, pnorm, …) y a otras distribuciones. ¡Solo cambia el sufijo!",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#distribución-binomial",
+    "href": "00-nivelacion2/nivelacion-02.html#distribución-binomial",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Distribución Binomial",
+    "text": "Distribución Binomial\nUn proceso aleatorio sigue una distribución binomial si se cumplen las siguientes 4 condiciones (Devore 2016):\n\nEl experimento consta de una secuencia de \\(n\\) experimentos más pequeños llamados ensayos, donde \\(n\\) se fija antes del experimento.\nCada ensayo puede dar por resultado uno de los mismos dos resultados posibles (ensayos dicotómicos) los cuales se denotan como éxito (\\(S\\)) y como falla (\\(F\\)).\nLos ensayos son independientes entre sí, de modo que el resultado en un ensayo particular no influye en el resultado de cualquier otro ensayo.\nLa probabilidad de éxito \\(P(S)\\) es constante de un ensayo a otro. Esta probabilidad se denota por \\(p\\).\n\n\nTal y como se mencionó anteriormente, el lanzamiento de una moneda cumple precisamente con estas características, por lo que sigue una distribución binomial.\n\nPor ejemplo, el proceso aleatorio de lanzar 3 monedas y contar la cantidad de caras obtenidas cumple estas 4 condiciones:\n\n\\(n = 3\\)\n\\(p = 0.5\\)\néxito = “cara”.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#aplicación-en-r-dbinom",
+    "href": "00-nivelacion2/nivelacion-02.html#aplicación-en-r-dbinom",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Aplicación en R: dbinom()\n",
+    "text": "Aplicación en R: dbinom()\n\n\nSiguiendo con el ejemplo de la moneda, para calcular la probabilidad de obtener 2 caras en 3 lanzamientos de moneda, podemos utilizar la función dbinom() de la siguiente manera, sabiendo que \\(x = 2\\), \\(n = 3\\) y \\(p = 0.5\\):\n\n\n\ndbinom(2, size = 3, prob = 0.5)\n\n[1] 0.375\n\n\n\n\n\nEl resultado es 0.375 = 3/8, exactamente lo que habíamos contado en la tabla. Este cálculo directo nos ahorra tener que enumerar el espacio muestral del proceso aleatorio: \\(\\{CCC,\\color{Red}{CC}S,\\color{Red}{C}S\\color{Red}{C},S\\color{Red}{CC},CSS,SCS,SSC,SSS\\}\\).",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#aplicación-en-r-pbinom",
+    "href": "00-nivelacion2/nivelacion-02.html#aplicación-en-r-pbinom",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Aplicación en R: pbinom()\n",
+    "text": "Aplicación en R: pbinom()\n\n\nSi ahora quisiéramos calcular cuál es la probabilidad de tener 1 cara o menos en los mismos 3 lanzamientos, podemos utilizar la función pbinom() de la siguiente manera:\n\n\n\npbinom(1, size = 3, prob = 0.5)\n\n[1] 0.5\n\n\n\n\n\\(\\{CCC,CCS,CSC,SCC,\\color{Red}CSS,S\\color{Red}CS,SS\\color{Red}C,\\color{Red}{SSS}\\}\\).\n\n\n¿Y si quisiéramos obtener la probabilidad de obtener al menos 1 cara?\nPara responder a ello, podemos usar el complemento: \\(P(X \\geq 1) = 1 - P(X = 0)\\).\npbinom(0, 3, 0.5) entrega \\(P(X \\leq 0)\\), que aquí es igual a \\(P(X = 0)\\):\n\n\n\n1 - pbinom(0, size = 3, prob = 0.5)\n\n[1] 0.875\n\n\n\nEl resultado es 0.875 = 7/8: la misma lógica del complemento que usamos con las dos monedas, pero ahora calculado mediante funciones de R.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#aplicación-en-r-qbinom",
+    "href": "00-nivelacion2/nivelacion-02.html#aplicación-en-r-qbinom",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Aplicación en R: qbinom()\n",
+    "text": "Aplicación en R: qbinom()\n\n\n\nLa función qbinom() en R permite encontrar el valor de una variable binomial asociado a una probabilidad acumulada determinada. Es decir, calcula el cuantil (o percentil) de la distribución binomial. Los argumentos básicos de la función son:\n\n\np: La probabilidad acumulada.\n\nsize: El número de ensayos (lanzamientos de la moneda).\n\nprob: La probabilidad de éxito en cada ensayo (probabilidad de obtener cara en cada lanzamiento).\n\n\nqbinom(p, size, prob) devuelve el menor valor de \\(k\\) tal que la probabilidad acumulada \\(P(X\\leq k)\\) sea al menos \\(p\\), donde \\(X\\) es una variable aleatoria binomial con parámetros size y prob\nPor los ejercicios anteriores, sabemos que \\(P(X\\leq 0) = 0.125\\), \\(P(X\\leq 1) = 0.5\\), \\(P(X\\leq 2) = 0.875\\) y \\(P(X\\leq 3) = 1\\)\nPor lo tanto, si queremos saber hasta qué punto concreto de los valores que podría tomar \\(X\\) se acumula el 87.5% de la probabilidad, debemos ejecutar lo siguiente:\n\n\n\nqbinom(0.875, 3, 0.5)\n\n[1] 2",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#aplicación-distribución-binomial",
+    "href": "00-nivelacion2/nivelacion-02.html#aplicación-distribución-binomial",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "💻 Aplicación: Distribución Binomial",
+    "text": "💻 Aplicación: Distribución Binomial\nUna prueba tiene 5 preguntas de verdadero/falso. Un estudiante responde al azar (\\(p = 0.5\\) de acertar cada una). Complete el código para calcular la probabilidad de acertar exactamente 3:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPista\n\n\nLa pregunta dice “exactamente 3”, así que usamos el prefijo d (dbinom).",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#de-lo-discreto-a-lo-continuo",
+    "href": "00-nivelacion2/nivelacion-02.html#de-lo-discreto-a-lo-continuo",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "De lo Discreto a lo Continuo",
+    "text": "De lo Discreto a lo Continuo\n\nLa distribución binomial es discreta: \\(X\\) toma valores separados (0, 1, 2, 3…).\nPero muchas variables son continuas, es decir, pueden tomar cualquier valor en un rango (altura, ingreso, temperatura).\n\n\n\nEn variables continuas ya no preguntamos por \\(P(X = x)\\) exacto (es prácticamente 0), sino por la probabilidad de caer en un intervalo, que corresponde al área bajo la curva de su función de densidad, es decir, principalmente nos interesamos en calcular probabilidad mediante p funciones (ejemplo: pnorm()).\n\n\n\nLa distribución continua más importante (y protagonista para introducir reglas y conceptos de inferencia estadística) es la distribución normal.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#la-distribución-normal-1",
+    "href": "00-nivelacion2/nivelacion-02.html#la-distribución-normal-1",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "La Distribución Normal",
+    "text": "La Distribución Normal\n\nEs una distribución continua con forma de campana simétrica.\n\nSe describe con dos parámetros:\n\n\n\\(\\mu\\) (media): dónde está el centro.\n\n\\(\\sigma\\) (desviación estándar): qué tan ancha es.\n\n\nSe abrevia \\(X \\sim \\mathcal{N}(\\mu, \\sigma^2)\\).\nEn ella se cumple que media = mediana = moda.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#el-efecto-de-los-parámetros",
+    "href": "00-nivelacion2/nivelacion-02.html#el-efecto-de-los-parámetros",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "El Efecto de los Parámetros",
+    "text": "El Efecto de los Parámetros\n\\(\\mu\\) mueve la curva hacia la izquierda o derecha, mientras que \\(\\sigma\\) la hace más ancha o angosta:",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#ejemplo-la-altura-de-una-población",
+    "href": "00-nivelacion2/nivelacion-02.html#ejemplo-la-altura-de-una-población",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Ejemplo: La Altura de una Población",
+    "text": "Ejemplo: La Altura de una Población\nSupongamos que la altura (en cm) de una población se distribuye de forma normal con media 177 y desviación estándar 10:\n\\[X \\sim \\mathcal{N}(177,\\ 10^2)\\]\n\n\n\n\n\n\n\n\n\nQueremos calcular probabilidades sobre la altura usando pnorm().",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#calcular-probabilidades-con-pnorm",
+    "href": "00-nivelacion2/nivelacion-02.html#calcular-probabilidades-con-pnorm",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Calcular Probabilidades con pnorm()\n",
+    "text": "Calcular Probabilidades con pnorm()\n\n\n¿Cuál es la probabilidad de que alguien mida menos de 160 cm con la distribución anterior?\n\n\nSabemos que pnorm() entrega el área a la izquierda (la cdf, \\(P(X \\leq x)\\)):\n\npnorm(160, mean = 177, sd = 10)\n\n[1] 0.04456546\n\n\n\n\nPor lo tanto, hay un 4.5% de probabilidad de medir menos de 160 cm.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#calcular-probabilidades-con-pnorm-1",
+    "href": "00-nivelacion2/nivelacion-02.html#calcular-probabilidades-con-pnorm-1",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Calcular Probabilidades con pnorm()\n",
+    "text": "Calcular Probabilidades con pnorm()\n\n\n¿Cuál es la probabilidad de medir más de 180 cm?\n\n\nAhora necesitamos saber el área a la derecha, es decir, el complemento:\n\n1 - pnorm(180, mean = 177, sd = 10)\n\n[1] 0.3820886\n\n\n\n\nO bien usando el argumento lower.tail = FALSE:\n\npnorm(180, mean = 177, sd = 10, lower.tail = FALSE)\n\n[1] 0.3820886\n\n\nLo que nos indica que un 38.2% mide más de 180 cm.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#ejercicio-guiado-normal",
+    "href": "00-nivelacion2/nivelacion-02.html#ejercicio-guiado-normal",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "💻 Ejercicio Guiado: Normal",
+    "text": "💻 Ejercicio Guiado: Normal\nCon la misma distribución de altura \\(\\mathcal{N}(177, 10^2)\\), complete el código para calcular la probabilidad de medir entre 160 y 180 cm.\nPista: es el área a la izquierda de 180 menos el área a la izquierda de 160.\n\n\n\n\n\n\n\n\n\nEl resultado es 0.573: poco más de la mitad de la población mide entre 160 y 180 cm.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#puntaje-z-y-la-regla-empírica",
+    "href": "00-nivelacion2/nivelacion-02.html#puntaje-z-y-la-regla-empírica",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Puntaje Z y la Regla Empírica",
+    "text": "Puntaje Z y la Regla Empírica\n\nRecordemos de la Clase 1 el puntaje Z, el cual mide a cuántas desviaciones estándar está un valor de la media: \\[z = \\frac{x - \\mu}{\\sigma}\\]\nEn cualquier distribución con forma de campana se cumple la Regla Empírica:\n\n\n\n\nRango\n% de los datos\n\n\n\n\\(\\mu \\pm 1\\sigma\\)\n≈ 68%\n\n\n\\(\\mu \\pm 2\\sigma\\)\n≈ 95%\n\n\n\\(\\mu \\pm 3\\sigma\\)\n≈ 99.7%\n\n\n\n\n\nEstos porcentajes son el área bajo la curva normal, y serán la base para construir los intervalos de confianza que veremos más adelante.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#pregunta-n-3",
+    "href": "00-nivelacion2/nivelacion-02.html#pregunta-n-3",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "🧠 Pregunta N° 3",
+    "text": "🧠 Pregunta N° 3\nLa altura sigue una \\(\\mathcal{N}(177, 10^2)\\). Una persona mide 197 cm.\n\n¿Qué podemos decir de su puntaje Z?\n\nz = 2: está a 2 desviaciones sobre la media, entre el 2,5% más alto.\nz = 2: es un valor imposible bajo esta distribución.\nz = 20: está muy lejos de la media.\nz = 0,5: es un valor muy común.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#recordar-población-vs.-muestra",
+    "href": "00-nivelacion2/nivelacion-02.html#recordar-población-vs.-muestra",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Recordar: Población vs. Muestra",
+    "text": "Recordar: Población vs. Muestra\n\nPoblación (\\(N\\)): el grupo completo que nos interesa (por ejemplo, todos los hogares de Chile).\nMuestra (\\(n\\)): un subconjunto de la población que efectivamente observamos.\n\n\n\nUn parámetro describe a la población (la media real \\(\\mu\\)). Casi nunca lo conocemos.\nUn estadístico se calcula desde la muestra (la media muestral \\(\\bar{x}\\)). Es nuestra estimación del parámetro.\n\n\n\n\n\n\n\n\n\nTip\n\n\nHacemos inferencia: usamos el estadístico de una muestra para sacar conclusiones sobre el parámetro de la población.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#el-problema-la-incertidumbre",
+    "href": "00-nivelacion2/nivelacion-02.html#el-problema-la-incertidumbre",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "El Problema: la Incertidumbre",
+    "text": "El Problema: la Incertidumbre\n\nSi tomamos otra muestra, obtendremos una media distinta. Y otra más, otra distinta.\nCada muestra entrega una estimación algo diferente: existe variabilidad muestral.\n\n\n\n¿Cómo se comportan todas esas medias muestrales si repitiéramos el muestreo muchísimas veces?\n\n\n\nLa respuesta es uno de los resultados más importantes de la estadística: el Teorema del Límite Central.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#teorema-del-límite-central-tlc",
+    "href": "00-nivelacion2/nivelacion-02.html#teorema-del-límite-central-tlc",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Teorema del Límite Central (TLC)",
+    "text": "Teorema del Límite Central (TLC)\nEl TLC dice que, si tomamos muchas muestras de tamaño \\(n\\) y calculamos la media de cada una:\n\nLa distribución de esas medias tiende a una distribución normal…\n…aunque la población original no sea normal,\nLa media de estas medias muestrales está centrada justo en la media poblacional \\(\\mu\\),\ny su distribución es más angosta mientras mayor sea \\(n\\).\n\n\nVeamos una breve animación que lo explica:",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#la-edad-de-independencia-según-el-censo-2024",
+    "href": "00-nivelacion2/nivelacion-02.html#la-edad-de-independencia-según-el-censo-2024",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "La Edad de Independencia según el Censo 2024",
+    "text": "La Edad de Independencia según el Censo 2024\nUsemos la edad de la comuna de Independencia a partir de la base de datos de personas del Censo 2024. Como tenemos a todas las personas censadas, conocemos los parámetros poblacionales \\(\\mu\\) y \\(\\sigma\\):\n\nlibrary(readxl)\ncenso &lt;- read_excel(\"data/censo24-personas-independencia.xlsx\")   # columna: edad\ncenso |&gt; summarise(mu = mean(edad), sigma = sd(edad)) |&gt;  kable()\n\n\n\nmu\nsigma\n\n\n35.91319\n20.75632\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa distribución de la edad no es normal.\nEn la mayoría de los casos no conocemos \\(\\mu\\): solo tenemos muestras y realizamos estimaciones con \\(\\hat{\\mu} = \\bar{x}\\).\nCada muestra da un \\(\\hat{\\mu}\\) distinto. ¿Cómo se distribuyen?",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#muestras-de-la-edad-tlc",
+    "href": "00-nivelacion2/nivelacion-02.html#muestras-de-la-edad-tlc",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "1.000 Muestras de la Edad: TLC",
+    "text": "1.000 Muestras de la Edad: TLC\nTomamos 1.000 muestras y calculamos la media de la edad en cada una, para tres tamaños muestrales (\\(n = 10, 100, 500\\)):\n\n\nAunque la población no es normal, la distribución de las medias se aproxima a una normal, centrada en la media poblacional (línea roja) y cada vez más angosta a mayor \\(n\\). Eso es el Teorema del Límite Central.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#resumen",
+    "href": "00-nivelacion2/nivelacion-02.html#resumen",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Resumen",
+    "text": "Resumen\nEn general, si sacamos una muestra aleatoria de tamaño \\(n\\) desde una población \\(N\\), entonces:\n\nLa media muestral \\(\\bar{X}\\) es un estimador insesgado de \\(\\mu\\), y su dispersión, medida por el error estándar \\(\\sigma/\\sqrt{n}\\) disminuye al aumentar \\(n\\). Además, por el TCL, para \\(n\\) suficientemente grande la distribución de \\(\\bar{X}\\) a una Normal, sin importar la distribución original de la población.\nLos resultados basados en la muestra podrían ser generalizados a la población.\nLa estimación puntual, \\(\\hat{\\mu}\\), es una “buena suposición” del parámetro poblacional desconocido, \\(\\mu\\).\nEntonces, en vez de hacer un censo (costoso en muchos sentidos), podemos hacer inferencia sobre una población usando muestreo.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#error-estándar-se",
+    "href": "00-nivelacion2/nivelacion-02.html#error-estándar-se",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Error Estándar (SE)",
+    "text": "Error Estándar (SE)\n\nEl error estándar es una métrica única que resume la variabilidad en la distribución muestral de un estadístico.\nEl error estándar se puede estimar utilizando una estadística basada en la desviación estándar \\(s\\) de los valores de la muestra y el tamaño de la muestra \\(n\\):\n\n\n\\[SE = \\frac{s}{\\sqrt{n}}\\]\n\n\nA medida que aumenta el tamaño de la muestra, el error estándar disminuye: \\(\\uparrow n \\Rightarrow \\downarrow SE\\), tal y como vimos con los ejemplos anteriores (distribuciones más estrechas en torno al promedio poblacional).\n\n\n\n\n\n\n\n\nLa intuición central de la inferencia\n\n\nMientras más grande es la muestra (\\(n\\)), más pequeño es el error estándar, lo que hace que nuestra estimación sea más precisa.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#pregunta-n-4",
+    "href": "00-nivelacion2/nivelacion-02.html#pregunta-n-4",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "🧠 Pregunta N° 4",
+    "text": "🧠 Pregunta N° 4\nDos equipos estiman el ingreso promedio de una comuna. El equipo A usa una muestra de 100 personas; el equipo B, de 1.000.\n\n¿Qué estimación tendrá, en general, un menor error estándar?\n\nLa del equipo B, porque a mayor n menor es el error estándar.\nLa del equipo A, porque usa menos datos.\nAmbas tendrán el mismo error estándar.\nNo se puede saber sin conocer la media.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#intervalo-de-confianza-ic",
+    "href": "00-nivelacion2/nivelacion-02.html#intervalo-de-confianza-ic",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Intervalo de Confianza (IC)",
+    "text": "Intervalo de Confianza (IC)\n\nUna estimación puntual (como \\(\\bar{x}\\)) casi nunca es exactamente igual al parámetro. Por eso reportamos un rango de valores plausibles.\nUn intervalo de confianza es ese rango, construido para contener al parámetro con un nivel de confianza dado (típicamente 95%):\n\n\n\\[\\bar{x} \\pm c \\times SE\\]\ndonde \\(c\\) es un valor crítico (cercano a 2 para el 95%, por la Regla Empírica).\n\n\n\n\n\n\n\n\nInterpretación correcta\n\n\nSi repitiéramos el muestreo muchas veces, cerca del 95% de los intervalos construidos contendría el verdadero parámetro. No es que “hay 95% de probabilidad de que el parámetro esté en este intervalo particular”.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#construyendo-manualmente-un-ic-en-r",
+    "href": "00-nivelacion2/nivelacion-02.html#construyendo-manualmente-un-ic-en-r",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "💻 Construyendo Manualmente un IC en R\n",
+    "text": "💻 Construyendo Manualmente un IC en R\n\nUsaremos bdims (openintro), con 507 medidas físicas. Estimemos la altura promedio (hgt) con un IC al 95%:\n\n\n\n\n\n\n\n\n\nEl resultado es un rango alrededor de la media: nuestra estimación de la altura promedio con su incertidumbre.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#la-lógica-de-una-prueba-de-hipótesis",
+    "href": "00-nivelacion2/nivelacion-02.html#la-lógica-de-una-prueba-de-hipótesis",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "La Lógica de una Prueba de Hipótesis",
+    "text": "La Lógica de una Prueba de Hipótesis\nUna prueba de hipótesis nos ayuda a decidir si los datos respaldan una afirmación. Siempre planteamos dos hipótesis:\n\nHipótesis nula (\\(H_0\\)): “no hay efecto / no hay diferencia”. Es lo que asumimos por defecto.\nHipótesis alternativa (\\(H_1\\)): “sí hay efecto / sí hay diferencia”. Es lo que queremos probar.\n\n\n\n\n\n\n\n\nLa idea\n\n\nAsumimos que \\(H_0\\) es cierta y nos preguntamos: ¿qué tan sorprendentes serían estos datos si \\(H_0\\) fuera verdad? Si son muy sorprendentes, dudamos de \\(H_0\\).",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#el-p-valor",
+    "href": "00-nivelacion2/nivelacion-02.html#el-p-valor",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "El p-valor",
+    "text": "El p-valor\n\nEl p-valor mide esa “sorpresa”: es la probabilidad de observar un resultado al menos tan extremo como el nuestro si \\(H_0\\) fuera cierta.\nLo comparamos con un umbral \\(\\alpha\\) (habitualmente 0.05):\n\n\n\n\n\np-valor &lt; 0.05 → resultado poco probable bajo \\(H_0\\) → rechazamos \\(H_0\\) (hay evidencia de un efecto).\n\np-valor ≥ 0.05 → resultado compatible con \\(H_0\\) → no rechazamos \\(H_0\\) (no hay evidencia suficiente).\n\n\n\n\n\n\n\n\n\n\nImportante\n\n\n“No rechazar \\(H_0\\)” no prueba que \\(H_0\\) sea verdad; solo significa que no tenemos evidencia suficiente en su contra.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#la-prueba-t-t-test",
+    "href": "00-nivelacion2/nivelacion-02.html#la-prueba-t-t-test",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "La Prueba t (t-test)",
+    "text": "La Prueba t (t-test)\n\nLa prueba t es una de las más usadas. Sirve, por ejemplo, para comparar la media de dos grupos.\nPregunta clave: ¿la diferencia de medias que observo es real, o pudo deberse al azar del muestreo?\n\n\n\n\nEjemplo con bdims: ¿difiere la altura promedio entre hombres y mujeres?\n\n\n\\(H_0\\): la altura promedio es igual en ambos grupos.\n\n\\(H_1\\): la altura promedio es distinta.\n\n\n\n\n\nEn R esto se resuelve con una sola función: t.test():\n\nFórmula y datos: variable ~ grupo especifica qué se compara y por qué factor. El argumento data indica el data frame. t.test(hgt ~ sex, data = bdims) se lee: “compara hgt según sex”.\nHipótesis alternativa (alternative): por defecto es \"two.sided\" (\\(H_1: \\mu_1 \\neq \\mu_2\\)); puede ser \"less\" o \"greater\" si la pregunta es direccional.\nVarianzas iguales (var.equal): por defecto es FALSE, lo que aplica la versión de Welch, que es más robusta y no asume que ambos grupos tienen la misma dispersión. Con var.equal = TRUE se obtiene la prueba t clásica de Student.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#aplicación-t.test-en-r",
+    "href": "00-nivelacion2/nivelacion-02.html#aplicación-t.test-en-r",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Aplicación: t.test() en R\n",
+    "text": "Aplicación: t.test() en R\n\n\nt.test(hgt ~ sex, data = bdims)\n\n\n    Welch Two Sample t-test\n\ndata:  hgt by sex\nt = -21.059, df = 494.73, p-value &lt; 2.2e-16\nalternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0\n95 percent confidence interval:\n -14.07406 -11.67201\nsample estimates:\nmean in group 0 mean in group 1 \n       164.8723        177.7453 \n\n\n\nAl ejecutarlo, nos fijamos en dos resultados:\n\n\nEl p-valor: si es &lt; 0.05, hay evidencia de una diferencia real.\nEl intervalo de confianza de la diferencia: si no contiene el 0, refuerza que la diferencia es significativa.\n\n\n\n\nPara la altura por sexo, el p-valor es muy pequeño (≈ 0): rechazamos \\(H_0\\) y concluimos que sí existe una diferencia de altura entre hombres y mujeres en estos datos.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#test-de-hipótesis",
+    "href": "00-nivelacion2/nivelacion-02.html#test-de-hipótesis",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "💻 Test de Hipótesis",
+    "text": "💻 Test de Hipótesis\nQueremos saber si el peso promedio (wgt) difiere entre hombres y mujeres usando el dataset bdims. Complete y ejecute la prueba:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPara concluir, responda\n\n\n\n¿El p-valor es menor que 0.05?\nSegún eso, ¿rechaza o no rechaza \\(H_0\\)?\nRedacte la conclusión en palabras simples.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#pregunta-n-5",
+    "href": "00-nivelacion2/nivelacion-02.html#pregunta-n-5",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "🧠 Pregunta N° 5",
+    "text": "🧠 Pregunta N° 5\nUna prueba t comparando dos grupos arroja un p-valor de 0.32.\n\n¿Qué concluimos (con \\(\\alpha = 0.05\\))?\n\nNo rechazamos H₀: no hay evidencia suficiente de una diferencia.\nRechazamos H₀: hay una diferencia significativa.\nProbamos que los dos grupos son idénticos.\nEl resultado es muy extremo.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#resumen-lo-esencial-de-la-clase",
+    "href": "00-nivelacion2/nivelacion-02.html#resumen-lo-esencial-de-la-clase",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Resumen: Lo Esencial de la Clase",
+    "text": "Resumen: Lo Esencial de la Clase\n\n\n\n\n\n\nTip\n\n\n\nLa probabilidad mide la factibilidad de un resultado y se conecta con las variables aleatorias y sus distribuciones (binomial, normal).\nLa distribución normal describe muchos fenómenos en la práctica y permite estimar de manera precisa la variación de los estadísticos usados en muestras.\nSabemos que debido a la variabilidad muestral existe incertidumbre. No obstante, el TLC nos dice que las medias muestrales se distribuyen de forma normal, con menor error estándar a mayor \\(n\\). Esto permite mostrar empíricamente la relevancia del tamaño de una muestra para hacer inferencia estadística.\nUn intervalo de confianza (IC) para un parámetro es un intervalo de números dentro del cual se cree que se encuentra dicho parámetro. La probabilidad de que este método produzca un intervalo que contenga el parámetro se denomina nivel de confianza. Este nivel de confianza se elige como un número cercano a 1, como 0,95 o 0,99.\nInterpretación Correcta del IC:(Çetinkaya-Rundel y Hardin 2024) Tenemos un XX% de confianza en que el parámetro poblacional se encuentra entre el límite inferior y el límite superior (donde ambos son valores numéricos). Un lenguaje incorrecto podría describir el intervalo de confianza como una representación del parámetro poblacional con una probabilidad determinada. Este es uno de los errores más comunes: El nivel de confianza solo cuantifica la plausibilidad de que el parámetro se encuentre dentro del intervalo.\nLa prueba de hipótesis y el p-valor nos permiten decidir, con un criterio claro, si los datos respaldan una afirmación.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#lo-que-viene-módulo-2",
+    "href": "00-nivelacion2/nivelacion-02.html#lo-que-viene-módulo-2",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Lo que Viene: Módulo 2",
+    "text": "Lo que Viene: Módulo 2\nEstos fundamentos son la base de lo que viene en el Módulo 2:\n\nHerramientas de Ciencia de Datos con R: importar, ordenar, transformar, visualizar y comunicar datos.\nEstadística Aplicada con R: inferencia estadística, regresión lineal y casos aplicados a políticas públicas.\n\n\n\n\n\n\n\n\nPara reforzar\n\n\nRecuerden que cada clase cuenta con una guía de ejercicios en Webcursos para practicar de forma autónoma. ¡La práctica es la mejor forma de aprender!",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#gracias-por-su-atención",
+    "href": "00-nivelacion2/nivelacion-02.html#gracias-por-su-atención",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "¡Gracias por su Atención!",
+    "text": "¡Gracias por su Atención!\nEspacio final para preguntas.\n\n📤 La presentación y grabación se subirán a Webcursos.\n📧 Consultas a través del foro del curso.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion2/nivelacion-02.html#bibliografía",
+    "href": "00-nivelacion2/nivelacion-02.html#bibliografía",
+    "title": "Clase 2: Probabilidad e Inferencia",
+    "section": "Bibliografía",
+    "text": "Bibliografía\n\n\nAgresti, Alan. 2018. Statistical methods for the social sciences. Fifth edition, global edition. Harlow: Pearson Education, Limited.\n\n\nÇetinkaya-Rundel, Mine, y Johanna Hardin. 2024. Introduction to modern statistics. 2e ed. Vereinigte Staaten: OpenIntro, Inc. https://openintro-ims.netlify.app/.\n\n\nDevore, Jay L. 2016. Probabilidad y estadística para ingeniería y ciencias (9a. ed.). Distrito Federal: CENGAGE Learning.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Nivelación",
+      "Clase 2: Inferencia Estadística"
+    ]
+  },
+  {
+    "objectID": "00-nivelacion1/index.html",
+    "href": "00-nivelacion1/index.html",
+    "title": "Clase 1: Estadística Descriptiva",
+    "section": "",
+    "text": "Usa las flechas del teclado para navegar. Presiona F para pantalla completa.\n\n\n🔗 Abrir en pantalla completa"
+  },
+  {
+    "objectID": "00-nivelacion1/index.html#material-de-clase",
+    "href": "00-nivelacion1/index.html#material-de-clase",
+    "title": "Clase 1: Estadística Descriptiva",
+    "section": "",
+    "text": "Usa las flechas del teclado para navegar. Presiona F para pantalla completa.\n\n\n🔗 Abrir en pantalla completa"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "DIAPP 2026 · Análisis de Datos y Estadística Computacional",
+    "section": "",
+    "text": "Bienvenidos al sitio del Módulo II del Diplomado en Herramientas de Inteligencia Artificial para Políticas Públicas (DIAPP 2026), Universidad Adolfo Ibáñez."
+  },
+  {
+    "objectID": "index.html#nivelación-estadística",
+    "href": "index.html#nivelación-estadística",
+    "title": "DIAPP 2026 · Análisis de Datos y Estadística Computacional",
+    "section": "Nivelación Estadística",
+    "text": "Nivelación Estadística\n\n\n\n\n\nMódulo\nNivelación Estadística\n\n\nCarácter\nOptativo\n\n\nProfesor\nGabriel Duarte (gabriel.duarte@edu.uai.cl)\n\n\nAyudante\nJean Paul Sepúlveda (jean.sepulveda@edu.uai.cl)\n\n\nModalidad\nEn vivo, vía Zoom\n\n\nPlataforma\nWebcursos\n\n\nEvaluación\nSin evaluaciones\n\n\n\n\n\n\n\n\nN°\nFecha\nHora\n\n\n\n\nClase 1\nMartes 02-06-2026\n18:30 a 21:00\n\n\nClase 2\nJueves 04-06-2026\n18:30 a 21:00\n\n\n\n\n\n📋 Programa 📊 Clase 1: Estadística Descriptiva 📊 Clase 2: Estadística Inferencial"
+  },
+  {
+    "objectID": "index.html#módulo-ii-análisis-de-datos-y-estadística-computacional",
+    "href": "index.html#módulo-ii-análisis-de-datos-y-estadística-computacional",
+    "title": "DIAPP 2026 · Análisis de Datos y Estadística Computacional",
+    "section": "Módulo II: Análisis de Datos y Estadística Computacional",
+    "text": "Módulo II: Análisis de Datos y Estadística Computacional\n\n\n\n\n\nMódulo\nII\n\n\nPrerrequisito\nIntroducción a R\n\n\nAsistencia\n75%\n\n\nProfesor\nGabriel Duarte\n\n\nAyudante\nJean Paul Sepúlveda\n\n\nModalidad\nEn vivo, vía Zoom\n\n\nPlataforma\nWebcursos\n\n\n\n\n\n\n\n\nN°\nFecha\nHora\n\n\n\n\nClase 1\nMartes 09-06-2026\n18:30 a 21:50\n\n\nClase 2\nSábado 13-06-2026\n09:00 a 12:20\n\n\nClase 3\nMartes 16-06-2026\n18:30 a 21:50\n\n\nClase 4\nSábado 20-06-2026\n09:00 a 12:20\n\n\nClase 5\nMartes 23-06-2026\n18:30 a 21:50\n\n\nClase 6\nSábado 04-07-2026\n09:00 a 12:20\n\n\nClase 7\nMartes 07-07-2026\n18:30 a 21:50\n\n\nClase 8\nSábado 11-07-2026\n09:00 a 12:20\n\n\n\n\n\nAyudantías:\n\n\n\nN°\nFecha\nHora\n\n\n\n\nAyudantía 1\nJueves 25-06-2026\n18:30\n\n\nAyudantía 2\nMartes 14-07-2026\n18:30\n\n\n\n📋 Programa Módulo II\n\n\n\nClase\nTema\nMaterial\n\n\n\n\n1\nImportación y cruce de datos\nVer clase\n\n\n2\nTransformación de datos\nPróximamente\n\n\n3\nVisualización de datos\nPróximamente\n\n\n4\nComunicar con R e IA\nPróximamente\n\n\n5\nInferencia estadística\nPróximamente\n\n\n6\nRegresión lineal I\nPróximamente\n\n\n7\nRegresión lineal II\nPróximamente\n\n\n8\nTaller de cierre\nPróximamente"
+  },
+  {
     "objectID": "00-nivelacion1/nivelacion-01.html#nivelación-estadística",
     "href": "00-nivelacion1/nivelacion-01.html#nivelación-estadística",
     "title": "Clase 1: Estadística Descriptiva",
@@ -64,7 +927,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#qué-son-los-datos",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "¿Qué Son Los Datos?",
-    "text": "¿Qué Son Los Datos?\n\nLa recopilación de información está en el centro de toda conocimiento científico.\nEsta recopilación entrega observaciones, las cuales son usadas en el análisis estadístico.\nA las observaciones recolectadas sobre características de interés se les conoce como datos.\nAnalizar los datos de manera correcta nos permite aprender cómo estas características recolectadas están asociadas y responder preguntas relevantes para la ciencia social, como por ejemplo:\n\n¿Los trabajadores que tienen mayor educación suelen ganar más? ¿Cuánto más?\n¿Qué variables permiten explicar de mejor manera los altos niveles violencia en ciertos territorios?\n¿Cuál es el efecto de un programa social en la reincidencia delictual de niños, niñas y adolescentes?",
+    "text": "¿Qué Son Los Datos?\n\nLa recopilación de información está en el centro de todo conocimiento científico.\nEsta recopilación entrega observaciones, las cuales son usadas en el análisis estadístico.\nA las observaciones recolectadas sobre características de interés se les conoce como datos.\nAnalizar los datos de manera correcta nos permite aprender cómo estas características recolectadas están asociadas y responder preguntas relevantes para la ciencia social, como por ejemplo:\n\n¿Los trabajadores que tienen mayor educación suelen ganar más? ¿Cuánto más?\n¿Qué variables permiten explicar de mejor manera los altos niveles violencia en ciertos territorios?\n¿Cuál es el efecto de un programa social en la reincidencia delictual de niños, niñas y adolescentes?",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -124,7 +987,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#para-qué-sirve-la-estadística",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "¿Para Qué Sirve la Estadística?",
-    "text": "¿Para Qué Sirve la Estadística?\n\nEn este sentido, la estadística provee métodos para:\n\n\n\nDiseñar: Planear como obtener datos para un estudio de investigación, de manera que sean informativos.\n\nEjemplo: Cómo seleccionar a la gente para una encuesta y cómo diseñar sus preguntas.\n\n\n\nDescribir: Resumir y entender los datos obtenidos y de manera simple y sin distorsionar o perder mucha información.\n\nEjemplo: Presentar estadísticas descriptivas o gráficos de barra con el objetivo de mostrar los datos de manera simple y entendible, sin distorsionar o perder mucha información.\n\n\n\nInferir: Para hacer predicciones basadas en los datos, manejando la incertidumbre de una estimación de manera objetiva.\n\nEjemplo: Estimar los rangos en que oscila el efecto de un programa de manera confiable.",
+    "text": "¿Para Qué Sirve la Estadística?\n\nEn este sentido, la estadística provee métodos para:\n\n\n\nDiseñar: Planear como obtener datos para un estudio de investigación, de manera que sean informativos.\n\nEjemplo: Cómo seleccionar a la gente para una encuesta y cómo diseñar sus preguntas.\n\n\n\nDescribir: Resumir y entender los datos obtenidos de manera simple y sin distorsionar ni perder información relevante.\n\nEjemplo: Presentar estadísticas descriptivas o gráficos de barra con el objetivo de mostrar los datos de manera simple y entendible, sin distorsionar o perder mucha información.\n\n\n\nInferir: Para hacer predicciones basadas en los datos, manejando la incertidumbre de una estimación de manera objetiva.\n\nEjemplo: Estimar los rangos en que oscila el efecto de un programa de manera confiable.",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -136,7 +999,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#población-y-muestra",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "Población y Muestra",
-    "text": "Población y Muestra\nGran parte de la estadística se basa en cómo extraer conclusiones a partir de un conjunto parcial de datos sobre una población de estudio. Es relevante entender que la población no solamente pueden ser personas, sino que también hogares, unidades territoriales, etc.\n\n\n\n\n\n\n\nPoblación y Muestra (Agresti 2018)\n\n\nLa población es el conjunto total de sujetos de interés en un estudio. Una muestra, es un subconjunto de la población sobre la cual se recolectan datos.\n\n\n\n\n\n\n\nFuente: Elaboración propia con IA (ChatGPT, 2026)",
+    "text": "Población y Muestra\nGran parte de la estadística se basa en cómo extraer conclusiones a partir de un conjunto parcial de datos sobre una población de estudio. Es relevante entender que la población no solamente puede estar conformada por personas, sino también por hogares, unidades territoriales, etc.\n\n\n\n\n\n\n\nPoblación y Muestra (Agresti 2018)\n\n\nLa población es el conjunto total de sujetos de interés en un estudio. Una muestra, es un subconjunto de la población sobre la cual se recolectan datos.\n\n\n\n\n\n\n\nFuente: Elaboración propia con IA (ChatGPT, 2026)",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -208,7 +1071,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#variables-y-su-clasificación-1",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "Variables y su Clasificación",
-    "text": "Variables y su Clasificación\n\n\nNuméricos: Variables cuya escala de medición tiene valores numéricos que representan diferentes magnitudes. Pueden clasificarse en:\n\n\nContinuos: Datos que pueden tomar cualquier valor en un intervalo, es decir, pueden tomar infinitos valores posibles dentro de los números reales. Ejemplo de variables continuas son la altura, el peso o el tiempo entre dos ciudadaes.\n\nDiscretos: Datos que sus posibles valores forman un conjunto de números separados, tales como los recuentos (0, 1, 2, 3, …). Un ejemplo de variables discretas es el número de hermanos.\n\n\n\nCategóricos: Variables que solo pueden tomar valores específicos sobre un set de posibles categorías. Pueden clasificarse en:\n\n\nNominales: Categorías que no se pueden ordenar, es decir, que ninguna categoría es mayor ni menor que ninguna otra categoría. Por ejemplo: Blanco, Verde y Rojo.\n\n\nBinarios: Un caso especial de datos categóricos con solo 2 categorías de valores, por ejemplo: hombre/mujer, 0/1, verdadero/falso, presente/ausente, etc.\n\n\n\nOrdinales: Datos categóricos que tienen un orden explícito. A diferencia de las cuantitativas, hay un orden pero no un valor numérico que permite medir cuánta es la distancia entre cada categoría. Ej: primer, segundo y tercer lugar; clase alta, media o baja; siempre, ocasionalmente o nunca; etc.",
+    "text": "Variables y su Clasificación\n\n\nNuméricos: Variables cuya escala de medición tiene valores numéricos que representan diferentes magnitudes. Pueden clasificarse en:\n\n\nContinuos: Datos que pueden tomar cualquier valor en un intervalo, es decir, pueden tomar infinitos valores posibles dentro de los números reales. Ejemplo de variables continuas son la altura, el peso o el tiempo entre dos ciudades.\n\nDiscretos: Datos que sus posibles valores forman un conjunto de números separados, tales como los recuentos (0, 1, 2, 3, …). Un ejemplo de variables discretas es el número de hermanos.\n\n\n\nCategóricos: Variables que solo pueden tomar valores específicos sobre un set de posibles categorías. Pueden clasificarse en:\n\n\nNominales: Categorías que no se pueden ordenar, es decir, que ninguna categoría es mayor ni menor que ninguna otra categoría. Por ejemplo: Blanco, Verde y Rojo.\n\n\nBinarios: Un caso especial de datos categóricos con solo 2 categorías de valores, por ejemplo: hombre/mujer, 0/1, verdadero/falso, presente/ausente, etc.\n\n\n\nOrdinales: Datos categóricos que tienen un orden explícito. A diferencia de las cuantitativas, hay un orden pero no un valor numérico que permite medir cuánta es la distancia entre cada categoría. Ej: primer, segundo y tercer lugar; clase alta, media o baja; siempre, ocasionalmente o nunca; etc.",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -256,7 +1119,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#ejemplo-en-r-1",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "Ejemplo en R\n",
-    "text": "Ejemplo en R\n\nOtra forma más elegante obtener esta información es con la función glimpse &lt;dplyr&gt;:\n\n\nlibrary(dplyr) #Cargo paquete para usar función glimpse\nglimpse(gapminder)\n\nRows: 1,704\nColumns: 6\n$ country   &lt;fct&gt; \"Afghanistan\", \"Afghanistan\", \"Afghanistan\", \"Afghanistan\", …\n$ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, …\n$ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, …\n$ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8…\n$ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12…\n$ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, …\n\n\n\n\nDel resultado anterior vemos que:\n\n\ncountry es una variable tipo factor.\n\ncontinent es una variable tipo factor.\n\nyear es una variable tipo int.\n\nlifeExp es una variable tipo num.\n\npop es una variable tipo int.\n\ngdpPercap es una variable tipo num.",
+    "text": "Ejemplo en R\n\nOtra forma más elegante de obtener esta información es con la función glimpse() del paquete dplyr:\n\n\nlibrary(dplyr) #Cargo paquete para usar función glimpse\nglimpse(gapminder)\n\nRows: 1,704\nColumns: 6\n$ country   &lt;fct&gt; \"Afghanistan\", \"Afghanistan\", \"Afghanistan\", \"Afghanistan\", …\n$ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, …\n$ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, …\n$ lifeExp   &lt;dbl&gt; 28.801, 30.332, 31.997, 34.020, 36.088, 38.438, 39.854, 40.8…\n$ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12…\n$ gdpPercap &lt;dbl&gt; 779.4453, 820.8530, 853.1007, 836.1971, 739.9811, 786.1134, …\n\n\n\n\nDel resultado anterior vemos que:\n\n\ncountry es una variable tipo factor.\n\ncontinent es una variable tipo factor.\n\nyear es una variable tipo int.\n\nlifeExp es una variable tipo num.\n\npop es una variable tipo int.\n\ngdpPercap es una variable tipo num.",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -268,7 +1131,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#resumen",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "Resumen",
-    "text": "Resumen\n\n\n\n\n\n\nConceptos Importantes (Agresti 2018)\n\n\n\nEl campo de la estadística guarda relación con la recopilación, análisis y uso de datos para tomar decisiones y resolver problemas.\nLas 2 ramas principales de la estadística son la descriptiva y la inferencial.\nLa estadística descriptiva consiste en métodos para organizar y resumir datos.\nLa estadística inferencial consiste en métodos para obtener conclusiones o predicciones objetivas a partir de una muestra de datos.\nLos datos corresponden observaciones que se recolectan sobre características de interés. Los datos que usaremos en este curso corresponden a datos ordenados o rectangulares en donde cada fila es una observación de la unidad de análisis, cada columna una variable o característica de interés y cada celda es un valor específico para una observación y una característica determinada.\nLos métodos estadísticos analizan datos de variables (características que varían entre sujetos o unidades de observación) y pueden definirse como cuantitativas (variables que son medidas en un intervalo) o cualitativas (variables que toman un valor específico dentro de un conjunto de categorías).\nLas variables cuantitativas pueden clasificarse en dos: Discretas (cuyos valores posibles son finitos) y continuas (cuyos valores posibles son infinitos dentro un rango determinado). Las variables cualitativas por su parte, pueden ser nominales (categorías sin orden) y ordinales (categorías con un orden definido que indica mayor o menor medida de algo sin especificar cuánto).",
+    "text": "Resumen\n\n\n\n\n\n\nConceptos Importantes (Agresti 2018)\n\n\n\nEl campo de la estadística guarda relación con la recopilación, análisis y uso de datos para tomar decisiones y resolver problemas.\nLas 2 ramas principales de la estadística son la descriptiva y la inferencial.\nLa estadística descriptiva consiste en métodos para organizar y resumir datos.\nLa estadística inferencial consiste en métodos para obtener conclusiones o predicciones objetivas a partir de una muestra de datos.\nLos datos corresponden a observaciones que se recolectan sobre características de interés. Los datos que usaremos en este curso corresponden a datos ordenados o rectangulares en donde cada fila es una observación de la unidad de análisis, cada columna una variable o característica de interés y cada celda es un valor específico para una observación y una característica determinada.\nLos métodos estadísticos analizan datos de variables (características que varían entre sujetos o unidades de observación) y pueden definirse como cuantitativas (variables que son medidas en un intervalo) o cualitativas (variables que toman un valor específico dentro de un conjunto de categorías).\nLas variables cuantitativas pueden clasificarse en dos: Discretas (cuyos valores posibles son finitos) y continuas (cuyos valores posibles son infinitos dentro un rango determinado). Las variables cualitativas por su parte, pueden ser nominales (categorías sin orden) y ordinales (categorías con un orden definido que indica mayor o menor medida de algo sin especificar cuánto).",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -316,7 +1179,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#estadística-descriptiva-1",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "Estadística Descriptiva",
-    "text": "Estadística Descriptiva\n\nEl objetivo de la estadística descriptiva es resumir datos para facilitar su comprensión y puede usarse tanto para datos cuantitativos como cualitativos.\nPara variables cualitativas, generalmente se utilizan las frecuencias absolutas y relativas de cada categoría.\nPara las variables cuantitativas el espectro de medidas es más amplio, pudiendo distinguir cuatro grandes tipos:\n\nMedidas de tendencia central (🎯): Media, Mediana y Moda.\nMedidas de variabilidad (📊): Varianza y Desviación Estándar.\nMedidas de posición (📏): Percentiles, Rango Intercuartil (IQR).\nMedidas de asociación (📈) para datos cuantitativos bivariados: Correlación.\n\n\n\n\n\n\n\n\n\n\nConocimiento Relevante (Agresti 2018)\n\n\nLas estadísticas descriptivas para una variable cuantiativa poseen dos atributos principales para describirlas numéricamente: El centro o su observación típica (por ejemplo, a través de la media) y su variabilidad (por ejemplo, a través de la desviación estándar).",
+    "text": "Estadística Descriptiva\n\nEl objetivo de la estadística descriptiva es resumir datos para facilitar su comprensión y puede usarse tanto para datos cuantitativos como cualitativos.\nPara variables cualitativas, generalmente se utilizan las frecuencias absolutas y relativas de cada categoría.\nPara las variables cuantitativas el espectro de medidas es más amplio, pudiendo distinguir cuatro grandes tipos:\n\nMedidas de tendencia central (🎯): Media, Mediana y Moda.\nMedidas de variabilidad (📊): Varianza y Desviación Estándar.\nMedidas de posición (📏): Percentiles, Rango Intercuartil (IQR).\nMedidas de asociación (📈) para datos cuantitativos bivariados: Correlación.\n\n\n\n\n\n\n\n\n\n\nConocimiento Relevante (Agresti 2018)\n\n\nLas estadísticas descriptivas para una variable cuantitativa poseen dos atributos principales para describirlas numéricamente: El centro o su observación típica (por ejemplo, a través de la media) y su variabilidad (por ejemplo, a través de la desviación estándar).",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -328,7 +1191,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#distribuciones-de-frecuencia",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "Distribuciones de Frecuencia",
-    "text": "Distribuciones de Frecuencia\n\nUna de las formas más básicas de resumir información es mediante tablas y gráficos que muestren una distribución de frecuencia, ya sea de una variable cualitativa o cuantitativa.\n\n\n\n\n\n\n\n\nDistribución de Frecuencia (Agresti 2018)\n\n\nUna distribución de frecuencias es una lista de los posibles valores de una variable, junto con el número de observaciones para cada valor.\n\n\n\n\n\nLas distribuciones de frecuencia se pueden visualizar mediante gráficos de barra (barplots) para datos cualitativos y mediante histogramas (histograms) en el caso de datos cuantitativos.\n\n\nPara resumir datos categóricos, una forma sencilla de hacerlo sería:\n\nListar los distitos valores de cada categoría.\nContar los casos (observaciones) que hay dentro de cada una de ellas.\nConstruir un indicador de frecuencia relativa (o porcentaje) de cada categoría que permita entender rápidamente el peso de cada una sobre el total.",
+    "text": "Distribuciones de Frecuencia\n\nUna de las formas más básicas de resumir información es mediante tablas y gráficos que muestren una distribución de frecuencia, ya sea de una variable cualitativa o cuantitativa.\n\n\n\n\n\n\n\n\nDistribución de Frecuencia (Agresti 2018)\n\n\nUna distribución de frecuencias es una lista de los posibles valores de una variable, junto con el número de observaciones para cada valor.\n\n\n\n\n\nLas distribuciones de frecuencia se pueden visualizar mediante gráficos de barra (barplots) para datos cualitativos y mediante histogramas (histograms) en el caso de datos cuantitativos.\n\n\nPara resumir datos categóricos, una forma sencilla de hacerlo sería:\n\nListar los distintos valores de cada categoría.\nContar los casos (observaciones) que hay dentro de cada una de ellas.\nConstruir un indicador de frecuencia relativa (o porcentaje) de cada categoría que permita entender rápidamente el peso de cada una sobre el total.",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -364,7 +1227,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#distribución-de-frecuencias-cuantitativas",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "Distribución de Frecuencias Cuantitativas",
-    "text": "Distribución de Frecuencias Cuantitativas\n\nUn histograma es un gráfico de distribución de frecuencia para una variable cuantitativa.\nA diferencia de los gráficos de barra en donde a una cantidad finita de valores posibles a contabilizar, los histogramas requieren definir la cantidad de intervalos o barras (bins) con que se construirá el gráfico.\nSi se ocupan muy pocos intervalos o barras, se pierde mucha información. Si se ocupan muchos intervalos, la información se torna difícil de interpretar e incluso puede ocultar los patrones generales que se quieren mostrar.\nUna alternativa para mostrar la distribución completa de una variable es hacer gráficos de densidad (density plots)\nEn R esto se puede lograr mediante geom_histogram() y geom_density()",
+    "text": "Distribución de Frecuencias Cuantitativas\n\nUn histograma es un gráfico de distribución de frecuencia para una variable cuantitativa.\nA diferencia de los gráficos de barra, donde hay una cantidad finita de valores posibles a contabilizar, los histogramas requieren definir la cantidad de intervalos o barras (bins) con que se construirá el gráfico.\nSi se ocupan muy pocos intervalos o barras, se pierde mucha información. Si se ocupan muchos intervalos, la información se torna difícil de interpretar e incluso puede ocultar los patrones generales que se quieren mostrar.\nUna alternativa para mostrar la distribución completa de una variable es hacer gráficos de densidad (density plots)\nEn R esto se puede lograr mediante geom_histogram() y geom_density()",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -377,18 +1240,6 @@
     "title": "Clase 1: Estadística Descriptiva",
     "section": "Histogramas y Gráficos de Densidad",
     "text": "Histogramas y Gráficos de Densidad\n\n\n\nlibrary(ggplot2)\npenguins |&gt;\n  ggplot(aes(x = flipper_len)) +\n  geom_histogram(fill = \"blue4\", color = \"black\", alpha = .5) +\n  labs(x = \"Largo de la Aleta\", y = \"Frecuencia\", title = \"Histograma del Largo de la Aleta\",\n       subtitle = \"344 Pingüinos del dataset penguins\")\n\n\n\n\n\n\n\n\n\nlibrary(ggplot2)\npenguins |&gt;\n  ggplot(aes(x = flipper_len)) +\n  geom_density(fill = \"purple4\", color = \"black\", alpha = .5) +\n  labs(x = \"Largo de la Aleta\", y = \"Densidad\", title = \"Gráfico de Densidad del Largo de la Aleta\",\n       subtitle = \"344 Pingüinos del dataset penguins\")",
-    "crumbs": [
-      "🏠 Inicio",
-      "Nivelación",
-      "Clase 1: Estadística Descriptiva"
-    ]
-  },
-  {
-    "objectID": "00-nivelacion1/nivelacion-01.html#distribución-de-una-variable",
-    "href": "00-nivelacion1/nivelacion-01.html#distribución-de-una-variable",
-    "title": "Clase 1: Estadística Descriptiva",
-    "section": "Distribución de una Variable",
-    "text": "Distribución de una Variable",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -412,7 +1263,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#media-aplicación",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "💻 🎯 Media: Aplicación",
-    "text": "💻 🎯 Media: Aplicación\nCalcule el promedio de víctimas de homicidio consumado mensuales del año 2025 a partir del informe elaborado por el Centro para la Prevención de Homicidios y Delitos Violentos ¿cuántas víctimas de homicidios hubo durante 2025? (Hint: la función sum() permite sumar los elementos de un vector)",
+    "text": "💻 🎯 Media: Aplicación\nCalcule el promedio de víctimas de homicidio consumado mensuales del año 2025 a partir del informe elaborado por el Centro para la Prevención de Homicidios y Delitos Violentos. ¿Cuántas víctimas de homicidios hubo durante 2025? (Hint: la función sum() permite sumar los elementos de un vector)",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -496,7 +1347,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#varianza-1",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "📊 Varianza",
-    "text": "📊 Varianza\n\nLa medida de variabilidad más útil se basa en las desviaciones de cada observación respecto a la media \\(\\bar{y}\\):\n\n\n\\[\\text{Desviación}_i = y_i - \\bar{y}\\]\n\n\nLa suma de todas las desviaciones siempre es cero: \\(\\sum(y_i - \\bar{y}) = 0\\), por lo que se usan los cuadrados de las desviaciones para poder obtener una medida de variabilidad de una variable completa (y no solo la desviación de cada uno de sus valores).\nLa varianza \\(s^2\\) es aproximadamente el promedio de las desviaciones al cuadrado:\n\n\n\\[s^2 = \\frac{\\sum(y_i - \\bar{y})^2}{n-1} = \\frac{(y_1-\\bar{y})^2 + (y_2-\\bar{y})^2 + \\cdots + (y_n-\\bar{y})^2}{n-1}\\]\n\n\nEn R se puede calcular usando la función var()\n\n\n\n\nvar(penguins$body_mass, na.rm = T)\n\n[1] 643131.1",
+    "text": "📊 Varianza\n\nLa medida de variabilidad más útil se basa en las desviaciones de cada observación respecto a la media \\(\\bar{y}\\):\n\n\n\\[\\text{Desviación}_i = y_i - \\bar{y}\\]\n\n\nLa suma de todas las desviaciones siempre es cero: \\(\\sum(y_i - \\bar{y}) = 0\\), por lo que se usan los cuadrados de las desviaciones para obtener una medida de variabilidad de toda la variable (y no solo la desviación de cada uno de sus valores).\nLa varianza \\(s^2\\) es aproximadamente el promedio de las desviaciones al cuadrado:\n\n\n\\[s^2 = \\frac{\\sum(y_i - \\bar{y})^2}{n-1} = \\frac{(y_1-\\bar{y})^2 + (y_2-\\bar{y})^2 + \\cdots + (y_n-\\bar{y})^2}{n-1}\\]\n\n\nEn R se puede calcular usando la función var()\n\n\n\n\nvar(penguins$body_mass, na.rm = T)\n\n[1] 643131.1",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -568,7 +1419,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#percentiles-y-cuartiles",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "📏 Percentiles y Cuartiles",
-    "text": "📏 Percentiles y Cuartiles\nOtra forma de describir una distribución es mediante medidas de posición. Esto nos permite identificar el punto en el cual cierto porcentaje de los datos se ubican debajo (o sobre) tal punto.\n\n\n\n\n\n\n\nPercentiles y Cuartiles\n\n\nEl percentil \\(p\\) es el valor tal que el \\(p\\%\\) de las observaciones cae por debajo o en ese punto, y el \\((100-p)\\%\\) cae por encima.\nLos cuartiles (\\(Q_n\\)) se obtienen a partir de la definición de percentil cuando se define \\(p = 25\\) y \\(p = 75\\). Los cuartiles, junto con la mediana, dividen la distribución en cuatro partes, cada una de las cuales contiene una cuarta parte de las observaciones.\n\n\n\n\n\n\n\nPercentil\nNombre\nInterpretación\n\n\n\n25°\n\nCuartil inferior \\(Q_1\\)\n\n25% de los datos cae por debajo\n\n\n50°\n\nMediana \\(Q_2\\)\n\n50% de los datos cae por debajo\n\n\n75°\n\nCuartil superior \\(Q_3\\)\n\n25% de los datos cae por encima\n\n\n\nEl Rango Intercuartil \\(IQR = Q_3 - Q_1\\) mide la dispersión del 50% central de los datos y es la base de para la construcción del gráfico conocido como boxplot o de caja y bigotes.",
+    "text": "📏 Percentiles y Cuartiles\nOtra forma de describir una distribución es mediante medidas de posición. Esto nos permite identificar el punto en el cual cierto porcentaje de los datos se ubican debajo (o sobre) tal punto.\n\n\n\n\n\n\n\nPercentiles y Cuartiles\n\n\nEl percentil \\(p\\) es el valor tal que el \\(p\\%\\) de las observaciones cae por debajo o en ese punto, y el \\((100-p)\\%\\) cae por encima.\nLos cuartiles (\\(Q_n\\)) se obtienen a partir de la definición de percentil cuando se define \\(p = 25\\) y \\(p = 75\\). Los cuartiles, junto con la mediana, dividen la distribución en cuatro partes, cada una de las cuales contiene una cuarta parte de las observaciones.\n\n\n\n\n\n\n\nPercentil\nNombre\nInterpretación\n\n\n\n25°\n\nCuartil inferior \\(Q_1\\)\n\n25% de los datos cae por debajo\n\n\n50°\n\nMediana \\(Q_2\\)\n\n50% de los datos cae por debajo\n\n\n75°\n\nCuartil superior \\(Q_3\\)\n\n25% de los datos cae por encima\n\n\n\nEl Rango Intercuartil \\(IQR = Q_3 - Q_1\\) mide la dispersión del 50% central de los datos y es la base para la construcción del gráfico conocido como boxplot o de caja y bigotes.",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -736,7 +1587,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#correlación",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "📈 Correlación",
-    "text": "📈 Correlación\n\nSe dice que las variables \\(X\\) e \\(Y\\) (cada una con datos cuantitativos) están correlacionadas positivamente si es que cuando aumenta \\(X\\), \\(Y\\) también lo hace, y viceversa.\n\nSi cuando \\(X\\) aumenta \\(Y\\) disminuye, y viceversa, las variables están correlacionadas negativamente.\nEs importante notar que la correlación es una medida de dependencia lineal entre dos variables cuantitativas. Esto quiere decir, que puede ocurrir que 2 variables estén relacionadas de manera no lineal y, por lo tanto, exista una baja o nula correlación de Pearson, lo que no implica que no haya asociación entre estas variables.\nPara calcular el coeficiente de correlación de Pearson, multiplicamos las desviaciones de la media de la variable 1 por las de la variable 2 y las dividimos por el producto de las desviaciones estándar respectivas:\n\n\n\\[r=\\frac{\\sigma_{xy}}{{\\sigma _{x}\\sigma _{y}}} = {\\frac{\\sum_{i=1}^n(x_i-\\bar{x})(y_i-\\bar{y})}{(n-1) s_{x}s_{y}}}\\]",
+    "text": "📈 Correlación\n\nSe dice que las variables \\(X\\) e \\(Y\\) (cada una con datos cuantitativos) están correlacionadas positivamente si cuando aumenta \\(X\\), \\(Y\\) también lo hace, y viceversa.\nSi cuando \\(X\\) aumenta \\(Y\\) disminuye, y viceversa, las variables están correlacionadas negativamente.\nEs importante notar que la correlación es una medida de dependencia lineal entre dos variables cuantitativas. Esto quiere decir, que puede ocurrir que 2 variables estén relacionadas de manera no lineal y, por lo tanto, exista una baja o nula correlación de Pearson, lo que no implica que no haya asociación entre estas variables.\nPara calcular el coeficiente de correlación de Pearson, multiplicamos las desviaciones de la media de la variable 1 por las de la variable 2 y las dividimos por el producto de las desviaciones estándar respectivas:\n\n\n\\[r= \\frac{Cov(x,y)}{{s_{x}s_{y}}} = {\\frac{\\sum_{i=1}^n(x_i-\\bar{x})(y_i-\\bar{y})}{(n-1) s_{x}s_{y}}}\\]",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -820,7 +1671,7 @@
     "href": "00-nivelacion1/nivelacion-01.html#resumen-estadística-descriptiva",
     "title": "Clase 1: Estadística Descriptiva",
     "section": "Resumen Estadística Descriptiva",
-    "text": "Resumen Estadística Descriptiva\n\n\n\n\n\n\nConceptos Importantes\n\n\n\nLa métrica básica para tendencias centrales es la media, pero puede ser sensible a valores atípicos (outliers).\nOtras métricas como la mediana son menos sensibles a valores atípicos y, por lo tanto, son más robustas en presencia de ellos.\nLa varianza es la medida más típica de dispersión pero tiene la desventaja de no estar en escalas interpretables. Como alternativa, la raíz cuadrada de la varianza (la desviación estándar) es mejor para poder interpretar la magnitud de la variabilidad en la escala del dato.\nLos percentiles permiten conocer rápidamente que porcentaje de las unidades de observación estan bajo cierto umbral.\nLa covarianza, es una medida de asociación entre dos variables cuantitativas. De manera análoga a la desviación estándar, la correlación es una medida que acota la escala entre -1 y 1 y permite interpretar de manera más sencilla la fuerza y sentido de esta asociación.",
+    "text": "Resumen Estadística Descriptiva\n\n\n\n\n\n\nConceptos Importantes\n\n\n\nLa métrica básica para la tendencia central es la media, pero puede ser sensible a valores atípicos (outliers).\nOtras métricas como la mediana son menos sensibles a valores atípicos y, por lo tanto, son más robustas en presencia de ellos.\nLa varianza es la medida más típica de dispersión pero tiene la desventaja de no estar en escalas interpretables. Como alternativa, la raíz cuadrada de la varianza, conocido como desviación estándar, es mejor para poder interpretar la magnitud de la variabilidad en la escala del dato.\nLos percentiles permiten conocer rápidamente qué porcentaje de las unidades de observación están bajo cierto umbral.\nLa covarianza es una medida de asociación entre dos variables cuantitativas. De manera análoga a la desviación estándar, la correlación acota la escala entre -1 y 1 y permite interpretar de manera más sencilla la fuerza y sentido de esta asociación.",
     "crumbs": [
       "🏠 Inicio",
       "Nivelación",
@@ -862,40 +1713,5 @@
       "Nivelación",
       "Clase 1: Estadística Descriptiva"
     ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "DIAPP 2026 · Análisis de Datos y Estadística Computacional",
-    "section": "",
-    "text": "Bienvenidos al sitio del Módulo II del Diplomado en Herramientas de Inteligencia Artificial para Políticas Públicas (DIAPP 2026), Universidad Adolfo Ibáñez."
-  },
-  {
-    "objectID": "index.html#nivelación-estadística",
-    "href": "index.html#nivelación-estadística",
-    "title": "DIAPP 2026 · Análisis de Datos y Estadística Computacional",
-    "section": "Nivelación Estadística",
-    "text": "Nivelación Estadística\n\n\n\n\n\nMódulo\nNivelación Estadística\n\n\nCarácter\nOptativo\n\n\nProfesor\nGabriel Duarte (gabriel.duarte@edu.uai.cl)\n\n\nAyudante\nJean Paul Sepúlveda (jean.sepulveda@edu.uai.cl)\n\n\nModalidad\nEn vivo, vía Zoom\n\n\nPlataforma\nWebcursos\n\n\nEvaluación\nSin evaluaciones\n\n\n\n\n\n\n\n\nN°\nFecha\nHora\n\n\n\n\nClase 1\nMartes 02-06-2026\n18:30 a 21:00\n\n\nClase 2\nJueves 04-06-2026\n18:30 a 21:00\n\n\n\n\n\n📋 Programa 📊 Clase 1: Estadística Descriptiva 📊 Clase 2: Estadística Inferencial"
-  },
-  {
-    "objectID": "index.html#módulo-ii-análisis-de-datos-y-estadística-computacional",
-    "href": "index.html#módulo-ii-análisis-de-datos-y-estadística-computacional",
-    "title": "DIAPP 2026 · Análisis de Datos y Estadística Computacional",
-    "section": "Módulo II: Análisis de Datos y Estadística Computacional",
-    "text": "Módulo II: Análisis de Datos y Estadística Computacional\n\n\n\n\n\nMódulo\nII\n\n\nPrerrequisito\nIntroducción a R\n\n\nAsistencia\n75%\n\n\nProfesor\nGabriel Duarte\n\n\nAyudante\nJean Paul Sepúlveda\n\n\nModalidad\nEn vivo, vía Zoom\n\n\nPlataforma\nWebcursos\n\n\n\n\n\n\n\n\nN°\nFecha\nHora\n\n\n\n\nClase 1\nMartes 09-06-2026\n18:30 a 21:50\n\n\nClase 2\nSábado 13-06-2026\n09:00 a 12:20\n\n\nClase 3\nMartes 16-06-2026\n18:30 a 21:50\n\n\nClase 4\nSábado 20-06-2026\n09:00 a 12:20\n\n\nClase 5\nMartes 23-06-2026\n18:30 a 21:50\n\n\nClase 6\nSábado 04-07-2026\n09:00 a 12:20\n\n\nClase 7\nMartes 07-07-2026\n18:30 a 21:50\n\n\nClase 8\nSábado 11-07-2026\n09:00 a 12:20\n\n\n\n\n\nAyudantías:\n\n\n\nN°\nFecha\nHora\n\n\n\n\nAyudantía 1\nJueves 25-06-2026\n18:30\n\n\nAyudantía 2\nMartes 14-07-2026\n18:30\n\n\n\n📋 Programa Módulo II\n\n\n\nClase\nTema\nMaterial\n\n\n\n\n1\nImportación y cruce de datos\nVer clase\n\n\n2\nTransformación de datos\nPróximamente\n\n\n3\nVisualización de datos\nPróximamente\n\n\n4\nComunicar con R e IA\nPróximamente\n\n\n5\nInferencia estadística\nPróximamente\n\n\n6\nRegresión lineal I\nPróximamente\n\n\n7\nRegresión lineal II\nPróximamente\n\n\n8\nTaller de cierre\nPróximamente"
-  },
-  {
-    "objectID": "00-nivelacion1/index.html",
-    "href": "00-nivelacion1/index.html",
-    "title": "Clase 1: Estadística Descriptiva",
-    "section": "",
-    "text": "Usa las flechas del teclado para navegar. Presiona F para pantalla completa.\n\n\n🔗 Abrir en pantalla completa"
-  },
-  {
-    "objectID": "00-nivelacion1/index.html#material-de-clase",
-    "href": "00-nivelacion1/index.html#material-de-clase",
-    "title": "Clase 1: Estadística Descriptiva",
-    "section": "",
-    "text": "Usa las flechas del teclado para navegar. Presiona F para pantalla completa.\n\n\n🔗 Abrir en pantalla completa"
   }
 ]

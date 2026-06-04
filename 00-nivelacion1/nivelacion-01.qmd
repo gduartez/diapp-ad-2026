@@ -181,7 +181,7 @@ La estadística consiste en un conjunto de métodos para **obtener** y
 
 ## ¿Qué Son Los Datos? {.smaller}
 
-- La recopilación de información está en el centro de toda conocimiento
+- La recopilación de información está en el centro de todo conocimiento
   científico.
 - Esta recopilación entrega *observaciones*, las cuales son usadas en el
   análisis estadístico.
@@ -273,7 +273,7 @@ En este sentido, la estadística provee métodos para:
     - Ejemplo: Cómo seleccionar a la gente para una encuesta y cómo
       diseñar sus preguntas.
 2.  [**Describir:**]{.underline} Resumir y entender los datos obtenidos
-    y de manera simple y sin distorsionar o perder mucha información.
+    de manera simple y sin distorsionar ni perder información relevante.
     - Ejemplo: Presentar estadísticas descriptivas o gráficos de barra
       con el objetivo de mostrar los datos de manera simple y
       entendible, sin distorsionar o perder mucha información.
@@ -287,8 +287,8 @@ En este sentido, la estadística provee métodos para:
 
 Gran parte de la estadística se basa en cómo extraer conclusiones a
 partir de un conjunto **parcial** de datos sobre una población de
-estudio. Es relevante entender que la población no solamente pueden ser
-personas, sino que también hogares, unidades territoriales, etc.
+estudio. Es relevante entender que la población no solamente puede
+estar conformada por personas, sino también por hogares, unidades territoriales, etc.
 
 :::: fragment
 ::: callout-note
@@ -379,9 +379,9 @@ delincuencia, asaltos y robos en primer lugar.
 - [Estadística descriptiva para una muestra.]{.correct
   data-explanation="Correcto. El 61% resume y describe los datos recolectados en la muestra de 1.217 personas encuestadas en 100 comunas."}
 - [Estadística inferencial sobre la población
-  chilena.]{data-explanation="No exactamente. Para hacer inferencia necesitaríamos un paso adicional: estimar con qué nivel de confianza ese 60% representa a todos los chilenos mayores de 18 años."}
+  chilena.]{data-explanation="No exactamente. Para hacer inferencia necesitaríamos un paso adicional: estimar con qué nivel de confianza ese 61% representa a todos los chilenos mayores de 18 años."}
 - [Un parámetro
-  poblacional.]{data-explanation="Un parámetro describe a toda la población. Este 60% proviene de una muestra de 1.217 personas, no de todos los chilenos, por lo que es un estadístico muestral, no un parámetro poblacional."}
+  poblacional.]{data-explanation="Un parámetro describe a toda la población. Este 61% proviene de una muestra de 1.217 personas, no de todos los chilenos, por lo que es un estadístico muestral, no un parámetro poblacional."}
 - [Estadística descriptiva para la población
   chilena.]{data-explanation="La estadística descriptiva es correcta, pero el resultado describe la muestra encuestada, no la población completa. Para describir a toda la población habría que haber consultado a todos los chilenos mayores de 18 años."}
 :::
@@ -411,7 +411,7 @@ delincuencia, asaltos y robos en primer lugar.
     un intervalo, es decir, pueden tomar [infinitos valores
     posibles]{style="color: darkred;"} dentro de los números reales.
     Ejemplo de variables continuas son la altura, el peso o el tiempo
-    entre dos ciudadaes.
+    entre dos ciudades.
   - [Discretos:]{.underline} Datos que sus posibles valores forman un
     conjunto de números separados, tales como los recuentos (0, 1, 2, 3,
     ...). Un ejemplo de variables discretas es el número de hermanos.
@@ -484,8 +484,8 @@ ______(gapminder) #muestro la estructura y clases de las variables del dataframe
 
 ## Ejemplo en `R` {.smaller}
 
-Otra forma más elegante obtener esta información es con la función
-`glimpse <dplyr>`:
+Otra forma más elegante de obtener esta información es con la función
+`glimpse()` del paquete `dplyr`:
 
 ::: fragment
 ```{r}
@@ -520,7 +520,7 @@ Del resultado anterior vemos que:
 - La [**estadística inferencial**]{style="color: darkblue;"} consiste en
   métodos para obtener conclusiones o predicciones objetivas a partir de
   una **muestra** de datos.
-- Los datos corresponden observaciones que se recolectan sobre
+- Los datos corresponden a observaciones que se recolectan sobre
   características de interés. Los datos que usaremos en este curso
   corresponden a datos ordenados o rectangulares en donde cada fila es
   una observación de la unidad de análisis, cada columna una variable o
@@ -604,7 +604,7 @@ opciones: UDI, RN, PDG, PPD, PS, PC, Ninguno, Otro.
 ::: callout-tip
 ## Conocimiento Relevante [@agresti2018]
 
-Las estadísticas descriptivas para una variable cuantiativa poseen dos
+Las estadísticas descriptivas para una variable cuantitativa poseen dos
 atributos principales para describirlas numéricamente: El **centro** o
 su observación típica (por ejemplo, a través de la **media**) y su
 **variabilidad** (por ejemplo, a través de la **desviación estándar**).
@@ -633,7 +633,7 @@ una variable, junto con el número de observaciones para cada valor.
 ::: fragment
 Para resumir datos categóricos, una forma sencilla de hacerlo sería:
 
-1.  Listar los distitos valores de cada categoría.
+1.  Listar los distintos valores de cada categoría.
 2.  Contar los casos (observaciones) que hay dentro de cada una de
     ellas.
 3.  Construir un indicador de frecuencia relativa (o porcentaje) de cada
@@ -688,7 +688,7 @@ penguins |>
 
 - Un **histograma** es un gráfico de distribución de frecuencia para una
   variable **cuantitativa**.
-- A diferencia de los gráficos de barra en donde a una cantidad finita
+- A diferencia de los gráficos de barra, donde hay una cantidad finita
   de valores posibles a contabilizar, los histogramas requieren definir
   la cantidad de intervalos o barras (*bins*) con que se construirá el
   gráfico.
@@ -735,7 +735,6 @@ penguins |>
 :::
 :::::
 
-## Distribución de una Variable
 ## 🎯 Media (*Mean*) {.smaller}
 
 ::: callout-tip
@@ -774,7 +773,7 @@ Calcule el **promedio** de víctimas de homicidio consumado **mensuales**
 del año 2025 a partir del
 [informe](https://prevenciondehomicidios.cl/wp-content/uploads/2026/03/Informe_de_victimas_de_homicidios_consumados_2025_VF.pdf)
 elaborado por el Centro para la Prevención de Homicidios y Delitos
-Violentos ¿cuántas víctimas de homicidios hubo durante 2025? (*Hint: la
+Violentos. ¿Cuántas víctimas de homicidios hubo durante 2025? (*Hint: la
 función `sum()` permite sumar los elementos de un vector*)
 
 ```{webr}
@@ -993,8 +992,7 @@ $$\text{Desviación}_i = y_i - \bar{y}$$
 
 - La suma de todas las desviaciones siempre es **cero**:
   $\sum(y_i - \bar{y}) = 0$, por lo que se usan los **cuadrados** de las
-  desviaciones para poder obtener una medida de variabilidad de una
-  variable completa (y no solo la desviación de cada uno de sus
+  desviaciones para obtener una medida de variabilidad de toda la variable (y no solo la desviación de cada uno de sus
   valores).
 
 - La **varianza** $s^2$ es aproximadamente el promedio de las
@@ -1162,7 +1160,7 @@ cuales contiene una cuarta parte de las observaciones.
 | 75°       | **Cuartil superior** $Q_3$ | 25% de los datos cae por encima |
 
 El **Rango Intercuartil** $IQR = Q_3 - Q_1$ mide la dispersión del 50%
-central de los datos y es la base de para la construcción del gráfico
+central de los datos y es la base para la construcción del gráfico
 conocido como *boxplot* o de caja y bigotes.
 :::
 ::::
@@ -1434,8 +1432,8 @@ penguins |>
 ## 📈 Correlación {.medium}
 
 - Se dice que las variables $X$ e $Y$ (cada una con datos cuantitativos)
-  están correlacionadas **positivamente** si es que cuando aumenta $X$,
-  $Y$ también lo hace, y viceversa.\
+  están correlacionadas **positivamente** si cuando aumenta $X$,
+  $Y$ también lo hace, y viceversa.
 - Si cuando $X$ aumenta $Y$ disminuye, y viceversa, las variables están
   correlacionadas **negativamente**.
 - Es importante notar que la correlación es una medida de **dependencia
@@ -1450,7 +1448,7 @@ penguins |>
   respectivas:
 
 ::: {.fragment .fade-in}
-$$r=\frac{\sigma_{xy}}{{\sigma _{x}\sigma _{y}}} = {\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{(n-1) s_{x}s_{y}}}$$
+$$r= \frac{Cov(x,y)}{{s_{x}s_{y}}} = {\frac{\sum_{i=1}^n(x_i-\bar{x})(y_i-\bar{y})}{(n-1) s_{x}s_{y}}}$$
 :::
 
 ## 📈 Correlación {.medium}
@@ -1553,20 +1551,20 @@ ______(m,method = 'number',type="lower",tl.col="black",pch.col = "black",) #Gene
 :::: callout-tip
 ## Conceptos Importantes
 
-- La métrica básica para tendencias centrales es la media, pero puede
+- La métrica básica para la tendencia central es la media, pero puede
   ser sensible a valores atípicos (*outliers*).
 - Otras métricas como la mediana son menos sensibles a valores atípicos
   y, por lo tanto, son más robustas en presencia de ellos.
 - La varianza es la medida más típica de dispersión pero tiene la
   desventaja de no estar en escalas interpretables. Como alternativa, la
-  raíz cuadrada de la varianza (la desviación estándar) es mejor para
+  raíz cuadrada de la varianza, conocido como **desviación estándar**, es mejor para
   poder interpretar la magnitud de la variabilidad en la escala del
   dato.
-- Los percentiles permiten conocer rápidamente que porcentaje de las
-  unidades de observación estan bajo cierto umbral.
-- La covarianza, es una medida de asociación entre dos variables
+- Los percentiles permiten conocer rápidamente qué porcentaje de las
+  unidades de observación están bajo cierto umbral.
+- La covarianza es una medida de asociación entre dos variables
   cuantitativas. De manera análoga a la desviación estándar, la
-  correlación es una medida que acota la escala entre -1 y 1 y permite
+  correlación acota la escala entre -1 y 1 y permite
   interpretar de manera más sencilla la fuerza y sentido de esta
   asociación.
 :::
