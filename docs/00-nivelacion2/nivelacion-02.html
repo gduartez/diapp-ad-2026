@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="es"><head>
-<script src="nivelacion-02_files/libs/clipboard/clipboard.min.js"></script>
-<script src="nivelacion-02_files/libs/quarto-html/tabby.min.js"></script>
-<script src="nivelacion-02_files/libs/quarto-html/popper.min.js"></script>
-<script src="nivelacion-02_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="nivelacion-02_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="nivelacion-02_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="nivelacion-02_files/libs/quarto-html/quarto-syntax-highlighting-0626ff4d7a71b55c8707dcae1d04a9b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="nivelacion-02_files/libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
-<link href="nivelacion-02_files/libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../img/logo-26.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-0626ff4d7a71b55c8707dcae1d04a9b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="../site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.6.39">
 <meta name="author" content="Prof.&nbsp;Gabriel Duarte Zúñiga">
-<title>Clase 2: Probabilidad e Inferencia</title>
+<title>DIAPP 2026 · Análisis de Datos – Clase 2: Probabilidad e Inferencia</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-<link rel="stylesheet" href="nivelacion-02_files/libs/revealjs/dist/reset.css">
-<link rel="stylesheet" href="nivelacion-02_files/libs/revealjs/dist/reveal.css">
+<link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
 <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -99,6 +100,7 @@
     div.csl-bib-body { }
     div.csl-entry {
       clear: both;
+      margin-bottom: 0em;
     }
     .hanging-indent div.csl-entry {
       margin-left:2em;
@@ -115,14 +117,14 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-<link rel="stylesheet" href="nivelacion-02_files/libs/revealjs/dist/theme/quarto-39e682620bd26b50951c1e36b0e06a1a.css">
-<link href="nivelacion-02_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-<link href="nivelacion-02_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-<link href="nivelacion-02_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-<link href="nivelacion-02_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
-<link href="nivelacion-02_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
-<link href="nivelacion-02_files/libs/revealjs/plugin/reveal-quiz/quiz.css" rel="stylesheet">
-<link href="nivelacion-02_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-39e682620bd26b50951c1e36b0e06a1a.css">
+<link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+<link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+<link href="../site_libs/revealjs/plugin/reveal-quiz/quiz.css" rel="stylesheet">
+<link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
 <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -210,7 +212,7 @@
       margin-right: 0; 
     }
   </style>
-<script type="module" src="nivelacion-02_files/libs/quarto-ojs/quarto-ojs-runtime.js"></script><link href="nivelacion-02_files/libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script><link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -233,7 +235,107 @@
   <p class="date">4 de junio de 2026</p>
 </section><section><section id="bienvenidas-y-bienvenidos" class="title-slide slide level1 center"><h1>¡Bienvenidas y Bienvenidos!</h1>
 
-</section><section id="repaso-dónde-quedamos" class="slide level2 smaller"><h2>Repaso: ¿Dónde Quedamos?</h2>
+</section><section id="repaso-clase-1-estadísticas-descriptivas-en-r" class="slide level2 smaller"><h2>🔁 Repaso Clase 1: Estadísticas Descriptivas en <code>R</code>
+</h2>
+<div class="fragment">
+<div style="font-size: 0.9em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 24%">
+<col style="width: 27%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">Concepto</th>
+<th style="text-align: left;">Definición</th>
+<th style="text-align: left;">Función en <code>R</code>
+</th>
+<th style="text-align: left;">Ejemplo de uso</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Media</strong></td>
+<td style="text-align: left;">Promedio aritmético: suma de los valores dividida por <span class="math inline">\(n\)</span>
+</td>
+<td style="text-align: left;"><code>mean(x, na.rm = T)</code></td>
+<td style="text-align: left;"><code>mean(penguins$body_mass, na.rm = T)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Mediana</strong></td>
+<td style="text-align: left;">Valor central de los datos ordenados; más robusta ante <em>outliers</em>
+</td>
+<td style="text-align: left;"><code>median(x, na.rm = T)</code></td>
+<td style="text-align: left;"><code>median(penguins$body_mass, na.rm = T)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Desv. Estándar</strong></td>
+<td style="text-align: left;">Distancia <em>típica</em> de cada observación respecto a la media</td>
+<td style="text-align: left;"><code>sd(x, na.rm = T)</code></td>
+<td style="text-align: left;"><code>sd(penguins$body_mass, na.rm = T)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Percentil</strong></td>
+<td style="text-align: left;">Valor bajo el cual cae el <span class="math inline">\(p\)</span>% de los datos</td>
+<td style="text-align: left;"><code>quantile(x, probs = p)</code></td>
+<td style="text-align: left;"><code>quantile(penguins$body_mass, probs = c(.25, .75))</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Puntaje Z</strong></td>
+<td style="text-align: left;">N° de desviaciones estándar que separan una observación de la media</td>
+<td style="text-align: left;"><code>(x - mean(x)) / sd(x)</code></td>
+<td style="text-align: left;"><code>(200 - mean(bdims$hgt)) / sd(bdims$hgt)</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Correlación</strong></td>
+<td style="text-align: left;">Fuerza y dirección de la asociación lineal entre dos variables cuantitativas (<span class="math inline">\(-1\)</span> a <span class="math inline">\(+1\)</span>)</td>
+<td style="text-align: left;">
+<code>cor(x, y)</code> <code>geom_point()</code>
+</td>
+<td style="text-align: left;"><code>cor(penguins$body_mass, penguins$flipper_len)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section><section id="repaso-clase-1-estadísticas-descriptivas-en-r-1" class="slide level2"><h2>🔁 Repaso Clase 1: Estadísticas Descriptivas en <code>R</code>
+</h2>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Para obtener varias medidas de una sola vez utilizamos: <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code></strong></p>
+</div>
+<div class="callout-content">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">summary</span>(penguins)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      species          island       bill_len        bill_dep    
+ Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
+ Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  
+ Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  
+                                 Mean   :43.92   Mean   :17.15  
+                                 3rd Qu.:48.50   3rd Qu.:18.70  
+                                 Max.   :59.60   Max.   :21.50  
+                                 NA's   :2       NA's   :2      
+  flipper_len      body_mass        sex           year     
+ Min.   :172.0   Min.   :2700   female:165   Min.   :2007  
+ 1st Qu.:190.0   1st Qu.:3550   male  :168   1st Qu.:2007  
+ Median :197.0   Median :4050   NA's  : 11   Median :2008  
+ Mean   :200.9   Mean   :4202                Mean   :2008  
+ 3rd Qu.:213.0   3rd Qu.:4750                3rd Qu.:2009  
+ Max.   :231.0   Max.   :6300                Max.   :2009  
+ NA's   :2       NA's   :2                                 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section id="repaso-dónde-quedamos" class="slide level2 smaller"><h2>🔁 Repaso: ¿Dónde Quedamos?</h2>
 <p>En la <strong>Clase 1</strong> aprendimos a <strong>describir</strong> datos:</p>
 <ul>
 <li class="fragment">Medidas de <strong>tendencia central</strong> (media, mediana) y <strong>variabilidad</strong> (varianza, desviación estándar).</li>
@@ -247,9 +349,9 @@
 </div>
 </div>
 <div class="fragment">
-<p>La herramienta que nos permite dar ese salto es la <strong>probabilidad</strong>.</p>
+<p>Para ello requerimos de la <strong>inferencia estadística</strong>: usar la información de una muestra para sacar conclusiones sobre la población. Y para hacerlo de forma rigurosa, reconociendo que toda muestra trae consigo cierta <strong>incertidumbre</strong>, primero necesitamos entender en qué consiste la probabilidad.</p>
 </div>
-</section><section id="objetivos-clase-2" class="slide level2 smaller"><h2>🎯 Objetivos Clase 2</h2>
+</section><section id="objetivos-clase-2" class="slide level2 medium"><h2>🎯 Objetivos Clase 2</h2>
 <p>Los objetivos específicos de la clase 2 son:</p>
 <ul>
 <li class="fragment">Comprender las <strong>nociones básicas de probabilidad</strong> y aplicarlas a ejemplos concretos.</li>
@@ -257,22 +359,20 @@
 <li class="fragment">Entender por qué una muestra genera <strong>incertidumbre</strong> y cómo el <strong>Teorema del Límite Central</strong> nos ayuda a manejarla.</li>
 <li class="fragment">Construir e interpretar <strong>intervalos de confianza</strong>.</li>
 <li class="fragment">Plantear una <strong>prueba de hipótesis</strong> sencilla, interpretar el <strong>p-valor</strong> y <strong>concluir</strong>.</li>
-</ul></section><section id="qué-veremos-hoy" class="slide level2 smaller"><h2>¿Qué Veremos Hoy?</h2>
-<div>
+</ul></section><section id="qué-veremos-hoy" class="slide level2"><h2>¿Qué Veremos Hoy?</h2>
 <ol type="1">
-<li>
-<strong>Probabilidad</strong> y ejemplos concretos.</li>
-<li>
+<li class="fragment">
+<strong>Probabilidad</strong> y ejemplos aplicados.</li>
+<li class="fragment">
 <strong>Variables aleatorias</strong> y distribuciones conocidas (binomial).</li>
-<li>La <strong>distribución normal</strong>.</li>
-<li>
+<li class="fragment">La <strong>distribución normal</strong>.</li>
+<li class="fragment">
 <strong>Muestreo, Teorema del Límite Central</strong> y error estándar.</li>
-<li>
+<li class="fragment">
 <strong>Intervalos de confianza</strong>, <strong>p-valor</strong> y <strong>prueba de hipótesis</strong> (<em>t-test</em>).</li>
 </ol>
-</div>
 <div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout callout-caution callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
@@ -288,16 +388,42 @@
 </div>
 </section></section><section><section id="probabilidad" class="title-slide slide level1 center" data-background="#416fc4"><h1><span style="color:white">Probabilidad</span></h1>
 
-</section><section id="qué-es-la-probabilidad" class="slide level2 smaller"><h2>¿Qué es la Probabilidad?</h2>
+</section><section id="probabilidad-1" class="slide level2 medium"><h2>Probabilidad</h2>
+<ul>
+<li class="fragment"><p>El término probabilidad se refiere al estudio del azar y la incertidumbre en cualquier situación en la que diferentes sucesos pueden ocurrir.</p></li>
+<li class="fragment"><p><strong>Definición <em>frecuentista</em>:</strong> La probabilidad de un resultado está definida por la <strong>proporción de veces</strong> que ese resultado es observado a través de un <strong>alto número de repeticiones de procesos aleatorios</strong>:</p></li>
+</ul>
+<div class="fragment fade-in smaller">
+<p><span class="math display">\[Probabilidad = \frac{\#Eventos\ Favorables}{\#Eventos\ Totales}\]</span></p>
+</div>
+<div class="fragment">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Probabilidad <span class="citation" data-cites="agresti2018">(<a href="#/bibliografía" role="doc-biblioref" onclick="">Agresti 2018</a>)</span></strong></p>
+</div>
+<div class="callout-content">
+<p>En una muestra o experimento aleatorio, la probabilidad de que una observación tenga un resultado particular es la <span style="color: darkblue;"><strong>proporción de veces</strong></span> que ese resultado ocurriría en una secuencia <strong>muy larga</strong> de observaciones similares.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section id="probabilidad-2" class="slide level2 medium"><h2>Probabilidad</h2>
+<ul>
+<li class="fragment">Dado que definimos <em>probabilidad</em> como una <strong>proporción</strong>, la probabilidad es un número entre 0 y 1 (o 0 y 100 si se expresa en %) que mide qué tan factible es que ocurra un resultado
 <ul>
 <li class="fragment">
-<p>La <strong>probabilidad</strong> es un número entre <strong>0 y 1</strong> que mide qué tan factible es que ocurra un resultado.</p>
-<ul>
+<span class="math inline">\(0\)</span> = imposible</li>
 <li class="fragment">
-<span class="math inline">\(0\)</span> = imposible, <span class="math inline">\(1\)</span> = seguro, <span class="math inline">\(0.5\)</span> = tan probable como no.</li>
+<span class="math inline">\(1\)</span> = seguro</li>
+<li class="fragment">
+<span class="math inline">\(0.5\)</span> = tan probable como no.</li>
 </ul>
 </li>
-<li class="fragment"><p>Una forma intuitiva de entenderla es como la <strong>frecuencia relativa</strong> de un resultado cuando repetimos un experimento <strong>muchas veces</strong>.</p></li>
+<li class="fragment">La probabilidad puede entenderse como la <strong>frecuencia relativa</strong> de un resultado cuando repetimos un experimento <strong>muchas veces</strong>. Esto implica que las probabilidades se interpretan bajo un contexto de <strong>largo plazo</strong>. Por ejemplo, si un meteorólogo dice que la probabilidad de lluvia hoy es del 70%, esto significa que en una <strong>larga serie de días con condiciones atmosféricas como las de hoy</strong>, llueve el 70% de los días.</li>
 </ul>
 <div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -309,120 +435,174 @@
 <p><strong>Idea clave</strong></p>
 </div>
 <div class="callout-content">
-<p>Si lanzamos una moneda equilibrada muchísimas veces, la <strong>proporción</strong> de caras se acercará a <span class="math inline">\(0.5\)</span>. Esa proporción de largo plazo <em>es</em> la probabilidad.</p>
+<p>Si lanzamos una moneda equilibrada muchísimas veces, la <strong>proporción</strong> de caras se acercará a <span class="math inline">\(0.5\)</span>. Esa proporción de <strong>largo plazo</strong> <em>es</em> la <strong>probabilidad</strong> de obtener una cara.</p>
 </div>
 </div>
 </div>
 </div>
-</section><section id="conceptos-básicos" class="slide level2 smaller"><h2>Conceptos Básicos</h2>
-<p>Para hablar de probabilidad necesitamos tres ideas:</p>
+</section><section id="proceso-aleatorio" class="slide level2"><h2>Proceso Aleatorio</h2>
 <ul>
-<li class="fragment"><p><strong>Experimento (proceso) aleatorio:</strong> una acción cuyo resultado no podemos predecir con certeza (lanzar una moneda).</p></li>
+<li class="fragment"><p>En un <em>proceso aleatorio</em> hay más de un posible resultado y la predicción de este está sujeto a <strong>variabilidad</strong>:</p></li>
 <li class="fragment">
-<p><strong>Espacio muestral</strong> (<span class="math inline">\(S\)</span>): el conjunto de <strong>todos</strong> los resultados posibles.</p>
+<p>Ejemplos Clásicos:</p>
 <ul>
-<li class="fragment">Una moneda: <span class="math inline">\(S = \{Cara, Sello\}\)</span>.</li>
+<li class="fragment">Tirar una moneda.</li>
+<li class="fragment">Tirar un dado.</li>
 </ul>
 </li>
-<li class="fragment">
-<p><strong>Evento:</strong> un subconjunto del espacio muestral que nos interesa.</p>
+<li class="fragment"><p>Se puede pensar como un proceso donde el resultado es <strong>probabilístico</strong> (o estocástico) y <span style="color: darkred;"><strong>no determinístico</strong></span>. Es decir, hay <strong>incertidumbre</strong> en el resultado.</p></li>
+</ul></section><section id="espacio-muestral" class="slide level2"><h2>Espacio Muestral</h2>
 <ul>
-<li class="fragment">“Salió cara”: <span class="math inline">\(A = \{Cara\}\)</span>.</li>
+<li class="fragment">El <em>espacio muestral</em> es el conjunto de todos los <strong>posibles resultados</strong> de un proceso aleatorio. Se denota con el símbolo <span class="math inline">\(S\)</span>. Por ejemplo:
+<ul>
+<li class="fragment">Dados: <span class="math inline">\(S=\{1,2,3,4,5,6\}\)</span>.</li>
+<li class="fragment">Moneda: <span class="math inline">\(S=\{C,S\}\)</span>.</li>
 </ul>
 </li>
+</ul></section><section id="evento" class="slide level2"><h2>Evento</h2>
+<ul>
+<li class="fragment"><p>Un <em>evento</em> es un <strong>subconjunto</strong> del <em>espacio muestral</em>.</p></li>
+<li class="fragment">
+<p>Para el caso del lanzamiento de un dado, digamos que:</p>
+<ul>
+<li class="fragment">
+<span class="math inline">\(A\)</span> representa el evento de que al tirar un dado el resultado sea un <span style="color: darkblue;"><strong>número par</strong></span>: <span class="math inline">\(A=\{2,4,6\}\)</span>.</li>
+<li class="fragment">
+<span class="math inline">\(B\)</span> representa el evento de que al tirar un dado el resultado sea un <span style="color: darkred;"><strong>número impar</strong></span>: <span class="math inline">\(B=\{1,3,5\}\)</span>.</li>
+<li class="fragment">
+<span class="math inline">\(C\)</span> representa el evento de que al tirar un dado el resultado sea un <span style="color: darkgreen;"><strong>número primo</strong></span>: <span class="math inline">\(C=\{2,3,5\}\)</span>.</li>
 </ul>
-<div class="fragment">
-<p>Cuando todos los resultados son <strong>igualmente probables</strong>:</p>
-<p><span class="math display">\[P(A) = \frac{\text{n° de resultados en } A}{\text{n° total de resultados en } S}\]</span></p>
+</li>
+</ul></section><section id="diagrama-de-venn" class="slide level2"><h2>Diagrama de Venn</h2>
+<p>Lo anterior se pueden representar visualmente mediante un <em>Diagrama de Venn</em>: Una gráfica que usa círculos superpuestos para ilustrar las relaciones lógicas entre dos o más conjuntos de elementos.</p>
+<div class="fragment fade-in smaller">
+<p><img data-src="img/venn.jpg" style="width:50.0%"></p>
 </div>
-</section><section id="el-espacio-muestral-con-un-diagrama-de-venn" class="slide level2 smaller"><h2>El Espacio Muestral con un Diagrama de Venn</h2>
-<p>Lancemos <strong>dos monedas</strong>. El espacio muestral tiene 4 resultados igualmente probables:</p>
-<p><span class="math display">\[S = \{CC,\ CS,\ SC,\ SS\}\]</span></p>
-<div class="fragment">
-<div class="columns">
-<div class="column" style="width:55%;">
-<p>Un <strong>diagrama de Venn</strong> nos ayuda a visualizar eventos dentro de <span class="math inline">\(S\)</span> (el rectángulo). Por ejemplo:</p>
-<ul>
-<li class="fragment">
-<span class="math inline">\(A\)</span> = “la <strong>primera</strong> es cara” <span class="math inline">\(= \{CC, CS\}\)</span>
-</li>
-<li class="fragment">
-<span class="math inline">\(B\)</span> = “la <strong>segunda</strong> es cara” <span class="math inline">\(= \{CC, SC\}\)</span>
-</li>
-</ul>
-<p>El resultado <span class="math inline">\(CC\)</span> está en <strong>ambos</strong> eventos (la intersección).</p>
-</div><div class="column" style="width:45%;">
-<div class="cell">
-<div class="cell-output-display">
+</section><section id="pregunta-n-1" class="slide level2 quiz-question smaller"><h2>🧠 Pregunta N° 1</h2>
+<p>Lanzamos un <strong>dado</strong> equilibrado de 6 caras una vez.</p>
 <div>
-<figure><p><img data-src="nivelacion-02_files/figure-revealjs/unnamed-chunk-3-1.png" width="768"></p>
-</figure>
+<p><strong><em>¿Cuál es la probabilidad de obtener un número mayor que 4?</em></strong></p>
+<ul>
+<li><span class="correct" data-explanation="Correcto. Los resultados mayores que 4 son {5, 6}, es decir 2 de los 6 resultados igualmente probables: 2/6 ≈ 0,33.">2/6 ≈ 0,33.</span></li>
+<li><span data-explanation="Eso correspondería a 'menor o igual que 4' = {1,2,3,4}. La pregunta pide estrictamente mayor que 4.">4/6 ≈ 0,67.</span></li>
+<li><span data-explanation="1/6 sería la probabilidad de un único número (por ejemplo, sacar un 5). Mayor que 4 incluye dos resultados: 5 y 6.">1/6 ≈ 0,17.</span></li>
+<li><span data-explanation="3/6 correspondería a tres resultados (por ejemplo {4,5,6}). Estrictamente mayor que 4 son solo {5,6}.">3/6 = 0,5.</span></li>
+</ul>
+</div>
+</section><section id="complemento-de-un-evento" class="slide level2 smaller"><h2>Complemento de un Evento</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="img/venn.jpg" style="width:100.0%"></p>
+<ul>
+<li class="fragment">Definimos estos eventos en <code>R</code> como vectores:</li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>)</span>
+<span id="cb3-2"><a></a>B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>)</span>
+<span id="cb3-3"><a></a>C <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>)</span>
+<span id="cb3-4"><a></a>S <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li class="fragment">
+<strong>Definición</strong>: El complemento de un evento son todos los resultados en el espacio muestral que <strong>no</strong> corresponden al evento mismo.</li>
+<li class="fragment">
+<strong>Ejemplo</strong>: el complemento del evento <span class="math inline">\(C\)</span> es el conjunto de resultados de tirar un dado que <strong>no</strong> corresponden a números primos.</li>
+<li class="fragment">
+<strong>Notación</strong>: <span class="math inline">\(C'\)</span>.</li>
+<li class="fragment">
+<span class="math inline">\(\Large C^c:\{1,4,6\}\)</span>.</li>
+<li class="fragment">En <code>R</code> podemos usar la función <code><a href="https://rdrr.io/r/base/sets.html">setdiff()</a></code> para obtener el complemento de un evento, especificando primero el espacio muestral y luego el evento:</li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">setdiff</span>(S,C)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 4 6</code></pre>
 </div>
 </div>
 </div>
 </div></div>
-</div>
-</section><section id="calculemos-una-probabilidad-concreta" class="slide level2 smaller"><h2>Calculemos una Probabilidad Concreta</h2>
-<p>Con dos monedas, <span class="math inline">\(S = \{CC,\ CS,\ SC,\ SS\}\)</span> (4 resultados igualmente probables). Calculemos:</p>
-<div class="fragment">
-<ul>
-<li class="fragment"><span class="math inline">\(P(\text{exactamente una cara}) = \dfrac{|\{CS, SC\}|}{4} = \dfrac{2}{4} = 0.5\)</span></li>
-</ul>
-</div>
-<div class="fragment">
+</section><section id="unión-de-eventos" class="slide level2 smaller"><h2>Unión de Eventos</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="img/venn.jpg" style="width:100.0%"></p>
+</div><div class="column" style="width:50%;">
 <ul>
 <li class="fragment">
-<span class="math inline">\(P(\text{al menos una cara})\)</span>: en vez de contar <span class="math inline">\(\{CC, CS, SC\}\)</span>, usamos el <strong>complemento</strong>. El único caso sin caras es <span class="math inline">\(\{SS\}\)</span>:</li>
+<strong>Definición</strong>: La unión de dos eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> es el evento formado por todos los resultados que están en <span class="math inline">\(A\)</span>, en <span class="math inline">\(B\)</span> o en ambos; es decir, los resultados que pertenecen a al menos uno de los dos eventos.</li>
+<li class="fragment">
+<strong>Ejemplo</strong>: La unión de los eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(C\)</span> es el conjunto de resultados posibles de tirar un dado que son números pares, <strong>o</strong> primos, <strong>o</strong> ambos.</li>
+<li class="fragment">
+<strong>Notación</strong>: <span class="math inline">\(A \cup C\)</span>.</li>
+<li class="fragment">
+<span class="math inline">\(A \cup C: \{2,3,4,5,6\}\)</span>.</li>
+<li class="fragment">En <code>R</code> podemos usar la función <code><a href="https://rdrr.io/r/base/sets.html">union()</a></code> para obtener la unión de dos eventos:</li>
 </ul>
-<p><span class="math display">\[P(\text{al menos una cara}) = 1 - P(\text{ninguna cara}) = 1 - \tfrac{1}{4} = 0.75\]</span></p>
-</div>
 <div class="fragment">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Regla del complemento</strong></p>
-</div>
-<div class="callout-content">
-<p>Muchas veces es más fácil calcular lo contrario de lo que buscamos: <span class="math inline">\(P(A) = 1 - P(\text{no } A)\)</span>.</p>
-</div>
-</div>
-</div>
-</div>
-</section><section id="probabilidad-como-frecuencia-relativa-en-r" class="slide level2 smaller"><h2>Probabilidad como Frecuencia Relativa en <code>R</code>
-</h2>
-<p>Comprobemos la idea de “frecuencia de largo plazo” <strong>simulando</strong> 10.000 lanzamientos de una moneda:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb1-2"><a href=""></a>lanzamientos <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="st">"Cara"</span>, <span class="st">"Sello"</span>), <span class="at">size =</span> <span class="dv">10000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-3"><a href=""></a><span class="fu">prop.table</span>(<span class="fu">table</span>(lanzamientos))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">union</span>(A,C)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>lanzamientos
-  Cara  Sello 
-0.5017 0.4983 </code></pre>
+<pre><code>[1] 2 4 6 3 5</code></pre>
 </div>
 </div>
+</div>
+</div></div>
+</section><section id="intersección-de-eventos" class="slide level2 smaller"><h2>Intersección de Eventos</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="img/venn.jpg" style="width:100.0%"></p>
+</div><div class="column" style="width:50%;">
+<ul>
+<li class="fragment">
+<strong>Definición</strong>: La intersección de dos eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> es el evento que consiste en todos los resultados que están <strong>tanto en A como en B</strong>.</li>
+<li class="fragment">
+<strong>Ejemplo</strong>: La intersección de los eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(C\)</span> es el conjunto de resultados posibles de tirar un dado que son números pares <strong>Y</strong> primos al mismo tiempo.</li>
+<li class="fragment">
+<strong>Notación</strong>: <span class="math inline">\(A \cap C\)</span>.</li>
+<li class="fragment">
+<span class="math inline">\(A \cap C: \{2\}\)</span>.</li>
+<li class="fragment">En <code>R</code> podemos usar la función <code><a href="https://rdrr.io/r/base/sets.html">intersect()</a></code> para obtener la intersección de dos eventos:</li>
+</ul>
 <div class="fragment">
-<p>La proporción de caras se acerca a <strong>0.5</strong>, tal como predice la teoría. A más repeticiones, <strong>más cerca</strong> del valor verdadero.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">intersect</span>(A,C)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
 </div>
+</div>
+</div>
+</div></div>
+</section><section id="eventos-mutuamente-excluyentes" class="slide level2 smaller"><h2>Eventos Mutuamente Excluyentes</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="img/venn.jpg" style="width:100.0%"></p>
+</div><div class="column" style="width:50%;">
+<ul>
+<li class="fragment"><p><strong>Definición</strong>: Los eventos mutuamente excluyentes son eventos que no pueden ocurrir al mismo tiempo.</p></li>
+<li class="fragment"><p><strong>Ejemplo</strong>: El evento <span class="math inline">\(A\)</span> y el evento <span class="math inline">\(B\)</span> son mutuamente excluyentes porque el resultado de tirar un dado no puede ser par e impar al mismo tiempo.</p></li>
+<li class="fragment"><p><strong>Notación</strong>: <span class="math inline">\(A \cap B = \emptyset\)</span></p></li>
+<li class="fragment"><p>Los eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(C\)</span> no son mutuamente excluyentes porque el número 2 es tanto par como primo.</p></li>
+</ul>
+</div></div>
 </section><section id="eventos-independientes" class="slide level2 smaller"><h2>Eventos Independientes</h2>
 <ul>
 <li class="fragment">
 <p>Dos eventos son <strong>independientes</strong> cuando el resultado de uno <strong>no afecta</strong> la probabilidad del otro.</p>
 <ul>
-<li class="fragment">Que la primera moneda salga cara <strong>no cambia</strong> lo que pase con la segunda.</li>
+<li class="fragment">Por ejemplo: Que la primera moneda salga cara <strong>no afecta</strong> la probabilidad de que salga cara o sello en el segundo lanzamiento.</li>
 </ul>
 </li>
-<li class="fragment"><p>Para eventos independientes, la probabilidad de que ocurran <strong>ambos</strong> se <strong>multiplica</strong>:</p></li>
+<li class="fragment"><p>Por definición, los eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span> son eventos independientes, si y solo si la probabilidad de que ocurran <strong>ambos</strong> (es decir, su intersección) corresponde a la <strong>multiplicación</strong> de sus probabilidades individuales:</p></li>
 </ul>
-<p><span class="math display">\[P(A \text{ y } B) = P(A) \times P(B)\]</span></p>
 <div class="fragment">
+<p><span class="math display">\[P(A \cap B) = P(A) \times P(B)\]</span></p>
+</div>
 <ul>
 <li class="fragment">Ejemplo: <span class="math inline">\(P(\text{dos caras seguidas}) = 0.5 \times 0.5 = 0.25\)</span>.</li>
 </ul>
-</div>
 <div class="fragment">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -438,35 +618,191 @@
 </div>
 </div>
 </div>
-</section><section id="pregunta-n-1" class="slide level2 quiz-question smaller"><h2>🧠 Pregunta N° 1</h2>
-<p>Lanzamos un <strong>dado</strong> equilibrado de 6 caras una vez.</p>
+</section><section id="pregunta-n-2" class="slide level2 quiz-question smaller"><h2>🧠 Pregunta N° 2</h2>
+<p>Lanzamos el <strong>mismo dado</strong> equilibrado <strong>dos veces seguidas</strong>. Cada lanzamiento es <strong>independiente</strong> del otro.</p>
 <div>
-<p><strong><em>¿Cuál es la probabilidad de obtener un número mayor que 4?</em></strong></p>
+<p><strong><em>¿Cuál es la probabilidad de obtener un número mayor que 4 en ambos lanzamientos?</em></strong></p>
 <ul>
-<li><span class="correct" data-explanation="Correcto. Los resultados mayores que 4 son {5, 6}, es decir 2 de los 6 resultados igualmente probables: 2/6 ≈ 0,33.">2/6 ≈ 0,33.</span></li>
-<li><span data-explanation="Eso correspondería a 'menor o igual que 4' = {1,2,3,4}. La pregunta pide estrictamente mayor que 4.">4/6 ≈ 0,67.</span></li>
-<li><span data-explanation="1/6 sería la probabilidad de un único número (por ejemplo, sacar un 5). Mayor que 4 incluye dos resultados: 5 y 6.">1/6 ≈ 0,17.</span></li>
-<li><span data-explanation="3/6 correspondería a tres resultados (por ejemplo {4,5,6}). Estrictamente mayor que 4 son solo {5,6}.">3/6 = 0,5.</span></li>
+<li><span data-explanation="Esa es la probabilidad de obtener un número mayor que 4 en un solo lanzamiento. Para que ocurra en ambos hay que multiplicar las dos probabilidades.">2/6 ≈ 0,33.</span></li>
+<li><span data-explanation="Esto sumaría las probabilidades en lugar de multiplicarlas. Para eventos independientes que deben ocurrir a la vez, las probabilidades se multiplican, no se suman.">4/6 ≈ 0,67.</span></li>
+<li><span class="correct" data-explanation="Correcto. En cada lanzamiento P(>4) = 2/6 = 1/3. Como los lanzamientos son independientes, las probabilidades se multiplican: (1/3) × (1/3) = 1/9 ≈ 0,11.">1/9 ≈ 0,11.</span></li>
+<li><span data-explanation="1/36 sería la probabilidad de un par específico (por ejemplo, sacar exactamente 5 y luego 5). Aquí cada lanzamiento tiene 2 resultados favorables, no 1: (2/6) × (2/6) = 4/36 = 1/9.">1/36 ≈ 0,03.</span></li>
 </ul>
+</div>
+</section><section id="resumen-probabilidad" class="slide level2 medium"><h2>Resumen Probabilidad</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Conceptos Importantes <span class="citation" data-cites="devore2016">(<a href="#/bibliografía" role="doc-biblioref" onclick="">Devore 2016</a>)</span></strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li class="fragment">Un <strong>proceso aleatorio</strong> (en libros de estadística, llamado también <em>experimento</em>) es cualquier acción o proceso cuyo resultado está sujeto a la incertidumbre.</li>
+<li class="fragment">El <strong>espacio muestral</strong> de un experimento, denotado por <span class="math inline">\(S\)</span>, es el conjunto de todos los posibles resultados de dicho experimento.</li>
+<li class="fragment">Un <strong>evento</strong> es cualquier recopilación (subconjunto) de resultados contenidos en el espacio muestral <span class="math inline">\(S\)</span>.</li>
+<li class="fragment">Sea que <span class="math inline">\(\phi\)</span> denote el evento nulo (el evento sin resultados). Cuando <span class="math inline">\(A \cap B = \phi\)</span>, se dice que A y B son eventos <strong>mutuamente excluyentes</strong> o disjuntos.</li>
+<li class="fragment">El <strong>complemento</strong> de un evento <span class="math inline">\(A\)</span>, denotado por <span class="math inline">\(A'\)</span>, es el conjunto de todos los resultados en <span class="math inline">\(S\)</span> que no están contenidos en A.</li>
+<li class="fragment">La <strong>unión</strong> de dos eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>, denotados por <span class="math inline">\(A \cup B\)</span> y leída como <em>A o B</em>, es el evento que consiste en todos los resultados que están en A o en B o en ambos eventos, es decir, todos los resultados en al menos uno de los eventos: <span class="math inline">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span>. También <span class="math inline">\(A \cup B\)</span> se puede descomponer en dos eventos excluyentes: <span class="math inline">\(A\)</span> y <span class="math inline">\(B \cap A'\)</span>; la última es la parte de <span class="math inline">\(B\)</span> que queda afuera de <span class="math inline">\(A\)</span>, por lo que <span class="math inline">\(P(A \cup B) = P(A) + P(B \cap A')\)</span>.</li>
+<li class="fragment">La <strong>intersección</strong> de dos eventos <span class="math inline">\(A\)</span> y <span class="math inline">\(B\)</span>, denotada por <span class="math inline">\(A \cap B\)</span> y leída como <em>A y B</em>, es el evento que consiste en todos los resultados que están tanto en A como en B.</li>
+</ul>
+</div>
+</div>
+</div>
+</section><section id="resumen-probabilidad-1" class="slide level2 medium"><h2>Resumen Probabilidad</h2>
+
+<img data-src="img/venn2.png" class="r-stretch quarto-figure-center"><p class="caption">Fuente: <span class="citation" data-cites="devore2016">(<a href="#/bibliografía" role="doc-biblioref" onclick="">Devore 2016</a>)</span></p></section><section id="aplicando-el-complemento" class="slide level2 smaller"><h2>Aplicando el Complemento</h2>
+<ul>
+<li class="fragment"><p>Consideremos el lanzamiento de <strong>2</strong> monedas. En este caso, el espacio muestral sería <span class="math inline">\(S = \{CC,\ CS,\ SC,\ SS\}\)</span> (4 resultados igualmente probables)</p></li>
+<li class="fragment">
+<p>Calculemos las siguientes probabilidades:</p>
+<ul>
+<li class="fragment"><p><span class="math inline">\(P(\text{exactamente una cara (X=1)}) = \dfrac{2}{4} = 0.5\)</span></p></li>
+<li class="fragment"><p><span class="math inline">\(P(\text{al menos una cara}(X \geq 1))\)</span>: en vez de contar <span class="math inline">\(\{CC, CS, SC\}\)</span>, usamos el <strong>complemento</strong> de ese evento (que en este caso, sería <span class="math inline">\(P(X &lt; 1)\)</span>. El único caso sin caras es <span class="math inline">\(\{SS\}\)</span>:</p></li>
+</ul>
+</li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[P(\text{al menos una cara}) = 1 - P(\text{ninguna cara}) = 1 - \tfrac{1}{4} = 0.75\]</span></p>
+</div>
+<div class="fragment">
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Muchas veces puede ser útil usar el <strong>complemento</strong> de un evento para calcular probabilidades: <span class="math inline">\(P(A) = 1 - P(A')\)</span>.</p>
+</div>
+</div>
+</div>
+</div>
+</section><section id="proceso-aleatorio-con-repeticiones" class="slide level2"><h2>Proceso Aleatorio con Repeticiones</h2>
+<ul>
+<li class="fragment">Asumamos que repetimos el proceso aleatorio de tirar una moneda y que registramos como evento <span class="math inline">\(X\)</span> el número de veces que sale <em>cara</em> en <span class="math inline">\(n\)</span> lanzamientos de moneda. Entonces:</li>
+</ul>
+<div class="fragment fade-in">
+<p><span class="math display">\[\Large P(Cara)=\lim_{n\to\infty}\frac{X}{n}\]</span></p>
+</div>
+<div class="fragment fade-in">
+<p><span class="math display">\[\Large P(Cara)=\frac{1}{2}\]</span></p>
+</div>
+</section><section id="lanzar-1-vez-una-moneda" class="slide level2 smaller justify"><h2>Lanzar 1 Vez una Moneda</h2>
+<ul>
+<li class="fragment">Definamos un vector <em>moneda</em> con los posibles eventos y simulemos un solo lanzamiento de esa moneda.</li>
+<li class="fragment">Para hacerlo en R, debemos utilizar la función <code><a href="https://rdrr.io/r/base/sample.html">sample()</a></code> considerando los siguientes argumentos:
+<ul>
+<li class="fragment">
+<code>x</code>: Un vector de uno o más elementos entre los cuales elegir, o un número entero positivo.</li>
+<li class="fragment">
+<code>size</code>: Un número entero no negativo que indica el número de elementos a elegir.</li>
+<li class="fragment">
+<code>replace</code>: Un valor lógico que indica si es que el muestreo debe ser con reposición (<code>= T</code>) o no (<code>= F</code>).</li>
+</ul>
+</li>
+<li class="fragment">Además, <em>seteamos una semilla</em> con la función <code><a href="https://rdrr.io/r/base/Random.html">set.seed()</a></code> para definir un proceso pseudo-aleatorio que nos permita replicar los mismos resultados. En la medida que se utilice la misma semilla, todos los procesos aleatorios que se hagan en adelante serán replicables siempre y cuando utilicen la misma semilla (en la práctica, cualquier número natural).</li>
+</ul>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb10-2"><a></a>moneda <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"cara"</span>, <span class="st">"sello"</span>)</span>
+<span id="cb10-3"><a></a><span class="fu">sample</span>(moneda, <span class="at">size =</span> <span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "cara"</code></pre>
+</div>
+</div>
+</div>
+</section><section id="repitamos-20-veces-este-proceso" class="slide level2"><h2>Repitamos 20 Veces Este Proceso</h2>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb12-2"><a></a>tirar_moneda <span class="ot">&lt;-</span> <span class="fu">sample</span>(moneda, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-3"><a></a><span class="fu">table</span>(tirar_moneda)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tirar_moneda
+ cara sello 
+   11     9 </code></pre>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">Dados estos resultados, vemos que <span class="math inline">\(P(Cara)=\frac{11}{20}=55\%\)</span>
+</li>
+</ul></section><section id="repitamos-5.000-veces-este-proceso" class="slide level2"><h2>Repitamos 5.000 Veces Este Proceso</h2>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb14-2"><a></a>tirar_moneda <span class="ot">&lt;-</span> <span class="fu">sample</span>(moneda, <span class="at">size =</span> <span class="dv">5000</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-3"><a></a><span class="fu">table</span>(tirar_moneda)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tirar_moneda
+ cara sello 
+ 2499  2501 </code></pre>
+</div>
+</div>
+</div>
+<ul>
+<li class="fragment">En este caso vemos que <span class="math inline">\(P(Cara)=\frac{2499}{5000}=49,98\%\)</span>
+</li>
+</ul></section><section id="frecuencia-relativa-acumulada-de-10.000-repeticiones" class="slide level2 medium"><h2>Frecuencia Relativa Acumulada de 10.000 repeticiones</h2>
+
+<img data-src="nivelacion-02_files/figure-revealjs/unnamed-chunk-8-1.png" style="width:100.0%" class="r-stretch"><div class="fragment">
+<p>La proporción de caras se acerca a <strong>0.5</strong> a medida que <span class="math inline">\(n\)</span> crece, tal como vimos previamente. A más repeticiones, <strong>más cerca</strong> del valor verdadero. Recordar que la probabilidad implicaba pensar en un resultado de <strong>largo plazo</strong>, es decir, con varias repeticiones.</p>
+</div>
+</section><section id="simular-lanzamientos" class="slide level2 smaller"><h2>💻 Simular lanzamientos</h2>
+<p>Anteriormente ya calculamos que la probabilidad de obtener un número <strong>mayor que 4</strong> en el lanzamiento de un dado es <span class="math inline">\(2/6 \approx 0{,}33\)</span>. Confirmémoslo <strong>simulando 1000 lanzamientos</strong> de un dado y observando la frecuencia relativa de cada resultado (<em>también puede usar la función <code><a href="https://rdrr.io/r/base/proportions.html">prop.table()</a></code> para sacar proporciones</em>):</p>
+<div class="cell" data-exercise="ex_1">
+<div>
+<div id="webr-1" class="exercise-cell">
+
+</div>
+<script type="webr-1-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMSJ9LCJjb2RlIjoic2V0LnNlZWQoMTIzKVxuZGFkbyAgPC0gMTo2XG50aXJvcyA8LSBzYW1wbGUoX19fX19fLCBzaXplID0gX19fX19fLCByZXBsYWNlID0gVFJVRSlcblxudGFibGUoX19fX19fKSAgICAgICAgICAgICAgICAgICAgICAgIyBjb250ZW8gcG9yIGNhcmFcbnN1bSh0aXJvcyA+IF9fX19fXykgICAgICAgICAgICAgICAgICAgICAjICg9IGNvbnRlbyBkZSA1IHkgNilcbnN1bShfX19fX18pIC8gbGVuZ3RoKHRpcm9zKSAgICAgIyBwcm9wb3JjacOzbiBkZSBldmVudG9zIGZhdm9yYWJsZXMifQ==
+</script>
+</div>
+</div>
+<div class="cell" data-exercise="ex_1_2">
+<div>
+<div id="webr-2" class="exercise-cell">
+
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMV8yIn0sImNvZGUiOiJzZXQuc2VlZCgxMjMpXG5kYWRvICA8LSAxOjZcbnRpcm9zIDwtIHNhbXBsZShfX19fX18sIHNpemUgPSBfX19fX18sIHJlcGxhY2UgPSBUUlVFKVxuXG4jIFByb3BvcmNpw7NuIGRlIGNhZGEgcmVzdWx0YWRvIChmcmVjdWVuY2lhIHJlbGF0aXZhKVxucHJvcC50YWJsZSh0YWJsZShfX19fX18pKSJ9
+</script>
+</div>
 </div>
 </section></section><section><section id="variables-aleatorias-y-distribuciones" class="title-slide slide level1 center" data-background-color="#22226c"><h1><span style="color:white">Variables Aleatorias y Distribuciones</span></h1>
 
-</section><section id="de-los-resultados-a-los-números" class="slide level2 smaller"><h2>De los Resultados a los Números</h2>
+</section><section id="variables-aleatorias" class="slide level2 medium"><h2>Variables Aleatorias</h2>
 <ul>
-<li class="fragment"><p>Una <strong>variable aleatoria</strong> (<span class="math inline">\(X\)</span>) es una regla que asigna un <strong>número</strong> a cada resultado de un experimento aleatorio.</p></li>
-<li class="fragment"><p>Ejemplo: lancemos <strong>3 monedas</strong> y definamos <span class="math inline">\(X = \text{n° de caras}\)</span>.</p></li>
+<li class="fragment"><p>El concepto de variable aleatoria nos permite pasar de los resultados experimentales a una <strong>función</strong> numérica de los resultados.</p></li>
+<li class="fragment">
+<p>Existen fundamentalmente dos tipos diferentes de variables aleatorias:</p>
+<ul>
+<li class="fragment"><strong>Variables aleatorias discretas</strong></li>
+<li class="fragment"><strong>Variables aleatorias continuas</strong></li>
+</ul>
+</li>
+<li class="fragment"><p>Así, una función que asigna un resultado numérico a un proceso aleatorio se conoce como <strong>variable aleatoria</strong>.</p></li>
+</ul></section><section id="variables-aleatorias-discretas" class="slide level2 smaller"><h2>Variables Aleatorias Discretas</h2>
+<ul>
+<li class="fragment"><p>Para una <strong>variable aleatoria discreta</strong>, estos resultados numéricos toman valores aislados (entre dos números no existe ninguno intermedio) y los posibles valores son <strong>finitos</strong>.</p></li>
+<li class="fragment"><p>Usaremos letras mayúsculas, como <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>, y <span class="math inline">\(Z\)</span>, para representar variables aleatorias y minúsculas ( <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, y <span class="math inline">\(z\)</span>) para indicar los resultados observados.</p></li>
+<li class="fragment"><p>Definamos el siguiente proceso aleatorio: Tirar <strong>3 veces</strong> una misma moneda y <span class="math inline">\(X = \text{N° de caras}\)</span></p></li>
+<li class="fragment"><p>En este ejemplo, el espacio muestral tiene 8 resultados, y <span class="math inline">\(X\)</span> puede tomar los valores <span class="math inline">\(0, 1, 2, 3\)</span>:</p></li>
 </ul>
 <div class="fragment">
-<ul>
-<li class="fragment">El espacio muestral tiene 8 resultados, y <span class="math inline">\(X\)</span> puede tomar los valores <span class="math inline">\(0, 1, 2, 3\)</span>:</li>
-</ul>
 <p><span class="math display">\[\{\underbrace{SSS}_{0},\ \underbrace{CSS, SCS, SSC}_{1},\ \underbrace{CCS, CSC, SCC}_{2},\ \underbrace{CCC}_{3}\}\]</span></p>
 </div>
-<div class="fragment">
-<p>Así pasamos de “caras y sellos” a <strong>números</strong> sobre los que podemos calcular probabilidades.</p>
-</div>
-</section><section id="distribución-de-probabilidad" class="slide level2 smaller"><h2>Distribución de Probabilidad</h2>
-<p>La <strong>distribución</strong> de una variable aleatoria nos dice qué probabilidad tiene <strong>cada valor posible</strong>. Para $X = $ n° de caras en 3 lanzamientos:</p>
+<ul>
+<li class="fragment">Así pasamos de “caras y sellos” a <strong>números</strong> sobre los que podemos calcular probabilidades.</li>
+</ul></section><section id="distribución-de-probabilidad" class="slide level2"><h2>Distribución de Probabilidad</h2>
+<p>La <strong>distribución</strong> de una variable aleatoria nos dice qué probabilidad tiene <strong>cada valor posible</strong>. Para <span class="math inline">\(X = \text{N° de caras en 3 lanzamientos}\)</span>:</p>
 <div class="fragment">
 <table class="caption-top">
 <thead><tr class="header">
@@ -484,21 +820,19 @@
 <td>1/8</td>
 </tr></tbody>
 </table>
-</div>
-<div class="fragment">
 <ul>
 <li class="fragment">Todas las probabilidades son <span class="math inline">\(\geq 0\)</span>.</li>
 <li class="fragment">La suma de todas las probabilidades es <strong>1</strong>.</li>
 </ul>
 </div>
 <div class="fragment">
-<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Tip</strong></p>
+<p><strong>Función Masa de Probabilidad (pmf)</strong></p>
 </div>
 <div class="callout-content">
 <p>La función que asigna una probabilidad a cada valor de una variable <strong>discreta</strong> se llama <strong>función de masa de probabilidad</strong> (<em>pmf</em>).</p>
@@ -506,33 +840,153 @@
 </div>
 </div>
 </div>
-</section><section id="la-distribución-binomial" class="slide level2 smaller"><h2>La Distribución Binomial</h2>
-<p>El ejemplo de las monedas sigue una <strong>distribución binomial</strong>, que aparece cuando <span class="citation" data-cites="devore2016">(<a href="#/bibliografía" role="doc-biblioref" onclick=""><strong>devore2016?</strong></a>)</span>:</p>
-<div>
-<ol type="1">
-<li>Repetimos un experimento un número <strong>fijo</strong> de veces (<span class="math inline">\(n\)</span>).</li>
-<li>Cada intento tiene solo <strong>dos resultados</strong> (éxito / fracaso).</li>
-<li>Los intentos son <strong>independientes</strong>.</li>
-<li>La probabilidad de éxito (<span class="math inline">\(p\)</span>) es <strong>constante</strong>.</li>
-</ol>
+</section><section id="pmf-y-cdf" class="slide level2 smaller justify"><h2>PMF y CDF</h2>
+<ul>
+<li class="fragment">
+<p><strong>PMF:</strong> La distribución de probabilidad o función de masa de probabilidad de una variable discreta se define para cada número <span class="math inline">\(x\)</span> como <span class="math inline">\(p(x) = P(X = x)\)</span></p>
+<ul>
+<li class="fragment">Es decir, para cada valor posible <span class="math inline">\(x\)</span> de la variable aleatoria, la función de masa de probabilidad especifica la probabilidad de <strong>observar dicho valor</strong> cuando se realiza el proceso aleatorio</li>
+</ul>
+</li>
+<li class="fragment">
+<p><strong>CDF:</strong> La función de distribución acumulada <span class="math inline">\(F(x)\)</span> de una variable aleatoria discreta <span class="math inline">\(X\)</span> con función de masa de probabilidad <span class="math inline">\(p(x)\)</span> se define para cada número <span class="math inline">\(x\)</span> como: <span class="math display">\[F(x) = P(X \leq x) = \sum_{y: y\leq x} p(y)\]</span></p>
+<ul>
+<li class="fragment">Es decir, que para cualquier número <span class="math inline">\(x\)</span>, <span class="math inline">\(F(x)\)</span> es la probabilidad de que el valor observado de <span class="math inline">\(X\)</span> sea <strong>menor o igual</strong> a <span class="math inline">\(x\)</span>.</li>
+</ul>
+</li>
+</ul></section><section id="aplicando-la-pmf" class="slide level2 medium"><h2>Aplicando la pmf</h2>
+<ul>
+<li class="fragment">Digamos que <span class="math inline">\(X\)</span> es una variable aleatoria discreta que representa el número total de <em>caras</em> en 3 tiros de moneda. ¿Cuál es <span class="math inline">\(P(X=2)\)</span>?</li>
+</ul>
+<div class="fragment fade-in">
+<p><span class="math inline">\(P(X=2)=\frac{3}{8}=0.375\)</span></p>
 </div>
-<div class="fragment">
-<p>Lanzar 3 monedas y contar caras cumple las 4 condiciones: <span class="math inline">\(n = 3\)</span>, <span class="math inline">\(p = 0.5\)</span>, éxito = “cara”.</p>
+<div class="fragment fade-in">
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead><tr class="header">
+<th>x</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td><span class="math inline">\(\small P(X=x)=f(x)\)</span></td>
+<td>
+<span class="math inline">\(f(0)\)</span>=0,125</td>
+<td>
+<span class="math inline">\(f(1)\)</span>=0,375</td>
+<td>
+<span class="math inline">\(f(2)\)</span>=0,375</td>
+<td>
+<span class="math inline">\(f(3)\)</span>=0,125</td>
+</tr></tbody>
+</table>
 </div>
-</section><section id="la-familia-de-funciones-de-distribución-en-r" class="slide level2 smaller"><h2>La Familia de Funciones de Distribución en <code>R</code>
+<div class="fragment fade-in">
+<p>Probemos haciendo el experimento 10.000 veces:</p>
+</div>
+<div class="fragment fade-in">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>resultados <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="at">expr =</span> <span class="fu">sum</span>(<span class="fu">sample</span>(moneda, <span class="dv">3</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="sc">==</span> <span class="st">"cara"</span>), <span class="at">n =</span> <span class="dv">10000</span>)</span>
+<span id="cb16-2"><a></a><span class="fu">table</span>(resultados)<span class="sc">/</span><span class="dv">10000</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>resultados
+     0      1      2      3 
+0.1283 0.3674 0.3758 0.1285 </code></pre>
+</div>
+</div>
+</div>
+</section><section id="función-de-distribución-acumulada-cdf-y-pmf" class="slide level2 smaller"><h2>Función de Distribución Acumulada (cdf) y pmf</h2>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead><tr class="header">
+<th></th>
+<th>x</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>pmf</td>
+<td><span class="math inline">\(\small P(X=x)=f(x)\)</span></td>
+<td>
+<span class="math inline">\(f(0)\)</span>=0,125</td>
+<td>
+<span class="math inline">\(f(1)\)</span>=0,375</td>
+<td>
+<span class="math inline">\(f(2)\)</span>=0,375</td>
+<td>
+<span class="math inline">\(f(3)\)</span>=0,125</td>
+</tr>
+<tr class="even">
+<td>cdf</td>
+<td><span class="math inline">\(\small P(X&lt;=x)=F(x)\)</span></td>
+<td>
+<span class="math inline">\(F(0)\)</span>=0,125</td>
+<td>
+<span class="math inline">\(F(1)\)</span>=0,5</td>
+<td>
+<span class="math inline">\(F(2)\)</span>=0,875</td>
+<td>
+<span class="math inline">\(F(3)\)</span>=1</td>
+</tr>
+</tbody>
+</table>
+
+<img data-src="nivelacion-02_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section><section id="pmf-y-cdf-en-r" class="slide level2 medium"><h2>PMF y CDF en <code>R</code>
+</h2>
+<ul>
+<li class="fragment">El paquete <code>stats</code> permite calcular fácilmente las funciones de probabilidad (<em>pmf</em>) y las funciones de probabilidad acumulada (<em>cdf</em>). La sintaxis general es: <code>prefijo</code> <span class="math inline">\(+\)</span> <code>distr</code> donde <code>distr</code> es el sufijo de la abreviación de la distribución de probabilidad (por ejemplo, <code>binom</code> para la binomial, <code>norm</code> para la normal, y así sucesivamente); mientras que el <span class="math inline">\(prefijo\)</span> puede ser uno de los siguientes valores:
+<ul>
+<li class="fragment">
+<span class="math inline">\(d\)</span> para la <strong>pmf/pdf</strong>. En <code>R</code> se le llama <em>density</em>
+</li>
+<li class="fragment">
+<span class="math inline">\(p\)</span> para la <strong>cdf</strong>. En <code>R</code> se le llama <em>distribution function</em>
+</li>
+<li class="fragment">
+<span class="math inline">\(q\)</span> para los <strong>cuantiles</strong>. En <code>R</code> se le llama <em>quantile function</em>
+</li>
+<li class="fragment">
+<span class="math inline">\(r\)</span> para generar <strong>números aleatorios</strong> según la distribución indicada. En <code>R</code> se le llama <em>random variates o random generation</em>
+</li>
+</ul>
+</li>
+</ul></section><section id="la-familia-de-funciones-de-distribución-en-r" class="slide level2 medium"><h2>La Familia de Funciones de Distribución en <code>R</code>
 </h2>
 <p><code>R</code> tiene una familia de funciones para cada distribución. Para la binomial, el sufijo es <code>binom</code>:</p>
 <table class="caption-top">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 61%">
+<col style="width: 19%">
+</colgroup>
 <thead><tr class="header">
 <th>Prefijo</th>
 <th>Pregunta que responde</th>
-<th>Función</th>
+<th>Función Ejemplo</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td><code>d</code></td>
-<td>¿Probabilidad de un valor <strong>exacto</strong>? <span class="math inline">\(P(X=x)\)</span>
-</td>
+<td>¿Probabilidad de un valor <strong>exacto</strong>? En el caso discreto <span class="math inline">\(P(X=x)\)</span> y altura de la curva si es continua</td>
 <td><code><a href="https://rdrr.io/r/stats/Binomial.html">dbinom()</a></code></td>
 </tr>
 <tr class="even">
@@ -555,58 +1009,127 @@
 </tbody>
 </table>
 <div class="fragment">
-<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Nota</strong></p>
+<p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<p>El mismo patrón aplica a la normal (<code>dnorm</code>, <code>pnorm</code>, …) y a otras distribuciones. ¡Solo cambia el sufijo!</p>
+<p>Recuerden que el mismo patrón aplica a la distribución normal que veremos más adelante (<code>dnorm</code>, <code>pnorm</code>, …) y a otras distribuciones. ¡Solo cambia el sufijo!</p>
 </div>
 </div>
 </div>
 </div>
-</section><section id="aplicación-dbinom" class="slide level2 smaller"><h2>💻 Aplicación: <code>dbinom()</code>
+</section><section id="distribución-binomial" class="slide level2 smaller"><h2>Distribución Binomial</h2>
+<p>Un proceso aleatorio sigue una distribución binomial si se cumplen las siguientes 4 condiciones <span class="citation" data-cites="devore2016">(<a href="#/bibliografía" role="doc-biblioref" onclick="">Devore 2016</a>)</span>:</p>
+<ol type="1">
+<li class="fragment">El experimento consta de una secuencia de <span class="math inline">\(n\)</span> experimentos más pequeños llamados ensayos, donde <span class="math inline">\(n\)</span> se fija antes del experimento.</li>
+<li class="fragment">Cada ensayo puede dar por resultado uno de los mismos <strong>dos resultados</strong> posibles (ensayos dicotómicos) los cuales se denotan como éxito (<span class="math inline">\(S\)</span>) y como falla (<span class="math inline">\(F\)</span>).</li>
+<li class="fragment">Los ensayos son <strong>independientes</strong> entre sí, de modo que el resultado en un ensayo particular <strong>no</strong> influye en el resultado de cualquier otro ensayo.</li>
+<li class="fragment">La probabilidad de éxito <span class="math inline">\(P(S)\)</span> es <strong>constante</strong> de un ensayo a otro. Esta probabilidad se denota por <span class="math inline">\(p\)</span>.</li>
+</ol>
+<ul>
+<li class="fragment"><p>Tal y como se mencionó anteriormente, el <strong>lanzamiento de una moneda</strong> cumple precisamente con estas características, por lo que sigue una <strong>distribución binomial</strong>.</p></li>
+<li class="fragment">
+<p>Por ejemplo, el proceso aleatorio de lanzar 3 monedas y contar la cantidad de caras obtenidas cumple estas 4 condiciones:</p>
+<ul>
+<li class="fragment"><span class="math inline">\(n = 3\)</span></li>
+<li class="fragment"><span class="math inline">\(p = 0.5\)</span></li>
+<li class="fragment">éxito = “cara”.</li>
+</ul>
+</li>
+</ul></section><section id="aplicación-en-r-dbinom" class="slide level2 smaller"><h2>Aplicación en <code>R</code>: <code>dbinom()</code>
 </h2>
-<p><strong>¿Cuál es la probabilidad de obtener exactamente 2 caras en 3 lanzamientos?</strong> (<span class="math inline">\(x = 2\)</span>, <span class="math inline">\(n = 3\)</span>, <span class="math inline">\(p = 0.5\)</span>)</p>
+<ul>
+<li class="fragment">Siguiendo con el ejemplo de la moneda, para calcular la probabilidad de obtener <strong>2 caras</strong> en <strong>3 lanzamientos</strong> de moneda, podemos utilizar la función <code><a href="https://rdrr.io/r/stats/Binomial.html">dbinom()</a></code> de la siguiente manera, sabiendo que <span class="math inline">\(x = 2\)</span>, <span class="math inline">\(n = 3\)</span> y <span class="math inline">\(p = 0.5\)</span>:</li>
+</ul>
+<div class="fragment fade-in smaller">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">dbinom</span>(<span class="dv">2</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">dbinom</span>(<span class="dv">2</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.375</code></pre>
 </div>
 </div>
-<div class="fragment">
-<p>El resultado es <strong>0.375 = 3/8</strong>, exactamente lo que habíamos contado en la tabla. <code>R</code> nos ahorra enumerar el espacio muestral.</p>
 </div>
-</section><section id="aplicación-pbinom" class="slide level2 smaller"><h2>💻 Aplicación: <code>pbinom()</code>
+<div class="fragment">
+<ul>
+<li class="fragment">El resultado es <strong>0.375 = 3/8</strong>, exactamente lo que habíamos contado en la tabla. Este cálculo directo nos ahorra tener que enumerar el espacio muestral del proceso aleatorio: <span class="math inline">\(\{CCC,\color{Red}{CC}S,\color{Red}{C}S\color{Red}{C},S\color{Red}{CC},CSS,SCS,SSC,SSS\}\)</span>.</li>
+</ul>
+</div>
+</section><section id="aplicación-en-r-pbinom" class="slide level2 smaller"><h2>Aplicación en <code>R</code>: <code>pbinom()</code>
 </h2>
-<p><strong>¿Cuál es la probabilidad de obtener al menos 1 cara?</strong> Usamos el <strong>complemento</strong>: <span class="math inline">\(P(X \geq 1) = 1 - P(X = 0)\)</span>.</p>
-<p><code>pbinom(0, 3, 0.5)</code> entrega <span class="math inline">\(P(X \leq 0)\)</span>, que aquí es igual a <span class="math inline">\(P(X = 0)\)</span>:</p>
+<ul>
+<li class="fragment">Si ahora quisiéramos calcular cuál es la probabilidad de tener <strong>1 cara o menos</strong> en los mismos 3 lanzamientos, podemos utilizar la función <code><a href="https://rdrr.io/r/stats/Binomial.html">pbinom()</a></code> de la siguiente manera:</li>
+</ul>
+<div class="fragment fade-in smaller">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">0</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">pbinom</span>(<span class="dv">1</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5</code></pre>
+</div>
+</div>
+</div>
+<div class="fragment fade-in smaller">
+<p><span class="math inline">\(\{CCC,CCS,CSC,SCC,\color{Red}CSS,S\color{Red}CS,SS\color{Red}C,\color{Red}{SSS}\}\)</span>.</p>
+</div>
+<ul>
+<li class="fragment"><p>¿Y si quisiéramos obtener la probabilidad de obtener <strong>al menos 1</strong> cara?</p></li>
+<li class="fragment"><p>Para responder a ello, podemos usar el <strong>complemento</strong>: <span class="math inline">\(P(X \geq 1) = 1 - P(X = 0)\)</span>.</p></li>
+<li class="fragment"><p><code>pbinom(0, 3, 0.5)</code> entrega <span class="math inline">\(P(X \leq 0)\)</span>, que aquí es igual a <span class="math inline">\(P(X = 0)\)</span>:</p></li>
+</ul>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pbinom</span>(<span class="dv">0</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.875</code></pre>
 </div>
 </div>
-<div class="fragment">
-<p>El resultado es <strong>0.875 = 7/8</strong>: la misma lógica del complemento que usamos con las dos monedas, ahora con <code>R</code>.</p>
+<ul>
+<li class="fragment">El resultado es <strong>0.875 = 7/8</strong>: la misma lógica del complemento que usamos con las dos monedas, pero ahora calculado mediante funciones de <code>R</code>.</li>
+</ul>
 </div>
-</section><section id="ejercicio-guiado-binomial" class="slide level2 smaller"><h2>💻 Ejercicio Guiado: Binomial</h2>
+</section><section id="aplicación-en-r-qbinom" class="slide level2 smaller"><h2>Aplicación en <code>R</code>: <code>qbinom()</code>
+</h2>
+<ul>
+<li class="fragment">
+<p>La función <code><a href="https://rdrr.io/r/stats/Binomial.html">qbinom()</a></code> en <code>R</code> permite encontrar el valor de una variable binomial asociado a una probabilidad acumulada determinada. Es decir, calcula el cuantil (o percentil) de la distribución binomial. Los argumentos básicos de la función son:</p>
+<ul>
+<li class="fragment">
+<code>p</code>: La probabilidad acumulada.</li>
+<li class="fragment">
+<code>size</code>: El número de ensayos (lanzamientos de la moneda).</li>
+<li class="fragment">
+<code>prob</code>: La probabilidad de éxito en cada ensayo (probabilidad de obtener cara en cada lanzamiento).</li>
+</ul>
+</li>
+<li class="fragment"><p><code>qbinom(p, size, prob)</code> devuelve el menor valor de <span class="math inline">\(k\)</span> tal que la probabilidad acumulada <span class="math inline">\(P(X\leq k)\)</span> sea al menos <span class="math inline">\(p\)</span>, donde <span class="math inline">\(X\)</span> es una variable aleatoria binomial con parámetros <code>size</code> y <code>prob</code></p></li>
+<li class="fragment"><p>Por los ejercicios anteriores, sabemos que <span class="math inline">\(P(X\leq 0) = 0.125\)</span>, <span class="math inline">\(P(X\leq 1) = 0.5\)</span>, <span class="math inline">\(P(X\leq 2) = 0.875\)</span> y <span class="math inline">\(P(X\leq 3) = 1\)</span></p></li>
+<li class="fragment"><p>Por lo tanto, si queremos saber hasta qué punto concreto de los valores que podría tomar <span class="math inline">\(X\)</span> se acumula el 87.5% de la probabilidad, debemos ejecutar lo siguiente:</p></li>
+</ul>
+<div class="fragment fade-in smaller">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">qbinom</span>(<span class="fl">0.875</span>, <span class="dv">3</span>, <span class="fl">0.5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+</div>
+</section><section id="aplicación-distribución-binomial" class="slide level2 smaller"><h2>💻 Aplicación: Distribución Binomial</h2>
 <p>Una prueba tiene <strong>5 preguntas</strong> de verdadero/falso. Un estudiante <strong>responde al azar</strong> (<span class="math inline">\(p = 0.5\)</span> de acertar cada una). Complete el código para calcular la probabilidad de acertar <strong>exactamente 3</strong>:</p>
-<div class="cell" data-exercise="ex_binom">
+<div class="cell" data-exercise="ex_2">
 <div>
-<div id="webr-1" class="exercise-cell">
+<div id="webr-3" class="exercise-cell">
 
 </div>
-<script type="webr-1-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfYmlub20ifSwiY29kZSI6IiMgeCA9IDMgYWNpZXJ0b3MsIG4gPSA1IHByZWd1bnRhcywgcCA9IDAuNVxuX19fX19fKF9fX19fXywgc2l6ZSA9IF9fX19fXywgcHJvYiA9IF9fX19fXykifQ==
+<script type="webr-3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMiJ9LCJjb2RlIjoiX19fX19fKF9fX19fXywgc2l6ZSA9IF9fX19fXywgcHJvYiA9IF9fX19fXykifQ==
 </script>
 </div>
 </div>
-<div class="fragment">
+<div class="hint webr-ojs-exercise exercise-hint d-none" data-exercise="ex_2">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -621,24 +1144,22 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfYmlub20ifSwiY29k
 </div>
 </div>
 </div>
-</section><section id="de-lo-discreto-a-lo-continuo" class="slide level2 smaller"><h2>De lo Discreto a lo Continuo</h2>
+</section><section id="de-lo-discreto-a-lo-continuo" class="slide level2 medium"><h2>De lo Discreto a lo Continuo</h2>
 <ul>
-<li class="fragment"><p>La binomial es <strong>discreta</strong>: <span class="math inline">\(X\)</span> toma valores separados (0, 1, 2, 3…).</p></li>
-<li class="fragment"><p>Pero muchas variables son <strong>continuas</strong>: pueden tomar <strong>cualquier</strong> valor en un rango (altura, ingreso, temperatura).</p></li>
+<li class="fragment"><p>La distribución binomial es <strong>discreta</strong>: <span class="math inline">\(X\)</span> toma valores separados (0, 1, 2, 3…).</p></li>
+<li class="fragment"><p>Pero muchas variables son <strong>continuas</strong>, es decir, pueden tomar <strong>cualquier</strong> valor en un rango (altura, ingreso, temperatura).</p></li>
 </ul>
 <div class="fragment">
 <ul>
-<li class="fragment">En variables continuas ya no preguntamos por <span class="math inline">\(P(X = x)\)</span> exacto (es prácticamente 0), sino por la probabilidad de caer en un <strong>intervalo</strong>, que corresponde al <strong>área bajo la curva</strong> de su función de densidad.</li>
+<li class="fragment">En variables continuas ya no preguntamos por <span class="math inline">\(P(X = x)\)</span> exacto (es prácticamente 0), sino por la probabilidad de caer en un <strong>intervalo</strong>, que corresponde al <strong>área bajo la curva</strong> de su función de densidad, es decir, principalmente nos interesamos en calcular probabilidad mediante <code>p</code> funciones (ejemplo: <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code>).</li>
 </ul>
 </div>
 <div class="fragment">
-<p>La distribución continua más importante —y la protagonista de la inferencia— es la <strong>distribución normal</strong>.</p>
+<p>La distribución continua más importante (y protagonista para introducir reglas y conceptos de inferencia estadística) es la <strong>distribución normal</strong>.</p>
 </div>
 </section></section><section><section id="la-distribución-normal" class="title-slide slide level1 center" data-background="#416fc4"><h1><span style="color:white">La Distribución Normal</span></h1>
 
 </section><section id="la-distribución-normal-1" class="slide level2 smaller"><h2>La Distribución Normal</h2>
-<div class="columns">
-<div class="column" style="width:60%;">
 <ul>
 <li class="fragment"><p>Es una distribución <strong>continua</strong> con forma de <strong>campana</strong> simétrica.</p></li>
 <li class="fragment">
@@ -653,65 +1174,84 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfYmlub20ifSwiY29k
 <li class="fragment"><p>Se abrevia <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma^2)\)</span>.</p></li>
 <li class="fragment"><p>En ella se cumple que <strong>media = mediana = moda</strong>.</p></li>
 </ul>
-</div><div class="column" style="width:40%;">
+<div class="fragment">
 <div class="cell">
 <div class="cell-output-display">
 <div>
-<figure><p><img data-src="nivelacion-02_files/figure-revealjs/unnamed-chunk-8-1.png" width="768"></p>
+<figure><p><img data-src="nivelacion-02_files/figure-revealjs/unnamed-chunk-16-1.png" width="768"></p>
 </figure>
 </div>
 </div>
 </div>
-</div></div>
+</div>
 </section><section id="el-efecto-de-los-parámetros" class="slide level2 smaller"><h2>El Efecto de los Parámetros</h2>
-<p><span class="math inline">\(\mu\)</span> <strong>mueve</strong> la curva; <span class="math inline">\(\sigma\)</span> la hace más <strong>ancha o angosta</strong>:</p>
+<p><span class="math inline">\(\mu\)</span> <strong>mueve</strong> la curva hacia la izquierda o derecha, mientras que <span class="math inline">\(\sigma\)</span> la hace más <strong>ancha o angosta</strong>:</p>
 
-<img data-src="nivelacion-02_files/figure-revealjs/unnamed-chunk-9-1.png" width="768" class="r-stretch"></section><section id="ejemplo-la-altura-de-una-población" class="slide level2 smaller"><h2>Ejemplo: La Altura de una Población</h2>
+<img data-src="nivelacion-02_files/figure-revealjs/unnamed-chunk-17-1.png" width="768" class="r-stretch"></section><section id="ejemplo-la-altura-de-una-población" class="slide level2 smaller"><h2>Ejemplo: La Altura de una Población</h2>
 <p>Supongamos que la <strong>altura</strong> (en cm) de una población se distribuye de forma normal con media <strong>177</strong> y desviación estándar <strong>10</strong>:</p>
 <p><span class="math display">\[X \sim \mathcal{N}(177,\ 10^2)\]</span></p>
 <div class="fragment">
 <div class="cell">
 <div class="cell-output-display">
 <div>
-<figure><p><img data-src="nivelacion-02_files/figure-revealjs/unnamed-chunk-10-1.png" width="768"></p>
+<figure><p><img data-src="nivelacion-02_files/figure-revealjs/unnamed-chunk-18-1.png" width="768"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Queremos calcular probabilidades sobre la altura usando <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code>.</p>
 </div>
-</section><section id="calcular-probabilidades-pnorm" class="slide level2 smaller"><h2>💻 Calcular Probabilidades: <code>pnorm()</code>
+</section><section id="calcular-probabilidades-con-pnorm" class="slide level2 medium"><h2>Calcular Probabilidades con <code>pnorm()</code>
 </h2>
-<p><strong>¿Cuál es la probabilidad de que alguien mida menos de 160 cm?</strong> <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code> entrega el <strong>área a la izquierda</strong> (la cdf, <span class="math inline">\(P(X \leq x)\)</span>):</p>
+<ul>
+<li class="fragment"><strong>¿Cuál es la probabilidad de que alguien mida menos de 160 cm con la distribución anterior?</strong></li>
+</ul>
+<div class="fragment">
+<p>Sabemos que <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code> entrega el <strong>área a la izquierda</strong> (la cdf, <span class="math inline">\(P(X \leq x)\)</span>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">pnorm</span>(<span class="dv">160</span>, <span class="at">mean =</span> <span class="dv">177</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">pnorm</span>(<span class="dv">160</span>, <span class="at">mean =</span> <span class="dv">177</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.04456546</code></pre>
 </div>
 </div>
-<div class="fragment">
-<p>Hay un <strong>4.5%</strong> de probabilidad de medir menos de 160 cm.</p>
 </div>
 <div class="fragment">
-<p><strong>¿Y de medir más de 180 cm?</strong> Es el área a la derecha (el complemento):</p>
+<p>Por lo tanto, hay un <strong>4.5%</strong> de probabilidad de medir menos de 160 cm.</p>
+</div>
+</section><section id="calcular-probabilidades-con-pnorm-1" class="slide level2 medium"><h2>Calcular Probabilidades con <code>pnorm()</code>
+</h2>
+<ul>
+<li class="fragment"><strong>¿Cuál es la probabilidad de medir más de 180 cm?</strong></li>
+</ul>
+<div class="fragment">
+<p>Ahora necesitamos saber el área a la derecha, es decir, el complemento:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">pnorm</span>(<span class="dv">180</span>, <span class="at">mean =</span> <span class="dv">177</span>, <span class="at">sd =</span> <span class="dv">10</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="dv">180</span>, <span class="at">mean =</span> <span class="dv">177</span>, <span class="at">sd =</span> <span class="dv">10</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3820886</code></pre>
 </div>
 </div>
-<p>Un <strong>38.2%</strong> mide más de 180 cm.</p>
+</div>
+<div class="fragment">
+<p>O bien usando el argumento <code>lower.tail = FALSE</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">pnorm</span>(<span class="dv">180</span>, <span class="at">mean =</span> <span class="dv">177</span>, <span class="at">sd =</span> <span class="dv">10</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3820886</code></pre>
+</div>
+</div>
+<p>Lo que nos indica que un <strong>38.2%</strong> mide más de 180 cm.</p>
 </div>
 </section><section id="ejercicio-guiado-normal" class="slide level2 smaller"><h2>💻 Ejercicio Guiado: Normal</h2>
 <p>Con la misma distribución de altura <span class="math inline">\(\mathcal{N}(177, 10^2)\)</span>, complete el código para calcular la probabilidad de medir <strong>entre 160 y 180 cm</strong>.</p>
 <p><em>Pista: es el área a la izquierda de 180 menos el área a la izquierda de 160.</em></p>
-<div class="cell" data-exercise="ex_norm">
+<div class="cell" data-exercise="ex_3">
 <div>
-<div id="webr-2" class="exercise-cell">
+<div id="webr-4" class="exercise-cell">
 
 </div>
-<script type="webr-2-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfbm9ybSJ9LCJjb2RlIjoicG5vcm0oX19fX19fLCAxNzcsIDEwKSAtIHBub3JtKF9fX19fXywgMTc3LCAxMCkifQ==
+<script type="webr-4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfMyJ9LCJjb2RlIjoicG5vcm0oX19fX19fLCAxNzcsIDEwKSAtIHBub3JtKF9fX19fXywgMTc3LCAxMCkifQ==
 </script>
 </div>
 </div>
@@ -720,7 +1260,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfbm9ybSJ9LCJjb2Rl
 </div>
 </section><section id="puntaje-z-y-la-regla-empírica" class="slide level2 smaller"><h2>Puntaje Z y la Regla Empírica</h2>
 <ul>
-<li class="fragment"><p>Recordemos de la Clase 1 el <strong>puntaje Z</strong>, que mide a cuántas desviaciones estándar está un valor de la media: <span class="math display">\[z = \frac{x - \mu}{\sigma}\]</span></p></li>
+<li class="fragment"><p>Recordemos de la Clase 1 el <strong>puntaje Z</strong>, el cual mide a cuántas desviaciones estándar está un valor de la media: <span class="math display">\[z = \frac{x - \mu}{\sigma}\]</span></p></li>
 <li class="fragment"><p>En <strong>cualquier</strong> distribución con forma de campana se cumple la <strong>Regla Empírica</strong>:</p></li>
 </ul>
 <div class="fragment">
@@ -746,9 +1286,9 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfbm9ybSJ9LCJjb2Rl
 </table>
 </div>
 <div class="fragment">
-<p>Estos porcentajes son el área bajo la curva normal, y serán la base de los <strong>intervalos de confianza</strong>.</p>
+<p>Estos porcentajes son el área bajo la curva normal, y serán la base para construir los <strong>intervalos de confianza</strong> que veremos más adelante.</p>
 </div>
-</section><section id="pregunta-n-2" class="slide level2 quiz-question smaller"><h2>🧠 Pregunta N° 2</h2>
+</section><section id="pregunta-n-3" class="slide level2 quiz-question smaller"><h2>🧠 Pregunta N° 3</h2>
 <p>La altura sigue una <span class="math inline">\(\mathcal{N}(177, 10^2)\)</span>. Una persona mide <strong>197 cm</strong>.</p>
 <div>
 <p><strong><em>¿Qué podemos decir de su puntaje Z?</em></strong></p>
@@ -761,7 +1301,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfbm9ybSJ9LCJjb2Rl
 </div>
 </section></section><section><section id="inferencia-de-la-muestra-a-la-población" class="title-slide slide level1 center" data-background-color="#22226c"><h1><span style="color:white">Inferencia: De la Muestra a la Población</span></h1>
 
-</section><section id="población-vs.-muestra" class="slide level2 smaller"><h2>Población vs.&nbsp;Muestra</h2>
+</section><section id="recordar-población-vs.-muestra" class="slide level2 smaller"><h2>Recordar: Población vs.&nbsp;Muestra</h2>
 <ul>
 <li class="fragment"><p><strong>Población</strong> (<span class="math inline">\(N\)</span>): el grupo <strong>completo</strong> que nos interesa (por ejemplo, todos los hogares de Chile).</p></li>
 <li class="fragment"><p><strong>Muestra</strong> (<span class="math inline">\(n\)</span>): un <strong>subconjunto</strong> de la población que efectivamente observamos.</p></li>
@@ -794,7 +1334,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfbm9ybSJ9LCJjb2Rl
 </ul>
 <div class="fragment">
 <div class="cuadro-pregunta">
-<p>¿Cómo se comportan todas esas medias muestrales si repitiéramos el muestreo muchísimas veces?</p>
+<p>¿Cómo se comportan todas esas <strong>medias muestrales</strong> si repitiéramos el muestreo muchísimas veces?</p>
 </div>
 </div>
 <div class="fragment">
@@ -802,34 +1342,78 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfbm9ybSJ9LCJjb2Rl
 </div>
 </section><section id="teorema-del-límite-central-tlc" class="slide level2 smaller"><h2>Teorema del Límite Central (TLC)</h2>
 <p>El <strong>TLC</strong> dice que, si tomamos muchas muestras de tamaño <span class="math inline">\(n\)</span> y calculamos la media de cada una:</p>
-<div>
 <ul>
-<li>La distribución de <strong>esas medias</strong> tiende a una <strong>normal</strong>…</li>
-<li>…<strong>aunque la población original no sea normal</strong>,</li>
-<li>centrada en la <strong>media poblacional</strong> <span class="math inline">\(\mu\)</span>,</li>
-<li>y <strong>más angosta</strong> mientras <strong>mayor</strong> sea <span class="math inline">\(n\)</span>.</li>
+<li class="fragment">La distribución de <strong>esas medias</strong> tiende a una <strong>distribución normal</strong>…</li>
+<li class="fragment">…aunque la población original <strong>no sea normal</strong>,</li>
+<li class="fragment">La media de estas medias muestrales está centrada justo en la <strong>media poblacional</strong> <span class="math inline">\(\mu\)</span>,</li>
+<li class="fragment">y su distribución es <strong>más angosta</strong> mientras <strong>mayor</strong> sea <span class="math inline">\(n\)</span>.</li>
 </ul>
-</div>
 <div class="fragment">
 <p>Veamos una breve animación que lo explica:</p>
 </div>
 <div class="fragment">
 <iframe data-external="1" src="https://www.youtube.com/embed/jvoxEYmQHNM" width="560" height="315" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 </div>
-</section><section id="una-ilustración-del-tlc-en-r" class="slide level2 smaller"><h2>💻 Una Ilustración del TLC en <code>R</code>
-</h2>
-<p>Partamos de una población <strong>muy asimétrica</strong> (nada normal). Tomamos 10.000 muestras y graficamos sus <strong>medias</strong> para 3 tamaños de <span class="math inline">\(n\)</span>:</p>
-
-<img data-src="nivelacion-02_files/figure-revealjs/unnamed-chunk-14-1.png" width="768" class="r-stretch"><div class="fragment">
-<p>A mayor <span class="math inline">\(n\)</span>, la distribución de las medias es <strong>más normal y más angosta</strong>, tal como predice el TLC.</p>
+</section><section id="la-edad-de-independencia-según-el-censo-2024" class="slide level2 smaller justify"><h2>La Edad de Independencia según el Censo 2024</h2>
+<p>Usemos la <strong>edad</strong> de la comuna de Independencia a partir de la base de datos de personas del Censo 2024. Como tenemos a <strong>todas</strong> las personas censadas, conocemos los parámetros poblacionales <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">library</span>(readxl)</span>
+<span id="cb32-2"><a></a>censo <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/censo24-personas-independencia.xlsx"</span>)   <span class="co"># columna: edad</span></span>
+<span id="cb32-3"><a></a>censo <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">mu =</span> <span class="fu">mean</span>(edad), <span class="at">sigma =</span> <span class="fu">sd</span>(edad)) <span class="sc">|&gt;</span>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<thead><tr class="header">
+<th style="text-align: right;">mu</th>
+<th style="text-align: right;">sigma</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: right;">35.91319</td>
+<td style="text-align: right;">20.75632</td>
+</tr></tbody>
+</table>
 </div>
-</section><section id="el-error-estándar-se" class="slide level2 smaller"><h2>El Error Estándar (SE)</h2>
+</div>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure><p><img data-src="nivelacion-02_files/figure-revealjs/unnamed-chunk-24-1.png" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:45%;">
 <ul>
-<li class="fragment"><p>El <strong>error estándar</strong> resume en un solo número cuánto <strong>varían</strong> las medias muestrales.</p></li>
-<li class="fragment"><p>Es, simplemente, la desviación estándar de la <strong>distribución de las medias</strong>, y se estima como:</p></li>
+<li class="fragment">La distribución de la edad <strong>no es normal</strong>.</li>
+<li class="fragment">En la mayoría de los casos <strong>no</strong> conocemos <span class="math inline">\(\mu\)</span>: solo tenemos <strong>muestras</strong> y realizamos estimaciones con <span class="math inline">\(\hat{\mu} = \bar{x}\)</span>.</li>
+<li class="fragment">Cada muestra da un <span class="math inline">\(\hat{\mu}\)</span> <strong>distinto</strong>. ¿Cómo se distribuyen?</li>
 </ul>
+</div></div>
+</section><section id="muestras-de-la-edad-tlc" class="slide level2 smaller"><h2>1.000 Muestras de la Edad: TLC</h2>
+<p>Tomamos <strong>1.000 muestras</strong> y calculamos la <strong>media de la edad</strong> en cada una, para tres tamaños muestrales (<span class="math inline">\(n = 10, 100, 500\)</span>):</p>
+
+<img data-src="nivelacion-02_files/figure-revealjs/unnamed-chunk-25-1.png" width="960" class="r-stretch"><div class="fragment">
+<p>Aunque la población <strong>no</strong> es normal, la distribución de las <strong>medias</strong> se aproxima a una normal, <strong>centrada en la media poblacional</strong> (línea roja) y <strong>cada vez más angosta</strong> a mayor <span class="math inline">\(n\)</span>. Eso es el <strong>Teorema del Límite Central</strong>.</p>
+</div>
+</section><section id="resumen" class="slide level2 smaller justify"><h2>Resumen</h2>
+<p>En general, si sacamos una <strong>muestra aleatoria</strong> de tamaño <span class="math inline">\(n\)</span> desde una población <span class="math inline">\(N\)</span>, entonces:</p>
+<ul>
+<li class="fragment">La media muestral <span class="math inline">\(\bar{X}\)</span> es un estimador insesgado de <span class="math inline">\(\mu\)</span>, y su dispersión, medida por el error estándar <span class="math inline">\(\sigma/\sqrt{n}\)</span> disminuye al aumentar <span class="math inline">\(n\)</span>. Además, por el TCL, para <span class="math inline">\(n\)</span> suficientemente grande la distribución de <span class="math inline">\(\bar{X}\)</span> a una Normal, sin importar la distribución original de la población.</li>
+<li class="fragment">Los resultados basados en la muestra podrían ser <strong>generalizados a la población</strong>.</li>
+<li class="fragment">La estimación puntual, <span class="math inline">\(\hat{\mu}\)</span>, es una <strong>“buena suposición”</strong> del parámetro poblacional desconocido, <span class="math inline">\(\mu\)</span>.</li>
+<li class="fragment">Entonces, en vez de hacer un censo (costoso en muchos sentidos), podemos hacer <strong>inferencia sobre una población usando muestreo</strong>.</li>
+</ul></section><section id="error-estándar-se" class="slide level2 medium"><h2>Error Estándar (SE)</h2>
+<ul>
+<li class="fragment"><p>El error estándar es una métrica única que resume la variabilidad en la distribución muestral de un estadístico.</p></li>
+<li class="fragment"><p>El error estándar se puede estimar utilizando una estadística basada en la <strong>desviación estándar</strong> <span class="math inline">\(s\)</span> de los valores de la muestra y el <strong>tamaño de la muestra</strong> <span class="math inline">\(n\)</span>:</p></li>
+</ul>
+<div class="fragment">
 <p><span class="math display">\[SE = \frac{s}{\sqrt{n}}\]</span></p>
-<p>donde <span class="math inline">\(s\)</span> es la desviación estándar de la muestra y <span class="math inline">\(n\)</span> su tamaño.</p>
+</div>
+<ul>
+<li class="fragment">A medida que aumenta el tamaño de la muestra, el error estándar disminuye: <span class="math inline">\(\uparrow n \Rightarrow \downarrow SE\)</span>, tal y como vimos con los ejemplos anteriores (distribuciones más estrechas en torno al promedio poblacional).</li>
+</ul>
 <div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -840,12 +1424,12 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfbm9ybSJ9LCJjb2Rl
 <p><strong>La intuición central de la inferencia</strong></p>
 </div>
 <div class="callout-content">
-<p>Mientras <strong>más grande</strong> es la muestra (<span class="math inline">\(n\)</span>), <strong>más pequeño</strong> es el error estándar: nuestra estimación es <strong>más precisa</strong>.</p>
+<p>Mientras <strong>más grande</strong> es la muestra (<span class="math inline">\(n\)</span>), <strong>más pequeño</strong> es el error estándar, lo que hace que nuestra estimación sea <strong>más precisa</strong>.</p>
 </div>
 </div>
 </div>
 </div>
-</section><section id="pregunta-n-3" class="slide level2 quiz-question smaller"><h2>🧠 Pregunta N° 3</h2>
+</section><section id="pregunta-n-4" class="slide level2 quiz-question smaller"><h2>🧠 Pregunta N° 4</h2>
 <p>Dos equipos estiman el ingreso promedio de una comuna. El equipo A usa una muestra de <strong>100</strong> personas; el equipo B, de <strong>1.000</strong>.</p>
 <div>
 <p><strong><em>¿Qué estimación tendrá, en general, un menor error estándar?</em></strong></p>
@@ -858,13 +1442,15 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfbm9ybSJ9LCJjb2Rl
 </div>
 </section></section><section><section id="intervalos-de-confianza-y-pruebas-de-hipótesis" class="title-slide slide level1 center" data-background="#416fc4"><h1><span style="color:white">Intervalos de Confianza y Pruebas de Hipótesis</span></h1>
 
-</section><section id="intervalo-de-confianza-ic" class="slide level2 smaller"><h2>Intervalo de Confianza (IC)</h2>
+</section><section id="intervalo-de-confianza-ic" class="slide level2 medium"><h2>Intervalo de Confianza (IC)</h2>
 <ul>
 <li class="fragment"><p>Una estimación puntual (como <span class="math inline">\(\bar{x}\)</span>) casi nunca es <strong>exactamente</strong> igual al parámetro. Por eso reportamos un <strong>rango</strong> de valores plausibles.</p></li>
 <li class="fragment"><p>Un <strong>intervalo de confianza</strong> es ese rango, construido para contener al parámetro con un nivel de confianza dado (típicamente <strong>95%</strong>):</p></li>
 </ul>
+<div class="fragment">
 <p><span class="math display">\[\bar{x} \pm c \times SE\]</span></p>
 <p>donde <span class="math inline">\(c\)</span> es un valor crítico (cercano a <strong>2</strong> para el 95%, por la Regla Empírica).</p>
+</div>
 <div class="fragment">
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
@@ -880,23 +1466,23 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfbm9ybSJ9LCJjb2Rl
 </div>
 </div>
 </div>
-</section><section id="construyamos-un-ic-en-r" class="slide level2 smaller"><h2>💻 Construyamos un IC en <code>R</code>
+</section><section id="construyendo-manualmente-un-ic-en-r" class="slide level2 smaller"><h2>💻 Construyendo Manualmente un IC en <code>R</code>
 </h2>
 <p>Usaremos <code>bdims</code> (openintro), con 507 medidas físicas. Estimemos la <strong>altura promedio</strong> (<code>hgt</code>) con un IC al 95%:</p>
-<div class="cell" data-exercise="ex_ic">
+<div class="cell" data-exercise="ex_4">
 <div>
-<div id="webr-3" class="exercise-cell">
+<div id="webr-5" class="exercise-cell">
 
 </div>
-<script type="webr-3-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfaWMifSwiY29kZSI6InhfYmFyIDwtIG1lYW4oYmRpbXMkaGd0KSAgICAgICAgICAgICMgbWVkaWEgbXVlc3RyYWxcbnMgICAgIDwtIHNkKGJkaW1zJGhndCkgICAgICAgICAgICAgICMgZGVzdmlhY2nDs24gZXN0w6FuZGFyXG5uICAgICA8LSBsZW5ndGgoYmRpbXMkaGd0KSAgICAgICAgICAjIHRhbWHDsW8gbXVlc3RyYWxcbnNlICAgIDwtIHMgLyBzcXJ0KG4pICAgICAgICAgICAgICAgICMgZXJyb3IgZXN0w6FuZGFyXG5cbiMgVmFsb3IgY3LDrXRpY28gdCBwYXJhIDk1JSBlIGludGVydmFsb1xuY190ICAgPC0gcXQoMC45NzUsIGRmID0gbiAtIDEpXG54X2JhciArIGNfdCAqIGMoLXNlLCBzZSkifQ==
+<script type="webr-5-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfNCJ9LCJjb2RlIjoieF9iYXIgPC0gX19fX19fKCkgICAgICAgICAgICAjIG1lZGlhIG11ZXN0cmFsXG5zICAgICA8LSBfX19fX18oKSAgICAgICAgICAgICAgIyBkZXN2aWFjacOzbiBlc3TDoW5kYXJcbm4gICAgIDwtIGxlbmd0aCgpICAgICAgICAgICMgdGFtYcOxbyBtdWVzdHJhbFxuc2UgICAgPC0gX19fX19fIC8gc3FydChfX19fX18pICAgICAgICAgICAgICAgICMgZXJyb3IgZXN0w6FuZGFyXG5cbiMgVmFsb3IgY3LDrXRpY28gdCBwYXJhIDk1JSBlIGludGVydmFsb1xuY190ICAgPC0gcXQoMC45NzUsIGRmID0gbiAtIDEpXG5fX19fX18gKyBfX19fX18gKiBjKC1fX19fX18sIF9fX19fXykifQ==
 </script>
 </div>
 </div>
 <div class="fragment">
 <p>El resultado es un <strong>rango</strong> alrededor de la media: nuestra estimación de la altura promedio <strong>con su incertidumbre</strong>.</p>
 </div>
-</section><section id="la-lógica-de-una-prueba-de-hipótesis" class="slide level2 smaller"><h2>La Lógica de una Prueba de Hipótesis</h2>
+</section><section id="la-lógica-de-una-prueba-de-hipótesis" class="slide level2 medium"><h2>La Lógica de una Prueba de Hipótesis</h2>
 <p>Una <strong>prueba de hipótesis</strong> nos ayuda a decidir si los datos respaldan una afirmación. Siempre planteamos <strong>dos</strong> hipótesis:</p>
 <ul>
 <li class="fragment"><p><strong>Hipótesis nula</strong> (<span class="math inline">\(H_0\)</span>): “no hay efecto / no hay diferencia”. Es lo que asumimos por defecto.</p></li>
@@ -912,23 +1498,23 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfaWMifSwiY29kZSI6
 <p><strong>La idea</strong></p>
 </div>
 <div class="callout-content">
-<p>Asumimos que <span class="math inline">\(H_0\)</span> es cierta y nos preguntamos: <em>¿qué tan sorprendentes serían estos datos si <span class="math inline">\(H_0\)</span> fuera verdad?</em> Si son <strong>muy</strong> sorprendentes, dudamos de <span class="math inline">\(H_0\)</span>.</p>
+<p>Asumimos que <span class="math inline">\(H_0\)</span> es cierta y nos preguntamos: <em>¿qué tan sorprendentes serían estos datos si</em> <span class="math inline">\(H_0\)</span> fuera verdad? Si son <strong>muy</strong> sorprendentes, dudamos de <span class="math inline">\(H_0\)</span>.</p>
 </div>
 </div>
 </div>
 </div>
 </section><section id="el-p-valor" class="slide level2 smaller"><h2>El p-valor</h2>
 <ul>
-<li class="fragment"><p>El <strong>p-valor</strong> mide esa “sorpresa”: es la probabilidad de observar un resultado <strong>al menos tan extremo</strong> como el nuestro <strong>si <span class="math inline">\(H_0\)</span> fuera cierta</strong>.</p></li>
+<li class="fragment"><p>El <strong>p-valor</strong> mide esa “sorpresa”: es la probabilidad de observar un resultado <strong>al menos tan extremo</strong> como el nuestro <strong>si</strong> <span class="math inline">\(H_0\)</span> fuera cierta.</p></li>
 <li class="fragment"><p>Lo comparamos con un umbral <span class="math inline">\(\alpha\)</span> (habitualmente <strong>0.05</strong>):</p></li>
 </ul>
 <div class="fragment">
 <div>
 <ul>
 <li>
-<strong>p-valor &lt; 0.05</strong> → resultado poco probable bajo <span class="math inline">\(H_0\)</span> → <strong>rechazamos <span class="math inline">\(H_0\)</span></strong> (hay evidencia de un efecto).</li>
+<strong>p-valor &lt; 0.05</strong> → resultado poco probable bajo <span class="math inline">\(H_0\)</span> → <strong>rechazamos</strong> <span class="math inline">\(H_0\)</span> (hay evidencia de un efecto).</li>
 <li>
-<strong>p-valor ≥ 0.05</strong> → resultado compatible con <span class="math inline">\(H_0\)</span> → <strong>no rechazamos <span class="math inline">\(H_0\)</span></strong> (no hay evidencia suficiente).</li>
+<strong>p-valor ≥ 0.05</strong> → resultado compatible con <span class="math inline">\(H_0\)</span> → <strong>no rechazamos</strong> <span class="math inline">\(H_0\)</span> (no hay evidencia suficiente).</li>
 </ul>
 </div>
 </div>
@@ -966,12 +1552,30 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfaWMifSwiY29kZSI6
 </ul>
 </div>
 <div class="fragment">
-<p>En <code>R</code> esto se resuelve con <strong>una sola función</strong>: <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code>.</p>
+<p>En <code>R</code> esto se resuelve con <strong>una sola función</strong>: <code><a href="https://rdrr.io/r/stats/t.test.html">t.test()</a></code>:</p>
+<ul>
+<li class="fragment"><p><strong>Fórmula y datos</strong>: <code>variable ~ grupo</code> especifica <em>qué</em> se compara y <em>por qué factor</em>. El argumento <code>data</code> indica el data frame. <code>t.test(hgt ~ sex, data = bdims)</code> se lee: <em>“compara <code>hgt</code> según <code>sex</code>”</em>.</p></li>
+<li class="fragment"><p><strong>Hipótesis alternativa</strong> (<code>alternative</code>): por defecto es <code>"two.sided"</code> (<span class="math inline">\(H_1: \mu_1 \neq \mu_2\)</span>); puede ser <code>"less"</code> o <code>"greater"</code> si la pregunta es direccional.</p></li>
+<li class="fragment"><p><strong>Varianzas iguales</strong> (<code>var.equal</code>): por defecto es <code>FALSE</code>, lo que aplica la versión de <strong>Welch</strong>, que es más robusta y no asume que ambos grupos tienen la misma dispersión. Con <code>var.equal = TRUE</code> se obtiene la prueba <em>t</em> clásica de Student.</p></li>
+</ul>
 </div>
-</section><section id="aplicación-t.test" class="slide level2 smaller"><h2>💻 Aplicación: <code>t.test()</code>
+</section><section id="aplicación-t.test-en-r" class="slide level2 smaller"><h2>Aplicación: <code>t.test()</code> en <code>R</code>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">t.test</span>(hgt <span class="sc">~</span> sex, <span class="at">data =</span> bdims)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">t.test</span>(hgt <span class="sc">~</span> sex, <span class="at">data =</span> bdims)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  hgt by sex
+t = -21.059, df = 494.73, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -14.07406 -11.67201
+sample estimates:
+mean in group 0 mean in group 1 
+       164.8723        177.7453 </code></pre>
+</div>
 </div>
 <div class="fragment">
 <p>Al ejecutarlo, nos fijamos en <strong>dos resultados</strong>:</p>
@@ -985,14 +1589,14 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfaWMifSwiY29kZSI6
 <div class="fragment">
 <p>Para la altura por sexo, el p-valor es <strong>muy pequeño</strong> (≈ 0): rechazamos <span class="math inline">\(H_0\)</span> y concluimos que <strong>sí</strong> existe una diferencia de altura entre hombres y mujeres en estos datos.</p>
 </div>
-</section><section id="ejercicio-guiado-plantear-y-concluir" class="slide level2 smaller"><h2>💻 Ejercicio Guiado: Plantear y Concluir</h2>
-<p>Queremos saber si el <strong>peso promedio</strong> (<code>wgt</code>) difiere entre hombres y mujeres en <code>bdims</code>. Complete y ejecute la prueba:</p>
+</section><section id="test-de-hipótesis" class="slide level2 smaller"><h2>💻 Test de Hipótesis</h2>
+<p>Queremos saber si el <strong>peso promedio</strong> (<code>wgt</code>) difiere entre hombres y mujeres usando el dataset <code>bdims</code>. Complete y ejecute la prueba:</p>
 <div class="cell" data-exercise="ex_ttest">
 <div>
-<div id="webr-4" class="exercise-cell">
+<div id="webr-6" class="exercise-cell">
 
 </div>
-<script type="webr-4-contents">
+<script type="webr-6-contents">
 eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfdHRlc3QifSwiY29kZSI6IiMgSDA6IGVsIHBlc28gcHJvbWVkaW8gZXMgaWd1YWwgZW50cmUgc2V4b3NcbiMgSDE6IGVsIHBlc28gcHJvbWVkaW8gZXMgZGlzdGludG8gZW50cmUgc2V4b3NcbnQudGVzdChfX19fX18gfiBfX19fX18sIGRhdGEgPSBiZGltcykifQ==
 </script>
 </div>
@@ -1016,10 +1620,10 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfdHRlc3QifSwiY29k
 </div>
 </div>
 </div>
-</section><section id="pregunta-n-4" class="slide level2 quiz-question smaller"><h2>🧠 Pregunta N° 4</h2>
+</section><section id="pregunta-n-5" class="slide level2 quiz-question smaller"><h2>🧠 Pregunta N° 5</h2>
 <p>Una prueba t comparando dos grupos arroja un <strong>p-valor de 0.32</strong>.</p>
 <div>
-<p><strong><em>¿Qué concluimos (con <span class="math inline">\(\alpha = 0.05\)</span>)?</em></strong></p>
+<p><strong><em>¿Qué concluimos (con</em></strong> <span class="math inline">\(\alpha = 0.05\)</span>)?</p>
 <ul>
 <li><span class="correct" data-explanation="Correcto. Como 0,32 > 0,05, el resultado es compatible con la hipótesis nula: no hay evidencia suficiente para afirmar que los grupos difieren.">No rechazamos H₀: no hay evidencia suficiente de una diferencia.</span></li>
 <li><span data-explanation="Solo rechazamos H₀ cuando el p-valor es menor que 0,05. Aquí 0,32 es bastante mayor, así que no se rechaza.">Rechazamos H₀: hay una diferencia significativa.</span></li>
@@ -1029,24 +1633,33 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfdHRlc3QifSwiY29k
 </div>
 </section></section><section><section id="cierre" class="title-slide slide level1 center" data-background-color="#22226c"><h1><span style="color:white">Cierre</span></h1>
 
-</section><section id="resumen-lo-esencial-de-la-clase" class="slide level2 smaller"><h2>Resumen: Lo Esencial de la Clase</h2>
-<div>
+</section><section id="resumen-lo-esencial-de-la-clase" class="slide level2 medium"><h2>Resumen: Lo Esencial de la Clase</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
 <ul>
-<li><p>La <strong>probabilidad</strong> mide la factibilidad de un resultado y se conecta con las <strong>variables aleatorias</strong> y sus <strong>distribuciones</strong> (binomial, normal).</p></li>
-<li><p>La <strong>distribución normal</strong> describe muchos fenómenos y permite calcular probabilidades con <code><a href="https://rdrr.io/r/stats/Normal.html">pnorm()</a></code>.</p></li>
-<li><p>Por la <strong>variabilidad muestral</strong> existe incertidumbre; el <strong>TLC</strong> nos dice que las medias muestrales se distribuyen de forma <strong>normal</strong>, con menor <strong>error estándar</strong> a mayor <span class="math inline">\(n\)</span>.</p></li>
-<li><p>El <strong>intervalo de confianza</strong> entrega un rango de valores plausibles para el parámetro.</p></li>
-<li><p>La <strong>prueba de hipótesis</strong> y el <strong>p-valor</strong> nos permiten decidir, con un criterio claro, si los datos respaldan una afirmación.</p></li>
+<li class="fragment"><p>La <strong>probabilidad</strong> mide la factibilidad de un resultado y se conecta con las <strong>variables aleatorias</strong> y sus <strong>distribuciones</strong> (binomial, normal).</p></li>
+<li class="fragment"><p>La <strong>distribución normal</strong> describe muchos fenómenos en la práctica y permite estimar de manera precisa la variación de los estadísticos usados en muestras.</p></li>
+<li class="fragment"><p>Sabemos que debido a la <strong>variabilidad muestral</strong> existe incertidumbre. No obstante, el <strong>TLC</strong> nos dice que las medias muestrales se distribuyen de forma <strong>normal</strong>, con menor <strong>error estándar</strong> a mayor <span class="math inline">\(n\)</span>. Esto permite mostrar empíricamente la relevancia del tamaño de una muestra para hacer inferencia estadística.</p></li>
+<li class="fragment"><p>Un intervalo de confianza (IC) para un parámetro es un intervalo de números dentro del cual se cree que se encuentra dicho parámetro. La probabilidad de que este método produzca un intervalo que contenga el parámetro se denomina nivel de confianza. Este nivel de confianza se elige como un número cercano a 1, como 0,95 o 0,99.</p></li>
+<li class="fragment"><p><span style="color: darkgreen;"><strong>Interpretación Correcta del IC:</strong></span><span class="citation" data-cites="çetinkaya-rundel2024">(<a href="#/bibliografía" role="doc-biblioref" onclick="">Çetinkaya-Rundel y Hardin 2024</a>)</span> Tenemos un XX% de confianza en que el parámetro poblacional se encuentra entre el límite inferior y el límite superior (donde ambos son valores numéricos). Un lenguaje <span style="color: darkred;"><strong>incorrecto</strong></span> podría describir el intervalo de confianza como una representación del parámetro poblacional con una probabilidad determinada. Este es uno de los errores más comunes: El nivel de confianza solo cuantifica la plausibilidad de que el parámetro se encuentre dentro del intervalo.</p></li>
+<li class="fragment"><p>La <strong>prueba de hipótesis</strong> y el <strong>p-valor</strong> nos permiten decidir, con un criterio claro, si los datos respaldan una afirmación.</p></li>
 </ul>
 </div>
-</section><section id="próxima-etapa-módulo-2" class="slide level2 smaller"><h2>Próxima Etapa: Módulo 2</h2>
+</div>
+</div>
+</section><section id="lo-que-viene-módulo-2" class="slide level2 medium"><h2>Lo que Viene: Módulo 2</h2>
 <p>Estos fundamentos son la base de lo que viene en el <strong>Módulo 2</strong>:</p>
-<div>
 <ul>
-<li><p><strong>Herramientas de Ciencia de Datos con R:</strong> importar, ordenar, transformar, visualizar y comunicar datos.</p></li>
-<li><p><strong>Estadística Aplicada con R:</strong> inferencia estadística, <strong>regresión lineal</strong> y un caso aplicado a políticas públicas.</p></li>
+<li class="fragment"><p><strong>Herramientas de Ciencia de Datos con R:</strong> importar, ordenar, transformar, visualizar y comunicar datos.</p></li>
+<li class="fragment"><p><strong>Estadística Aplicada con R:</strong> inferencia estadística, <strong>regresión lineal</strong> y casos aplicados a políticas públicas.</p></li>
 </ul>
-</div>
 <div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -1062,20 +1675,83 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfdHRlc3QifSwiY29k
 </div>
 </div>
 </div>
-</section><section id="gracias" class="slide level2 smaller"><h2>¡Gracias!</h2>
+</section><section id="gracias-por-su-atención" class="slide level2 smaller"><h2>¡Gracias por su Atención!</h2>
 <p>Espacio final para <strong>preguntas</strong>.</p>
 <ul>
 <li class="fragment">📤 La presentación y grabación se subirán a <strong>Webcursos</strong>.</li>
 <li class="fragment">📧 Consultas a través del <strong>foro del curso</strong>.</li>
 </ul></section><section id="bibliografía" class="slide level2 smaller scrollable"><h2>Bibliografía</h2>
-<div id="refs" role="list">
-
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-agresti2018" class="csl-entry" role="listitem">
+Agresti, Alan. 2018. <em>Statistical methods for the social sciences</em>. Fifth edition, global edition. Harlow: Pearson Education, Limited.
 </div>
+<div id="ref-çetinkaya-rundel2024" class="csl-entry" role="listitem">
+Çetinkaya-Rundel, Mine, y Johanna Hardin. 2024. <em>Introduction to modern statistics</em>. 2e ed. Vereinigte Staaten: OpenIntro, Inc. <a href="https://openintro-ims.netlify.app/">https://openintro-ims.netlify.app/</a>.
+</div>
+<div id="ref-devore2016" class="csl-entry" role="listitem">
+Devore, Jay L. 2016. <em>Probabilidad y estadística para ingeniería y ciencias (9a. ed.)</em>. Distrito Federal: CENGAGE Learning.
+</div>
+</div>
+<!-- ## El Espacio Muestral con un Diagrama de Venn {.smaller} -->
+<!-- Definamos el siguiente proceso aleatorio como el lanzamiento de **dos -->
+<!-- monedas**. En este caso, el espacio muestral tiene 4 resultados -->
+<!-- igualmente probables: -->
+<!-- . . . -->
+<!-- $$S = \{CC,\ CS,\ SC,\ SS\}$$ -->
+<!-- . . . -->
+<!-- ::::: columns -->
+<!-- ::: {.column width="55%"} -->
+<!-- Un **diagrama de Venn** nos ayuda a visualizar eventos dentro del -->
+<!-- espacio muestral $S$ (el rectángulo). Por ejemplo: -->
+<!-- - $A$ = "la **primera** es cara" $= \{CC, CS\}$ -->
+<!-- - $B$ = "la **segunda** es cara" $= \{CC, SC\}$ -->
+<!-- El resultado $CC$ está en **ambos** eventos (la intersección). -->
+<!-- ::: -->
+<!-- ::: {.column width="45%"} -->
+<!-- ```{r} -->
+<!-- #| echo: false -->
+<!-- #| fig-height: 4.2 -->
+<!-- library(ggplot2) -->
+<!-- circle <- function(x0, r, n = 200){ -->
+<!--   t <- seq(0, 2*pi, length.out = n) -->
+<!--   data.frame(x = x0 + r*cos(t), y = r*sin(t)) -->
+<!-- } -->
+<!-- cA <- circle(-0.45, 0.85); cA$grupo <- "A" -->
+<!-- cB <- circle( 0.45, 0.85); cB$grupo <- "B" -->
+<!-- ggplot() + -->
+<!--   annotate("rect", xmin = -1.8, xmax = 1.8, ymin = -1.2, ymax = 1.2, -->
+<!--            fill = NA, color = "grey50") + -->
+<!--   geom_polygon(data = cA, aes(x, y), fill = "#1d6996", alpha = 0.35) + -->
+<!--   geom_polygon(data = cB, aes(x, y), fill = "#e17c05", alpha = 0.35) + -->
+<!--   annotate("text", x = -0.9, y = 0, label = "CS", size = 6) + -->
+<!--   annotate("text", x =  0,   y = 0, label = "CC", size = 6, fontface = "bold") + -->
+<!--   annotate("text", x =  0.9, y = 0, label = "SC", size = 6) + -->
+<!--   annotate("text", x =  1.45, y = -0.95, label = "SS", size = 6) + -->
+<!--   annotate("text", x = -0.9, y = 0.95, label = "A", size = 7, color = "#1d6996") + -->
+<!--   annotate("text", x =  0.9, y = 0.95, label = "B", size = 7, color = "#e17c05") + -->
+<!--   coord_equal(xlim = c(-1.8, 1.8), ylim = c(-1.2, 1.2)) + -->
+<!--   theme_void() -->
+<!-- ``` -->
+<!-- ::: -->
+<!-- ::::: -->
+<!-- ## Probabilidad como Frecuencia Relativa en `R` {.smaller} -->
+<!-- Comprobemos la idea de "frecuencia de largo plazo" **simulando** 10.000 -->
+<!-- lanzamientos de una moneda: -->
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- set.seed(123) -->
+<!-- lanzamientos <- sample(c("Cara", "Sello"), size = 10000, replace = TRUE) -->
+<!-- prop.table(table(lanzamientos)) -->
+<!-- ``` -->
+<!-- . . . -->
+<!-- La proporción de caras se acerca a **0.5**, tal como predice la teoría. -->
+<!-- A más repeticiones, **más cerca** del valor verdadero. -->
+
 
 <script type="webr-data">
 eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC41LjgvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyIsImRwbHlyIiwiZ2dwbG90MiIsIm9wZW5pbnRybyJdLCJyZXBvcyI6W119LCJyZW5kZXJfZGYiOiJEVCJ9
 </script><script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC00IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV80O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzQgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici00LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItNC1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzQgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzQsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzQgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzQuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTMiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzM7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0zIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMyA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTMtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0zLWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfMyA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMywge30pO1xuX3dlYnJfZmVlZGJhY2tfMyA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfMy5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl8yID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMi1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXhlcmNpc2UgY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbihcbiAgICB7XG4gICAgICBpZDogXCJ3ZWJyLTItY29udGVudHNcIixcbiAgICAgIGVudmlyOiBgZXhlcmNpc2UtZW52LSR7YmxvY2suYXR0ci5leGVyY2lzZX1gLFxuICAgICAgZXJyb3I6IGZhbHNlLFxuICAgICAgY2FwdGlvbjogJ0V4ZXJjaXNlJyxcbiAgICB9LFxuICAgIGJsb2NrLmF0dHJcbiAgKTtcblxuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbnZpZXdvZiBfd2Vicl92YWx1ZV8yID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8yLCB7fSk7XG5fd2Vicl9mZWVkYmFja18yID0ge1xuICBjb25zdCB7IFdlYlJHcmFkZXIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGVtcHR5RmVlZGJhY2sgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcblxuICBjb25zdCBncmFkZXIgPSBuZXcgV2ViUkdyYWRlcihfd2Vicl92YWx1ZV8yLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8xO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0xLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItMS1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzEgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzEsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzEgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzEuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItcHJlbHVkZSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IndlYlJPanMgPSB7XG4gIGNvbnN0IHsgV2ViUiwgQ2hhbm5lbFR5cGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWUuV2ViUjtcbiAgY29uc3Qge1xuICAgIFdlYlJFdmFsdWF0b3IsXG4gICAgV2ViUkVudmlyb25tZW50TWFuYWdlcixcbiAgICBzZXR1cFIsXG4gICAgYjY0RGVjb2RlLFxuICAgIGNvbGxhcHNlUGF0aFxuICB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcblxuICBjb25zdCBzdGF0dXNDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctc3RhdHVzXCIpO1xuICBjb25zdCBpbmRpY2F0b3JDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpbmRpY2F0b3JDb250YWluZXIuY2xhc3NMaXN0LnJlbW92ZShcImQtbm9uZVwiKTtcblxuICBsZXQgc3RhdHVzVGV4dCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIilcbiAgc3RhdHVzVGV4dC5jbGFzc0xpc3QgPSBcImV4ZXJjaXNlLWxvYWRpbmctZGV0YWlsc1wiO1xuICBzdGF0dXNUZXh0ID0gc3RhdHVzQ29udGFpbmVyLmFwcGVuZENoaWxkKHN0YXR1c1RleHQpO1xuICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluaXRpYWxpc2VgO1xuXG4gIC8vIEhvaXN0IGluZGljYXRvciBvdXQgZnJvbSBmaW5hbCBzbGlkZSB3aGVuIHJ1bm5pbmcgdW5kZXIgcmV2ZWFsXG4gIGNvbnN0IHJldmVhbFN0YXR1cyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsIC5leGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaWYgKHJldmVhbFN0YXR1cykge1xuICAgIHJldmVhbFN0YXR1cy5yZW1vdmUoKTtcbiAgICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCA+IC5zbGlkZXNcIikuYXBwZW5kQ2hpbGQocmV2ZWFsU3RhdHVzKTtcbiAgfVxuXG4gIC8vIE1ha2UgYW55IHJldmVhbCBzbGlkZXMgd2l0aCBsaXZlIGNlbGxzIHNjcm9sbGFibGVcbiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbChcIi5yZXZlYWwgLmV4ZXJjaXNlLWNlbGxcIikuZm9yRWFjaCgoZWwpID0+IHtcbiAgICBlbC5jbG9zZXN0KCdzZWN0aW9uLnNsaWRlJykuY2xhc3NMaXN0LmFkZChcInNjcm9sbGFibGVcIik7XG4gIH0pXG5cbiAgLy8gd2ViUiBzdXBwbGVtZW50YWwgZGF0YSBhbmQgb3B0aW9uc1xuICBjb25zdCBkYXRhQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLWRhdGFcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBkYXRhID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZGF0YUNvbnRlbnQpKTtcblxuICAvLyBHcmFiIGxpc3Qgb2YgcmVzb3VyY2VzIHRvIGJlIGRvd25sb2FkZWRcbiAgY29uc3QgZmlsZXNDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInZmcy1maWxlXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZmlsZXMgPSBKU09OLnBhcnNlKGI2NERlY29kZShmaWxlc0NvbnRlbnQpKTtcblxuICAvLyBJbml0aWFsaXNlIHdlYlIgYW5kIHNldHVwIGZvciBSIGNvZGUgZXZhbHVhdGlvblxuICBsZXQgd2ViUlByb21pc2UgPSAoYXN5bmMgKHdlYlIpID0+IHtcbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHdlYlJgO1xuICAgIGF3YWl0IHdlYlIuaW5pdCgpO1xuXG4gICAgLy8gSW5zdGFsbCBwcm92aWRlZCBsaXN0IG9mIHBhY2thZ2VzXG4gICAgLy8gRW5zdXJlIHdlYlIgZGVmYXVsdCByZXBvIGlzIGluY2x1ZGVkXG4gICAgZGF0YS5wYWNrYWdlcy5yZXBvcy5wdXNoKFwiaHR0cHM6Ly9yZXBvLnItd2FzbS5vcmdcIilcbiAgICBhd2FpdCBkYXRhLnBhY2thZ2VzLnBrZ3MubWFwKChwa2cpID0+ICgpID0+IHtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcGFja2FnZTogJHtwa2d9YDtcbiAgICAgIHJldHVybiB3ZWJSLmV2YWxSVm9pZChgXG4gICAgICAgIHdlYnI6Omluc3RhbGwocGtnLCByZXBvcyA9IHJlcG9zKVxuICAgICAgICBsaWJyYXJ5KHBrZywgY2hhcmFjdGVyLm9ubHkgPSBUUlVFKVxuICAgICAgYCwgeyBlbnY6IHtcbiAgICAgICAgcGtnOiBwa2csXG4gICAgICAgIHJlcG9zOiBkYXRhLnBhY2thZ2VzLnJlcG9zLFxuICAgICAgfX0pO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgLy8gRG93bmxvYWQgYW5kIGluc3RhbGwgcmVzb3VyY2VzXG4gICAgYXdhaXQgZmlsZXMubWFwKChmaWxlKSA9PiBhc3luYyAoKSA9PiB7XG4gICAgICBjb25zdCBuYW1lID0gZmlsZS5zdWJzdHJpbmcoZmlsZS5sYXN0SW5kZXhPZignLycpICsgMSk7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHJlc291cmNlOiAke25hbWV9YDtcbiAgICAgIGNvbnN0IHJlc3BvbnNlID0gYXdhaXQgZmV0Y2goZmlsZSk7XG4gICAgICBpZiAoIXJlc3BvbnNlLm9rKSB7XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgQ2FuJ3QgZG93bmxvYWQgXFxgJHtmaWxlfVxcYC4gRXJyb3IgJHtyZXNwb25zZS5zdGF0dXN9OiBcIiR7cmVzcG9uc2Uuc3RhdHVzVGV4dH1cIi5gKTtcbiAgICAgIH1cbiAgICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXNwb25zZS5hcnJheUJ1ZmZlcigpO1xuXG4gICAgICAvLyBTdG9yZSBVUkxzIGluIHRoZSBjd2Qgd2l0aG91dCBhbnkgc3ViZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgaWYgKGZpbGUuaW5jbHVkZXMoXCI6Ly9cIikpIHtcbiAgICAgICAgZmlsZSA9IG5hbWU7XG4gICAgICB9XG5cbiAgICAgIC8vIENvbGxhcHNlIGhpZ2hlciBkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBmaWxlID0gY29sbGFwc2VQYXRoKGZpbGUpO1xuXG4gICAgICAvLyBDcmVhdGUgZGlyZWN0b3J5IHRyZWUsIGlnbm9yaW5nIFwiZGlyZWN0b3J5IGV4aXN0c1wiIFZGUyBlcnJvcnNcbiAgICAgIGNvbnN0IHBhcnRzID0gZmlsZS5zcGxpdCgnLycpLnNsaWNlKDAsIC0xKTtcbiAgICAgIGxldCBwYXRoID0gJyc7XG4gICAgICB3aGlsZSAocGFydHMubGVuZ3RoID4gMCkge1xuICAgICAgICBwYXRoICs9IHBhcnRzLnNoaWZ0KCkgKyAnLyc7XG4gICAgICAgIGNvbnN0IGFuYWx5c2lzID0gYXdhaXQgd2ViUi5GUy5hbmFseXplUGF0aChwYXRoKTtcbiAgICAgICAgaWYgKCFhbmFseXNpcy5leGlzdHMpIHtcbiAgICAgICAgICB0cnkge1xuICAgICAgICAgICAgYXdhaXQgd2ViUi5GUy5ta2RpcihwYXRoKTtcbiAgICAgICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYEZpbGVzeXN0ZW0gRXJyb3I6IFwiJHtlLm1lc3NhZ2V9XCIuYCk7XG4gICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICB9XG5cbiAgICAgIC8vIFdyaXRlIHRoaXMgZmlsZSB0byB0aGUgVkZTXG4gICAgICByZXR1cm4gYXdhaXQgd2ViUi5GUy53cml0ZUZpbGUoZmlsZSwgbmV3IFVpbnQ4QXJyYXkoZGF0YSkpO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbnN0YWxsaW5nIHdlYlIgc2hpbXNgO1xuICAgIGF3YWl0IHdlYlIuZXZhbFJWb2lkKGB3ZWJyOjpzaGltX2luc3RhbGwoKWApO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBXZWJSIGVudmlyb25tZW50IHNldHVwYDtcbiAgICBhd2FpdCBzZXR1cFIod2ViUiwgZGF0YSk7XG5cbiAgICBzdGF0dXNUZXh0LnJlbW92ZSgpO1xuICAgIGlmIChzdGF0dXNDb250YWluZXIuY2hpbGRyZW4ubGVuZ3RoID09IDApIHtcbiAgICAgIHN0YXR1c0NvbnRhaW5lci5wYXJlbnROb2RlLnJlbW92ZSgpO1xuICAgIH1cbiAgICByZXR1cm4gd2ViUjtcbiAgfSkobmV3IFdlYlIoZGF0YS5vcHRpb25zKSk7XG5cbiAgLy8gS2VlcCB0cmFjayBvZiBpbml0aWFsIE9KUyBibG9jayByZW5kZXJcbiAgY29uc3QgcmVuZGVyZWRPanMgPSB7fTtcblxuICBjb25zdCBwcm9jZXNzID0gYXN5bmMgKGNvbnRleHQsIGlucHV0cykgPT4ge1xuICAgIGNvbnN0IHdlYlIgPSBhd2FpdCB3ZWJSUHJvbWlzZTtcbiAgICBjb25zdCBldmFsdWF0b3IgPSBuZXcgV2ViUkV2YWx1YXRvcih3ZWJSLCBjb250ZXh0KVxuICAgIGF3YWl0IGV2YWx1YXRvci5wcm9jZXNzKGlucHV0cyk7XG4gICAgcmV0dXJuIGV2YWx1YXRvci5jb250YWluZXI7XG4gIH1cblxuICByZXR1cm4ge1xuICAgIHByb2Nlc3MsXG4gICAgd2ViUlByb21pc2UsXG4gICAgcmVuZGVyZWRPanMsXG4gIH07XG59XG4ifV19
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC02IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV82O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzYgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici02LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItNi1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzYgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzYsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzYgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzYuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzU7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici01IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNSA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTUtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici01LWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfNSwge30pO1xuX3dlYnJfZmVlZGJhY2tfNSA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfNS5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNDtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl80ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXhlcmNpc2UgY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbihcbiAgICB7XG4gICAgICBpZDogXCJ3ZWJyLTQtY29udGVudHNcIixcbiAgICAgIGVudmlyOiBgZXhlcmNpc2UtZW52LSR7YmxvY2suYXR0ci5leGVyY2lzZX1gLFxuICAgICAgZXJyb3I6IGZhbHNlLFxuICAgICAgY2FwdGlvbjogJ0V4ZXJjaXNlJyxcbiAgICB9LFxuICAgIGJsb2NrLmF0dHJcbiAgKTtcblxuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbnZpZXdvZiBfd2Vicl92YWx1ZV80ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl80LCB7fSk7XG5fd2Vicl9mZWVkYmFja180ID0ge1xuICBjb25zdCB7IFdlYlJHcmFkZXIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGVtcHR5RmVlZGJhY2sgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcblxuICBjb25zdCBncmFkZXIgPSBuZXcgV2ViUkdyYWRlcihfd2Vicl92YWx1ZV80LmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8zO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcIndlYnItMy1jb250ZW50c1wiLFxuICAgICAgZW52aXI6IGBleGVyY2lzZS1lbnYtJHtibG9jay5hdHRyLmV4ZXJjaXNlfWAsXG4gICAgICBlcnJvcjogZmFsc2UsXG4gICAgICBjYXB0aW9uOiAnRXhlcmNpc2UnLFxuICAgIH0sXG4gICAgYmxvY2suYXR0clxuICApO1xuXG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxudmlld29mIF93ZWJyX3ZhbHVlXzMgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzMsIHt9KTtcbl93ZWJyX2ZlZWRiYWNrXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkdyYWRlciB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3QgZW1wdHlGZWVkYmFjayA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuXG4gIGNvbnN0IGdyYWRlciA9IG5ldyBXZWJSR3JhZGVyKF93ZWJyX3ZhbHVlXzMuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzI7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0yIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMiA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICAvLyBEZWZhdWx0IGV4ZXJjaXNlIGNvbmZpZ3VyYXRpb25cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oXG4gICAge1xuICAgICAgaWQ6IFwid2Vici0yLWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3dlYnJfdmFsdWVfMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMiwge30pO1xuX3dlYnJfZmVlZGJhY2tfMiA9IHtcbiAgY29uc3QgeyBXZWJSR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFdlYlJHcmFkZXIoX3dlYnJfdmFsdWVfMi5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl8xID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMS1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXhlcmNpc2UgY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbihcbiAgICB7XG4gICAgICBpZDogXCJ3ZWJyLTEtY29udGVudHNcIixcbiAgICAgIGVudmlyOiBgZXhlcmNpc2UtZW52LSR7YmxvY2suYXR0ci5leGVyY2lzZX1gLFxuICAgICAgZXJyb3I6IGZhbHNlLFxuICAgICAgY2FwdGlvbjogJ0V4ZXJjaXNlJyxcbiAgICB9LFxuICAgIGJsb2NrLmF0dHJcbiAgKTtcblxuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbnZpZXdvZiBfd2Vicl92YWx1ZV8xID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xLCB7fSk7XG5fd2Vicl9mZWVkYmFja18xID0ge1xuICBjb25zdCB7IFdlYlJHcmFkZXIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGVtcHR5RmVlZGJhY2sgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcblxuICBjb25zdCBncmFkZXIgPSBuZXcgV2ViUkdyYWRlcihfd2Vicl92YWx1ZV8xLmV2YWx1YXRvcik7XG4gIGNvbnN0IGZlZWRiYWNrID0gYXdhaXQgZ3JhZGVyLmdyYWRlRXhlcmNpc2UoKTtcbiAgaWYgKCFmZWVkYmFjaykgcmV0dXJuIGVtcHR5RmVlZGJhY2s7XG4gIHJldHVybiBmZWVkYmFjaztcbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXByZWx1ZGUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ3ZWJST2pzID0ge1xuICBjb25zdCB7IFdlYlIsIENoYW5uZWxUeXBlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lLldlYlI7XG4gIGNvbnN0IHtcbiAgICBXZWJSRXZhbHVhdG9yLFxuICAgIFdlYlJFbnZpcm9ubWVudE1hbmFnZXIsXG4gICAgc2V0dXBSLFxuICAgIGI2NERlY29kZSxcbiAgICBjb2xsYXBzZVBhdGhcbiAgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc3RhdHVzQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLXN0YXR1c1wiKTtcbiAgY29uc3QgaW5kaWNhdG9yQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaW5kaWNhdG9yQ29udGFpbmVyLmNsYXNzTGlzdC5yZW1vdmUoXCJkLW5vbmVcIik7XG5cbiAgbGV0IHN0YXR1c1RleHQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpXG4gIHN0YXR1c1RleHQuY2xhc3NMaXN0ID0gXCJleGVyY2lzZS1sb2FkaW5nLWRldGFpbHNcIjtcbiAgc3RhdHVzVGV4dCA9IHN0YXR1c0NvbnRhaW5lci5hcHBlbmRDaGlsZChzdGF0dXNUZXh0KTtcbiAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbml0aWFsaXNlYDtcblxuICAvLyBIb2lzdCBpbmRpY2F0b3Igb3V0IGZyb20gZmluYWwgc2xpZGUgd2hlbiBydW5uaW5nIHVuZGVyIHJldmVhbFxuICBjb25zdCByZXZlYWxTdGF0dXMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCAuZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGlmIChyZXZlYWxTdGF0dXMpIHtcbiAgICByZXZlYWxTdGF0dXMucmVtb3ZlKCk7XG4gICAgZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgPiAuc2xpZGVzXCIpLmFwcGVuZENoaWxkKHJldmVhbFN0YXR1cyk7XG4gIH1cblxuICAvLyBNYWtlIGFueSByZXZlYWwgc2xpZGVzIHdpdGggbGl2ZSBjZWxscyBzY3JvbGxhYmxlXG4gIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoXCIucmV2ZWFsIC5leGVyY2lzZS1jZWxsXCIpLmZvckVhY2goKGVsKSA9PiB7XG4gICAgZWwuY2xvc2VzdCgnc2VjdGlvbi5zbGlkZScpLmNsYXNzTGlzdC5hZGQoXCJzY3JvbGxhYmxlXCIpO1xuICB9KVxuXG4gIC8vIHdlYlIgc3VwcGxlbWVudGFsIGRhdGEgYW5kIG9wdGlvbnNcbiAgY29uc3QgZGF0YUNvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici1kYXRhXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZGF0YSA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGRhdGFDb250ZW50KSk7XG5cbiAgLy8gR3JhYiBsaXN0IG9mIHJlc291cmNlcyB0byBiZSBkb3dubG9hZGVkXG4gIGNvbnN0IGZpbGVzQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ2ZnMtZmlsZVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGZpbGVzID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZmlsZXNDb250ZW50KSk7XG5cbiAgLy8gSW5pdGlhbGlzZSB3ZWJSIGFuZCBzZXR1cCBmb3IgUiBjb2RlIGV2YWx1YXRpb25cbiAgbGV0IHdlYlJQcm9taXNlID0gKGFzeW5jICh3ZWJSKSA9PiB7XG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyB3ZWJSYDtcbiAgICBhd2FpdCB3ZWJSLmluaXQoKTtcblxuICAgIC8vIEluc3RhbGwgcHJvdmlkZWQgbGlzdCBvZiBwYWNrYWdlc1xuICAgIC8vIEVuc3VyZSB3ZWJSIGRlZmF1bHQgcmVwbyBpcyBpbmNsdWRlZFxuICAgIGRhdGEucGFja2FnZXMucmVwb3MucHVzaChcImh0dHBzOi8vcmVwby5yLXdhc20ub3JnXCIpXG4gICAgYXdhaXQgZGF0YS5wYWNrYWdlcy5wa2dzLm1hcCgocGtnKSA9PiAoKSA9PiB7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHBhY2thZ2U6ICR7cGtnfWA7XG4gICAgICByZXR1cm4gd2ViUi5ldmFsUlZvaWQoYFxuICAgICAgICB3ZWJyOjppbnN0YWxsKHBrZywgcmVwb3MgPSByZXBvcylcbiAgICAgICAgbGlicmFyeShwa2csIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSlcbiAgICAgIGAsIHsgZW52OiB7XG4gICAgICAgIHBrZzogcGtnLFxuICAgICAgICByZXBvczogZGF0YS5wYWNrYWdlcy5yZXBvcyxcbiAgICAgIH19KTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIC8vIERvd25sb2FkIGFuZCBpbnN0YWxsIHJlc291cmNlc1xuICAgIGF3YWl0IGZpbGVzLm1hcCgoZmlsZSkgPT4gYXN5bmMgKCkgPT4ge1xuICAgICAgY29uc3QgbmFtZSA9IGZpbGUuc3Vic3RyaW5nKGZpbGUubGFzdEluZGV4T2YoJy8nKSArIDEpO1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyByZXNvdXJjZTogJHtuYW1lfWA7XG4gICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGZldGNoKGZpbGUpO1xuICAgICAgaWYgKCFyZXNwb25zZS5vaykge1xuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYENhbid0IGRvd25sb2FkIFxcYCR7ZmlsZX1cXGAuIEVycm9yICR7cmVzcG9uc2Uuc3RhdHVzfTogXCIke3Jlc3BvbnNlLnN0YXR1c1RleHR9XCIuYCk7XG4gICAgICB9XG4gICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzcG9uc2UuYXJyYXlCdWZmZXIoKTtcblxuICAgICAgLy8gU3RvcmUgVVJMcyBpbiB0aGUgY3dkIHdpdGhvdXQgYW55IHN1YmRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGlmIChmaWxlLmluY2x1ZGVzKFwiOi8vXCIpKSB7XG4gICAgICAgIGZpbGUgPSBuYW1lO1xuICAgICAgfVxuXG4gICAgICAvLyBDb2xsYXBzZSBoaWdoZXIgZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgZmlsZSA9IGNvbGxhcHNlUGF0aChmaWxlKTtcblxuICAgICAgLy8gQ3JlYXRlIGRpcmVjdG9yeSB0cmVlLCBpZ25vcmluZyBcImRpcmVjdG9yeSBleGlzdHNcIiBWRlMgZXJyb3JzXG4gICAgICBjb25zdCBwYXJ0cyA9IGZpbGUuc3BsaXQoJy8nKS5zbGljZSgwLCAtMSk7XG4gICAgICBsZXQgcGF0aCA9ICcnO1xuICAgICAgd2hpbGUgKHBhcnRzLmxlbmd0aCA+IDApIHtcbiAgICAgICAgcGF0aCArPSBwYXJ0cy5zaGlmdCgpICsgJy8nO1xuICAgICAgICBjb25zdCBhbmFseXNpcyA9IGF3YWl0IHdlYlIuRlMuYW5hbHl6ZVBhdGgocGF0aCk7XG4gICAgICAgIGlmICghYW5hbHlzaXMuZXhpc3RzKSB7XG4gICAgICAgICAgdHJ5IHtcbiAgICAgICAgICAgIGF3YWl0IHdlYlIuRlMubWtkaXIocGF0aCk7XG4gICAgICAgICAgfSBjYXRjaCAoZSkge1xuICAgICAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBGaWxlc3lzdGVtIEVycm9yOiBcIiR7ZS5tZXNzYWdlfVwiLmApO1xuICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgfVxuXG4gICAgICAvLyBXcml0ZSB0aGlzIGZpbGUgdG8gdGhlIFZGU1xuICAgICAgcmV0dXJuIGF3YWl0IHdlYlIuRlMud3JpdGVGaWxlKGZpbGUsIG5ldyBVaW50OEFycmF5KGRhdGEpKTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5zdGFsbGluZyB3ZWJSIHNoaW1zYDtcbiAgICBhd2FpdCB3ZWJSLmV2YWxSVm9pZChgd2Vicjo6c2hpbV9pbnN0YWxsKClgKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgV2ViUiBlbnZpcm9ubWVudCBzZXR1cGA7XG4gICAgYXdhaXQgc2V0dXBSKHdlYlIsIGRhdGEpO1xuXG4gICAgc3RhdHVzVGV4dC5yZW1vdmUoKTtcbiAgICBpZiAoc3RhdHVzQ29udGFpbmVyLmNoaWxkcmVuLmxlbmd0aCA9PSAwKSB7XG4gICAgICBzdGF0dXNDb250YWluZXIucGFyZW50Tm9kZS5yZW1vdmUoKTtcbiAgICB9XG4gICAgcmV0dXJuIHdlYlI7XG4gIH0pKG5ldyBXZWJSKGRhdGEub3B0aW9ucykpO1xuXG4gIC8vIEtlZXAgdHJhY2sgb2YgaW5pdGlhbCBPSlMgYmxvY2sgcmVuZGVyXG4gIGNvbnN0IHJlbmRlcmVkT2pzID0ge307XG5cbiAgY29uc3QgcHJvY2VzcyA9IGFzeW5jIChjb250ZXh0LCBpbnB1dHMpID0+IHtcbiAgICBjb25zdCB3ZWJSID0gYXdhaXQgd2ViUlByb21pc2U7XG4gICAgY29uc3QgZXZhbHVhdG9yID0gbmV3IFdlYlJFdmFsdWF0b3Iod2ViUiwgY29udGV4dClcbiAgICBhd2FpdCBldmFsdWF0b3IucHJvY2VzcyhpbnB1dHMpO1xuICAgIHJldHVybiBldmFsdWF0b3IuY29udGFpbmVyO1xuICB9XG5cbiAgcmV0dXJuIHtcbiAgICBwcm9jZXNzLFxuICAgIHdlYlJQcm9taXNlLFxuICAgIHJlbmRlcmVkT2pzLFxuICB9O1xufVxuIn1dfQ==
 </script><div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
 <div id="exercise-loading-status" class="d-flex gap-2">
 
@@ -1107,7 +1783,7 @@ W10=
 </div>
 </div></div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="nivelacion-02_files/libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="nivelacion-02_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="nivelacion-02_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="nivelacion-02_files/libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="nivelacion-02_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="nivelacion-02_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script><script src="nivelacion-02_files/libs/revealjs/plugin/reveal-quiz/quiz.js"></script><script src="nivelacion-02_files/libs/revealjs/plugin/quarto-support/support.js"></script><script src="nivelacion-02_files/libs/revealjs/plugin/notes/notes.js"></script><script src="nivelacion-02_files/libs/revealjs/plugin/search/search.js"></script><script src="nivelacion-02_files/libs/revealjs/plugin/zoom/zoom.js"></script><script src="nivelacion-02_files/libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="../site_libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script><script src="../site_libs/revealjs/plugin/reveal-quiz/quiz.js"></script><script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script><script src="../site_libs/revealjs/plugin/notes/notes.js"></script><script src="../site_libs/revealjs/plugin/search/search.js"></script><script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script><script src="../site_libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -1304,9 +1980,9 @@ W10=
     eyJjb250ZW50cyI6W119
     </script><script type="module">
     if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
-    window._ojs.paths.runtimeToDoc = "../../..";
-    window._ojs.paths.runtimeToRoot = "../../..";
-    window._ojs.paths.docToRoot = "";
+    window._ojs.paths.runtimeToDoc = "../../00-nivelacion2";
+    window._ojs.paths.runtimeToRoot = "../..";
+    window._ojs.paths.docToRoot = "..";
     window._ojs.selfContained = false;
     window._ojs.runtime.interpretFromScriptTags();
     </script><script>
