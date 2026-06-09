@@ -1,5 +1,54 @@
 [
   {
+    "objectID": "01-importar/ejercicios-clase01.html",
+    "href": "01-importar/ejercicios-clase01.html",
+    "title": "Guía de Ejercicios N°1 - Análisis de Datos y Estadística Computacional",
+    "section": "",
+    "text": "Antes de comenzar\n\n\n\nAsegúrense de tener instalados los siguientes paquetes. Si no los tienen, instálenlos una sola vez con install.packages(\"nombre_paquete\") en la consola:\n\n\nCódigo\ninstall.packages(\"tidyverse\")\ninstall.packages(\"readxl\")\ninstall.packages(\"janitor\")\ninstall.packages(\"openxlsx\")\ninstall.packages('haven')\ninstall.packages('arrow')\ninstall.packages('sf')\n\n\nLuego cárguenlos al inicio de su script:\n\n\nCódigo\nlibrary(tidyverse)   # incluye dplyr (left_join) y readr\nlibrary(readxl)      # para leer archivos .xlsx\nlibrary(janitor)     # para usar clean_names()\nlibrary(openxlsx)    # para guardar en formato excel\nlibrary(haven)       # para trabajar datos en formato .dta\nlibrary(arrow)       # para trabajar datos en formato parquet\nlibrary(sf)          # para trabajar datos espaciales"
+  },
+  {
+    "objectID": "01-importar/ejercicios-clase01.html#pregunta-1",
+    "href": "01-importar/ejercicios-clase01.html#pregunta-1",
+    "title": "Guía de Ejercicios N°1 - Análisis de Datos y Estadística Computacional",
+    "section": "Pregunta 1",
+    "text": "Pregunta 1\nCargue cada uno de los archivos USArrests en la carpeta /data y asígnelos a un objeto cuyo nombre corresponda al nombre del archivo (por ejemplo, USArrests1, USArrests2, etc.).\n\n\nCódigo\nUSArrests1 &lt;- read_csv('data/USArrests1.csv')\nUSArrests2 &lt;- read_csv2('data/USArrests2.csv')\nUSArrests3 &lt;- read_dta('data/USArrests3.dta')\nUSArrests4 &lt;- read_sav('data/USArrests4.sav')\nUSArrests5 &lt;- read_delim('data/USArrests5.txt', delim = \" \")\nUSArrests6 &lt;- read_tsv('data/USArrests6.txt')\nUSArrests7 &lt;- read_excel('data/USArrests7.xlsx')\nUSArrests8 &lt;- read_rds('data/USArrests8.rds')"
+  },
+  {
+    "objectID": "01-importar/ejercicios-clase01.html#pregunta-2",
+    "href": "01-importar/ejercicios-clase01.html#pregunta-2",
+    "title": "Guía de Ejercicios N°1 - Análisis de Datos y Estadística Computacional",
+    "section": "Pregunta 2",
+    "text": "Pregunta 2\nCargue el archivo shape correspondiente a la geometría espacial de las comunas de la Región Metropolitana y muestre un mapa sencillo de los límites comunales usando ggplot() y geom_sf(). ¿De los 4 archivos que comienzan con el nombre comunas_rm cuál es la extensión que debe cargar?\n\n\nCódigo\ncomunas_rm &lt;- st_read('data/comunas_rm.shp')\n\n\nReading layer `comunas_rm' from data source \n  `C:\\Users\\gduar\\Desktop\\Academico\\Docencia\\UAI-AD\\2026\\01-importar\\data\\comunas_rm.shp' \n  using driver `ESRI Shapefile'\nSimple feature collection with 52 features and 8 fields\nGeometry type: POLYGON\nDimension:     XY\nBounding box:  xmin: -71.71523 ymin: -34.29093 xmax: -69.76999 ymax: -32.92194\nGeodetic CRS:  SIRGAS 2000\n\n\nCódigo\nggplot(comunas_rm) +\n  geom_sf()"
+  },
+  {
+    "objectID": "01-importar/ejercicios-clase01.html#pregunta-3",
+    "href": "01-importar/ejercicios-clase01.html#pregunta-3",
+    "title": "Guía de Ejercicios N°1 - Análisis de Datos y Estadística Computacional",
+    "section": "Pregunta 3",
+    "text": "Pregunta 3\nEl archivo homicidios_anuales_cead.xlsx contiene información sobre casos policiales de homicidios desagregados por unidad territorial.\nIntente cargar el archivo utilizando únicamente la función read_excel() y asígnelo al objeto homicidios_cead.\n\n\nCódigo\nhomicidios_cead &lt;- read_excel('data/homicidios_anuales_cead.xlsx')"
+  },
+  {
+    "objectID": "01-importar/ejercicios-clase01.html#pregunta-4",
+    "href": "01-importar/ejercicios-clase01.html#pregunta-4",
+    "title": "Guía de Ejercicios N°1 - Análisis de Datos y Estadística Computacional",
+    "section": "Pregunta 4",
+    "text": "Pregunta 4\nAbra nuevamente el archivo homicidios_anuales_cead.xlsx e identifique el rango exacto de celdas que contiene la tabla de datos.\nPosteriormente, utilice el argumento range de la función read_excel() para importar únicamente la información relevante.\nAsigne el resultado al objeto homicidios_cead2.\n\n\nCódigo\nhomicidios_cead2 &lt;- read_excel('data/homicidios_anuales_cead.xlsx',range = 'A4:W426')"
+  },
+  {
+    "objectID": "01-importar/ejercicios-clase01.html#introducción",
+    "href": "01-importar/ejercicios-clase01.html#introducción",
+    "title": "Guía de Ejercicios N°1 - Análisis de Datos y Estadística Computacional",
+    "section": "Introducción",
+    "text": "Introducción\nEn este ejercicio trabajaremos con los resultados de población comunal del Censo 2024 a partir del archivo denominado Población censada por sexo y edad en grupos quinquenales de la Región Metropolitana y, por otro, la tasa de pobreza comunal 2024 a partir de las estimaciones que realiza el Ministerio de Desarrollo Social y Familia. El objetivo es construir una única base de datos con la población censada de cada comuna y su tasa de pobreza.\n\n\n\n\n\n\nModalidad de trabajo\n\n\n\n\nTrabajen en grupos de 4 a 6 personas en las breakout rooms de zoom.\nTiempo estimado: 20 a 30 minutos.\nDesignen a una persona que comparta pantalla y vaya escribiendo el código; el resto acompaña la resolución del ejercicio probando en su computador local y discute.\nIntenten primero resolver cada parte y solo entonces revisen la pauta desplegable."
+  },
+  {
+    "objectID": "01-importar/ejercicios-clase01.html#funciones-que-utilizarás",
+    "href": "01-importar/ejercicios-clase01.html#funciones-que-utilizarás",
+    "title": "Guía de Ejercicios N°1 - Análisis de Datos y Estadística Computacional",
+    "section": "Funciones que utilizarás",
+    "text": "Funciones que utilizarás\nUn repaso breve de las herramientas de la clase que necesitarás:\n\nread_excel(\"ruta.xlsx\"): Importa un archivo Excel a un data frame.\nclean_names() (de janitor): Estandariza los nombres de columna a minúsculas, sin tildes ni espacios, separados por guion bajo. Conviene aplicarla justo después de importar. Por ejemplo:\n\n\ntibble(`Código Comuna` = 13101, `Población 2024` = 503147) |&gt;\n  clean_names()\n\n\n  \n\n\n\n\nleft_join(x, y, by = \"llave\"): conserva todas las filas de x y le agrega las columnas de y según la columna llave que ambas comparten. Si la llave se llama distinto en cada tabla, se usa join_by(llave_x == llave_y).\nFunciones de inspección y verificación: head(), glimpse(), summary().\n\n\n\nPregunta 1: Importar archivo de pobreza comunal\nImporte el archivo excel con la estimación de pobreza comunal SAE_ingresos_2024.xlsx sin ninguna limpieza o especificación adicional desde la carpeta data/ y asígnelo al objeto pobreza_2024. ¿Cuántas observaciones tiene el archivo? ¿Está bien estructurada la base de datos tal y como la cargó, por ejemplo, en el nombre de las variables? Analice qué puede estar fallando abriendo el visor del objeto (haciendo clic o ejecutando view(pobreza_2024)) y/o abriendo el archivo en Microsoft Excel.\n\n\n\n\n\n\nPauta\n\n\n\n\n\n\n\nCódigo\npobreza_2024 &lt;- read_excel(\"data/SAE_ingresos_2024.xlsx\")\nglimpse(pobreza_2024)\n\n\nRows: 354\nColumns: 10\n$ `Estimaciones de Tasa de Pobreza por ingresos por Comuna, Aplicación de Metodologías de Estimación para Áreas Pequeñas (SAE) 2024` &lt;chr&gt; …\n$ ...2                                                                                                                               &lt;chr&gt; …\n$ ...3                                                                                                                               &lt;chr&gt; …\n$ ...4                                                                                                                               &lt;chr&gt; …\n$ ...5                                                                                                                               &lt;chr&gt; …\n$ ...6                                                                                                                               &lt;chr&gt; …\n$ ...7                                                                                                                               &lt;chr&gt; …\n$ ...8                                                                                                                               &lt;chr&gt; …\n$ ...9                                                                                                                               &lt;chr&gt; …\n$ ...10                                                                                                                              &lt;chr&gt; …\n\n\nCódigo\nview(pobreza_2024)\n\n\nRecuerde que la ruta es relativa al proyecto: como los archivos están en data/, basta con escribir \"data/SAE_ingresos_2024.xlsx\". Es sumamente importante notar que deben especificar el nombre de ruta-archivo junto a SU EXTENSIÓN (ej: .xlsx, .txt, etc.)\nEn este caso, el archivo tiene 354 filas y 10 columnas, cuyos nombres están mal definidos. Además, sabemos que en Chile hay 345 comunas (sin considerar la antártica), por lo que hay más filas que comunas, lo que nos indica que algo no está bien estructurado.\n\n\n\n\n\nPregunta 2: Definir el rango de importación\nAbra el archivo Excel SAE_ingresos_2024.xlsx y defina el rango correcto de celdas que debe importar en R. Sobrescriba el objeto pobreza_2024 con esta nueva definición ¿cuántas observaciones tiene ahora su dataframe ordenado?\n\n\n\n\n\n\nPauta\n\n\n\n\n\n\n\nCódigo\npobreza_2024 &lt;- read_excel(\"data/SAE_ingresos_2024.xlsx\",\n                           range = \"A3:J348\")\nglimpse(pobreza_2024)\n\n\nRows: 345\nColumns: 10\n$ Código                                                            &lt;dbl&gt; 1101…\n$ Región                                                            &lt;chr&gt; \"Tar…\n$ `Nombre comuna`                                                   &lt;chr&gt; \"Iqu…\n$ `Número de personas según proyecciones de población (*)`          &lt;dbl&gt; 2324…\n$ `Número de personas en situación de pobreza de ingresos (**)`     &lt;dbl&gt; 3759…\n$ `Porcentaje de personas en situacion de pobreza de ingresos 2024` &lt;dbl&gt; 0.16…\n$ `Límite inferior`                                                 &lt;dbl&gt; 0.14…\n$ `Límite superior`                                                 &lt;dbl&gt; 0.17…\n$ `Presencia de la comuna en la muestra Casen`                      &lt;chr&gt; \"Sí\"…\n$ `Tipo de estimación SAE (***)`                                    &lt;chr&gt; \"Dir…\n\n\nAl abrir el archivo excel, vemos que la tabla de datos comienza en la celda A3 donde aparece el nombre de la primera variable (Código), y termina en la celda J348 correspondiente a la variable Tipo de estimación SAE (***) para la comuna de la fila 348, correspondiente a San Nicolás\n\n\n\n\n\nPregunta 3: Limpiar nombres\nLimpie los nombres del objeto pobreza_2024 quitando mayúsculas, tildes y espacios. Sobrescríbalo con el mismo nombre para guardar estos cambios. ¿Cómo se llama ahora la variable que contiene el código único territorial de la comuna?\n\n\n\n\n\n\nPauta\n\n\n\n\n\n\n\nCódigo\npobreza_2024 &lt;- pobreza_2024 |&gt; \n  clean_names()\nglimpse(pobreza_2024)\n\n\nRows: 345\nColumns: 10\n$ codigo                                                          &lt;dbl&gt; 1101, …\n$ region                                                          &lt;chr&gt; \"Tarap…\n$ nombre_comuna                                                   &lt;chr&gt; \"Iquiq…\n$ numero_de_personas_segun_proyecciones_de_poblacion              &lt;dbl&gt; 232455…\n$ numero_de_personas_en_situacion_de_pobreza_de_ingresos          &lt;dbl&gt; 37598.…\n$ porcentaje_de_personas_en_situacion_de_pobreza_de_ingresos_2024 &lt;dbl&gt; 0.1617…\n$ limite_inferior                                                 &lt;dbl&gt; 0.1478…\n$ limite_superior                                                 &lt;dbl&gt; 0.1756…\n$ presencia_de_la_comuna_en_la_muestra_casen                      &lt;chr&gt; \"Sí\", …\n$ tipo_de_estimacion_sae                                          &lt;chr&gt; \"Direc…\n\n\nOcupamos la función clean_names() para hacer la limpieza de los nombres y vemos que ahora la variable del código único territorial se llama codigo en lugar de Código. Esto simplifica la sintaxis y facilita la escritura y ejecución de código.\n\n\n\n\n\nPregunta 4: Importar población comunal\nAbra en Excel el archivo de población comunal D1_Poblacion-censada-por-sexo-y-edad-en-grupos-quinquenales.xlsx desde la carpeta data/ y observe la estructura de sus hojas. Importe la hoja: 2. Población censada por sexo y razón hombre-mujer, según comuna esta vez utilizando los argumentos skip y n_max de read_excel() y guarde estos datos en el objeto poblacion_2024. Asegúrese de limpiar los nombres de las variables y guardarlo en el mismo objeto ¿Cuántas observaciones tiene el archivo? ¿A qué se debe la diferencia con los datos comunales de pobreza si tienen el mismo nivel de observación?\n\n\n\n\n\n\nPauta\n\n\n\n\n\n\n\nCódigo\npoblacion_2024 &lt;- read_excel(\n  \"data/D1_Poblacion-censada-por-sexo-y-edad-en-grupos-quinquenales.xlsx\",\n  sheet = \"2\",  #también puede ser sheet = 3, indicando que corresponde a la tercera hoja\n  skip = 3, #para saltar las primeras 3 filas y leer desde la fila 4\n  n_max = 347 #última fila correspondiente a Torres del Paine\n  ) |&gt; \n  clean_names()\n\nglimpse(poblacion_2024)\n\n\nRows: 347\nColumns: 10\n$ codigo_region      &lt;dbl&gt; 0, 15, 15, 15, 15, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2,…\n$ region             &lt;chr&gt; \"País\", \"Arica y Parinacota\", \"Arica y Parinacota\",…\n$ codigo_provincia   &lt;dbl&gt; 0, 151, 151, 152, 152, 11, 11, 14, 14, 14, 14, 14, …\n$ provincia          &lt;chr&gt; \"País\", \"Arica\", \"Arica\", \"Parinacota\", \"Parinacota…\n$ codigo_comuna      &lt;dbl&gt; 0, 15101, 15102, 15201, 15202, 1101, 1107, 1401, 14…\n$ comuna             &lt;chr&gt; \"País\", \"Arica\", \"Camarones\", \"Putre\", \"General Lag…\n$ poblacion_censada  &lt;dbl&gt; 18480432, 241653, 861, 1547, 508, 199587, 142086, 1…\n$ hombres            &lt;dbl&gt; 8967033, 118844, 430, 846, 261, 98413, 70649, 8667,…\n$ mujeres            &lt;dbl&gt; 9513399, 122809, 431, 701, 247, 101174, 71437, 8211…\n$ razon_hombre_mujer &lt;dbl&gt; 94.3, 96.8, 99.8, 120.7, 105.7, 97.3, 98.9, 105.6, …\n\n\nNotar que en este dataset hay 347 filas porque se añaden dos observaciones más: País representando la población nacional y Antártica que no estaba dentro de la estimación de pobreza comunal.\n\n\n\n\n\nPregunta 5: Cruce de pobreza con población censada\nCree un nuevo objeto llamado poblacion_pobreza_2024 añadiendo al objeto pobreza_2024 la población censada, N° de hombres, N° de mujeres y razón hombre-mujer además del resto de información administrativa de región provincia y comuna. Para ello, utilice la familia de funciones *_join() y defina correctamente la llave de cruce a partir del código único territorial ¿Cuántas observaciones debiese esperar que obtenga con este cruce y cuántas efectivamente obtiene? Ocupe la función summary() sobre la variable poblacion_censada de este nuevo objeto y responda ¿Cuántos valores faltantes o NA observa?\n\n\n\n\n\n\nPauta\n\n\n\n\n\n\n\nCódigo\npoblacion_pobreza_2024 &lt;- left_join(pobreza_2024, poblacion_2024, join_by(codigo == codigo_comuna))\n\nglimpse(poblacion_pobreza_2024)\n\n\nRows: 345\nColumns: 19\n$ codigo                                                          &lt;dbl&gt; 1101, …\n$ region.x                                                        &lt;chr&gt; \"Tarap…\n$ nombre_comuna                                                   &lt;chr&gt; \"Iquiq…\n$ numero_de_personas_segun_proyecciones_de_poblacion              &lt;dbl&gt; 232455…\n$ numero_de_personas_en_situacion_de_pobreza_de_ingresos          &lt;dbl&gt; 37598.…\n$ porcentaje_de_personas_en_situacion_de_pobreza_de_ingresos_2024 &lt;dbl&gt; 0.1617…\n$ limite_inferior                                                 &lt;dbl&gt; 0.1478…\n$ limite_superior                                                 &lt;dbl&gt; 0.1756…\n$ presencia_de_la_comuna_en_la_muestra_casen                      &lt;chr&gt; \"Sí\", …\n$ tipo_de_estimacion_sae                                          &lt;chr&gt; \"Direc…\n$ codigo_region                                                   &lt;dbl&gt; 1, 1, …\n$ region.y                                                        &lt;chr&gt; \"Tarap…\n$ codigo_provincia                                                &lt;dbl&gt; 11, 11…\n$ provincia                                                       &lt;chr&gt; \"Iquiq…\n$ comuna                                                          &lt;chr&gt; \"Iquiq…\n$ poblacion_censada                                               &lt;dbl&gt; 199587…\n$ hombres                                                         &lt;dbl&gt; 98413,…\n$ mujeres                                                         &lt;dbl&gt; 101174…\n$ razon_hombre_mujer                                              &lt;dbl&gt; 97.3, …\n\n\nCódigo\nsummary(poblacion_pobreza_2024$poblacion_censada)\n\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n    102    9519   19802   53566   54222  568086 \n\n\nEs importante notar que el enunciado dice que al objeto de pobreza_2024 hay que añadirle información, por lo que es un left_join() entre pobreza y población (en ese orden). Por ello, si el cruce está bien realizado con la información que tenemos, debiésemos tener la misma cantidad de filas del dataset base de pobreza (es decir, 345 comunas), ya que al dataset de pobreza queremos añadirle nuevas variables.\n\n\n\n\n\n\nEl orden importa\n\n\n\nPusimos pobreza_2024 a la izquierda a propósito: left_join() conserva todas las filas de la tabla izquierda. Así nos aseguramos de quedarnos con las 345 comunas con datos de pobreza y agregarles su población. Si hubiéramos puesto poblacion_2024 a la izquierda, el resultado tendría las 347 observaciones.\n\n\nUna vez definido el orden, se debe identificar la llave de cruce, correspondiente al código de las comunas. Es importante notar que el nombre de esta variable difiere entre un dataset y otro, por lo que para asegurar que el cruce se realice por las variables que definimos como llave, usamos la función join_by() para especificar las llaves.\nEste tipo de cruces es extremadamente frecuente en el sector público. Por ejemplo, para analizar si las comunas con mayor pobreza presentan también mayores tasas de victimización, menor acceso a servicios públicos o distintos resultados educativos, es necesario integrar información proveniente de distintas fuentes mediante una llave común.\n\n\n\n\n\nPregunta 6: Cruce por nombre de comuna\nIntente hacer el mismo cruce de la pregunta anterior pero ahora usando como llave el nombre de la comuna y guárdelo en un objeto llamado poblacion_pobreza_2024_v2. ¿La cantidad de observaciones son las mismas que en la pregunta anterior? ¿Y los valores faltantes de la variable poblacion_censada? Dé un ejemplo de por qué el cruce puede haber fallado para una comuna en particular\n\n\n\n\n\n\nPauta\n\n\n\n\n\n\n\nCódigo\npoblacion_pobreza_2024_v2 &lt;- left_join(pobreza_2024, poblacion_2024, join_by(nombre_comuna == comuna))\n\nglimpse(poblacion_pobreza_2024_v2)\n\n\nRows: 345\nColumns: 19\n$ codigo                                                          &lt;dbl&gt; 1101, …\n$ region.x                                                        &lt;chr&gt; \"Tarap…\n$ nombre_comuna                                                   &lt;chr&gt; \"Iquiq…\n$ numero_de_personas_segun_proyecciones_de_poblacion              &lt;dbl&gt; 232455…\n$ numero_de_personas_en_situacion_de_pobreza_de_ingresos          &lt;dbl&gt; 37598.…\n$ porcentaje_de_personas_en_situacion_de_pobreza_de_ingresos_2024 &lt;dbl&gt; 0.1617…\n$ limite_inferior                                                 &lt;dbl&gt; 0.1478…\n$ limite_superior                                                 &lt;dbl&gt; 0.1756…\n$ presencia_de_la_comuna_en_la_muestra_casen                      &lt;chr&gt; \"Sí\", …\n$ tipo_de_estimacion_sae                                          &lt;chr&gt; \"Direc…\n$ codigo_region                                                   &lt;dbl&gt; 1, 1, …\n$ region.y                                                        &lt;chr&gt; \"Tarap…\n$ codigo_provincia                                                &lt;dbl&gt; 11, 11…\n$ provincia                                                       &lt;chr&gt; \"Iquiq…\n$ codigo_comuna                                                   &lt;dbl&gt; 1101, …\n$ poblacion_censada                                               &lt;dbl&gt; 199587…\n$ hombres                                                         &lt;dbl&gt; 98413,…\n$ mujeres                                                         &lt;dbl&gt; 101174…\n$ razon_hombre_mujer                                              &lt;dbl&gt; 97.3, …\n\n\nCódigo\nsummary(poblacion_pobreza_2024_v2$poblacion_censada)\n\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's \n    102   10208   20238   54400   56336  568086      17 \n\n\nVemos que el cruce falla en 17 comunas (17 valores NA). Al abrir la base en el visor y ordenar por código de comuna vemos que, por ejemplo en la base de pobreza la comuna 16207 está escrita como “Treguaco” mientras que ese código en la base de datos de población se escribe como “Trehuaco”.\nEsto refuerza la importancia de utilizar códigos o identificadores únicos como llave de cruce, en lugar de nombres que pueden contener errores de digitación o diferencias de escritura.\n\n\n\n\n\nPregunta 7: Guardar datos\nCree una carpeta que se llame clean dentro de data y guarde el objeto poblacion_pobreza_2024 en formato .xlsx y .parquet asignándole un nombre que usted defina como apropiado ¿cuál de los dos archivos pesa menos?\n\n\n\n\n\n\nPauta\n\n\n\n\n\n\n\nCódigo\nwrite.xlsx(poblacion_pobreza_2024, 'data/clean/pobreza_pob_censo_2024.xlsx')\nwrite_parquet(poblacion_pobreza_2024, 'data/clean/pobreza_pob_censo_2024.parquet')\n\n\nEl archivo en formato parquet pesa menos que el excel, aunque ambos tamaños son considerablemente bajos. Sin embargo, al trabajar con datos considerablemente más pesados, el formato parquet puede significar una ventaja en términos de rapidez de lectura."
+  },
+  {
     "objectID": "00-nivelacion2/nivelacion-02.html#repaso-clase-1-estadísticas-descriptivas-en-r",
     "href": "00-nivelacion2/nivelacion-02.html#repaso-clase-1-estadísticas-descriptivas-en-r",
     "title": "Clase 2: Probabilidad e Inferencia",
@@ -1712,6 +1761,846 @@
       "🏠 Inicio",
       "Nivelación",
       "Clase 1: Estadística Descriptiva"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#hacia-donde-queremos-llegar",
+    "href": "01-importar/clase-01.html#hacia-donde-queremos-llegar",
+    "title": "Clase 1: Importar Datos",
+    "section": "¿Hacia donde queremos llegar?",
+    "text": "¿Hacia donde queremos llegar?\n\n\n\n\n\nDatos CEAD\n\n\n\n\n\n\nVisualización de Datos",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#hacia-donde-queremos-llegar-1",
+    "href": "01-importar/clase-01.html#hacia-donde-queremos-llegar-1",
+    "title": "Clase 1: Importar Datos",
+    "section": "¿Hacia donde queremos llegar?",
+    "text": "¿Hacia donde queremos llegar?\n\n\n\n\n\nEcuaciones de Regresión Simple\n\n\n\n\n\n\nModelo para Responder Preguntas",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#objetivo-clase-1",
+    "href": "01-importar/clase-01.html#objetivo-clase-1",
+    "title": "Clase 1: Importar Datos",
+    "section": "Objetivo Clase 1",
+    "text": "Objetivo Clase 1\nEsta primera clase tiene como objetivo general introducirlos al curso de Análisis de Datos y Estadística Computacional y aprender a importar y cruzar bases de datos en R, dejándolas listas para transformarlas en las clases siguientes.\nComo objetivos específicos se busca:\n\nPresentar el programa del curso y algunas de las reglas básicas\nTrabajar de manera ordenada y reproducible mediante proyectos (.Rproj)\nAprender a importar bases de datos de distintos formatos: .csv, .xlsx, .dta, .shp\n\nRealizar una limpieza inicial de nombres con el paquete janitor\n\nCruzar información de dos o más fuentes con left_join()",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#información-general",
+    "href": "01-importar/clase-01.html#información-general",
+    "title": "Clase 1: Importar Datos",
+    "section": "Información General",
+    "text": "Información General\n\n8 clases en total con una duración de 3:20 hrs cada una.\nSe subirá el link de la presentación el mismo día previo al inicio de la clase para que los alumnos puedan seguirla en línea.\nEl curso consta de 2 unidades de 4 clases cada una\n\n\nUnidad I: Herramientas de Ciencia de Datos con R\n\nUnidad II: Estadística Aplicada con R.\n\n\nEste curso requiere un 75% de asistencia para ser aprobado. Toda justificación debe ser enviada por correo siempre con copia al ayudante. Si tienen problemas con el horario de conexión, también pueden escribirle al ayudante por el chat privado de zoom y/o por correo.\nEl canal principal de comunicación fuera de clases es Webcursos",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#metodología",
+    "href": "01-importar/clase-01.html#metodología",
+    "title": "Clase 1: Importar Datos",
+    "section": "Metodología",
+    "text": "Metodología\n\n\nLa clase se divide en diferentes secciones:\n\n👨‍🏫 Exposición: Láminas de contenido que resumen el conocimiento principal esperado como resultado de aprendizaje, junto con código de ejemplo.\n🧠 Preguntas: A lo largo de la clase se realizarán preguntas que pueden ir contestando en línea para evaluar el aprendizaje de cada sección.\n💻 Ejercicio guiado: Ejercicio práctico resuelto de manera simultánea por el profesor junto con los alumnos.\n👥 Ejercicio grupal: Ejercicios en grupos de 4-6 personas para resolver en conjunto los problemas propuestos. El profesor y ayudante pasarán por las salas recurrentemente.\n🔒 Cierre: Resumen de los aspectos más relevantes y espacio final de preguntas.\n\n\n📤 La grabación se subirá a Webcursos al finalizar cada clase.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#reglas-generales",
+    "href": "01-importar/clase-01.html#reglas-generales",
+    "title": "Clase 1: Importar Datos",
+    "section": "Reglas Generales",
+    "text": "Reglas Generales\n\nDurante clases se debe mantener la cámara prendida. Quienes no puedan por algún motivo deben avisar por medio de correo electrónico o chat privado de zoom a la ayudante.\n¡Siéntanse libres de hacer consultas! Sin embargo, el mayor aprendizaje se adquiere a través de la práctica: ensayo y error.\nToda comunicación y consultas fuera de clase deben realizarse a través del foro de webcursos: ¡no solo se beneficiarán ustedes, sino que también sus compañer@s!\nLas evaluaciones (tareas) son individuales.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#evaluación",
+    "href": "01-importar/clase-01.html#evaluación",
+    "title": "Clase 1: Importar Datos",
+    "section": "Evaluación",
+    "text": "Evaluación\n\n\nEvaluaciones: 2 tareas, cada una pondera 50% de la nota:\n\n\nTarea 1 (manejo, transformación y comunicación de datos con R): 28/06/2026\n\n\nTarea 2 (modelamiento estadístico y reporte reproducible en Quarto): 19/07/2026\n\n\n\n\nEntregas: En formato html, con el código completo y la justificación o análisis escrito cuando corresponda. Toda entrega debe realizarse a través de webcursos en el buzón creado para ello.\n\nCálculo de la nota: Sobre la base del puntaje obtenido en cada tarea: \\[Nota = \\left(\\frac{\\text{Puntaje obtenido}}{\\text{Puntaje total}}\\right)\\times 6 + 1\\]\n\n\nAprobación del Curso: Promedio simple de ambas tareas igual o superior a 4,0 (escala de 1 a 7).",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#bibliografía-principal",
+    "href": "01-importar/clase-01.html#bibliografía-principal",
+    "title": "Clase 1: Importar Datos",
+    "section": "Bibliografía Principal",
+    "text": "Bibliografía Principal\n\n\n\nUNIDAD I: HERRAMIENTAS DE CIENCIA DE DATOS CON R\n\n(Wickham, Çetinkaya-Rundel, y Grolemund 2023)\n\n\n\nUNIDAD II: ESTADÍSTICA APLICADA CON R\n\n(Ismay, Kim, y Valdivia 2025)",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#y-muchos-libros-más",
+    "href": "01-importar/clase-01.html#y-muchos-libros-más",
+    "title": "Clase 1: Importar Datos",
+    "section": "Y muchos libros más…",
+    "text": "Y muchos libros más…\n\n\nIntroduction to Modern Statistics (2e) (Çetinkaya-Rundel & Hardin) — Estadística aplicada con R con un enfoque moderno.\n\nR Cookbook (Long & Teetor) — consulta rápida de tareas cotidianas en R\nFundamentals of Data Visualization (Wilke)\nggplot2: Elegant Graphics for Data Analysis (Wickham)\nUsing R for Introductory Econometrics (Heiss)\nIntroduction to Econometrics with R (Hanck et al.)\n\nThe Effect (Huntington-Klein) — inferencia causal aplicada\nCausal Inference: The Mixtape (Cunningham)",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#en-qué-consiste-la-primera-parte-del-curso",
+    "href": "01-importar/clase-01.html#en-qué-consiste-la-primera-parte-del-curso",
+    "title": "Clase 1: Importar Datos",
+    "section": "¿En qué consiste la primera parte del curso?",
+    "text": "¿En qué consiste la primera parte del curso?\n\nPrincipales herramientas de trabajo con datos",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#qué-veremos-hoy",
+    "href": "01-importar/clase-01.html#qué-veremos-hoy",
+    "title": "Clase 1: Importar Datos",
+    "section": "¿Qué veremos hoy?",
+    "text": "¿Qué veremos hoy?\n\nImportar y Cruzar",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#ventajas-de-programar",
+    "href": "01-importar/clase-01.html#ventajas-de-programar",
+    "title": "Clase 1: Importar Datos",
+    "section": "Ventajas de programar",
+    "text": "Ventajas de programar\nSupongamos que queremos realizar un documento corto de análisis que sirva de insumo para un tomador de decisiones de política pública\n\n\n\nSIN PROGRAMACIÓN\n\nIngresar a la web y descargar datos o solicitarlos\nLimpiar, ordenar, y analizar datos en MS Excel\n\nEscribir documento en MS Word\n\nGuardar en “algún lado” (ojalá no en “Mis Documentos” o “Descargas”)\n\n\n\n\nCON PROGRAMACIÓN\n\nCrear una carpeta para el proyecto/tarea\n\ndatos\nscripts\nresultados\n\n\nDescargar datos desde R o bien llamarlos desde nuestra carpeta datos\n\nLimpiar, ordenar, y analizar datos en R a través de un script\n\nEscribir documento en R Markdown o Quarto",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#reproducibilidad",
+    "href": "01-importar/clase-01.html#reproducibilidad",
+    "title": "Clase 1: Importar Datos",
+    "section": "Reproducibilidad",
+    "text": "Reproducibilidad\nSeis meses después se debe repetir la tarea\n\n\n\nSIN PROGRAMACIÓN\n\nRecordar que se hizo\nIngresar a la web y descargar datos\nLimpiar, ordenar, y analizar datos en MS Excel\n\nEscribir documento en MS Word\n\nGuardar en “algún lado” (ojalá no en “Mis Documentos” o “Descargas”)\n\n\n\n\nCON PROGRAMACIÓN\n\nEjecutar el código",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#cuál-es-la-principal-dificultad",
+    "href": "01-importar/clase-01.html#cuál-es-la-principal-dificultad",
+    "title": "Clase 1: Importar Datos",
+    "section": "¿Cuál es la principal dificultad?",
+    "text": "¿Cuál es la principal dificultad?\n\nCurva de aprendizaje del lenguaje R",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#pero-hay-herramientas-que-lo-facilitan",
+    "href": "01-importar/clase-01.html#pero-hay-herramientas-que-lo-facilitan",
+    "title": "Clase 1: Importar Datos",
+    "section": "Pero hay herramientas que lo facilitan …",
+    "text": "Pero hay herramientas que lo facilitan …",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#cheatsheets",
+    "href": "01-importar/clase-01.html#cheatsheets",
+    "title": "Clase 1: Importar Datos",
+    "section": "Cheatsheets",
+    "text": "Cheatsheets\n\n\n\nreadr Cheatsheet",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#y-una-de-las-más-usadas-help",
+    "href": "01-importar/clase-01.html#y-una-de-las-más-usadas-help",
+    "title": "Clase 1: Importar Datos",
+    "section": "Y una de las más usadas: help()\n",
+    "text": "Y una de las más usadas: help()\n\nAntes de utilizar cualquier función, es útil consultar sus detalles (argumentos, valores, ejemplos, etc.) a través del comando help(x) o ?x",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#qué-es-r-y-rstudio",
+    "href": "01-importar/clase-01.html#qué-es-r-y-rstudio",
+    "title": "Clase 1: Importar Datos",
+    "section": "¿Qué es R y Rstudio?",
+    "text": "¿Qué es R y Rstudio?\n\nR vs RstudioR es un lenguaje de programación que ejecuta código, mientras que RStudio es un entorno de desarrollo integrado (IDE) que proporciona una interfaz que facilita la ejecución y trabajo con R",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#instalar-r-y-rstudio-realizar-en-orden",
+    "href": "01-importar/clase-01.html#instalar-r-y-rstudio-realizar-en-orden",
+    "title": "Clase 1: Importar Datos",
+    "section": "Instalar R y Rstudio (Realizar en orden)",
+    "text": "Instalar R y Rstudio (Realizar en orden)\n\n\nDescargar R\nDescargar Rstudio\nAbrir Rstudio\n\n\n\n\n\n\n\n\n\nAdvertencia\n\n\nEs importante que la ruta en donde se aloje R y Rstudio no tenga caracteres especiales\n\n\n\n\n\n\n\n\n\n\n\nImportante\n\n\nUna vez instalado R y Rstudio, solo deben abrir Rstudio para trabajar con R",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#por-qué-trabajar-con-proyectos-.rproj",
+    "href": "01-importar/clase-01.html#por-qué-trabajar-con-proyectos-.rproj",
+    "title": "Clase 1: Importar Datos",
+    "section": "¿Por qué trabajar con proyectos (.Rproj)?",
+    "text": "¿Por qué trabajar con proyectos (.Rproj)?\n\nUn proyecto de RStudio es una carpeta que contiene todo lo necesario para un análisis (datos, scripts, resultados) y un archivo .Rproj que la identifica como proyecto.\n\n\nSus principales ventajas:\n\n\nRutas relativas: el proyecto fija automáticamente el directorio de trabajo en su carpeta raíz, por lo que no necesitamos usar setwd() ni rutas absolutas del tipo \"C:/Users/.../mis documentos/...\".\n\nPortabilidad: el proyecto funciona igual en cualquier computador, sin tener que reescribir rutas.\n\nReproducibilidad y orden: cada análisis vive en su propia carpeta, autocontenido.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#crear-un-proyecto-en-rstudio",
+    "href": "01-importar/clase-01.html#crear-un-proyecto-en-rstudio",
+    "title": "Clase 1: Importar Datos",
+    "section": "Crear un proyecto en RStudio",
+    "text": "Crear un proyecto en RStudio\n\nFile → New Project → New Directory → New Project, y elegimos el nombre y la ubicación de la carpeta.\n\n\nAbrir rstudio\nHacer clic en file → New Project o en la esquina superior derecha\nHacer clic en “New Directory” si no han creado una carpeta de trabajo de sus clases o “Existing Directory” si ya tienen definido donde trabajar\nHacer clic en “New Project” si escogieron la opcion de “New Directory”\n\nFinalmente escoger el nombre del proyecto: “clase_01” y una ubicación (recomendada escritorio/DIAPP26)\n\n\n\n\n\n\n\n\nAdvertencia\n\n\nEviten que la ruta donde se aloja el proyecto tenga caracteres especiales (tildes, ñ, espacios, etc.), ya que pueden generar errores difíciles de diagnosticar.\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nUna vez creado el proyecto, ábranlo siempre haciendo doble clic en el archivo .Rproj así se abre RStudio con el directorio de trabajo ya configurado.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#estructura-recomendada-de-subcarpetas",
+    "href": "01-importar/clase-01.html#estructura-recomendada-de-subcarpetas",
+    "title": "Clase 1: Importar Datos",
+    "section": "Estructura recomendada de subcarpetas",
+    "text": "Estructura recomendada de subcarpetas\nDentro del proyecto conviene separar insumos, código y resultados. Una estructura simple y suficiente para este curso:\n\nmi_proyecto/\n├── mi_proyecto.Rproj      # archivo del proyecto\n├── data/                  # datos de entrada (NO se modifican a mano)\n│   ├── raw/               # datos originales tal como se descargaron\n│   └── clean/             # datos ya procesados y guardados desde R\n├── scripts/               # códigos .R o .qmd en orden de ejecución\n├── output/                # resultados generados\n│   ├── figuras/\n│   └── tablas/\n└── README.txt             # breve descripción del proyecto\n\n\n\n\n\n\n\n\nTip\n\n\nRegla de oro: los datos en data/raw/ se tratan como solo lectura. Toda transformación se hace en R y se guarda en data/clean/, de modo que siempre podamos reconstruir el resultado ejecutando el código.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#la-importancia-del-orden",
+    "href": "01-importar/clase-01.html#la-importancia-del-orden",
+    "title": "Clase 1: Importar Datos",
+    "section": "La importancia del orden",
+    "text": "La importancia del orden\n\nUna de las ventajas de programar es la reproducibilidad: cualquier persona (¡o nosotros mismos en seis meses!) debería poder obtener los mismos resultados ejecutando los mismos pasos.\nPor eso importa mantener el orden tanto en la carpeta del proyecto como en la sintaxis del script. Piensen en escribir su código como si escribieran una receta.\nOrdenen su script en secciones (atajo: CTRL + SHIFT + R) e intenten comentar el por qué de cada paso más que el cómo: el qué y el cómo siempre se pueden deducir del código, pero el por qué es lo más difícil de recuperar después.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#identación-y-estilo-de-código",
+    "href": "01-importar/clase-01.html#identación-y-estilo-de-código",
+    "title": "Clase 1: Importar Datos",
+    "section": "Identación y estilo de código",
+    "text": "Identación y estilo de código\nUn código bien indentado y espaciado es más fácil de leer, depurar y compartir:\n\n\n\nRecomendado \n\n# 0. Librerías ----------------------\nlibrary(tidyverse)\nlibrary(janitor)\n\n# 1. Cargo datos --------------------\ndatos &lt;- read_csv(\"data/raw/comunas.csv\")\n\n# 2. Limpio y transformo ------------\ndatos &lt;- datos |&gt;\n  clean_names() |&gt;\n  filter(poblacion &gt; 50000)\n\n\n\n\nNO Recomendado \n\nlibrary(tidyverse)\ndatos&lt;-read_csv(\"data/raw/comunas.csv\")\nlibrary(janitor)\ndatos&lt;-datos|&gt;clean_names()|&gt;filter(\npoblacion&gt;50000)",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#identación-y-estilo-de-código-1",
+    "href": "01-importar/clase-01.html#identación-y-estilo-de-código-1",
+    "title": "Clase 1: Importar Datos",
+    "section": "Identación y estilo de código",
+    "text": "Identación y estilo de código\nAlgunas recomendaciones básicas de estilo:\n\nDejen espacios alrededor de los operadores (&lt;-, +, ==, etc.) y después de las comas.\nEn un pipeline (|&gt;), pongan cada paso en su propia línea, indentada.\nUsen nombres descriptivos y en minúsculas para los objetos.\n\n\n\n\n\n\n\n\nTip\n\n\nRStudio puede ayudarles: seleccionando el código y presionando CTRL + SHIFT + A lo re-indenta automáticamente. El paquete styler permite estandarizar todo un script con un clic (install.packages(\"styler\") y luego clic en Addins).",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#uso-de-paquetes-packages",
+    "href": "01-importar/clase-01.html#uso-de-paquetes-packages",
+    "title": "Clase 1: Importar Datos",
+    "section": "Uso de paquetes (packages)\n",
+    "text": "Uso de paquetes (packages)\n\n\nAnalogía entre R y paquetes de R\nAl igual que cuando utilizamos una aplicación en nuestro celular, primero debemos instalarla y luego abrirla o utilizarla.\nEl comando básico para instalar paquetes es la función install.packages(). Es importante notar que el nombre del paquete que se instale a través de esta función debe ir entre comillas: e.g. install.packages('tidyverse')\n\nUna vez instalado el paquete, lo cargamos o llamamos a través de la función library(). En este caso, el nombre del paquete no debe ir entre comillas: e.g. library(tidyverse)",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#paquetes-y-pacman",
+    "href": "01-importar/clase-01.html#paquetes-y-pacman",
+    "title": "Clase 1: Importar Datos",
+    "section": "Paquetes y pacman\n",
+    "text": "Paquetes y pacman\n\n\nPara instalar un paquete: install.packages('tidyverse') (el nombre entre comillas).\nPara cargarlo: library(tidyverse) (el nombre sin comillas).\n\n\nA lo largo del curso usaremos indistintamente la función p_load() del paquete pacman, que combina ambos pasos: “si el paquete está instalado, cárgalo; si no, descárgalo y luego cárgalo”. Esto asegura que todos trabajemos con las mismas librerías:\n\nlibrary(pacman)\np_load(tidyverse, readxl, openxlsx, haven, janitor, sf)",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#primeras-complicaciones",
+    "href": "01-importar/clase-01.html#primeras-complicaciones",
+    "title": "Clase 1: Importar Datos",
+    "section": "Primeras complicaciones",
+    "text": "Primeras complicaciones\nR informa errores (errors), advertencias (warnings) y mensajes (messages) en un color que resalta, lo que hace que parezca que algo va mal en nuestro código. Sin embargo, ver texto de colores en la consola no siempre representa un problema:\n\n\nErrors: Si el texto comienza con Error, investiguen qué lo está causando. Piensen en los errores como en un semáforo en rojo: ¡algo anda mal!\n\nWarnings: Si el texto comienza con Warning, indaguen si es algo de qué preocuparse. Por ejemplo, si reciben una advertencia sobre valores faltantes en un diagrama de dispersión y saben que faltan valores, está bien. Piensen en las advertencias como en un semáforo en amarillo: todo funciona bien, pero presten atención a lo que están ejecutando.\n\nMessages: Piensen en los mensajes como un semáforo en verde: ¡todo funciona bien, por lo que sigan adelante!",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#algunos-tips-para-mejorar-en-programación",
+    "href": "01-importar/clase-01.html#algunos-tips-para-mejorar-en-programación",
+    "title": "Clase 1: Importar Datos",
+    "section": "Algunos tips para mejorar en programación",
+    "text": "Algunos tips para mejorar en programación\n\n\nLas computadoras no son autónomas (o tan inteligentes): Requieren de instrucciones entregadas por humanos, por lo que es muy relevante entender los inputs que uno le entrega al software para que ejecute una acción que queremos realizar.\n\nOcupar el copy, paste, and tweak approach: Muchas veces es más fácil tomar un código existente que sabemos que funciona y lo modificamos acorde a nuestros objetivos y fuentes de datos.\n\nLa mejor forma de de aprender a programar es haciendo y ejecutando códigos: Piensen en las tareas que realizan cotidianamente y que involucren un trabajo con datos. Traten de aplicar lo aprendido a lo largo del curso a problemas/desafíos concretos que enfrenten.\n\nPracticar, equivocarse, aprender y seguir practicando: ¡La práctica y la dedicación les permitirá avanzar en las primeras etapas de aprendizaje!",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#funciones-básicas-a-tener-en-consideración",
+    "href": "01-importar/clase-01.html#funciones-básicas-a-tener-en-consideración",
+    "title": "Clase 1: Importar Datos",
+    "section": "Funciones básicas a tener en consideración",
+    "text": "Funciones básicas a tener en consideración\n\n\nview(): Es equivalente a hacer click en el objeto mostrado en el Global Environment.\n\nhead(): Permite mostrar las primeras observaciones del objeto indicado.\n\nhelp(): Entrega toda la documentación de la función. En particular, es muy útil para saber los argumentos de la función y cuáles valores puede tomar.\n\nprint(): Imprime el objeto indicado. En dataframes extensos, se recomienda utilizar head() en lugar de print().\n\nstr(): Detalla la estructura y clase de cada componente del objeto indicado.\n\nglimpse(): Función del paquete dplyr que realiza algo similar a str() pero de manera más ordenada y mostrando una mayor cantidad de información.\n\nsummary(): Resume las estadísticas descriptivas generales del objeto indicado, incluyendo la cantidad de NA en caso de que existan.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#el-operador-pipe",
+    "href": "01-importar/clase-01.html#el-operador-pipe",
+    "title": "Clase 1: Importar Datos",
+    "section": "El operador pipe |>\n",
+    "text": "El operador pipe |&gt;\n\n\nEn R, el pipe |&gt; permite encadenar funciones pasando el resultado de una expresión como primer argumento de la siguiente.\nHace el código más legible: se lee de izquierda a derecha, como una receta de pasos.\n\n\nSin pipe, las funciones se anidan de adentro hacia afuera:\n\n# Sin pipe: hay que leer de adentro hacia afuera\nround(sqrt(log(100)), 2)\n\n\n\nCon pipe, cada paso queda en su propia línea, en orden de ejecución:\n\n# Con pipe: se lee de arriba hacia abajo\n100 |&gt;\n  log()   |&gt;\n  sqrt()  |&gt;\n  round(2)\n\n\n\n\n\n\n\n\n\nAtajo de teclado\n\n\nCtrl + Shift + M inserta el pipe |&gt; automáticamente en RStudio. Si te aparece %&gt;% en vez de |&gt;, ve a Tools → Global Options → Code y activa “Use native pipe operator”.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#preliminares",
+    "href": "01-importar/clase-01.html#preliminares",
+    "title": "Clase 1: Importar Datos",
+    "section": "Preliminares",
+    "text": "Preliminares\n\nPara importar datos usaremos una familia de funciones con el prefijo read.\nLos formatos más comunes con los que trabajaremos:\n\nValores separados por comas: .csv\n\nArchivos Excel: .xlsx o .xls\n\nDatos de STATA: .dta\n\nDatos espaciales (ESRI Shapefile): .shp\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nCada formato tiene su función y, muchas veces, su propio paquete: readr para texto plano, readxl para Excel, haven para STATA/SPSS y sf para datos espaciales.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#readr-importar-csv",
+    "href": "01-importar/clase-01.html#readr-importar-csv",
+    "title": "Clase 1: Importar Datos",
+    "section": "\nreadr: importar CSV",
+    "text": "readr: importar CSV\n\ncsv separados por coma (,): read_csv()\n\ncsv separados por punto y coma (;): read_csv2()\n\nSeparados por un delimitador específico: read_delim(file, delim)",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#archivos-separados-por-coma-.csv",
+    "href": "01-importar/clase-01.html#archivos-separados-por-coma-.csv",
+    "title": "Clase 1: Importar Datos",
+    "section": "Archivos separados por coma: .csv\n",
+    "text": "Archivos separados por coma: .csv\n\n\nstudents &lt;- read_csv(\"https://pos.it/r4ds-students-csv\")\nhead(students) |&gt; \n  kable()\n\n\n\n\n\n\n\n\n\n\nStudent ID\nFull Name\nfavourite.food\nmealPlan\nAGE\n\n\n\n1\nSunil Huffmann\nStrawberry yoghurt\nLunch only\n4\n\n\n2\nBarclay Lynn\nFrench fries\nLunch only\n5\n\n\n3\nJayendra Lyne\nN/A\nBreakfast and lunch\n7\n\n\n4\nLeon Rossini\nAnchovies\nLunch only\nNA\n\n\n5\nChidiegwu Dunkel\nPizza\nBreakfast and lunch\nfive\n\n\n6\nGüvenç Attila\nIce cream\nLunch only\n6\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nLa función head() devuelve las primeras 6 observaciones. ¡Úsenla siempre para inspeccionar visualmente sus objetos!",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#un-argumento-útil-na",
+    "href": "01-importar/clase-01.html#un-argumento-útil-na",
+    "title": "Clase 1: Importar Datos",
+    "section": "Un argumento útil: na\n",
+    "text": "Un argumento útil: na\n\nLa comida favorita de la fila 3 dice \"N/A\", pero R no la reconoce como dato faltante. Podemos indicarle qué tratar como NA:\n\n\nstudents &lt;- read_csv(\"https://pos.it/r4ds-students-csv\",\n                     na = c(\"N/A\", \"\"))\nhead(students) |&gt; \n  kable()\n\n\n\n\n\n\n\n\n\n\nStudent ID\nFull Name\nfavourite.food\nmealPlan\nAGE\n\n\n\n1\nSunil Huffmann\nStrawberry yoghurt\nLunch only\n4\n\n\n2\nBarclay Lynn\nFrench fries\nLunch only\n5\n\n\n3\nJayendra Lyne\nNA\nBreakfast and lunch\n7\n\n\n4\nLeon Rossini\nAnchovies\nLunch only\nNA\n\n\n5\nChidiegwu Dunkel\nPizza\nBreakfast and lunch\nfive\n\n\n6\nGüvenç Attila\nIce cream\nLunch only\n6",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#archivos-separados-por-punto-y-coma-.csv-con-read_csv2",
+    "href": "01-importar/clase-01.html#archivos-separados-por-punto-y-coma-.csv-con-read_csv2",
+    "title": "Clase 1: Importar Datos",
+    "section": "Archivos separados por punto y coma: .csv con read_csv2()\n",
+    "text": "Archivos separados por punto y coma: .csv con read_csv2()\n\n\nMuchos archivos generados en contextos hispanohablantes usan ; como separador (porque la coma se usa como separador decimal). En ese caso usamos read_csv2():\n\n\n\nread_csv2(I(\"comuna;poblacion\\nSantiago;503.147\\nCerrillos;88.056\"))\n\n# A tibble: 2 × 2\n  comuna    poblacion\n  &lt;chr&gt;         &lt;dbl&gt;\n1 Santiago     503147\n2 Cerrillos     88056",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#readxl-importar-archivos-excel",
+    "href": "01-importar/clase-01.html#readxl-importar-archivos-excel",
+    "title": "Clase 1: Importar Datos",
+    "section": "\nreadxl: importar archivos Excel",
+    "text": "readxl: importar archivos Excel\n\nPara importar archivos Excel usamos read_excel(). Sus argumentos principales:\n\n\npath: ruta del archivo. Debe terminar con la extensión (.xlsx o .xls).\n\nsheet: número (1, 2, …) o nombre de la hoja entre comillas.\n\nrange: rango de celdas a leer, en formato Excel y entre comillas, p. ej. \"B1:D5\".\n\nskip: cantidad de filas a ignorar antes de leer.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#aplicación-leer-un-excel-con-sheet-y-range",
+    "href": "01-importar/clase-01.html#aplicación-leer-un-excel-con-sheet-y-range",
+    "title": "Clase 1: Importar Datos",
+    "section": "Aplicación: leer un Excel con sheet y range\n",
+    "text": "Aplicación: leer un Excel con sheet y range\n\n\nruta &lt;- readxl_example(\"datasets.xlsx\")\nexcel_sheets(ruta)   # ¿qué hojas tiene el archivo?\n\n[1] \"mtcars\"   \"chickwts\" \"quakes\"  \n\n\n\n\nmtcars_xl &lt;- read_excel(ruta, sheet = \"mtcars\", range = \"A1:D5\")\nmtcars_xl\n\n# A tibble: 4 × 4\n    mpg   cyl  disp    hp\n  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1  21       6   160   110\n2  21       6   160   110\n3  22.8     4   108    93\n4  21.4     6   258   110",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#haven-archivos-de-stata-.dta",
+    "href": "01-importar/clase-01.html#haven-archivos-de-stata-.dta",
+    "title": "Clase 1: Importar Datos",
+    "section": "\nhaven: archivos de STATA .dta \n",
+    "text": "haven: archivos de STATA .dta \n\n\nPara leer archivos .dta (STATA) usamos read_dta() del paquete haven:\n\n\n\nruta_dta &lt;- system.file(\"examples\", \"iris.dta\", package = \"haven\")\niris_stata &lt;- read_dta(ruta_dta)\nhead(iris_stata)\n\n# A tibble: 6 × 5\n  sepallength sepalwidth petallength petalwidth species\n        &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;  \n1        5.10       3.5         1.40      0.200 setosa \n2        4.90       3           1.40      0.200 setosa \n3        4.70       3.20        1.30      0.200 setosa \n4        4.60       3.10        1.5       0.200 setosa \n5        5          3.60        1.40      0.200 setosa \n6        5.40       3.90        1.70      0.400 setosa \n\n\n\n\n\n\n\n\n\n\nTip\n\n\nhaven también lee SPSS (read_sav()) y SAS (read_sas()) con la misma lógica.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#archivos-georreferenciados",
+    "href": "01-importar/clase-01.html#archivos-georreferenciados",
+    "title": "Clase 1: Importar Datos",
+    "section": "Archivos Georreferenciados",
+    "text": "Archivos Georreferenciados\n\nPara trabajar archivos georreferenciados utilizaremos una de las librerías más reconocidas en el entorno de R para manejar datos espaciales: sf o simple features.\nNo profundizaremos en el manejo de datos espaciales (lo cual se verá en detalle en el módulo de Geoanálisis), pero intentaremos realizar mapas básicos para mostrar información que y captar la atención de la audiencia. Esto puede ser muy útil a la hora de comunicar resultados de manera efectiva.\nLa función básica para leer archivos georreferenciados es st_read() del paquete sf.\nExisten diferentes formatos de archivo para los datos de georreferenciados, pero el más común es probablemente el ESRI shapefile. A pesar de que se llama de manera singular, en realidad se compone de al menos cuatro archivos diferentes que trabajan juntos para almacenar los datos: .dbf .shx .prj .shp.\nLo importante es que estos archivos esten siempre juntos en la misma carpeta. Cumpliendo eso, solo debemos preocuparnos de cargar el archivo de extensión .shp",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#archivos-georreferenciados-1",
+    "href": "01-importar/clase-01.html#archivos-georreferenciados-1",
+    "title": "Clase 1: Importar Datos",
+    "section": "Archivos georreferenciados",
+    "text": "Archivos georreferenciados\nEn resumen:\n\nPara datos espaciales usaremos el paquete sf (simple features) y la función st_read().\nUn shapefile en realidad se compone de varios archivos (.shp, .dbf, .shx, .prj) que deben estar juntos en la misma carpeta. Solo cargamos el .shp.\n\n\n\nnc &lt;- st_read(system.file(\"shape/nc.shp\", package = \"sf\"))",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#archivos-georreferenciados-visualización",
+    "href": "01-importar/clase-01.html#archivos-georreferenciados-visualización",
+    "title": "Clase 1: Importar Datos",
+    "section": "Archivos georreferenciados: Visualización",
+    "text": "Archivos georreferenciados: Visualización\nPara mostrar un mapa podemos usar ggplot2 (en la clase 3 profundizaremos este tema):\n\nggplot(nc) +\n  geom_sf()\n\n\n\n\n\n\n\n\nNota\n\n\nNo profundizaremos en el manejo ni la visualización de datos espaciales: veremos los mapas en detalle en la Clase 3.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#formato-moderno-apache-parquet",
+    "href": "01-importar/clase-01.html#formato-moderno-apache-parquet",
+    "title": "Clase 1: Importar Datos",
+    "section": "Formato moderno: Apache Parquet",
+    "text": "Formato moderno: Apache Parquet\n\nLos formatos que hemos visto (.csv, .xlsx, .dta) tienen una limitación importante: a medida que los datos crecen, se vuelven lentos de leer y pesados en disco.\nEl formato Parquet (paquete arrow) resuelve esto mediante almacenamiento en columnas y compresión automática.\n\n\n\n\n\nVentajas\n\n\nTamaño: un .csv de 1 GB puede ocupar ~150 MB en Parquet.\n\nVelocidad: lee solo las columnas que necesitas, no el archivo completo.\n\nTipos de datos: preserva fechas, factores y enteros sin conversiones al importar.\n\nInteroperable: Python (pandas), SQL, Spark y R lo leen nativamente.\n\n\n\n\nCuándo usarlo\n\nArchivos grandes (&gt; 100 MB).\nDatos que se leen muchas veces y rara vez se editan a mano.\nFlujos de trabajo que mezclan R y Python.\nCuando compartir un .csv tarda demasiado.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#leer-y-escribir-parquet-con-arrow",
+    "href": "01-importar/clase-01.html#leer-y-escribir-parquet-con-arrow",
+    "title": "Clase 1: Importar Datos",
+    "section": "Leer y escribir Parquet con arrow\n",
+    "text": "Leer y escribir Parquet con arrow\n\n\nlibrary(arrow)\n\n# Leer un archivo Parquet\ndatos &lt;- read_parquet(\"data/raw/criminalidad.parquet\")\n\n# Escribir un data frame existente como Parquet\nwrite_parquet(datos, \"data/clean/criminalidad.parquet\")\n\n\nLa sintaxis es idéntica a read_csv() / write_csv(): un argumento de ruta de entrada o salida y listo.\n\n\n\n\n\n\n# Desde CSV a Parquet en dos líneas\ndatos &lt;- read_csv(\"data/raw/base_grande.csv\")\nwrite_parquet(datos, \"data/raw/base_grande.parquet\")\n\n→ Conversión de .csv a Parquet\n\n\n\n\n# Lectura selectiva de columnas (muy eficiente)\nread_parquet(\n  \"data/raw/base_grande.parquet\",\n  col_select = c(\"comuna\", \"anio\", \"tasa\")\n)\n\n→ Lee solo 3 columnas sin cargar el resto\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nPara este curso no es obligatorio, pero es una buena práctica guardar sus bases procesadas en Parquet una vez limpias: la próxima vez que las carguen será notablemente más rápido.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#limpieza-inicial-de-nombres-janitorclean_names",
+    "href": "01-importar/clase-01.html#limpieza-inicial-de-nombres-janitorclean_names",
+    "title": "Clase 1: Importar Datos",
+    "section": "Limpieza inicial de nombres: janitor::clean_names()\n",
+    "text": "Limpieza inicial de nombres: janitor::clean_names()\n\n\nMuchas bases reales traen nombres de columna “sucios”: con mayúsculas, espacios, tildes o caracteres especiales que dificultan trabajar con ellos.\nLa función clean_names() del paquete janitor los estandariza a un formato limpio y consistente (minúsculas, sin tildes, con guion bajo).\n\n\n\nlibrary(janitor)\ndf &lt;- tibble(`Nombre Comuna`  = c(\"Santiago\", \"Cerrillos\"),\n             `Población 2017` = c(503147, 88056))\ndf\n\n# A tibble: 2 × 2\n  `Nombre Comuna` `Población 2017`\n  &lt;chr&gt;                      &lt;dbl&gt;\n1 Santiago                  503147\n2 Cerrillos                  88056",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#limpieza-inicial-de-nombres-janitorclean_names-1",
+    "href": "01-importar/clase-01.html#limpieza-inicial-de-nombres-janitorclean_names-1",
+    "title": "Clase 1: Importar Datos",
+    "section": "Limpieza inicial de nombres: janitor::clean_names()\n",
+    "text": "Limpieza inicial de nombres: janitor::clean_names()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTip\n\n\nAplicar clean_names() justo después de importar es una excelente costumbre: nos ahorra muchos errores posteriores al referirnos a las columnas.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#pregunta-n-1",
+    "href": "01-importar/clase-01.html#pregunta-n-1",
+    "title": "Clase 1: Importar Datos",
+    "section": "🧠 Pregunta N° 1",
+    "text": "🧠 Pregunta N° 1\nTenemos un archivo Excel generado por un servicio público chileno. Al abrirlo en Excel, vemos que las primeras 3 filas son encabezados combinados con el nombre del reporte y la fuente, y los datos reales comienzan en la fila 4.\n\n¿Cuál es la forma correcta de importarlo a R?\n\nread_excel(\"archivo.xlsx\")\nread_excel(\"archivo.xlsx\", skip = 3)\nread_excel(\"archivo.xlsx\", sheet = 3)\nread_csv(\"archivo.xlsx\")",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#ejercicio-guiado-importar-y-limpiar",
+    "href": "01-importar/clase-01.html#ejercicio-guiado-importar-y-limpiar",
+    "title": "Clase 1: Importar Datos",
+    "section": "Ejercicio Guiado: importar y limpiar",
+    "text": "Ejercicio Guiado: importar y limpiar\nVer Guía de Ejercicios N°1, Parte I.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#guardar-o-exportar",
+    "href": "01-importar/clase-01.html#guardar-o-exportar",
+    "title": "Clase 1: Importar Datos",
+    "section": "Guardar o Exportar",
+    "text": "Guardar o Exportar\n\nLa familia de funciones es write_\n\nSiempre deben especificar la extensión del archivo luego del path. Por ejemplo:\n\n\nmtcars.csv si queremos guardarlo como un archivo csv\n\n\nmtcars.dta si queremos guardarlo como un archivo de STATA\n\n\nmtcars.xlsx si queremos guardarlo como un archivo excel, etc.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#guardar-o-exportar-1",
+    "href": "01-importar/clase-01.html#guardar-o-exportar-1",
+    "title": "Clase 1: Importar Datos",
+    "section": "Guardar o Exportar",
+    "text": "Guardar o Exportar\n\n\n\n\n\nreadr:\n\nwrite_delim(mtcars, 'mtcars.txt', delim = \" \")\nwrite_csv(mtcars, 'mtcars.csv')\nwrite_csv2(mtcars, 'mtcars.csv')\nwrite_tsv(mtcars, 'mtcars.tsv')\n\n\n\n\n\n\n\n\nhaven:\n\nwrite_dta(mtcars, 'mtcars.dta')\nwrite_sav(mtcars, 'mtcars.sav')\nwrite_xpt(mtcars, 'mtcars.xpt')\n\n\n\nparquet:\n\nwrite_parquet(mtcars,'mtcars.parquet')\n\n\n\nRDS:\n\nwrite_rds(mtcars,'mtcars.parquet')",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#exportar-a-excel",
+    "href": "01-importar/clase-01.html#exportar-a-excel",
+    "title": "Clase 1: Importar Datos",
+    "section": "Exportar a Excel",
+    "text": "Exportar a Excel\nPara exportar archivos excel se recomienda usar una librería adicional: openxlsx:\n\nlibrary(openxlsx)\nwrite.xlsx(mtcars,'mtcars.xlsx')\n\n\n\n\n\n\n\n\nAdvertencia\n\n\n\nNotar que a diferencia de las otras funciones write en donde la extensión va precedida por un _ la del paquete openxlsx es precedida por un .\n\nDeben prestar mucha atención a la sintaxis exacta de la funciones que ocupen, ya que por ejemplo, una de las librerías base de R tiene funciones similares a las ya revisadas, pero que operan de manera distinta (por ejemplo, read.csv)",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#por-qué-cruzar-bases-de-datos",
+    "href": "01-importar/clase-01.html#por-qué-cruzar-bases-de-datos",
+    "title": "Clase 1: Importar Datos",
+    "section": "¿Por qué cruzar bases de datos?",
+    "text": "¿Por qué cruzar bases de datos?\n\nAl trabajar con datos rara vez tenemos toda la información en una sola tabla: lo habitual es combinar varias fuentes vinculadas entre sí.\n\nExisten dos grandes familias de uniones:\n\n\nMutating joins: agregan nuevas variables a una tabla a partir de coincidencias en otra.\n\nFiltering joins: filtran las observaciones de una tabla según si coinciden o no con otra.\n\n\nEn este curso nos centraremos en el left_join(), el mutating join más usado: conserva todas las filas de la tabla de la izquierda y le agrega las columnas de la derecha.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#left_join-argumentos",
+    "href": "01-importar/clase-01.html#left_join-argumentos",
+    "title": "Clase 1: Importar Datos",
+    "section": "\nleft_join(): argumentos",
+    "text": "left_join(): argumentos\n\n\nFunción a utilizar: left_join()\n\nArgumentos importantes:\n\n\n\nx: el dataframe base (al que se le añaden variables).\n\ny: el dataframe con la información adicional que queremos agregar.\n\nby: la llave o variable que permite unir ambas tablas.\n\n\n\n\n\n\n\n\n\nTip\n\n\nLa llave se puede especificar con join_by(). Por ejemplo, join_by(a == b) cruza x$a con y$b cuando las columnas tienen nombres distintos.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#left_join-gráficamente",
+    "href": "01-importar/clase-01.html#left_join-gráficamente",
+    "title": "Clase 1: Importar Datos",
+    "section": "\nleft_join() gráficamente",
+    "text": "left_join() gráficamente\n\n\n\nLeft Join",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#aplicación-left_join",
+    "href": "01-importar/clase-01.html#aplicación-left_join",
+    "title": "Clase 1: Importar Datos",
+    "section": "Aplicación: left_join()\n",
+    "text": "Aplicación: left_join()\n\nTenemos dos tablas de comunas vinculadas por su código (cod_comuna):\n\ncomunas &lt;- tibble(\n  cod_comuna = c(13101, 13102, 13201),\n  comuna     = c(\"Santiago\", \"Cerrillos\", \"Puente Alto\")\n)\n\npoblacion &lt;- tibble(\n  cod_comuna = c(13101, 13102, 13201),\n  poblacion  = c(503147, 88056, 645909)\n)\n\n\n\ncomunas |&gt; \n  left_join(poblacion, by = \"cod_comuna\")\n\n# A tibble: 3 × 3\n  cod_comuna comuna      poblacion\n       &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;\n1      13101 Santiago       503147\n2      13102 Cerrillos       88056\n3      13201 Puente Alto    645909",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#cuando-las-llaves-tienen-distinto-nombre",
+    "href": "01-importar/clase-01.html#cuando-las-llaves-tienen-distinto-nombre",
+    "title": "Clase 1: Importar Datos",
+    "section": "Cuando las llaves tienen distinto nombre",
+    "text": "Cuando las llaves tienen distinto nombre\nSi la llave se llama distinto en cada tabla (cod_comuna vs. codigo), lo indicamos con join_by():\n\npoblacion2 &lt;- tibble(\n  codigo    = c(13101, 13102, 13201),\n  poblacion = c(503147, 88056, 645909)\n)\n\ncomunas |&gt; \n  left_join(poblacion2, join_by(cod_comuna == codigo))\n\n# A tibble: 3 × 3\n  cod_comuna comuna      poblacion\n       &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;\n1      13101 Santiago       503147\n2      13102 Cerrillos       88056\n3      13201 Puente Alto    645909\n\n\n\n\n\n\n\n\n\nAdvertencia\n\n\nSi no especificamos by, R usará como llave todas las columnas con el mismo nombre en ambas tablas (natural join), lo que a veces produce cruces no deseados.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#pregunta-n-2",
+    "href": "01-importar/clase-01.html#pregunta-n-2",
+    "title": "Clase 1: Importar Datos",
+    "section": "🧠 Pregunta N° 2",
+    "text": "🧠 Pregunta N° 2\nTenemos dos tablas: hospitales con columna cod_comuna y poblacion con columna codigo. Queremos añadirle la población censada a cada hospital, conservando todos los hospitales aunque no encuentren coincidencia.\n\n¿Cuál es el código correcto?\n\nleft_join(poblacion, hospitales, join_by(codigo == cod_comuna))\nleft_join(hospitales, poblacion, by = 'cod_comuna')\nleft_join(hospitales, poblacion, join_by(cod_comuna == codigo))\ninner_join(hospitales, poblacion, join_by(cod_comuna == codigo))",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#ejercicio-grupal-20-30-min",
+    "href": "01-importar/clase-01.html#ejercicio-grupal-20-30-min",
+    "title": "Clase 1: Importar Datos",
+    "section": "Ejercicio Grupal (20-30 min)",
+    "text": "Ejercicio Grupal (20-30 min)\nResolver parte II de la guía de ejercicios. Trabajarán en salas pequeñas resolviendo la parte II de la guía de ejercicios subida a Webcursos",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#tidy-data",
+    "href": "01-importar/clase-01.html#tidy-data",
+    "title": "Clase 1: Importar Datos",
+    "section": "\nTidy data",
+    "text": "Tidy data\n\n\nUna variable es una cantidad, cualidad o propiedad que se puede medir.\nUn valor es el estado de una variable cuando se mide. El valor de una variable puede cambiar de una medida a otra.\nUna observación es un conjunto de mediciones realizadas en condiciones similares (por lo general, se realizan todas las mediciones en una observación al mismo tiempo y en el mismo objeto). Una observación contendrá varios valores, cada uno asociado con una variable diferente. A veces nos referiremos a una observación como un punto de datos.\n\n\n\nLos datos tidy o tabulares son un conjunto de valores, cada uno asociado con una variable y una observación. Los datos tabulares están en formato tidy si cada valor se coloca en su propia celda, cada variable en su propia columna y cada observación en su propia fila.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#tidy-data-1",
+    "href": "01-importar/clase-01.html#tidy-data-1",
+    "title": "Clase 1: Importar Datos",
+    "section": "\nTidy data",
+    "text": "Tidy data\n\nDatos Ordenados en formato tidy",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#alargar-el-data-frame-lengthening-data-más-filas-u-observaciones",
+    "href": "01-importar/clase-01.html#alargar-el-data-frame-lengthening-data-más-filas-u-observaciones",
+    "title": "Clase 1: Importar Datos",
+    "section": "Alargar el data frame (lengthening data): Más Filas u Observaciones",
+    "text": "Alargar el data frame (lengthening data): Más Filas u Observaciones\n\n\nFunción a utilizar: pivot_longer()\n\nArgumentos importantes:\n\n\n\ndata: El dataframe a pivotear (implícito si utilizamos un pipeline con un dataframe que le preceda)\n\ncols: El conjunto de variables a pivotear en formato longer\n\nnames_to: Un string que especifica la nueva columna o columnas para crear a partir de la información almacenada en los nombres de columna de los datos especificados por cols\n\n\nvalues_to: Un string que especifica el nombre de la columna para crear a partir de los datos almacenados en el valor de la celda\n\n\n\n\n\n\n\n\n\nTip\n\n\nEl argumento clave de esta función es cols, ya que esta indica las columnas que queremos pasar a un formato long.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#ensanchar-el-data-frame-widening-data-más-columnas-o-variables",
+    "href": "01-importar/clase-01.html#ensanchar-el-data-frame-widening-data-más-columnas-o-variables",
+    "title": "Clase 1: Importar Datos",
+    "section": "Ensanchar el data frame (widening data): Más Columnas o Variables",
+    "text": "Ensanchar el data frame (widening data): Más Columnas o Variables\n\n\nFunción a utilizar: pivot_wider()\n\nArgumentos importantes:\n\n\n\ndata: El dataframe a pivotear (implícito si utilizamos un pipeline con un dataframe que le preceda)\n\nnames_from: El conjunto de variables a pivotear en formato wider (sobre qué columna(s) se obtendrá el nombre de la columna de salida)\n\nvalues_from: El conjunto de variables desde donde se obtendrán los valores de las nuevas columnas creadas.\n\n\n\n\n\n\n\n\n\nTip\n\n\nEn este caso, tanto names_from como values_from son clave para poder ejecutar correctamente la función.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#aplicación-pivot-longer",
+    "href": "01-importar/clase-01.html#aplicación-pivot-longer",
+    "title": "Clase 1: Importar Datos",
+    "section": "Aplicación Pivot Longer",
+    "text": "Aplicación Pivot Longer\n\nVeamos un data set sencillo que muestra el número de casos de Tuberculosis documentados por la Organización Mundial de la Salud en Afganistán, Brasil y China entre 1999 y 2000: ver aquí\nLos datos contienen valores asociados con cuatro variables (país, año, casos y población), pero cada tabla organiza los valores en un diseño diferente.\n\n\n\nprint(table1)\n\n# A tibble: 6 × 4\n  country      year  cases population\n  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;\n1 Afghanistan  1999    745   19987071\n2 Afghanistan  2000   2666   20595360\n3 Brazil       1999  37737  172006362\n4 Brazil       2000  80488  174504898\n5 China        1999 212258 1272915272\n6 China        2000 213766 1280428583",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#aplicación-pivot-longer-1",
+    "href": "01-importar/clase-01.html#aplicación-pivot-longer-1",
+    "title": "Clase 1: Importar Datos",
+    "section": "Aplicación Pivot Longer",
+    "text": "Aplicación Pivot Longer\n\nA continuación, se muestra una parte de este dataset en formato no tidy:\n\n\n\nprint(table4a)\n\n# A tibble: 3 × 3\n  country     `1999` `2000`\n  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;\n1 Afghanistan    745   2666\n2 Brazil       37737  80488\n3 China       212258 213766\n\n\n\nSe puede apreciar que los nombres de columna 1999 y 2000 representan valores de la variable año, los valores en las columnas 1999 y 2000 representan valores de la variable casos, y cada fila representa dos observaciones en lugar de una.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#aplicación-pivot-longer-2",
+    "href": "01-importar/clase-01.html#aplicación-pivot-longer-2",
+    "title": "Clase 1: Importar Datos",
+    "section": "Aplicación Pivot Longer",
+    "text": "Aplicación Pivot Longer\n\nPara transformar este dataset en uno tidy, podemos ocupar la función pivot_longer, es decir, agrandar la base de datos hacia abajo o bien, con más observaciones:\n\n\n\ntable4a |&gt;  \n  pivot_longer(c(`1999`, `2000`), names_to = \"year\", values_to = \"cases\")\n\n# A tibble: 6 × 3\n  country     year   cases\n  &lt;chr&gt;       &lt;chr&gt;  &lt;dbl&gt;\n1 Afghanistan 1999     745\n2 Afghanistan 2000    2666\n3 Brazil      1999   37737\n4 Brazil      2000   80488\n5 China       1999  212258\n6 China       2000  213766",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#aplicación-pivot-longer-3",
+    "href": "01-importar/clase-01.html#aplicación-pivot-longer-3",
+    "title": "Clase 1: Importar Datos",
+    "section": "Aplicación Pivot Longer",
+    "text": "Aplicación Pivot Longer\n\nPivot Longer",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#aplicación-pivot-wider",
+    "href": "01-importar/clase-01.html#aplicación-pivot-wider",
+    "title": "Clase 1: Importar Datos",
+    "section": "Aplicación Pivot Wider",
+    "text": "Aplicación Pivot Wider\nAnalicemos otro diseño del mismo dataset original:\n\nprint(table2)\n\n# A tibble: 12 × 4\n   country      year type            count\n   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;\n 1 Afghanistan  1999 cases             745\n 2 Afghanistan  1999 population   19987071\n 3 Afghanistan  2000 cases            2666\n 4 Afghanistan  2000 population   20595360\n 5 Brazil       1999 cases           37737\n 6 Brazil       1999 population  172006362\n 7 Brazil       2000 cases           80488\n 8 Brazil       2000 population  174504898\n 9 China        1999 cases          212258\n10 China        1999 population 1272915272\n11 China        2000 cases          213766\n12 China        2000 population 1280428583\n\n\nEn este caso, el problema es que una observación es un país en un año, pero cada observación se distribuye en 2 filas. Para solucionarlo, ocupamos pivot_wider, es decir, agrandar la base de datos hacia el lado o bien, con más columnas o variables",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#aplicación-pivot-wider-1",
+    "href": "01-importar/clase-01.html#aplicación-pivot-wider-1",
+    "title": "Clase 1: Importar Datos",
+    "section": "Aplicación Pivot Wider",
+    "text": "Aplicación Pivot Wider\n\ntable2 |&gt; \n    pivot_wider(names_from = type, values_from = count)\n\n# A tibble: 6 × 4\n  country      year  cases population\n  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;\n1 Afghanistan  1999    745   19987071\n2 Afghanistan  2000   2666   20595360\n3 Brazil       1999  37737  172006362\n4 Brazil       2000  80488  174504898\n5 China        1999 212258 1272915272\n6 China        2000 213766 1280428583\n\n\n\nNotar que los argumentos operan de manera análoga al pivot_longer.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#aplicación-pivot-wider-2",
+    "href": "01-importar/clase-01.html#aplicación-pivot-wider-2",
+    "title": "Clase 1: Importar Datos",
+    "section": "Aplicación Pivot Wider",
+    "text": "Aplicación Pivot Wider\n\n\n\n\nPivot Wider",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
+    ]
+  },
+  {
+    "objectID": "01-importar/clase-01.html#qué-aprendimos-hoy",
+    "href": "01-importar/clase-01.html#qué-aprendimos-hoy",
+    "title": "Clase 1: Importar Datos",
+    "section": "¿Qué aprendimos hoy?",
+    "text": "¿Qué aprendimos hoy?\n\nA trabajar de forma ordenada y reproducible mediante proyectos (.Rproj) y una estructura clara de subcarpetas.\nA importar bases de datos de los formatos más comunes: .csv (read_csv/read_csv2), Excel (read_excel), STATA (read_dta) y espaciales (st_read).\nA hacer una limpieza inicial de nombres con janitor::clean_names().\nA cruzar información de dos fuentes con left_join().\n\n\nLa próxima clase profundizaremos en cómo ordenar y transformar estas bases (tidyr, dplyr) para dejarlas listas para el análisis.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 1: Importar datos"
     ]
   }
 ]

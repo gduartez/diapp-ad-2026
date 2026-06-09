@@ -6,7 +6,7 @@ project:
     - "programa.qmd"
     - "00-nivelacion1/*.qmd"
     - "00-nivelacion2/*.qmd"
-    - "!01-importar/*.qmd"
+    - "01-importar/*.qmd"
     - "!02-transformar/*.qmd"
     - "!03-visualizar/*.qmd"
     - "!04-comunicar/*.qmd"

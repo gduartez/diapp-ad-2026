@@ -1,0 +1,337 @@
+---
+title: "Guía de Ejercicios N°1 - Análisis de Datos y Estadística Computacional"
+subtitle: "Importación y Cruce de Datos con R"
+author: "Prof. Gabriel Duarte Zúñiga"
+institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
+date: "2026-06-09"
+lang: es
+format:
+  html:
+    toc: true
+    toc-title: "Contenidos"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+    theme: [flatly, styles_ex.scss]
+    highlight-style: github
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    df-print: paged
+    fig-align: center
+    fig-width: 8
+    fig-height: 5
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  eval: true             
+---
+
+```{r}
+#| include: false
+#| eval: true
+library(tidyverse)
+library(readxl)
+library(janitor)
+```
+
+::: callout-important
+## Antes de comenzar
+
+Asegúrense de tener instalados los siguientes paquetes. Si no los tienen, instálenlos una sola vez con `install.packages("nombre_paquete")` en la consola:
+
+```{r}
+#| eval: false
+install.packages("tidyverse")
+install.packages("readxl")
+install.packages("janitor")
+install.packages("openxlsx")
+install.packages('haven')
+install.packages('arrow')
+install.packages('sf')
+```
+
+Luego cárguenlos al inicio de su script:
+
+```{r}
+library(tidyverse)   # incluye dplyr (left_join) y readr
+library(readxl)      # para leer archivos .xlsx
+library(janitor)     # para usar clean_names()
+library(openxlsx)    # para guardar en formato excel
+library(haven)       # para trabajar datos en formato .dta
+library(arrow)       # para trabajar datos en formato parquet
+library(sf)          # para trabajar datos espaciales
+
+```
+:::
+
+::: callout-tip
+## Organicen el proyecto
+
+Trabajen dentro de un **proyecto de RStudio** (`.Rproj`) y coloquen los dos archivos en una subcarpeta `data/`:
+
+```         
+clase_01/
+├── clase_01.Rproj
+├── data/
+│   ├── D1_Poblacion-censada-por-sexo-y-edad-en-grupos-quinquenales.xlsx
+│   └── SAE_ingresos_2024.xlsx
+└── scripts/
+    └── ejercicio_guiado.R
+    └── ejercicio_grupal.R
+    
+```
+
+Así podrán usar **rutas relativas** (`"data/archivo.xlsx"`) sin necesidad de `setwd()`.
+:::
+
+
+# Ejercicio Guiado
+
+En esta actividad aprenderemos a importar distintos formatos de archivos frecuentemente utilizados en proyectos de análisis de datos. Para ello utilizaremos los archivos del dataset `USArrests` contenidos en la carpeta `/data`,  un archivo espacial de las comunas de la Región Metropolitana (`comunas_rm`) y datos de casos policiales del CEAD (`homicidios_anuales_cead`).
+
+## Pregunta 1
+
+Cargue cada uno de los archivos `USArrests` en la carpeta `/data` y asígnelos a un objeto cuyo nombre corresponda al nombre del archivo (por ejemplo, USArrests1, USArrests2, etc.).
+
+```{r}
+USArrests1 <- read_csv('data/USArrests1.csv')
+USArrests2 <- read_csv2('data/USArrests2.csv')
+USArrests3 <- read_dta('data/USArrests3.dta')
+USArrests4 <- read_sav('data/USArrests4.sav')
+USArrests5 <- read_delim('data/USArrests5.txt', delim = " ")
+USArrests6 <- read_tsv('data/USArrests6.txt')
+USArrests7 <- read_excel('data/USArrests7.xlsx')
+USArrests8 <- read_rds('data/USArrests8.rds')
+```
+
+## Pregunta 2
+
+Cargue el archivo shape correspondiente a la geometría espacial de las comunas de la Región Metropolitana y muestre un mapa sencillo de los límites comunales usando `ggplot()` y `geom_sf()`. ¿De los 4 archivos que comienzan con el nombre `comunas_rm` cuál es la extensión que debe cargar? 
+
+```{r}
+comunas_rm <- st_read('data/comunas_rm.shp')
+ggplot(comunas_rm) +
+  geom_sf()
+```
+
+## Pregunta 3
+El archivo `homicidios_anuales_cead.xlsx` contiene información sobre casos policiales de homicidios desagregados por unidad territorial.
+
+Intente cargar el archivo utilizando únicamente la función `read_excel()` y asígnelo al objeto `homicidios_cead`.
+
+```{r}
+homicidios_cead <- read_excel('data/homicidios_anuales_cead.xlsx')
+```
+
+## Pregunta 4
+
+Abra nuevamente el archivo `homicidios_anuales_cead.xlsx` e identifique el rango exacto de celdas que contiene la tabla de datos.
+
+Posteriormente, utilice el argumento `range` de la función `read_excel()` para importar únicamente la información relevante.
+
+Asigne el resultado al objeto `homicidios_cead2`.
+
+```{r}
+homicidios_cead2 <- read_excel('data/homicidios_anuales_cead.xlsx',range = 'A4:W426')
+```
+
+------------------------------------------------------------------------
+
+# Ejercicio Grupal
+
+En esta parte de la guía pondremos en práctica, **en grupos de 4 a 6 personas**, los contenidos de la **Clase 1** del módulo: trabajar de forma ordenada en un proyecto, **importar** bases de datos y **cruzarlas** con `left_join()`. El problema que abordaremos es uno muy común en el análisis de políticas públicas: La información que necesitamos rara vez está en una sola tabla.
+
+## Introducción
+
+En este ejercicio trabajaremos con los resultados de población comunal del **Censo 2024** a partir del archivo denominado [*Población censada por sexo y edad en grupos quinquenales*]("https://censo2024.ine.gob.cl/resultados/") de la Región Metropolitana y, por otro, la **tasa de pobreza comunal** 2024 a partir de las estimaciones que realiza el Ministerio de Desarrollo Social y Familia. El objetivo es **construir una única base de datos** con la **población censada** de cada comuna y su **tasa de pobreza**.
+
+::: callout-note
+## Modalidad de trabajo
+
+-   Trabajen en **grupos de 4 a 6 personas** en las *breakout rooms* de zoom.
+-   Tiempo estimado: **20 a 30 minutos**.
+-   Designen a una persona que **comparta pantalla** y vaya escribiendo el código; el resto acompaña la resolución del ejercicio probando en su computador local y discute.
+-   Intenten primero resolver cada parte y solo entonces revisen la **pauta** desplegable.
+:::
+
+## Funciones que utilizarás
+
+Un repaso breve de las herramientas de la clase que necesitarás:
+
+-   **`read_excel("ruta.xlsx")`**: Importa un archivo Excel a un *data frame*.
+-   **`clean_names()`** (de `janitor`): Estandariza los nombres de columna a minúsculas, sin tildes ni espacios, separados por guion bajo. Conviene aplicarla justo después de importar. Por ejemplo:
+
+```{r}
+#| code-fold: false
+#| eval: true
+tibble(`Código Comuna` = 13101, `Población 2024` = 503147) |>
+  clean_names()
+```
+
+-   **`left_join(x, y, by = "llave")`**: conserva **todas** las filas de `x` y le agrega las columnas de `y` según la columna `llave` que ambas comparten. Si la llave se llama distinto en cada tabla, se usa `join_by(llave_x == llave_y)`.
+-   Funciones de inspección y verificación: `head()`, `glimpse()`, `summary()`.
+
+------------------------------------------------------------------------
+
+### Pregunta 1: Importar archivo de pobreza comunal {#sec-p1}
+
+Importe el archivo excel con la estimación de pobreza comunal `SAE_ingresos_2024.xlsx` sin ninguna limpieza o especificación adicional desde la carpeta `data/` y asígnelo al objeto `pobreza_2024`. ¿Cuántas observaciones tiene el archivo? ¿Está bien estructurada la base de datos tal y como la cargó, por ejemplo, en el nombre de las variables? Analice qué puede estar fallando abriendo el visor del objeto (haciendo clic o ejecutando `view(pobreza_2024)`) y/o abriendo el archivo en Microsoft Excel.
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+pobreza_2024 <- read_excel("data/SAE_ingresos_2024.xlsx")
+glimpse(pobreza_2024)
+view(pobreza_2024)
+```
+
+Recuerde que la ruta es **relativa al proyecto**: como los archivos están en `data/`, basta con escribir `"data/SAE_ingresos_2024.xlsx"`. Es sumamente importante notar que deben especificar el nombre de ruta-archivo junto a **SU EXTENSIÓN** (ej: `.xlsx`, `.txt`, etc.) 
+
+En este caso, el archivo tiene 354 filas y 10 columnas, cuyos nombres están mal definidos. Además, sabemos que en Chile hay 345 comunas (sin considerar la antártica), por lo que hay más filas que comunas, lo que nos indica que algo no está bien estructurado.
+:::
+
+### Pregunta 2: Definir el rango de importación {#sec-p2}
+
+Abra el archivo Excel `SAE_ingresos_2024.xlsx` y defina el rango correcto de celdas que debe importar en `R`. Sobrescriba el objeto `pobreza_2024` con esta nueva definición ¿cuántas observaciones tiene ahora su dataframe ordenado?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+pobreza_2024 <- read_excel("data/SAE_ingresos_2024.xlsx",
+                           range = "A3:J348")
+glimpse(pobreza_2024)
+```
+
+Al abrir el archivo excel, vemos que la tabla de datos comienza en la celda `A3` donde aparece el nombre de la primera variable (`Código`), y termina en la celda `J348` correspondiente a la variable `Tipo de estimación SAE (***)` para la comuna de la fila 348, correspondiente a *San Nicolás*
+:::
+
+### Pregunta 3: Limpiar nombres {#sec-p3}
+
+Limpie los nombres del objeto `pobreza_2024` quitando mayúsculas, tildes y espacios. Sobrescríbalo con el mismo nombre para guardar estos cambios. ¿Cómo se llama ahora la variable que contiene el código único territorial de la comuna?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+pobreza_2024 <- pobreza_2024 |> 
+  clean_names()
+glimpse(pobreza_2024)
+```
+
+Ocupamos la función `clean_names()` para hacer la limpieza de los nombres y vemos que ahora la variable del código único territorial se llama `codigo` en lugar de `Código`. Esto simplifica la sintaxis y facilita la escritura y ejecución de código.
+:::
+
+### Pregunta 4: Importar población comunal {#sec-p4}
+
+Abra en Excel el archivo de población comunal  `D1_Poblacion-censada-por-sexo-y-edad-en-grupos-quinquenales.xlsx` desde la carpeta `data/` y observe la estructura de sus hojas. Importe la hoja: ***2. Población censada por sexo y razón hombre-mujer, según comuna*** esta vez utilizando los argumentos `skip` y `n_max` de `read_excel()` y guarde estos datos en el objeto `poblacion_2024`. Asegúrese de limpiar los nombres de las variables y guardarlo en el mismo objeto ¿Cuántas observaciones tiene el archivo? ¿A qué se debe la diferencia con los datos comunales de pobreza si tienen el mismo nivel de observación?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+poblacion_2024 <- read_excel(
+  "data/D1_Poblacion-censada-por-sexo-y-edad-en-grupos-quinquenales.xlsx",
+  sheet = "2",  #también puede ser sheet = 3, indicando que corresponde a la tercera hoja
+  skip = 3, #para saltar las primeras 3 filas y leer desde la fila 4
+  n_max = 347 #última fila correspondiente a Torres del Paine
+  ) |> 
+  clean_names()
+
+glimpse(poblacion_2024)
+```
+
+Notar que en este dataset hay 347 filas porque se añaden dos observaciones más: *País* representando la población nacional y *Antártica* que no estaba dentro de la estimación de pobreza comunal.  
+:::
+
+### Pregunta 5: Cruce de pobreza con población censada {#sec-p5}
+
+Cree un nuevo objeto llamado `poblacion_pobreza_2024` añadiendo al objeto `pobreza_2024` la población censada, N° de hombres, N° de mujeres y razón hombre-mujer además del resto de información administrativa de región provincia y comuna. Para ello, utilice la familia de funciones `*_join()` y defina correctamente la llave de cruce a partir del código único territorial ¿Cuántas observaciones debiese esperar que obtenga con este cruce y cuántas efectivamente obtiene? Ocupe la función `summary()` sobre la variable `poblacion_censada` de este nuevo objeto y responda ¿Cuántos valores faltantes o `NA` observa?
+  
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+poblacion_pobreza_2024 <- left_join(pobreza_2024, poblacion_2024, join_by(codigo == codigo_comuna))
+
+glimpse(poblacion_pobreza_2024)
+
+summary(poblacion_pobreza_2024$poblacion_censada)
+```
+
+Es importante notar que el enunciado dice que al objeto de `pobreza_2024` hay que añadirle información, por lo que es un `left_join()` entre pobreza y población (en ese orden). Por ello, si el cruce está bien realizado con la información que tenemos, debiésemos tener la misma cantidad de filas del dataset base de pobreza (es decir, 345 comunas), ya que *al dataset de pobreza queremos añadirle nuevas variables*. 
+
+::: callout-warning
+### El orden importa
+
+Pusimos `pobreza_2024` a la izquierda **a propósito**: `left_join()` conserva todas las filas de la tabla izquierda. Así nos aseguramos de quedarnos con las **345 comunas con datos de pobreza** y agregarles su población. Si hubiéramos puesto `poblacion_2024` a la izquierda, el resultado tendría las 347 observaciones.
+:::
+
+Una vez definido el orden, se debe identificar la llave de cruce, correspondiente al código de las comunas. Es importante notar que el nombre de esta variable difiere entre un dataset y otro, por lo que para asegurar que el cruce se realice por las variables que definimos como llave, usamos la función `join_by()` para especificar las llaves.
+
+Este tipo de cruces es extremadamente frecuente en el sector público. Por ejemplo, para analizar si las comunas con mayor pobreza presentan también mayores tasas de victimización, menor acceso a servicios públicos o distintos resultados educativos, es necesario integrar información proveniente de distintas fuentes mediante una llave común.
+:::
+
+### Pregunta 6: Cruce por nombre de comuna {#sec-p6}
+
+Intente hacer el mismo cruce de la pregunta anterior pero ahora usando como llave el nombre de la comuna y guárdelo en un objeto llamado `poblacion_pobreza_2024_v2`. ¿La cantidad de observaciones son las mismas que en la pregunta anterior? ¿Y los valores faltantes de la variable `poblacion_censada`? Dé un ejemplo de por qué el cruce puede haber fallado para una comuna en particular
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+poblacion_pobreza_2024_v2 <- left_join(pobreza_2024, poblacion_2024, join_by(nombre_comuna == comuna))
+
+glimpse(poblacion_pobreza_2024_v2)
+
+summary(poblacion_pobreza_2024_v2$poblacion_censada)
+```
+
+Vemos que el cruce falla en 17 comunas (17 valores `NA`). Al abrir la base en el visor y ordenar por código de comuna vemos que, por ejemplo en la base de pobreza la comuna 16207 está escrita como *"Tre**g**uaco"* mientras que ese código en la base de datos de población se escribe como *"Tre**h**uaco"*.
+
+Esto refuerza la importancia de utilizar códigos o identificadores únicos como llave de cruce, en lugar de nombres que pueden contener errores de digitación o diferencias de escritura.
+:::
+
+### Pregunta 7: Guardar datos {#sec-p7}
+
+Cree una carpeta que se llame `clean` dentro de `data` y guarde el objeto `poblacion_pobreza_2024` en formato `.xlsx` y `.parquet` asignándole un nombre que usted defina como apropiado ¿cuál de los dos archivos pesa menos? 
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+write.xlsx(poblacion_pobreza_2024, 'data/clean/pobreza_pob_censo_2024.xlsx')
+write_parquet(poblacion_pobreza_2024, 'data/clean/pobreza_pob_censo_2024.parquet')
+```
+
+El archivo en formato `parquet` pesa menos que el excel, aunque ambos tamaños son considerablemente bajos. Sin embargo, al trabajar con datos considerablemente más pesados, el formato `parquet` puede significar una ventaja en términos de rapidez de lectura.
+:::
+
+------------------------------------------------------------------------
+
+# Resumen de Funciones Utilizadas
+
+| Función | Paquete | Descripción |
+|---------------------|-----------------|------------------------------|
+| `read_excel(path)` | readxl | Importa un archivo Excel (`.xlsx`/`.xls`) |
+| `st_read(path)` | sf | Importa un archivo espacial (`.shp`/`.gpkg`) |
+| `clean_names()` | janitor | Estandariza los nombres de columna |
+| `head()` | base R | Muestra las primeras filas de un objeto |
+| `glimpse()` | dplyr | Vista compacta de la estructura del *data frame* |
+| `left_join(x, y, by)` | dplyr | Une `y` a `x` conservando todas las filas de `x` |
+| `join_by(a == b)` | dplyr | Especifica la llave cuando tiene distinto nombre |
+| `summary()` | base R | Resumen estadístico y contador de NA's |
+| `write.xlsx()` | openxlsx | Guardar datos en formato Excel |
+| `write_parquet()` | arrow | Cargary guardar datos en formato parquet |
+
+------------------------------------------------------------------------
+
+::: callout-note
+## ¿Hacia dónde seguimos?
+
+Acaban de construir una base limpia y cruzada, lista para trabajar. En la **Clase 2** aprenderemos a **transformarla** (filtrar, ordenar, crear variables y calcular estadísticas por grupo con `dplyr`), y en la **Clase 3** podremos visualizar esta información mediante gráficos o mapas de la RM usando el archivo espacial de las comunas.
+:::
