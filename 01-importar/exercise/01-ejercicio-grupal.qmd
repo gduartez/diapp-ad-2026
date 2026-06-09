@@ -1,0 +1,130 @@
+---
+title: "Guía de Ejercicios N°1 - Módulo 2"
+subtitle: "Importar Datos con R"
+author: "Prof. Gabriel Duarte Zúñiga"
+institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
+date: "2026-06-09"
+lang: es
+format:
+  html:
+    toc: true
+    toc-title: "Contenidos"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+    theme: [flatly, styles_ex.scss]
+    highlight-style: github
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    df-print: paged
+    fig-align: center
+    fig-width: 8
+    fig-height: 5
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+  message: false
+bibliography: references.bib
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(openintro)
+
+theme_set(theme_classic(base_size = 13))
+```
+
+------------------------------------------------------------------------
+
+# Introducción
+
+La presente guía de ejercicios permite aplicar los conceptos abordados en la **Clase 2 de Nivelación Estadística** del DIAPP 2026. Su propósito es afianzar, mediante la práctica autónoma en `R`, los conocimientos aprendidos sobre probabilidad e inferencia estadística.
+
+El dataset principal de los ejercicios finales corresponde a **`bdims`**, disponible en el paquete `openintro` de `R`. Este conjunto de datos contiene **507 mediciones corporales** de adultos físicamente activos [@heinz2003]. En particular, nos centraremos en las siguientes variables:
+
+| Variable | Descripción                      |
+|----------|----------------------------------|
+| `sex`    | Sexo: `1` (hombre) o `0` (mujer) |
+| `hgt`    | Estatura, en centímetros         |
+| `wgt`    | Peso, en kilogramos              |
+| `age`    | Edad, en años                    |
+
+::: callout-tip
+## Explorar la documentación del dataset
+
+Para revisar el detalle completo de todas las variables del dataset, puede consultar su documentación oficial ejecutando en la consola de R:
+
+``` r
+help(bdims)
+```
+:::
+
+::: callout-important
+## Antes de comenzar
+
+Asegúrese de tener instalados los siguientes paquetes. En caso de no tenerlos, puede instalarlos ejecutando `install.packages("nombre_paquete")` en la consola de R.
+
+```{r}
+#| eval: false
+install.packages("tidyverse")
+install.packages("openintro")
+```
+
+Una vez instalados, cárguelos al inicio de su script:
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(openintro)
+```
+:::
+
+::: callout-note
+## Referencia bibliográfica de los ejercicios
+
+Varias de las preguntas de esta guía están basados o adaptados de los ejercicios impares del libro **OpenIntro: Introduction to Modern Statistics (2a ed.)** [@çetinkaya-rundel2024], disponible en: <https://openintro-ims.netlify.app/>. Los números de ejercicio y capítulos de referencia se indican en cada pregunta. Las respuestas a los ejercicios impares del libro pueden encontrarse en el **Apéndice A** del mismo.
+:::
+
+------------------------------------------------------------------------
+
+# Ejercicios
+
+### Pregunta 1:  {#sec-p1}
+
+Importe la base de datos 
+### Pregunta 2: {#sec-p1}
+
+### Pregunta 3: Servicios de telecomunicaciones {#sec-p1}
+
+### Pregunta 4: Servicios de telecomunicaciones {#sec-p1}
+
+## Resumen de Funciones Utilizadas
+
+A continuación se presenta un resumen de las principales funciones de `R` empleadas en esta guía:
+
+| Función | Paquete | Descripción |
+|---------------------|---------------------|------------------------------|
+| `mean(condición)` | base R | Proporción de casos que cumplen la condición (probabilidad empírica) |
+| `sample()` | base R | Muestreo aleatorio con o sin reemplazo |
+| `set.seed()` | base R | Fija la semilla para reproducibilidad |
+| `dbinom(x, size, prob)` | stats | pmf de la binomial: $P(X = x)$ |
+| `pbinom(x, size, prob)` | stats | cdf de la binomial: $P(X \leq x)$ |
+| `pnorm(x, mean, sd)` | stats | cdf de la normal: $P(X \leq x)$ |
+| `qnorm(p, mean, sd)` | stats | Cuantil de la normal: valor que deja probabilidad $p$ a la izquierda |
+| `t.test(x)` | stats | IC y prueba t para la media de una muestra |
+| `t.test(y ~ x, data)` | stats | Prueba t de Welch para dos muestras independientes |
+| `qt(p, df)` | stats | Cuantil de la distribución *t* con `df` grados de libertad |
+| `geom_boxplot()` | ggplot2 | Gráfico de caja |
+
+------------------------------------------------------------------------
+
+::: callout-note
+## Bibliografía de Referencia
+
+- Çetinkaya-Rundel, M. & Hardin, J. (2024). *Introduction to Modern Statistics* (2a ed.). OpenIntro. Disponible en: <https://openintro-ims.netlify.app/>
+- Devore, J. L. (2016). *Probabilidad y estadística para ingeniería y ciencias* (9a ed.). CENGAGE Learning.
+- Agresti, A. (2018). *Statistical Methods for the Social Sciences* (5a ed.). Pearson.
+:::

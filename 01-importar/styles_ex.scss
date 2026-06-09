@@ -1,0 +1,31 @@
+/*-- scss:defaults --*/
+@import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap';
+
+$font-family: "Atkinson Hyperlegible", sans-serif;
+
+// Paleta cálida
+//$body-bg:    #FBF6EE;   // fondo crema cálido
+//$body-color: #3A332C;   // texto marrón oscuro suave
+//$link-color: #B5651D;   // terracota
+
+/*-- scss:rules --*/
+body {
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+// Texto justificado
+p, li {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+h1, h2, h3, h4 {
+  font-family: $headings-font-family;
+  letter-spacing: -0.01em;
+}
+
+.callout, pre.sourceCode, .cell-output {
+  border-radius: 10px;
+}

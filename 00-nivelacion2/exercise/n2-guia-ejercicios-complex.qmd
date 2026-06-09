@@ -1,0 +1,723 @@
+---
+title: "Guía de Ejercicios N°2 - Nivelación Estadística"
+subtitle: "Probabilidad e Inferencia Estadística con R"
+author: "Prof. Gabriel Duarte Zúñiga"
+institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
+date: "2026-06-04"
+lang: es
+format:
+  html:
+    toc: true
+    toc-title: "Contenidos"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+    theme: [united, styles_ex.scss]
+    highlight-style: github
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    df-print: paged
+    fig-align: center
+    fig-width: 8
+    fig-height: 5
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(openintro)
+
+theme_set(theme_classic(base_size = 13))
+```
+
+---
+
+## Introducción
+
+La presente guía de ejercicios complementa los contenidos abordados en la
+**Clase 2 de Nivelación Estadística** del programa DIAPP 2026. Su propósito
+es afianzar, mediante la práctica autónoma en `R`, las habilidades
+desarrolladas en la sesión: probabilidad básica, distribuciones de
+probabilidad, inferencia estadística y prueba de hipótesis.
+
+Para estos ejercicios utilizaremos el dataset **`bdims`**, disponible en el
+paquete `openintro` de `R`. Este conjunto de datos fue recopilado por Grete
+Heinz y Louis J. Peterson y contiene **507 mediciones corporales** de adultos
+físicamente activos.
+
+En particular, trabajaremos con las siguientes variables:
+
+| Variable | Descripción |
+|----------|-------------|
+| `sex`    | Sexo: `"f"` (mujer) o `"m"` (hombre) |
+| `hgt`    | Estatura, en centímetros |
+| `wgt`    | Peso, en kilogramos |
+| `age`    | Edad, en años |
+
+::: {.callout-tip}
+## Explorar la documentación del dataset
+
+Para revisar el detalle completo de todas las variables del dataset, puede
+consultar su documentación oficial ejecutando en la consola de R:
+
+```r
+help(bdims)
+```
+:::
+
+::: {.callout-important}
+## Antes de comenzar
+
+Asegúrese de tener instalados los siguientes paquetes. En caso de no tenerlos,
+puede instalarlos ejecutando `install.packages("nombre_paquete")` en la consola
+de R.
+
+```{r}
+#| eval: false
+install.packages("tidyverse")
+install.packages("openintro")
+```
+
+Una vez instalados, cárguelos al inicio de su script:
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(openintro)
+```
+:::
+
+::: {.callout-note}
+## Referencia bibliográfica de los ejercicios
+
+Varios de los ejercicios de esta guía están inspirados o adaptados de los
+ejercicios impares (con respuesta) de **OpenIntro: Introduction to Modern
+Statistics (2a ed.)**, de Çetinkaya-Rundel & Hardin, disponible en:
+<https://openintro-ims.netlify.app/>. Los números de ejercicio y capítulos de
+referencia se indican en cada pregunta. Las respuestas a los ejercicios impares
+del libro pueden encontrarse en el **Apéndice A** del mismo.
+:::
+
+---
+
+## Ejercicios
+
+### Pregunta 1: Probabilidad como Frecuencia Relativa {#sec-p1}
+
+::: {.callout-note}
+## Referencia IMS
+Ejercicio inspirado en los conceptos del Capítulo 3 de IMS (Fundamentos de
+Probabilidad). Para práctica adicional, véanse los ejercicios impares de ese
+capítulo.
+:::
+
+Usando el dataset `bdims`, responda las siguientes preguntas, interpretando
+las **proporciones observadas como probabilidades** bajo el enfoque
+frecuentista.
+
+a) ¿Qué proporción de individuos del dataset son hombres (`sex == "f"`)? Interprete este número como una probabilidad.
+b) ¿Cuál es la probabilidad de que un individuo seleccionado al azar mida **más de 180 cm**?
+c) Utilizando la **regla del complemento**, calcule la probabilidad de que un individuo mida **180 cm o menos**.
+d) Verifique el resultado de (c) calculándolo directamente desde los datos.
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+**A)**
+
+```{r}
+# a) Proporción de hombres = P(sex==1)
+p_fem <- mean(bdims$sex == 1)
+p_fem
+```
+
+La proporción de hombres en el dataset es de aproximadamente **0.487**, es
+decir, un 48.7%. Desde el enfoque frecuentista, si seleccionáramos aleatoriamente
+a un individuo de esta muestra, la probabilidad de que sea hombre sería de
+aproximadamente 0.49.
+
+**B)**
+
+```{r}
+# b) P(hgt > 180)
+p_alto <- mean(bdims$hgt > 180)
+p_alto
+```
+
+**C)**
+
+```{r}
+# c) P(hgt <= 180) por complemento
+1 - p_alto
+```
+
+**D)**
+
+```{r}
+# d) Verificación directa
+mean(bdims$hgt <= 180)
+```
+
+Los resultados de (c) y (d) deben coincidir exactamente, ya que
+$P(A) + P(A^c) = 1$. Este es uno de los axiomas fundamentales de la
+probabilidad.
+:::
+
+---
+
+### Pregunta 2: Intersección, Unión y Eventos Mutuamente Excluyentes {#sec-p2}
+
+Defina los siguientes dos eventos a partir de `bdims`:
+
+- **Evento A**: el individuo mide **más de 175 cm** (`hgt > 175`).
+- **Evento B**: el individuo es **mujer** (`sex == 0`).
+
+Calcule las siguientes probabilidades y responda las preguntas conceptuales:
+
+a) $P(A)$ y $P(B)$.
+b) $P(A \cap B)$: probabilidad de ser alta **y** mujer simultáneamente.
+c) $P(A \cup B)$: probabilidad de ser alta **o** mujer (o ambas), usando la fórmula de adición: $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.
+d) Verifique el resultado de (c) calculándolo directamente con el operador lógico `|`.
+e) ¿Son los eventos A y B **mutuamente excluyentes**? ¿Por qué?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+A <- bdims$hgt > 175
+B <- bdims$sex == 0
+
+# a) Probabilidades individuales
+p_A  <- mean(A)
+p_B  <- mean(B)
+cat("P(A) =", round(p_A, 3), "\nP(B) =", round(p_B, 3))
+```
+
+```{r}
+# b) Intersección: P(A ∩ B)
+p_AB <- mean(A & B)
+cat("P(A ∩ B) =", round(p_AB, 3))
+```
+
+```{r}
+# c) Unión por fórmula de adición
+p_AuB_formula <- p_A + p_B - p_AB
+cat("P(A ∪ B) por fórmula =", round(p_AuB_formula, 3))
+```
+
+```{r}
+# d) Verificación directa
+p_AuB_directo <- mean(A | B)
+cat("P(A ∪ B) directo    =", round(p_AuB_directo, 3))
+```
+
+Ambos resultados deben coincidir. **e)** Los eventos A y B **no son
+mutuamente excluyentes**, ya que $P(A \cap B) > 0$: existen mujeres que miden
+más de 175 cm en el dataset. Dos eventos son mutuamente excluyentes solo
+si no pueden ocurrir simultáneamente, es decir, si $A \cap B = \emptyset$.
+:::
+
+---
+
+### Pregunta 3: Independencia de Eventos {#sec-p3}
+
+Utilice nuevamente los eventos definidos en la Pregunta 2:
+
+- **Evento A**: el individuo mide **más de 172 cm** (`hgt > 172`).
+- **Evento B**: el individuo es **mujer** (`sex == "f"`).
+
+a) Calcule $P(A)$, $P(B)$ y $P(A \cap B)$.
+b) Si los eventos fueran independientes, ¿cuánto debería valer $P(A \cap B)$? Calcule $P(A) \times P(B)$.
+c) Compare el valor obtenido en (b) con el $P(A \cap B)$ real. ¿Son los eventos independientes? ¿Qué significa sustantivamente este resultado?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+A2 <- bdims$hgt > 172
+B2 <- bdims$sex == 0
+
+p_A2  <- mean(A2)
+p_B2  <- mean(B2)
+p_A2B2 <- mean(A2 & B2)
+
+cat("P(A)      =", round(p_A2, 3))
+cat("\nP(B)      =", round(p_B2, 3))
+cat("\nP(A ∩ B)  =", round(p_A2B2, 3))
+cat("\nP(A)×P(B) =", round(p_A2 * p_B2, 3))
+```
+
+Si los eventos fueran independientes, se cumpliría que
+$P(A \cap B) = P(A) \times P(B)$. En la práctica, sin embargo,
+$P(A \cap B) < P(A) \times P(B)$: la probabilidad de ser alta **y** mujer
+es menor de lo que se esperaría bajo independencia. Esto indica que los
+eventos **no son independientes**: el sexo afecta la probabilidad de ser alto.
+Dicho de otro modo, saber que un individuo es mujer reduce la probabilidad de
+que mida más de 172 cm. Esto tiene sentido dado que las mujeres tienden a ser
+más bajas en promedio en esta muestra.
+:::
+
+---
+
+### Pregunta 4: Distribución Binomial {#sec-p4}
+
+En el dataset `bdims`, aproximadamente el **48.7% de los individuos son
+hombres**. Suponga que se seleccionan aleatoriamente **8 personas** de una
+población con las mismas características. Sea $X$ = número de hombres
+seleccionados.
+
+a) ¿Qué distribución sigue $X$? Enuncie sus parámetros.
+b) Calcule $P(X = 3)$: probabilidad de obtener exactamente 3 mujeres.
+c) Calcule $P(X \leq 2)$: probabilidad de obtener **a lo sumo** 2 mujeres.
+d) Calcule $P(X \geq 5)$: probabilidad de obtener **al menos** 5 mujeres. Use el complemento.
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+# Parámetros
+p <- mean(bdims$sex == 1)   # proporción empírica ≈ 0.487
+n <- 8
+
+cat("p =", round(p, 3), " | n =", n)
+```
+
+$X \sim \text{Binomial}(n = 8,\ p \approx 0.487)$. Se cumplen las cuatro
+condiciones: número fijo de ensayos ($n = 8$), resultado dicotómico (mujer/no
+mujer), independencia entre selecciones, y probabilidad constante $p$.
+
+```{r}
+# b) P(X = 3): exactamente 3 hombres
+dbinom(3, size = n, prob = p)
+```
+
+```{r}
+# c) P(X <= 2): a lo sumo 2 hombres
+pbinom(2, size = n, prob = p)
+```
+
+```{r}
+# d) P(X >= 5) = 1 - P(X <= 4): al menos 5 hombres
+1 - pbinom(4, size = n, prob = p)
+```
+
+---
+
+### Pregunta 5: Distribución Normal y `pnorm()` {#sec-p5}
+
+La estatura de los individuos en `bdims` sigue aproximadamente una
+distribución normal. Calcule su media ($\mu$) y desviación estándar ($\sigma$)
+y utilícelas para responder:
+
+a) Asumiendo $X \sim \mathcal{N}(\mu, \sigma^2)$, calcule $P(X < 160)$: probabilidad de medir **menos de 160 cm**.
+b) Calcule $P(X > 185)$: probabilidad de medir **más de 185 cm**. Use el argumento `lower.tail = FALSE`.
+c) Calcule $P(163 \leq X \leq 179)$: probabilidad de medir **entre 163 y 179 cm**.
+d) **Verificación empírica de la Regla Empírica**: ¿qué proporción de individuos cae dentro de $\mu \pm 1\sigma$ en los datos reales? ¿Es consistente con el 68% predicho por la Regla Empírica?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+mu    <- mean(bdims$hgt)
+sigma <- sd(bdims$hgt)
+cat("μ =", round(mu, 2), "cm  |  σ =", round(sigma, 2), "cm")
+```
+
+```{r}
+# a) P(X < 160)
+pnorm(160, mean = mu, sd = sigma)
+```
+
+```{r}
+# b) P(X > 185)
+pnorm(185, mean = mu, sd = sigma, lower.tail = FALSE)
+```
+
+```{r}
+# c) P(163 <= X <= 179)
+pnorm(179, mean = mu, sd = sigma) - pnorm(163, mean = mu, sd = sigma)
+```
+
+```{r}
+# d) Verificación empírica: ¿qué % cae en [μ - σ, μ + σ]?
+mean(abs(bdims$hgt - mu) <= sigma)
+```
+
+La proporción empírica dentro de $\mu \pm 1\sigma$ es muy cercana al **68%**
+predicho por la Regla Empírica, confirmando que la distribución de la
+estatura en `bdims` se aproxima bien a una normal. Note además que (c) da
+un resultado cercano al 60%: el intervalo [163, 179] no es exactamente
+$\mu \pm 1\sigma$, lo que explica la diferencia.
+:::
+
+---
+
+### Pregunta 6: Puntaje Z e Interpretación {#sec-p6}
+
+::: {.callout-note}
+## Referencia IMS
+Ejercicio relacionado con los conceptos de estandarización y puntaje Z del
+Capítulo 13 de IMS (Sección 13.2, Normal Distribution). Para práctica
+adicional véase el ejercicio impar 13.5.
+:::
+
+Usando los parámetros poblacionales calculados en la Pregunta 5:
+
+a) Calcule el **puntaje Z** de una persona que mide **157 cm**.
+b) Interprete el resultado: ¿cuántas desviaciones estándar se aleja esa persona de la media? ¿Está por encima o por debajo?
+c) Usando `pnorm()` aplicado directamente al puntaje Z (sin especificar `mean` ni `sd`), calcule la probabilidad acumulada correspondiente. ¿Cuál es la equivalencia entre `pnorm(z)` y `pnorm(157, mu, sigma)`?
+d) Usando `qnorm()`, encuentre la estatura correspondiente al **percentil 90** de la distribución.
+e) ¿Qué valor de Z corresponde al percentil 97.5? ¿Por qué este valor (≈ 1.96) es importante en inferencia estadística?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+mu    <- mean(bdims$hgt)
+sigma <- sd(bdims$hgt)
+
+# a-b) Puntaje Z para 157 cm
+z <- (157 - mu) / sigma
+cat("z =", round(z, 3))
+```
+
+La persona que mide 157 cm se encuentra aproximadamente **1.5 desviaciones
+estándar por debajo** de la media. El signo negativo indica que el valor
+está por debajo de $\mu$.
+
+```{r}
+# c) P(X < 157) usando z estandarizado vs. usando media y sd
+pnorm(z)                        # equivalente a
+pnorm(157, mean = mu, sd = sigma) # ambos deben ser iguales
+```
+
+Ambas expresiones son matemáticamente equivalentes porque la
+estandarización ($z = \frac{x - \mu}{\sigma}$) transforma la distribución
+original a una $\mathcal{N}(0, 1)$, para la cual `pnorm()` trabaja por
+defecto cuando no se especifican argumentos.
+
+```{r}
+# d) Percentil 90: estatura correspondiente
+qnorm(0.90, mean = mu, sd = sigma)
+```
+
+```{r}
+# e) Z para el percentil 97.5
+qnorm(0.975)
+```
+
+El valor $z \approx 1.96$ corresponde al percentil 97.5 de la normal estándar.
+Es crucial en inferencia porque implica que el 95% de la distribución queda
+dentro de $\pm 1.96$ desviaciones estándar de la media. Este es el **valor
+crítico** que se usa para construir los intervalos de confianza al 95%.
+:::
+
+---
+
+### Pregunta 7: Error Estándar y Tamaño Muestral {#sec-p7}
+
+::: {.callout-note}
+## Referencia IMS
+Ejercicio relacionado con el Capítulo 13, Sección 13.3 (Quantifying variability
+of a statistic, Standard Error). Para práctica adicional, véase el ejercicio
+impar 13.7 de IMS.
+:::
+
+Usando la desviación estándar de la estatura en `bdims` como referencia
+($\sigma$):
+
+a) Calcule el **error estándar** ($SE = \sigma / \sqrt{n}$) para muestras de tamaño $n = 25$, $n = 100$ y $n = 400$.
+b) ¿Cuántas veces disminuye el SE cuando el tamaño muestral se **cuadruplica** (de 25 a 100)? ¿Y de 100 a 400? ¿Qué patrón observa?
+c) Construya una pequeña tabla o gráfico que muestre SE en función de $n$ para los valores de $n$ pedidos en (a) más $n = 507$ (el tamaño real de `bdims`).
+d) Interprete: si un investigador quiere reducir su error estándar **a la mitad**, ¿qué debe hacer con el tamaño de su muestra?
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+sigma <- sd(bdims$hgt)
+
+# a) SE para distintos tamaños muestrales
+se_25  <- sigma / sqrt(25)
+se_100 <- sigma / sqrt(100)
+se_400 <- sigma / sqrt(400)
+se_507 <- sigma / sqrt(507)   # tamaño real de bdims
+
+cat("SE(n=25)  =", round(se_25,  3), "cm\n")
+cat("SE(n=100) =", round(se_100, 3), "cm\n")
+cat("SE(n=400) =", round(se_400, 3), "cm\n")
+cat("SE(n=507) =", round(se_507, 3), "cm\n")
+```
+
+```{r}
+# b) Ratios
+cat("Ratio se_100/se_25  =", round(se_100 / se_25, 3), "(cuadruplicar n → SE/2)\n")
+cat("Ratio se_400/se_100 =", round(se_400 / se_100, 3), "(cuadruplicar n → SE/2)\n")
+```
+
+```{r}
+# c) Tabla resumen
+tibble(
+  n  = c(25, 100, 400, 507),
+  SE = round(c(se_25, se_100, se_400, se_507), 3)
+)
+```
+
+**d)** Para reducir el SE a la mitad, es necesario **cuadruplicar** el tamaño
+muestral. Esto se deriva directamente de la fórmula: si $n$ se multiplica por
+4, $\sqrt{n}$ se multiplica por 2 y, por lo tanto, $SE = \sigma/\sqrt{n}$ se
+divide por 2. La precisión de la estimación crece con el cuadrado del tamaño
+muestral: ¡conseguir el doble de precisión cuesta cuatro veces más datos!
+:::
+
+---
+
+### Pregunta 8: Intervalo de Confianza {#sec-p8}
+
+::: {.callout-note}
+## Referencia IMS
+Ejercicio adaptado de IMS 19.1 y 19.3 (Capítulo 19, *Inference for a single
+mean*), que propone construir e interpretar intervalos de confianza para la
+media con la distribución *t*.
+:::
+
+Construya un **intervalo de confianza al 95%** para la estatura promedio de
+la población representada por `bdims`, tanto manualmente como con `t.test()`.
+
+a) Calcule $\bar{x}$, $s$, $n$ y el error estándar.
+b) Obtenga el valor crítico $t^*$ para un IC al 95% con los grados de libertad correspondientes: `qt(0.975, df = n - 1)`.
+c) Calcule los límites del intervalo: $\bar{x} \pm t^* \times SE$.
+d) Verifique el resultado usando `t.test(bdims$hgt)$conf.int`.
+e) Redacte la **interpretación correcta** del intervalo obtenido. A continuación se presentan dos afirmaciones: indique cuál es correcta y explique el error de la otra.
+   - **Afirmación 1**: "Hay un 95% de probabilidad de que la estatura media verdadera esté dentro de este intervalo."
+   - **Afirmación 2**: "Tenemos un 95% de confianza en que la estatura media verdadera se encuentra entre los límites calculados."
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+x_bar <- mean(bdims$hgt)
+s     <- sd(bdims$hgt)
+n     <- nrow(bdims)
+se    <- s / sqrt(n)
+
+cat("x̄ =", round(x_bar, 3), "| s =", round(s, 3),
+    "| n =", n, "| SE =", round(se, 4))
+```
+
+```{r}
+# b) Valor crítico t para 95% (bilateral)
+t_star <- qt(0.975, df = n - 1)
+cat("t* =", round(t_star, 4))
+```
+
+```{r}
+# c) Límites del IC
+ic_inf <- x_bar - t_star * se
+ic_sup <- x_bar + t_star * se
+cat("IC 95%: [", round(ic_inf, 2), ",", round(ic_sup, 2), "]")
+```
+
+```{r}
+# d) Verificación con t.test()
+t.test(bdims$hgt)$conf.int
+```
+
+Los resultados deben coincidir. **e)** La **Afirmación 2 es la correcta**.
+
+La **Afirmación 1 es incorrecta** porque comete el error de interpretar el
+nivel de confianza como una probabilidad sobre el intervalo ya calculado.
+Una vez que el intervalo ha sido calculado con datos reales, el parámetro
+poblacional ($\mu$) es un valor fijo (aunque desconocido): o está dentro
+del intervalo o no está. No hay probabilidad involucrada en ese sentido.
+
+El nivel de confianza del 95% es una propiedad del **método**: si
+repitiéramos el muestreo muchas veces y construyéramos un IC en cada
+ocasión, aproximadamente el **95% de esos intervalos contendrían** el
+verdadero parámetro poblacional.
+:::
+
+---
+
+### Pregunta 9: Prueba *t* de Dos Muestras {#sec-p9}
+
+::: {.callout-note}
+## Referencia IMS
+Ejercicio adaptado de IMS 20.1 y 20.3 (Capítulo 20, *Inference for comparing
+two independent means*), que plantean una prueba *t* de dos muestras e
+interpretación del output en `R`.
+:::
+
+Se quiere determinar si el **peso promedio** (`wgt`) difiere entre hombres y
+mujeres en la muestra `bdims`.
+
+a) Plantee la **hipótesis nula** $H_0$ y la **hipótesis alternativa** $H_1$.
+b) Antes de la prueba formal, compare visualmente los dos grupos mediante un **boxplot**. ¿Qué anticiparía sobre el resultado?
+c) Ejecute la prueba con `t.test(wgt ~ sex, data = bdims)`. Identifique en el output: el estadístico *t*, los grados de libertad, el p-valor y el intervalo de confianza de la diferencia.
+d) ¿Se rechaza $H_0$? ¿Por qué? Use tanto el p-valor como el IC para fundamentar.
+e) Redacte una conclusión en lenguaje no técnico.
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+Las hipótesis formales son:
+
+$$H_0: \mu_{\text{hombre}} = \mu_{\text{mujer}}$$
+$$H_1: \mu_{\text{hombre}} \neq \mu_{\text{mujer}}$$
+
+```{r}
+# b) Exploración visual
+bdims |>
+  ggplot(aes(x = sex, y = wgt, fill = sex)) +
+  geom_boxplot(alpha = 0.6) +
+  labs(
+    title    = "Distribución del peso por sexo",
+    subtitle = "Dataset bdims — openintro",
+    x        = "Sexo",
+    y        = "Peso (kg)"
+  ) +
+  scale_x_discrete(labels = c("f" = "Mujer", "m" = "Hombre")) +
+  theme(legend.position = "none")
+```
+
+El boxplot muestra claramente que los hombres tienen pesos mayores que las
+mujeres tanto en mediana como en dispersión.
+
+```{r}
+# c) Prueba t de dos muestras (Welch por defecto)
+t.test(wgt ~ sex, data = bdims)
+```
+
+**d)** El p-valor es extremadamente pequeño (muy inferior a 0.05), y el
+intervalo de confianza de la diferencia de medias **no contiene el 0**.
+Ambos criterios llevan a **rechazar $H_0$** con evidencia muy fuerte.
+
+**e)** Hay evidencia estadística sólida de que el peso promedio es
+significativamente diferente entre hombres y mujeres en esta muestra: los
+hombres tienen en promedio un peso considerablemente mayor que las mujeres.
+:::
+
+---
+
+### Pregunta 10: Interpretación Completa de una Prueba de Hipótesis {#sec-p10}
+
+::: {.callout-note}
+## Referencia IMS
+Ejercicio adaptado de IMS 20.3 y 20.5 (Capítulo 20), que piden interpretar
+íntegramente el output de una prueba *t* de dos muestras, incluyendo
+conclusión y potenciales errores de interpretación.
+:::
+
+Un investigador quiere saber si la **edad promedio** difiere entre hombres y
+mujeres en la muestra `bdims`.
+
+a) Explore los datos: construya un **boxplot** de `age` por `sex` y calcule media y desviación estándar por grupo con `group_by()` y `summarise()`.
+b) Plantee $H_0$ y $H_1$.
+c) Ejecute `t.test(age ~ sex, data = bdims)` e identifique todos los componentes del output: estadístico *t*, grados de libertad, p-valor, IC y medias de cada grupo.
+d) ¿Se rechaza $H_0$ con $\alpha = 0.05$? ¿Qué concluye?
+e) El investigador afirma: *"Como no rechazamos $H_0$, hemos demostrado que hombres y mujeres tienen exactamente la misma edad."* Evalúe críticamente esta afirmación: ¿es correcta o contiene un error lógico? Justifique.
+
+::: {.callout-tip collapse="true"}
+## Pauta
+
+```{r}
+# a) Exploración visual
+bdims |>
+  mutate(sex = factor(sex, labels = c("Mujer", "Hombre"))) |> 
+  ggplot(aes(x = sex, y = age, fill = sex)) +
+  geom_boxplot(alpha = 0.6) +
+  labs(
+    title    = "Distribución de la edad por sexo",
+    subtitle = "Dataset bdims — openintro",
+    x        = "Sexo",
+    y        = "Edad (años)"
+  ) +
+  scale_x_discrete() +
+  theme(legend.position = "none")
+```
+
+```{r}
+# Estadísticas por grupo
+bdims |>
+  group_by(sex) |>
+  summarise(
+    media = round(mean(age), 2),
+    desv  = round(sd(age),   2),
+    n     = n()
+  )
+```
+
+Los grupos tienen edades medias muy similares visualmente.
+
+Las hipótesis son:
+
+$$H_0: \mu_{\text{hombre}} = \mu_{\text{mujer}}$$
+$$H_1: \mu_{\text{hombre}} \neq \mu_{\text{mujer}}$$
+
+```{r}
+# c) Prueba t
+t.test(age ~ sex, data = bdims)
+```
+
+**d)** El p-valor es **mayor que 0.05** y el IC de la diferencia de medias
+**contiene el 0**. Ambos indicadores llevan a **no rechazar $H_0$**: no
+hay evidencia estadística suficiente para concluir que las edades promedio
+difieren entre hombres y mujeres.
+
+**e)** La afirmación del investigador **es incorrecta** y contiene un error
+lógico clásico. **No rechazar $H_0$ no es lo mismo que probar que $H_0$
+es verdadera.**
+
+La prueba de hipótesis parte asumiendo $H_0$ cierta y evalúa qué tan
+compatibles son los datos con esa suposición. Un p-valor alto solo significa
+que los datos observados son **compatibles** con $H_0$, no que $H_0$ sea
+necesariamente verdad. En términos coloquiales:
+
+> **Ausencia de evidencia no es evidencia de ausencia.**
+
+Con muestras pequeñas, podría no haber suficiente poder estadístico para
+detectar una diferencia real, incluso si existiese. La conclusión correcta es:
+*"No encontramos evidencia suficiente de que las edades promedio difieran
+entre grupos"*, no *"demostramos que son iguales"*.
+:::
+
+---
+
+## Resumen de Funciones Utilizadas
+
+A continuación se presenta un resumen de las principales funciones de `R`
+empleadas en esta guía:
+
+| Función | Paquete | Descripción |
+|---------|---------|-------------|
+| `mean(condición)` | base R | Proporción de casos que cumplen la condición (probabilidad empírica) |
+| `sample()` | base R | Muestreo aleatorio con o sin reemplazo |
+| `set.seed()` | base R | Fija la semilla para reproducibilidad |
+| `dbinom(x, size, prob)` | stats | pmf de la binomial: $P(X = x)$ |
+| `pbinom(x, size, prob)` | stats | cdf de la binomial: $P(X \leq x)$ |
+| `pnorm(x, mean, sd)` | stats | cdf de la normal: $P(X \leq x)$ |
+| `qnorm(p, mean, sd)` | stats | Cuantil de la normal: valor que deja probabilidad $p$ a la izquierda |
+| `t.test(x)` | stats | IC y prueba t para la media de una muestra |
+| `t.test(y ~ x, data)` | stats | Prueba t de Welch para dos muestras independientes |
+| `qt(p, df)` | stats | Cuantil de la distribución *t* con `df` grados de libertad |
+| `group_by()` + `summarise()` | dplyr | Estadísticas descriptivas por grupo |
+| `geom_boxplot()` | ggplot2 | Gráfico de caja |
+
+---
+
+::: {.callout-note}
+## Bibliografía de Referencia
+
+- Çetinkaya-Rundel, M. & Hardin, J. (2024). *Introduction to Modern Statistics*
+  (2a ed.). OpenIntro. Disponible en: <https://openintro-ims.netlify.app/>
+- Devore, J. L. (2016). *Probabilidad y estadística para ingeniería y ciencias*
+  (9a ed.). CENGAGE Learning.
+- Agresti, A. (2018). *Statistical Methods for the Social Sciences* (5a ed.).
+  Pearson.
+:::
