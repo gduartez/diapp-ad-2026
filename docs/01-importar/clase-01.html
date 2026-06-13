@@ -117,7 +117,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-<link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-39e682620bd26b50951c1e36b0e06a1a.css">
+<link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-c63bc6eab91b104308b3054a5ce26097.css">
 <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
 <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
 <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -270,16 +270,16 @@
 </div>
 </div></div>
 </section><section id="objetivo-clase-1" class="slide level2 smaller justify"><h2>Objetivo Clase 1</h2>
-<p>Esta primera clase tiene como objetivo general introducirlos al curso de <strong>Análisis de Datos y Estadística Computacional</strong> y aprender a <strong>importar y cruzar</strong> bases de datos en <code>R</code>, dejándolas listas para transformarlas en las clases siguientes.</p>
+<p>Esta primera clase tiene como objetivo general introducirlos al curso de <strong>Análisis de Datos y Estadística Computacional</strong> y aprender a <strong>importar y cruzar</strong> bases de datos en <code>R</code>. Las bases que trabajeremos hoy, serán trabajadas posteriormente en las siguiente clase.</p>
 <p>Como objetivos específicos se busca:</p>
 <ul>
 <li class="fragment">Presentar el programa del curso y algunas de las reglas básicas</li>
 <li class="fragment">Trabajar de manera ordenada y reproducible mediante <strong>proyectos</strong> (<code>.Rproj</code>)</li>
 <li class="fragment">Aprender a importar bases de datos de distintos formatos: <code>.csv</code>, <code>.xlsx</code>, <code>.dta</code>, <code>.shp</code>
 </li>
-<li class="fragment">Realizar una limpieza inicial de nombres con el paquete <code>janitor</code>
+<li class="fragment">Realizar una limpieza inicial de nombres de columnas (variables) con el paquete <code>janitor</code>
 </li>
-<li class="fragment">Cruzar información de dos o más fuentes con <code>left_join()</code>
+<li class="fragment">Cruzar información de dos datasets con <code>left_join()</code>
 </li>
 </ul></section><section id="información-general" class="slide level2"><h2>Información General</h2>
 <ul>
@@ -438,20 +438,24 @@
 <p><img data-src="img/xrstats.png" class="fragment"></p>
 </div>
 </section><section id="cheatsheets" class="slide level2"><h2>Cheatsheets</h2>
-<div style="text-align: center; margin-top: 1em">
-<div class="quarto-figure quarto-figure-center">
-<figure><p><embed data-src="https://rstudio.github.io/cheatsheets/data-import.pdf"></p>
-<figcaption>readr Cheatsheet</figcaption></figure>
-</div>
-</div>
+<iframe src="https://rstudio.github.io/cheatsheets/data-import.pdf" width="100%" height="600px">
+</iframe>
 </section><section id="y-una-de-las-más-usadas-help" class="slide level2"><h2>Y una de las más usadas: <code>help()</code>
 </h2>
 <p>Antes de utilizar cualquier función, es útil consultar sus detalles (argumentos, valores, ejemplos, etc.) a través del comando <code>help(x)</code> o <code>?x</code></p>
-</section></section><section><section id="rstudio-proyectos-y-orden-en-r" class="title-slide slide level1 center" data-background-color="#7A1904"><h1><span style="color:white">Rstudio, Proyectos y Orden en <code>R</code></span></h1>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">help</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a><span class="co">#Lo mismo de manera abreviada</span></span>
+<span id="cb1-4"><a></a>?ggplot2</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section></section><section><section id="rstudio-proyectos-y-orden-en-r" class="title-slide slide level1 center" data-background-color="#7A1904"><h1><span style="color:white">Rstudio, Proyectos y Orden en R</span></h1>
 
 </section><section id="qué-es-r-y-rstudio" class="slide level2"><h2>¿Qué es R y Rstudio?</h2>
 
-<img data-src="img/r_vs_rstudio.png" style="width:80.0%" class="r-stretch quarto-figure-center"><p class="caption">R vs Rstudio</p><p>R es un lenguaje de programación que ejecuta código, mientras que RStudio es un entorno de desarrollo integrado (IDE) que proporciona una <strong>interfaz</strong> que facilita la ejecución y trabajo con R</p>
+<img data-src="img/r_vs_rstudio.png" style="width:80.0%" class="r-stretch quarto-figure-center"><p class="caption">R vs Rstudio</p><p><strong>R</strong> es un lenguaje de programación que ejecuta código, mientras que <strong>RStudio</strong> es un entorno de desarrollo integrado (IDE) que proporciona una <strong>interfaz</strong> que facilita la ejecución y trabajo con R</p>
 </section><section id="instalar-r-y-rstudio-realizar-en-orden" class="slide level2 justify"><h2>Instalar R y Rstudio (Realizar en orden)</h2>
 <div class="fragment">
 <ol type="1">
@@ -588,28 +592,28 @@
 <div class="fragment fade-in smaller">
 <p><span style="color:green"><strong>Recomendado</strong></span> <img data-src="img/checked.png" style="width:7.0%"></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># 0. Librerías ----------------------</span></span>
-<span id="cb2-2"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-3"><a></a><span class="fu">library</span>(janitor)</span>
-<span id="cb2-4"><a></a></span>
-<span id="cb2-5"><a></a><span class="co"># 1. Cargo datos --------------------</span></span>
-<span id="cb2-6"><a></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/comunas.csv"</span>)</span>
-<span id="cb2-7"><a></a></span>
-<span id="cb2-8"><a></a><span class="co"># 2. Limpio y transformo ------------</span></span>
-<span id="cb2-9"><a></a>datos <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span></span>
-<span id="cb2-10"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb2-11"><a></a>  <span class="fu">filter</span>(poblacion <span class="sc">&gt;</span> <span class="dv">50000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="co"># 0. Librerías ----------------------</span></span>
+<span id="cb3-2"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-3"><a></a><span class="fu">library</span>(janitor)</span>
+<span id="cb3-4"><a></a></span>
+<span id="cb3-5"><a></a><span class="co"># 1. Cargo datos --------------------</span></span>
+<span id="cb3-6"><a></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/comunas.csv"</span>)</span>
+<span id="cb3-7"><a></a></span>
+<span id="cb3-8"><a></a><span class="co"># 2. Limpio y transformo ------------</span></span>
+<span id="cb3-9"><a></a>datos <span class="ot">&lt;-</span> datos <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb3-11"><a></a>  <span class="fu">filter</span>(poblacion <span class="sc">&gt;</span> <span class="dv">50000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="fragment fade-in smaller">
 <p><span style="color:red"><strong>NO Recomendado</strong></span> <img data-src="img/remove.png" style="width:7.0%"></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb3-2"><a></a>datos<span class="ot">&lt;-</span><span class="fu">read_csv</span>(<span class="st">"data/raw/comunas.csv"</span>)</span>
-<span id="cb3-3"><a></a><span class="fu">library</span>(janitor)</span>
-<span id="cb3-4"><a></a>datos<span class="ot">&lt;-</span>datos<span class="sc">|&gt;</span><span class="fu">clean_names</span>()<span class="sc">|&gt;</span><span class="fu">filter</span>(</span>
-<span id="cb3-5"><a></a>poblacion<span class="sc">&gt;</span><span class="dv">50000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb4-2"><a></a>datos<span class="ot">&lt;-</span><span class="fu">read_csv</span>(<span class="st">"data/raw/comunas.csv"</span>)</span>
+<span id="cb4-3"><a></a><span class="fu">library</span>(janitor)</span>
+<span id="cb4-4"><a></a>datos<span class="ot">&lt;-</span>datos<span class="sc">|&gt;</span><span class="fu">clean_names</span>()<span class="sc">|&gt;</span><span class="fu">filter</span>(</span>
+<span id="cb4-5"><a></a>poblacion<span class="sc">&gt;</span><span class="dv">50000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div></div>
@@ -653,8 +657,8 @@
 <div class="fragment">
 <p>A lo largo del curso usaremos indistintamente la función <code>p_load()</code> del paquete <code>pacman</code>, que combina ambos pasos: <em>“si el paquete está instalado, cárgalo; si no, descárgalo y luego cárgalo”</em>. Esto asegura que todos trabajemos con las mismas librerías:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">library</span>(pacman)</span>
-<span id="cb4-2"><a></a><span class="fu">p_load</span>(tidyverse, readxl, openxlsx, haven, janitor, sf)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(pacman)</span>
+<span id="cb5-2"><a></a><span class="fu">p_load</span>(tidyverse, readxl, openxlsx, haven, janitor, sf)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section><section id="primeras-complicaciones" class="slide level2 smaller"><h2>Primeras complicaciones</h2>
@@ -701,18 +705,18 @@
 <div class="fragment">
 <p>Sin pipe, las funciones se anidan de adentro hacia afuera:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="co"># Sin pipe: hay que leer de adentro hacia afuera</span></span>
-<span id="cb5-2"><a></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">log</span>(<span class="dv">100</span>)), <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co"># Sin pipe: hay que leer de adentro hacia afuera</span></span>
+<span id="cb6-2"><a></a><span class="fu">round</span>(<span class="fu">sqrt</span>(<span class="fu">log</span>(<span class="dv">100</span>)), <span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
 <p>Con pipe, cada paso queda en su propia línea, en orden de ejecución:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="co"># Con pipe: se lee de arriba hacia abajo</span></span>
-<span id="cb6-2"><a></a><span class="dv">100</span> <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a></a>  <span class="fu">log</span>()   <span class="sc">|&gt;</span></span>
-<span id="cb6-4"><a></a>  <span class="fu">sqrt</span>()  <span class="sc">|&gt;</span></span>
-<span id="cb6-5"><a></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="co"># Con pipe: se lee de arriba hacia abajo</span></span>
+<span id="cb7-2"><a></a><span class="dv">100</span> <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a></a>  <span class="fu">log</span>()   <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a></a>  <span class="fu">sqrt</span>()  <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -779,9 +783,9 @@
 </section><section id="archivos-separados-por-coma-.csv" class="slide level2 smaller"><h2>Archivos separados por coma: <code>.csv</code>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://pos.it/r4ds-students-csv"</span>)</span>
-<span id="cb7-2"><a></a><span class="fu">head</span>(students) <span class="sc">|&gt;</span> </span>
-<span id="cb7-3"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://pos.it/r4ds-students-csv"</span>)</span>
+<span id="cb8-2"><a></a><span class="fu">head</span>(students) <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <colgroup>
@@ -865,10 +869,10 @@
 <p>La comida favorita de la fila 3 dice <code>"N/A"</code>, pero R no la reconoce como dato faltante. Podemos indicarle qué tratar como <code>NA</code>:</p>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://pos.it/r4ds-students-csv"</span>,</span>
-<span id="cb8-2"><a></a>                     <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">""</span>))</span>
-<span id="cb8-3"><a></a><span class="fu">head</span>(students) <span class="sc">|&gt;</span> </span>
-<span id="cb8-4"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>students <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://pos.it/r4ds-students-csv"</span>,</span>
+<span id="cb9-2"><a></a>                     <span class="at">na =</span> <span class="fu">c</span>(<span class="st">"N/A"</span>, <span class="st">""</span>))</span>
+<span id="cb9-3"><a></a><span class="fu">head</span>(students) <span class="sc">|&gt;</span> </span>
+<span id="cb9-4"><a></a>  <span class="fu">kable</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <colgroup>
@@ -940,7 +944,7 @@
 </ul>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">read_csv2</span>(<span class="fu">I</span>(<span class="st">"comuna;poblacion</span><span class="sc">\n</span><span class="st">Santiago;503.147</span><span class="sc">\n</span><span class="st">Cerrillos;88.056"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">read_csv2</span>(<span class="fu">I</span>(<span class="st">"comuna;poblacion</span><span class="sc">\n</span><span class="st">Santiago;503.147</span><span class="sc">\n</span><span class="st">Cerrillos;88.056"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   comuna    poblacion
@@ -972,16 +976,16 @@
 </section><section id="aplicación-leer-un-excel-con-sheet-y-range" class="slide level2 smaller"><h2>Aplicación: leer un Excel con <code>sheet</code> y <code>range</code>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>ruta <span class="ot">&lt;-</span> <span class="fu">readxl_example</span>(<span class="st">"datasets.xlsx"</span>)</span>
-<span id="cb11-2"><a></a><span class="fu">excel_sheets</span>(ruta)   <span class="co"># ¿qué hojas tiene el archivo?</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>ruta <span class="ot">&lt;-</span> <span class="fu">readxl_example</span>(<span class="st">"datasets.xlsx"</span>)</span>
+<span id="cb12-2"><a></a><span class="fu">excel_sheets</span>(ruta)   <span class="co"># ¿qué hojas tiene el archivo?</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "mtcars"   "chickwts" "quakes"  </code></pre>
 </div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>mtcars_xl <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(ruta, <span class="at">sheet =</span> <span class="st">"mtcars"</span>, <span class="at">range =</span> <span class="st">"A1:D5"</span>)</span>
-<span id="cb13-2"><a></a>mtcars_xl</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>mtcars_xl <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(ruta, <span class="at">sheet =</span> <span class="st">"mtcars"</span>, <span class="at">range =</span> <span class="st">"A1:D5"</span>)</span>
+<span id="cb14-2"><a></a>mtcars_xl</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
     mpg   cyl  disp    hp
@@ -994,16 +998,16 @@
 </div>
 </div>
 </section><section id="haven-archivos-de-stata-.dta" class="slide level2 smaller"><h2>
-<code>haven</code>: archivos de STATA <code>.dta</code> <img data-src="img/haven.png" style="width:7.0%">
+<code>haven</code>: archivos de STATA <code>.dta</code>
 </h2>
 <ul>
 <li class="fragment">Para leer archivos <code>.dta</code> (STATA) usamos <code>read_dta()</code> del paquete <code>haven</code>:</li>
 </ul>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>ruta_dta <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"examples"</span>, <span class="st">"iris.dta"</span>, <span class="at">package =</span> <span class="st">"haven"</span>)</span>
-<span id="cb15-2"><a></a>iris_stata <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(ruta_dta)</span>
-<span id="cb15-3"><a></a><span class="fu">head</span>(iris_stata)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>ruta_dta <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"examples"</span>, <span class="st">"iris.dta"</span>, <span class="at">package =</span> <span class="st">"haven"</span>)</span>
+<span id="cb16-2"><a></a>iris_stata <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(ruta_dta)</span>
+<span id="cb16-3"><a></a><span class="fu">head</span>(iris_stata)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
   sepallength sepalwidth petallength petalwidth species
@@ -1035,10 +1039,10 @@
 </section><section id="archivos-georreferenciados" class="slide level2 smaller"><h2>Archivos Georreferenciados</h2>
 <ul>
 <li class="fragment"><p>Para trabajar archivos georreferenciados utilizaremos una de las librerías más reconocidas en el entorno de R para manejar datos espaciales: <code>sf</code> o <em>simple features</em>.</p></li>
-<li class="fragment"><p>No profundizaremos en el manejo de datos espaciales (lo cual se verá en detalle en el módulo de Geoanálisis), pero intentaremos realizar mapas básicos para mostrar información que y captar la atención de la audiencia. Esto puede ser muy útil a la hora de comunicar resultados de manera efectiva.</p></li>
+<li class="fragment"><p>No profundizaremos en el manejo de datos espaciales (lo cual se verá en detalle en el módulo de Geoanálisis), pero intentaremos realizar mapas básicos para mostrar información territorial de manera sencilla y sin necesidad de un sistema de información geográfica (softwares como Arcgis o Qgis).</p></li>
 <li class="fragment"><p>La función básica para leer archivos georreferenciados es <code>st_read()</code> del paquete <code>sf</code>.</p></li>
-<li class="fragment"><p>Existen diferentes formatos de archivo para los datos de georreferenciados, pero el más común es probablemente el <strong><em>ESRI shapefile</em></strong>. A pesar de que se llama de manera singular, en realidad se compone de al menos cuatro archivos diferentes que trabajan juntos para almacenar los datos: <code>.dbf</code> <code>.shx</code> <code>.prj</code> <code>.shp</code>.</p></li>
-<li class="fragment"><p>Lo importante es que estos archivos esten siempre juntos en la <strong>misma carpeta</strong>. Cumpliendo eso, solo debemos preocuparnos de <strong>cargar el archivo de extensión <code>.shp</code></strong></p></li>
+<li class="fragment"><p>Existen diferentes formatos de archivo para los datos georreferenciados, pero el más común es probablemente el <strong><em>ESRI shapefile</em></strong>. A pesar de que se llama de manera singular, en realidad se compone de al menos cuatro archivos diferentes que trabajan juntos para almacenar los datos: <code>.dbf</code> <code>.shx</code> <code>.prj</code> <code>.shp</code>.</p></li>
+<li class="fragment"><p>Lo importante es que estos archivos estén siempre juntos en la <strong>misma carpeta</strong>. Cumpliendo eso, solo debemos preocuparnos de <strong>cargar el archivo de extensión <code>.shp</code></strong></p></li>
 </ul></section><section id="archivos-georreferenciados-1" class="slide level2 medium"><h2>Archivos georreferenciados</h2>
 <p>En resumen:</p>
 <ul>
@@ -1047,14 +1051,14 @@
 </ul>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>nc <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="at">package =</span> <span class="st">"sf"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>nc <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">system.file</span>(<span class="st">"shape/nc.shp"</span>, <span class="at">package =</span> <span class="st">"sf"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section><section id="archivos-georreferenciados-visualización" class="slide level2 medium"><h2>Archivos georreferenciados: Visualización</h2>
-<p>Para mostrar un mapa podemos usar <code>ggplot2</code> (en la clase 3 profundizaremos este tema):</p>
+<p>Para mostrar un mapa podemos usar <code>ggplot2</code> usando la función <code>ggplot()</code> y <code>geom_sf()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">ggplot</span>(nc) <span class="sc">+</span></span>
-<span id="cb18-2"><a></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">ggplot</span>(nc) <span class="sc">+</span></span>
+<span id="cb19-2"><a></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="clase-01_files/figure-revealjs/shp2-1.png" width="768" class="r-stretch"><div class="callout callout-note callout-titled callout-style-default">
@@ -1066,7 +1070,7 @@
 <p><strong>Nota</strong></p>
 </div>
 <div class="callout-content">
-<p>No profundizaremos en el manejo ni la visualización de datos espaciales: veremos los mapas en detalle en la <strong>Clase 3</strong>.</p>
+<p>En la <strong>Clase 3</strong> profundizaremos en la visualización de datos incluida la visualización de mapas.</p>
 </div>
 </div>
 </div>
@@ -1106,36 +1110,36 @@
 </section><section id="leer-y-escribir-parquet-con-arrow" class="slide level2 smaller"><h2>Leer y escribir Parquet con <code>arrow</code>
 </h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">library</span>(arrow)</span>
-<span id="cb19-2"><a></a></span>
-<span id="cb19-3"><a></a><span class="co"># Leer un archivo Parquet</span></span>
-<span id="cb19-4"><a></a>datos <span class="ot">&lt;-</span> <span class="fu">read_parquet</span>(<span class="st">"data/raw/criminalidad.parquet"</span>)</span>
-<span id="cb19-5"><a></a></span>
-<span id="cb19-6"><a></a><span class="co"># Escribir un data frame existente como Parquet</span></span>
-<span id="cb19-7"><a></a><span class="fu">write_parquet</span>(datos, <span class="st">"data/clean/criminalidad.parquet"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">library</span>(arrow)</span>
+<span id="cb20-2"><a></a></span>
+<span id="cb20-3"><a></a><span class="co"># Leer un archivo Parquet</span></span>
+<span id="cb20-4"><a></a>datos <span class="ot">&lt;-</span> <span class="fu">read_parquet</span>(<span class="st">"data/raw/criminalidad.parquet"</span>)</span>
+<span id="cb20-5"><a></a></span>
+<span id="cb20-6"><a></a><span class="co"># Escribir un data frame existente como Parquet</span></span>
+<span id="cb20-7"><a></a><span class="fu">write_parquet</span>(datos, <span class="st">"data/clean/criminalidad.parquet"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
-<p>La sintaxis es idéntica a <code>read_csv()</code> / <code>write_csv()</code>: un argumento de ruta de entrada o salida y listo.</p>
+<p>La sintaxis es idéntica a <code>read_csv()</code> / <code>write_csv()</code>: un argumento de ruta de entrada para cargar datos y un objeto y ruta de salida para guardar archivos en carpetas.</p>
 </div>
 <div class="fragment">
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="co"># Desde CSV a Parquet en dos líneas</span></span>
-<span id="cb20-2"><a></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/base_grande.csv"</span>)</span>
-<span id="cb20-3"><a></a><span class="fu">write_parquet</span>(datos, <span class="st">"data/raw/base_grande.parquet"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="co"># Desde CSV a Parquet en dos líneas</span></span>
+<span id="cb21-2"><a></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/raw/base_grande.csv"</span>)</span>
+<span id="cb21-3"><a></a><span class="fu">write_parquet</span>(datos, <span class="st">"data/raw/base_grande.parquet"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><span style="color:gray; font-size:0.85em">→ Conversión de <code>.csv</code> a Parquet</span></p>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="co"># Lectura selectiva de columnas (muy eficiente)</span></span>
-<span id="cb21-2"><a></a><span class="fu">read_parquet</span>(</span>
-<span id="cb21-3"><a></a>  <span class="st">"data/raw/base_grande.parquet"</span>,</span>
-<span id="cb21-4"><a></a>  <span class="at">col_select =</span> <span class="fu">c</span>(<span class="st">"comuna"</span>, <span class="st">"anio"</span>, <span class="st">"tasa"</span>)</span>
-<span id="cb21-5"><a></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="co"># Lectura selectiva de columnas (muy eficiente)</span></span>
+<span id="cb22-2"><a></a><span class="fu">read_parquet</span>(</span>
+<span id="cb22-3"><a></a>  <span class="st">"data/raw/base_grande.parquet"</span>,</span>
+<span id="cb22-4"><a></a>  <span class="at">col_select =</span> <span class="fu">c</span>(<span class="st">"comuna"</span>, <span class="st">"anio"</span>, <span class="st">"tasa"</span>)</span>
+<span id="cb22-5"><a></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><span style="color:gray; font-size:0.85em">→ Lee solo 3 columnas sin cargar el resto</span></p>
 </div>
@@ -1164,10 +1168,10 @@
 </ul>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">library</span>(janitor)</span>
-<span id="cb22-2"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">`</span><span class="at">Nombre Comuna</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Santiago"</span>, <span class="st">"Cerrillos"</span>),</span>
-<span id="cb22-3"><a></a>             <span class="st">`</span><span class="at">Población 2017</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">503147</span>, <span class="dv">88056</span>))</span>
-<span id="cb22-4"><a></a>df</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">library</span>(janitor)</span>
+<span id="cb23-2"><a></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="st">`</span><span class="at">Nombre Comuna</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Santiago"</span>, <span class="st">"Cerrillos"</span>),</span>
+<span id="cb23-3"><a></a>             <span class="st">`</span><span class="at">Población 2017</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">503147</span>, <span class="dv">88056</span>))</span>
+<span id="cb23-4"><a></a>df</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   `Nombre Comuna` `Población 2017`
@@ -1177,7 +1181,7 @@
 </div>
 </div>
 </div>
-</section><section id="limpieza-inicial-de-nombres-janitorclean_names-1" class="slide level2 medium"><h2>Limpieza inicial de nombres: <code>janitor::clean_names()</code>
+</section><section id="limpieza-inicial-de-nombres-janitorclean_names-1" class="slide level2 medium"><h2>💻 Limpieza inicial de nombres: <code>janitor::clean_names()</code>
 </h2>
 <div class="cell">
 <div>
@@ -1199,7 +1203,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZGYgPC0gdGliYmxlKGBOb21i
 <p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<p>Aplicar <code>clean_names()</code> justo después de importar es una excelente costumbre: nos ahorra muchos errores posteriores al referirnos a las columnas.</p>
+<p>Aplicar <code>clean_names()</code> justo después de importar es recomendado para el proceso de transformación y limpieza de datos al unificar el formato de sintaxis.</p>
 </div>
 </div>
 </div>
@@ -1278,8 +1282,8 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZGYgPC0gdGliYmxlKGBOb21i
 </section><section id="exportar-a-excel" class="slide level2"><h2>Exportar a Excel</h2>
 <p>Para exportar archivos <strong>excel</strong> se recomienda usar una librería adicional: <code>openxlsx</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">library</span>(openxlsx)</span>
-<span id="cb24-2"><a></a><span class="fu">write.xlsx</span>(mtcars,<span class="st">'mtcars.xlsx'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb25-2"><a></a><span class="fu">write.xlsx</span>(mtcars,<span class="st">'mtcars.xlsx'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <div class="callout callout-warning callout-titled callout-style-default">
@@ -1300,7 +1304,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZGYgPC0gdGliYmxlKGBOb21i
 </div>
 </div>
 </div>
-</section></section><section><section id="cruce-de-datos-left_join" class="title-slide slide level1 center" data-background-color="#000080"><h1><span style="color:white">Cruce de Datos: <code>left_join</code></span></h1>
+</section></section><section><section id="cruce-de-datos-left_join" class="title-slide slide level1 center" data-background-color="#000080"><h1><span style="color:white">Cruce de Datos: left_join</span></h1>
 
 </section><section id="por-qué-cruzar-bases-de-datos" class="slide level2 smaller justify"><h2>¿Por qué cruzar bases de datos?</h2>
 <ul>
@@ -1356,20 +1360,20 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZGYgPC0gdGliYmxlKGBOb21i
 </h2>
 <p>Tenemos dos tablas de comunas vinculadas por su código (<code>cod_comuna</code>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>comunas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb25-2"><a></a>  <span class="at">cod_comuna =</span> <span class="fu">c</span>(<span class="dv">13101</span>, <span class="dv">13102</span>, <span class="dv">13201</span>),</span>
-<span id="cb25-3"><a></a>  <span class="at">comuna     =</span> <span class="fu">c</span>(<span class="st">"Santiago"</span>, <span class="st">"Cerrillos"</span>, <span class="st">"Puente Alto"</span>)</span>
-<span id="cb25-4"><a></a>)</span>
-<span id="cb25-5"><a></a></span>
-<span id="cb25-6"><a></a>poblacion <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb25-7"><a></a>  <span class="at">cod_comuna =</span> <span class="fu">c</span>(<span class="dv">13101</span>, <span class="dv">13102</span>, <span class="dv">13201</span>),</span>
-<span id="cb25-8"><a></a>  <span class="at">poblacion  =</span> <span class="fu">c</span>(<span class="dv">503147</span>, <span class="dv">88056</span>, <span class="dv">645909</span>)</span>
-<span id="cb25-9"><a></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>comunas <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb26-2"><a></a>  <span class="at">cod_comuna =</span> <span class="fu">c</span>(<span class="dv">13101</span>, <span class="dv">13102</span>, <span class="dv">13201</span>),</span>
+<span id="cb26-3"><a></a>  <span class="at">comuna     =</span> <span class="fu">c</span>(<span class="st">"Santiago"</span>, <span class="st">"Cerrillos"</span>, <span class="st">"Puente Alto"</span>)</span>
+<span id="cb26-4"><a></a>)</span>
+<span id="cb26-5"><a></a></span>
+<span id="cb26-6"><a></a>poblacion <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb26-7"><a></a>  <span class="at">cod_comuna =</span> <span class="fu">c</span>(<span class="dv">13101</span>, <span class="dv">13102</span>, <span class="dv">13201</span>),</span>
+<span id="cb26-8"><a></a>  <span class="at">poblacion  =</span> <span class="fu">c</span>(<span class="dv">503147</span>, <span class="dv">88056</span>, <span class="dv">645909</span>)</span>
+<span id="cb26-9"><a></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>comunas <span class="sc">|&gt;</span> </span>
-<span id="cb26-2"><a></a>  <span class="fu">left_join</span>(poblacion, <span class="at">by =</span> <span class="st">"cod_comuna"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>comunas <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a></a>  <span class="fu">left_join</span>(poblacion, <span class="at">by =</span> <span class="st">"cod_comuna"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   cod_comuna comuna      poblacion
@@ -1383,13 +1387,13 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZGYgPC0gdGliYmxlKGBOb21i
 </section><section id="cuando-las-llaves-tienen-distinto-nombre" class="slide level2 smaller"><h2>Cuando las llaves tienen distinto nombre</h2>
 <p>Si la llave se llama distinto en cada tabla (<code>cod_comuna</code> vs.&nbsp;<code>codigo</code>), lo indicamos con <code>join_by()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>poblacion2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb28-2"><a></a>  <span class="at">codigo    =</span> <span class="fu">c</span>(<span class="dv">13101</span>, <span class="dv">13102</span>, <span class="dv">13201</span>),</span>
-<span id="cb28-3"><a></a>  <span class="at">poblacion =</span> <span class="fu">c</span>(<span class="dv">503147</span>, <span class="dv">88056</span>, <span class="dv">645909</span>)</span>
-<span id="cb28-4"><a></a>)</span>
-<span id="cb28-5"><a></a></span>
-<span id="cb28-6"><a></a>comunas <span class="sc">|&gt;</span> </span>
-<span id="cb28-7"><a></a>  <span class="fu">left_join</span>(poblacion2, <span class="fu">join_by</span>(cod_comuna <span class="sc">==</span> codigo))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>poblacion2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb29-2"><a></a>  <span class="at">codigo    =</span> <span class="fu">c</span>(<span class="dv">13101</span>, <span class="dv">13102</span>, <span class="dv">13201</span>),</span>
+<span id="cb29-3"><a></a>  <span class="at">poblacion =</span> <span class="fu">c</span>(<span class="dv">503147</span>, <span class="dv">88056</span>, <span class="dv">645909</span>)</span>
+<span id="cb29-4"><a></a>)</span>
+<span id="cb29-5"><a></a></span>
+<span id="cb29-6"><a></a>comunas <span class="sc">|&gt;</span> </span>
+<span id="cb29-7"><a></a>  <span class="fu">left_join</span>(poblacion2, <span class="fu">join_by</span>(cod_comuna <span class="sc">==</span> codigo))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   cod_comuna comuna      poblacion
@@ -1427,205 +1431,83 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZGYgPC0gdGliYmxlKGBOb21i
 </div>
 </section><section id="ejercicio-grupal-20-30-min" class="slide level2"><h2>Ejercicio Grupal (20-30 min)</h2>
 <p>Resolver parte II de la guía de ejercicios. Trabajarán en <strong>salas pequeñas</strong> resolviendo la parte II de la guía de ejercicios subida a Webcursos</p>
-<!-- =================================================================== -->
-<!-- SECCIÓN OPCIONAL: PIVOT (tidyr).                                     -->
-<!-- En el programa, tidyr/pivot corresponde formalmente a la Clase 2.    -->
-<!-- Si la clase queda muy larga, comenta todo este bloque (desde         -->
-<!-- "# Ordenar Datos" hasta antes de "# Recapitulación") y muévelo allá. -->
-<!-- =================================================================== -->
-</section></section><section><section id="ordenar-datos" class="title-slide slide level1 center"><h1>Ordenar Datos</h1>
-
-</section><section id="tidy-data" class="slide level2 justify incremental smaller"><h2>
-<em>Tidy</em> data</h2>
-<div class="fragment">
-<ul>
-<li class="fragment">Una <strong>variable</strong> es una cantidad, cualidad o propiedad que se puede medir.</li>
-<li class="fragment">Un <strong>valor</strong> es el estado de una variable cuando se mide. El valor de una variable puede cambiar de una medida a otra.</li>
-<li class="fragment">Una <strong>observación</strong> es un conjunto de mediciones realizadas en condiciones similares (por lo general, se realizan todas las mediciones en una observación al mismo tiempo y en el mismo objeto). Una observación contendrá varios valores, cada uno asociado con una variable diferente. A veces nos referiremos a una observación como un punto de datos.</li>
-</ul>
-</div>
-<div class="fragment">
-<p>Los datos <em>tidy</em> o tabulares son un conjunto de <strong>valores</strong>, cada uno asociado con una <strong>variable</strong> y una <strong>observación</strong>. Los datos tabulares están en formato <em>tidy</em> si cada <u>valor</u> se coloca en su propia <u>celda</u>, cada <u>variable</u> en su propia <u>columna</u> y cada <u>observación</u> en su propia <u>fila</u>.</p>
-</div>
-</section><section id="tidy-data-1" class="slide level2"><h2>
-<em>Tidy</em> data</h2>
-
-<img data-src="imagenes/tidydata.png" style="width:60.0%" class="r-stretch quarto-figure-center"><p class="caption">Datos Ordenados en formato tidy</p></section><section id="alargar-el-data-frame-lengthening-data-más-filas-u-observaciones" class="slide level2 smaller"><h2>Alargar el data frame (<em>lengthening data</em>): Más Filas u Observaciones</h2>
-<div class="fragment">
-<ol type="1">
-<li class="fragment">Función a utilizar: <code>pivot_longer()</code>
-</li>
-<li class="fragment">Argumentos importantes:</li>
-</ol>
-<ul>
-<li class="fragment">
-<code>data</code>: El <em>dataframe</em> a pivotear (implícito si utilizamos un <em>pipeline</em> con un dataframe que le preceda)</li>
-<li class="fragment">
-<code>cols</code>: El conjunto de variables a pivotear en formato longer</li>
-<li class="fragment">
-<code>names_to</code>: Un <em>string</em> que especifica la nueva columna o columnas para crear a partir de la información almacenada en los nombres de columna de los datos especificados por <code>cols</code>
-</li>
-<li class="fragment">
-<code>values_to</code>: Un <em>string</em> que especifica el nombre de la columna para crear a partir de los datos almacenados en el valor de la celda</li>
-</ul>
-</div>
-<div class="fragment">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>El argumento clave de esta función es <code>cols</code>, ya que esta indica las columnas que queremos pasar a un formato <em>long</em>.</p>
-</div>
-</div>
-</div>
-</div>
-</section><section id="ensanchar-el-data-frame-widening-data-más-columnas-o-variables" class="slide level2 smaller"><h2>Ensanchar el data frame (<em>widening data</em>): Más Columnas o Variables</h2>
-<div class="fragment">
-<ol type="1">
-<li class="fragment">Función a utilizar: <code>pivot_wider()</code>
-</li>
-<li class="fragment">Argumentos importantes:</li>
-</ol>
-<ul>
-<li class="fragment">
-<code>data</code>: El <em>dataframe</em> a pivotear (implícito si utilizamos un <em>pipeline</em> con un dataframe que le preceda)</li>
-<li class="fragment">
-<code>names_from</code>: El conjunto de variables a pivotear en formato wider (sobre qué columna(s) se obtendrá el nombre de la columna de salida)</li>
-<li class="fragment">
-<code>values_from</code>: El conjunto de variables desde donde se obtendrán los valores de las nuevas columnas creadas.</li>
-</ul>
-</div>
-<div class="fragment">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>En este caso, tanto <code>names_from</code> como <code>values_from</code> son clave para poder ejecutar correctamente la función.</p>
-</div>
-</div>
-</div>
-</div>
-</section><section id="aplicación-pivot-longer" class="slide level2 smaller"><h2>Aplicación Pivot Longer</h2>
-<ul>
-<li class="fragment"><p>Veamos un data set sencillo que muestra el número de casos de Tuberculosis documentados por la Organización Mundial de la Salud en Afganistán, Brasil y China entre 1999 y 2000: <a href="https://www.who.int/teams/global-tuberculosis-programme/data">ver aquí</a></p></li>
-<li class="fragment"><p>Los datos contienen valores asociados con cuatro variables (país, año, casos y población), pero cada tabla organiza los valores en un diseño diferente.</p></li>
-</ul>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">print</span>(table1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
-  country      year  cases population
-  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
-1 Afghanistan  1999    745   19987071
-2 Afghanistan  2000   2666   20595360
-3 Brazil       1999  37737  172006362
-4 Brazil       2000  80488  174504898
-5 China        1999 212258 1272915272
-6 China        2000 213766 1280428583</code></pre>
-</div>
-</div>
-</div>
-</section><section id="aplicación-pivot-longer-1" class="slide level2 smaller"><h2>Aplicación Pivot Longer</h2>
-<ul>
-<li class="fragment">A continuación, se muestra una parte de este <em>dataset</em> en formato <strong>no</strong> <em>tidy</em>:</li>
-</ul>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">print</span>(table4a)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 3
-  country     `1999` `2000`
-  &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;
-1 Afghanistan    745   2666
-2 Brazil       37737  80488
-3 China       212258 213766</code></pre>
-</div>
-</div>
-<ul>
-<li class="fragment">Se puede apreciar que los nombres de columna 1999 y 2000 representan valores de la variable año, los valores en las columnas 1999 y 2000 representan valores de la variable casos, y cada fila representa <strong>dos</strong> observaciones en lugar de una.</li>
-</ul>
-</div>
-</section><section id="aplicación-pivot-longer-2" class="slide level2 smaller"><h2>Aplicación Pivot Longer</h2>
-<ul>
-<li class="fragment">Para transformar este <em>dataset</em> en uno <em>tidy</em>, podemos ocupar la función <code>pivot_longer</code>, es decir, <em>agrandar la base de datos hacia abajo</em> o bien, con <strong>más observaciones</strong>:</li>
-</ul>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>table4a <span class="sc">|&gt;</span>  </span>
-<span id="cb34-2"><a></a>  <span class="fu">pivot_longer</span>(<span class="fu">c</span>(<span class="st">`</span><span class="at">1999</span><span class="st">`</span>, <span class="st">`</span><span class="at">2000</span><span class="st">`</span>), <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"cases"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 3
-  country     year   cases
-  &lt;chr&gt;       &lt;chr&gt;  &lt;dbl&gt;
-1 Afghanistan 1999     745
-2 Afghanistan 2000    2666
-3 Brazil      1999   37737
-4 Brazil      2000   80488
-5 China       1999  212258
-6 China       2000  213766</code></pre>
-</div>
-</div>
-</div>
-</section><section id="aplicación-pivot-longer-3" class="slide level2"><h2>Aplicación Pivot Longer</h2>
-
-<img data-src="imagenes/pivot_longer.png" class="r-stretch quarto-figure-center"><p class="caption">Pivot Longer</p></section><section id="aplicación-pivot-wider" class="slide level2 smaller"><h2>Aplicación Pivot Wider</h2>
-<p>Analicemos otro diseño del mismo <em>dataset</em> original:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="fu">print</span>(table2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 4
-   country      year type            count
-   &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;
- 1 Afghanistan  1999 cases             745
- 2 Afghanistan  1999 population   19987071
- 3 Afghanistan  2000 cases            2666
- 4 Afghanistan  2000 population   20595360
- 5 Brazil       1999 cases           37737
- 6 Brazil       1999 population  172006362
- 7 Brazil       2000 cases           80488
- 8 Brazil       2000 population  174504898
- 9 China        1999 cases          212258
-10 China        1999 population 1272915272
-11 China        2000 cases          213766
-12 China        2000 population 1280428583</code></pre>
-</div>
-</div>
-<p>En este caso, el problema es que una observación es un país en un año, pero cada observación se distribuye en <strong>2</strong> filas. Para solucionarlo, ocupamos <code>pivot_wider</code>, es decir, <em>agrandar la base de datos hacia el lado</em> o bien, con <strong>más columnas o variables</strong></p>
-</section><section id="aplicación-pivot-wider-1" class="slide level2 smaller"><h2>Aplicación Pivot Wider</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>table2 <span class="sc">|&gt;</span> </span>
-<span id="cb38-2"><a></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> type, <span class="at">values_from =</span> count)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 4
-  country      year  cases population
-  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
-1 Afghanistan  1999    745   19987071
-2 Afghanistan  2000   2666   20595360
-3 Brazil       1999  37737  172006362
-4 Brazil       2000  80488  174504898
-5 China        1999 212258 1272915272
-6 China        2000 213766 1280428583</code></pre>
-</div>
-</div>
-<ul>
-<li class="fragment">Notar que los argumentos operan de manera análoga al <code>pivot_longer</code>.</li>
-</ul></section><section id="aplicación-pivot-wider-2" class="slide level2 smaller"><h2>Aplicación Pivot Wider</h2>
-
-<!-- =================================================================== -->
-<!-- FIN SECCIÓN OPCIONAL: PIVOT                                          -->
-<!-- =================================================================== -->
-<img data-src="imagenes/pivot_wider.png" class="r-stretch quarto-figure-center"><p class="caption">Pivot Wider</p></section></section><section><section id="recapitulación" class="title-slide slide level1 center"><h1>Recapitulación</h1>
+<!-- # Ordenar Datos -->
+<!-- ## *Tidy* data {.justify .incremental .smaller} -->
+<!-- ::: {.fragment} -->
+<!-- -   Una **variable** es una cantidad, cualidad o propiedad que se puede medir. -->
+<!-- -   Un **valor** es el estado de una variable cuando se mide. El valor de una variable puede cambiar de una medida a otra. -->
+<!-- -   Una **observación** es un conjunto de mediciones realizadas en condiciones similares (por lo general, se realizan todas las mediciones en una observación al mismo tiempo y en el mismo objeto). Una observación contendrá varios valores, cada uno asociado con una variable diferente. A veces nos referiremos a una observación como un punto de datos. -->
+<!-- ::: -->
+<!-- ::: {.fragment} -->
+<!-- Los datos *tidy* o tabulares son un conjunto de **valores**, cada uno asociado con una **variable** y una **observación**. Los datos tabulares están en formato *tidy* si cada [valor]{.underline} se coloca en su propia [celda]{.underline}, cada [variable]{.underline} en su propia [columna]{.underline} y cada [observación]{.underline} en su propia [fila]{.underline}. -->
+<!-- ::: -->
+<!-- ## *Tidy* data -->
+<!-- ![Datos Ordenados en formato tidy](imagenes/tidydata.png){width="60%" fig-align="center"} -->
+<!-- ## Alargar el data frame (*lengthening data*): Más Filas u Observaciones {.smaller} -->
+<!-- ::: {.fragment} -->
+<!-- 1. Función a utilizar: `pivot_longer()` -->
+<!-- 2. Argumentos importantes: -->
+<!--   + `data`: El *dataframe* a pivotear (implícito si utilizamos un *pipeline* con un dataframe que le preceda) -->
+<!--   + `cols`: El conjunto de variables a pivotear en formato longer -->
+<!--   + `names_to`: Un *string* que especifica la nueva columna o columnas para crear a partir de la información almacenada en los nombres de columna de los datos especificados por `cols` -->
+<!--   + `values_to`: Un *string* que especifica el nombre de la columna para crear a partir de los datos almacenados en el valor de la celda -->
+<!-- ::: -->
+<!-- ::: {.fragment} -->
+<!-- ::: {.callout-tip} -->
+<!-- El argumento clave de esta función es `cols`, ya que esta indica las columnas que queremos pasar a un formato *long*. -->
+<!-- ::: -->
+<!-- ::: -->
+<!-- ## Ensanchar el data frame (*widening data*): Más Columnas o Variables {.smaller} -->
+<!-- ::: {.fragment} -->
+<!-- 1. Función a utilizar: `pivot_wider()` -->
+<!-- 2. Argumentos importantes: -->
+<!--   + `data`: El *dataframe* a pivotear (implícito si utilizamos un *pipeline* con un dataframe que le preceda) -->
+<!--   + `names_from`: El conjunto de variables a pivotear en formato wider (sobre qué columna(s) se obtendrá el nombre de la columna de salida) -->
+<!--   + `values_from`: El conjunto de variables desde donde se obtendrán los valores de las nuevas columnas creadas. -->
+<!-- ::: -->
+<!-- ::: {.fragment} -->
+<!-- ::: {.callout-tip} -->
+<!-- En este caso, tanto  `names_from` como `values_from` son clave para poder ejecutar correctamente la función. -->
+<!-- ::: -->
+<!-- ::: -->
+<!-- ## Aplicación Pivot Longer {.smaller} -->
+<!-- - Veamos un data set sencillo que muestra el número de casos de Tuberculosis documentados por la Organización Mundial de la Salud en Afganistán, Brasil y China entre 1999 y 2000: [ver aquí](<https://www.who.int/teams/global-tuberculosis-programme/data>) -->
+<!-- - Los datos contienen valores asociados con cuatro variables (país, año, casos y población), pero cada tabla organiza los valores en un diseño diferente. -->
+<!-- . . .  -->
+<!-- ```{r pl1, echo=TRUE} -->
+<!-- print(table1) -->
+<!-- ``` -->
+<!-- ## Aplicación Pivot Longer {.smaller} -->
+<!-- - A continuación, se muestra una parte de este *dataset* en formato **no** *tidy*: -->
+<!-- . . . -->
+<!-- ```{r pl2, echo=TRUE} -->
+<!-- print(table4a) -->
+<!-- ``` -->
+<!-- - Se puede apreciar que los nombres de columna 1999 y 2000 representan valores de la variable año, los valores en las columnas 1999 y 2000 representan valores de la variable casos, y cada fila representa **dos** observaciones en lugar de una. -->
+<!-- ## Aplicación Pivot Longer {.smaller} -->
+<!-- - Para transformar este *dataset* en uno *tidy*, podemos ocupar la función `pivot_longer`, es decir, *agrandar la base de datos hacia abajo* o bien, con **más observaciones**: -->
+<!-- . . . -->
+<!-- ```{r pl3, echo=TRUE} -->
+<!-- table4a |>   -->
+<!--   pivot_longer(c(`1999`, `2000`), names_to = "year", values_to = "cases") -->
+<!-- ``` -->
+<!-- ## Aplicación Pivot Longer -->
+<!-- ![Pivot Longer](imagenes/pivot_longer.png) -->
+<!-- ## Aplicación Pivot Wider {.smaller} -->
+<!-- Analicemos otro diseño del mismo *dataset* original: -->
+<!-- ```{r pw1, echo=TRUE} -->
+<!-- print(table2) -->
+<!-- ``` -->
+<!-- En este caso, el problema es que una observación es un país en un año, pero cada observación se distribuye en **2** filas. Para solucionarlo, ocupamos `pivot_wider`, es decir, *agrandar la base de datos hacia el lado* o bien, con **más columnas o variables** -->
+<!-- ## Aplicación Pivot Wider {.smaller} -->
+<!-- ```{r pw2, echo=TRUE} -->
+<!-- table2 |>  -->
+<!--     pivot_wider(names_from = type, values_from = count) -->
+<!-- ``` -->
+<!-- - Notar que los argumentos operan de manera análoga al `pivot_longer`. -->
+<!-- ## Aplicación Pivot Wider {.smaller} -->
+<!-- ![Pivot Wider](imagenes/pivot_wider.png) -->
+</section></section><section><section id="recapitulación" class="title-slide slide level1 center"><h1>Recapitulación</h1>
 
 </section><section id="qué-aprendimos-hoy" class="slide level2 smaller justify"><h2>¿Qué aprendimos hoy?</h2>
 <ul>
@@ -1637,7 +1519,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZGYgPC0gdGliYmxlKGBOb21i
 <div class="fragment">
 <p>La próxima clase profundizaremos en cómo <strong>ordenar y transformar</strong> estas bases (<code>tidyr</code>, <code>dplyr</code>) para dejarlas listas para el análisis.</p>
 </div>
-</section></section><section id="bibliografía" class="title-slide slide level1 smaller scrollable"><h1>Bibliografía</h1>
+</section><section id="bibliografía" class="slide level2 smaller scrollable"><h2>Bibliografía</h2>
 
 
 <script type="webr-data">
@@ -1674,7 +1556,7 @@ Ismay, Chester, Albert Y. Kim, y Arturo Valdivia. 2025. <em>Statistical inferenc
 Wickham, Hadley, Mine Çetinkaya-Rundel, y Garrett Grolemund. 2023. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>.
 </div>
 </div>
-</section>
+</section></section>
 </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="img/logo-26.png" class="slide-logo"></p>
