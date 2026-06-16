@@ -1,0 +1,612 @@
+/*https://quarto.org/docs/presentations/revealjs/themes.html*/
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;600;700&display=swap');
+
+/*-- scss:defaults --*/
+
+$lighblue: #e9ffff !default;
+$black: #222222 !default;
+$dark-blue: #22226c;
+$cyan:    #3093CF !default;
+$white: #ffffff;
+$dark-pink:    #A52C60 !default;
+$brown: #a67b82 !default;
+$red: #ff4747;
+$pink:    #ffe3ff !default;
+$light-pink: #fffaff;
+
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #373a3c !default;
+$gray-900: #212529 !default;
+$black:    #000000 !default;
+
+$blue:    #2780e3 !default;
+$blue2:   #4758AB !default;
+$blue3:   #6B7C93 !default;
+$indigo:  #6610f2 !default;
+$purple:  #170C3A !default;
+$red:     #CF4446 !default;
+$orange:  #EE6A24 !default;
+$light-orange:  #FB9E07 !default;
+$yellow:  #F6D645 !default;
+$green:   #118230 !default;
+$teal:    #20c997 !default;
+
+$primary:   $pink !default;
+$secondary: $gray-700 !default;
+$success:   $green !default;
+$info:      $cyan !default;
+$warning:   $orange !default;
+$danger:    $red !default;
+$light:     $gray-400 !default;
+$dark:      $black !default;
+
+// barra de progreso
+$progress-color: $dark-blue !default;
+
+// controles de navegación (flechas)
+$control-color: $dark-blue !default;
+$control-opacity: 0.6 !default;
+$control-hover-color: $dark-pink !default;
+
+// fonts
+$font-family-sans-serif: "League Spartan", Atkinson Hyperlegible, Helvetica, Arial, sans-serif !default;
+$presentation-font-size-root: 35px;
+$presentation-line-height: 1.2;
+
+// headings
+$presentation-heading-font: "League Spartan", Atkinson Hyperlegible, Helvetica, Arial, sans-serif !default; //"EB Garamond", Garamond, Times, serif;
+$presentation-heading-color: $dark-blue !default;
+
+$presentation-h1-font-size:	2.5em;
+$presentation-h2-font-size:	1.4em;
+$presentation-h3-font-size:	1.2em;
+$presentation-h4-font-size: 1em;
+
+// colors
+$body-bg: $white !default;
+$body-color: $dark !default;
+$link-color: $indigo !default;
+$link-color-hover: $indigo !default;
+$selection-bg: $gray-500 !default;
+
+// inline code
+$code-bg:  $gray-100 !default;
+$code-color: $red;
+
+// code blocks
+//$code-block-bg: #1A111E;
+//$code-block-border-color: lighten($code-block-bg, 10%);
+$code-block-font-size: 0.8em;
+
+// justificación de parrafos
+p,
+.reveal ul li,
+.reveal ol li,
+.reveal ul li p,
+.reveal ol li p {
+  text-align: justify !important;
+}
+
+// configuraciones-reveal
+
+.img-full {
+  img {
+    width: 90% !important;
+    max-width: 90% !important;
+    max-height: 90% !important;
+    height: auto !important;
+    object-fit: contain;
+  }
+}
+
+.reveal .subtitle {
+  color: $blue3 !important;
+  text-align: center !important;
+  font-style: normal;   // quitar cursiva
+  font-size: 1.4em;     // ajustar tamaño
+  margin-top: 10px;     // opcional: mejor spacing
+}
+
+.reveal .date {
+  position: static !important;
+  margin-top: 10px;
+  font-weight: bold;
+  color: $black !important;
+  font-size: 0.9em;
+  text-align: center !important;
+}
+
+.reveal .institute {
+  margin-top: 20px;
+   color: $dark-pink;
+}
+
+//call-outs
+.callout .callout-title,
+.callout .callout-title-container {
+  color: #000000 !important;
+}
+
+// general
+p {
+  color: $body-color;
+  text-align: justify !important;
+  
+  code {
+    padding: 3px !important;
+  }
+}
+
+.cell code {
+  padding: 14px 6px !important; 
+}
+
+a {
+  text-decoration: underline !important;
+}
+
+h1 {
+  color: $dark-blue!important;
+}
+
+//strong {
+//  color: $blue2;
+//}
+
+.footer {
+  font-size: 0.4em !important;
+  
+  p {
+  color: #442A54 !important;
+  text-align: justify;
+  }
+  
+  a {
+  color: #442A54 !important;
+  text-align: justify;
+  }
+}
+
+.title {
+  font-weight: 600 !important;
+  line-height: 1 !important;
+}
+
+.subtitle {
+  // font-family: "EB Garamond", Garamond, Times, serif !important;
+  font-size: 130%;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.subtitulo {
+  font-size: 120%;
+  font-weight: bold;
+  color: $link-color;
+}
+
+h4 {
+  font-size: 120% !important;
+  font-weight: bold !important;
+  color: $link-color !important;
+}
+
+// images
+.reveal section.img_container {
+        width: 90%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+}
+.reveal section img {
+        display: block;
+        margin: auto;
+        height: auto;
+        max-height: 90%;
+        width: auto;
+        max-width: 90%;
+}
+
+// bloques de código
+.cell {
+  margin: 12px;
+}
+
+// creados
+.espaciar {
+      padding-right: 10%; /* Adjust the percentage as needed */
+}
+
+.borde {
+  border-radius: 7px !important;
+  margin: 12px !important;
+}
+
+.borde-linea {
+  border-radius: 8px !important;
+}
+
+.linea {
+  border: solid 2px #442A54;
+}
+
+.centrar {
+  margin: auto; 
+  text-align: center;
+}
+
+
+.cuadro {
+    border: solid 1px #442A54;
+    border-radius: 8px !important;
+    padding: 10px !important;
+    padding-left: 20px !important;
+    padding-bottom: 4px !important;
+    margin: 10px;
+    background-color: #31193F;
+    margin-bottom: 20px !important;
+    margin-top: 20px !important;
+}
+
+.logo-titulo {
+  position: relative;
+  top: -0.2em;
+}
+
+/*-- scss:rules --*/
+
+.reveal .slide blockquote {
+  border-left: 3px solid $text-muted;
+  padding-left: 0.5em;
+}
+
+.reveal .slides .medium {
+  font-size: 0.85em !important;
+  
+  li {
+    font-size: inherit !important;
+  }
+}
+
+/* Listas */
+.reveal ul {
+  list-style-type: none;
+  padding-left: 2px;
+}
+
+.reveal ul ul {
+  list-style-type: none;
+  padding-left: 2px;
+}
+
+.reveal ul ul ul {
+  list-style-type: none;   // ← esto elimina el ○ nativo del browser
+  padding-left: 2px;
+}
+
+.reveal ul li {
+  position: relative;
+  padding-left: 36px;
+  margin-bottom: 4px;
+}
+
+/* Nivel 1 — ▶ */
+.reveal ul > li::before {
+  content: "▶";
+  position: absolute;
+  left: 0;
+  color: $black;
+  font-size: 0.6em;        // ← relativo al li, no px fijo. Se adapta a .smaller
+  line-height: 2;          // ← baja el símbolo para alinearlo con el texto
+}
+
+/* Nivel 2 — ■ */
+.reveal ul ul > li::before {
+  content: "■";
+  position: absolute;
+  left: 0;
+  color: $black;
+  font-size: 0.65em;       // ← relativo también
+  line-height: 2;
+}
+
+/* Nivel 3 — • más grande */
+.reveal ul ul ul > li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: $black;
+  font-size: 1.4em;        // ← mucho más grande que antes
+  line-height: 1.1;
+}
+
+/* Listas ordenadas — sin símbolo extra */
+.reveal ol {
+  list-style-type: decimal !important;
+  padding-left: 2em !important;
+}
+
+.reveal ol > li {
+  padding-left: 8px;
+}
+
+.reveal ol > li::before {
+  content: none !important;
+}
+
+
+/*
+.reveal ul {
+  list-style-type: none; 
+  padding-left: 2px; 
+}
+
+.reveal ul ul {
+  list-style-type: none; 
+  padding-left: 2px; 
+}
+
+.reveal ul li {
+  position: relative; 
+  padding-left: 30px; 
+  margin-bottom: 2px;
+}
+
+// Limitar ▶ solo a listas no-ordenadas
+.reveal ul > li::before {
+  content: "▶";
+  position: absolute;
+  left: 0;
+  color: $black;
+  font-size: 20px;
+  line-height: 1.8;
+}
+
+// Listas ordenadas: sin símbolo extra, con numeración normal
+.reveal ol {
+  list-style-type: decimal !important;
+  padding-left: 2em !important;
+}
+
+.reveal ol > li {
+  padding-left: 8px;  // menos padding que ul
+}
+
+.reveal ol > li::before {
+  content: none !important;  // elimina el ▶ en items de ol
+}
+
+.reveal ul ul > li::before {
+  content: "■";
+  position: absolute;
+  left: 0;
+  color: #000000;
+  font-size: 18px;
+}
+
+
+.reveal ul ul ul > li::before {
+  content: "⁃";
+  position: absolute;
+  left: 0;
+  color: #000000;
+  font-size: 17px;
+}
+
+.reveal ul ul ul {
+  list-style-type: none;
+}
+
+*/
+
+.rosa {
+  filter: saturate(200%) brightness(90%);
+}
+
+.izq {
+ float: left !important;
+ padding-right: 16px;
+}
+
+.der {
+ float: right !important;
+ padding-left: 16px;
+}
+
+.esquina-der {
+  float: right !important;
+  margin-right: 32px !important;
+  margin-top: -80px !important;
+}
+
+.ancho-medio {
+  width: 120px !important;
+}
+
+
+.circulo {
+  background-color: $link-color;
+  color: $body-bg !important; 
+  font-weight: bold;
+  width: 30px; height: 30px;
+  line-height: 30px;
+  font-size: 95%;
+  padding-bottom: 0px;
+  border-radius: 50%;
+  text-align: center;
+  display: inline-block;
+  margin-right: 4px;
+  vertical-align: 0.1em;
+}
+
+.circulo-grande {
+  background-color: $link-color;
+  color: $body-bg !important; 
+  font-weight: bold;
+  width: 50px; height: 50px;
+  line-height: 50px;
+  font-size: 120%;
+  padding-bottom: 0px;
+  border-radius: 50%;
+  text-align: center;
+  display: inline-block;
+  margin-right: 4px;
+  vertical-align: 0.1em;
+}
+
+.circulo-grande-texto {
+  font-size: 90%;
+  margin-top: 60px;
+  margin-left: 25px;
+  transform: translate(-50%, 0%);
+}
+.circulo-grande-texto-der {
+  font-size: 90%;
+  margin-top: 60px;
+  margin-right: 25px;
+  transform: translate(50%, 0%);
+}
+
+.pad {
+  padding-top: 8px !important; 
+  padding-bottom: 8px !important; 
+}
+
+
+.just-der {
+  text-align: right !important;
+}
+
+
+.boton {
+  background-color: $link-color;
+  color: $body-bg !important; 
+  font-weight: bold;
+  font-size: 100%;
+  padding: 0px 18px;
+  border-radius: 8px;
+  text-align: center;
+  display: inline-block;
+  margin: 8px 4px;
+  
+  a {
+    color: $body-bg !important; 
+    text-decoration: none !important;
+  }
+  
+  p {
+  color: $body-bg !important;
+  }
+  
+  .fa-classic, .fa-regular, .fa-solid, .far, .fas {
+    margin-right: 6px !important;
+  }
+}
+
+
+
+.entrada-fade-in {
+  animation: fadeIn 3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.padding {
+  padding: 20px !important;
+}
+
+.fit-image {
+  width: 100% !important;
+  height: auto !important; /* maintain aspect ratio */
+  max-height: 100% !important; /* ensure it fits vertically */
+  object-fit: contain; /* ensures the whole image is visible within its container */
+}
+
+.fondo {
+  background-color: $body-bg !important;
+}
+
+
+.linea {
+  padding: 2px 8px;
+  background-color: $white;
+  border-radius: 6px;
+  border: none;
+  font-size: 65%;
+  color: #23102A;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+figure {
+  margin: 16px;
+  
+  img {
+    border-radius: 6px;
+  }
+}
+
+.r-stretch {
+  border-radius: 6px;
+}
+
+.quiz-question {
+  li.option-button {
+    list-style: none !important;
+    &::before {
+      display: none !important;
+    }
+  }
+}
+
+/* Para esconder los logos de la slides de transición con background colors */
+.reveal .slide-logo {
+  z-index: -999 !important;
+}
+
+.cuadro-pregunta {
+  background-color: #f0f7ff;
+  border-left: 5px solid #ffe45b;
+  border-radius: 8px;
+  padding: 15px 20px;
+  margin-top: 15px;
+  
+  p {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 0.95em;
+  }
+  
+  &::before {
+    content: "💡 Pregunta rápida";
+    display: block;
+    font-weight: bold;
+    color: #000935;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+  }
+}
+
+.cell-output-webr,
+.webr-editor {
+  min-height: 250px !important;
+}
+
+/* Para que el dropdown de autocompletado no se corte */
+.webr-editor .cm-tooltip-autocomplete {
+  max-height: 300px !important;
+  overflow-y: auto !important;
+  z-index: 9999 !important;
+}

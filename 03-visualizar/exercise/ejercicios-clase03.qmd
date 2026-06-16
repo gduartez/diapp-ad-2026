@@ -1,0 +1,389 @@
+---
+title: "Guía de Ejercicios N°3 - Análisis de Datos y Estadística Computacional"
+subtitle: "Visualizar Datos con ggplot2"
+author: "Prof. Gabriel Duarte Zúñiga"
+institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
+date: "2026-06-16"
+lang: es
+format:
+  html:
+    toc: true
+    toc-title: "Contenidos"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+    theme: [flatly, styles_ex.scss]
+    highlight-style: github
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    df-print: paged
+    fig-align: center
+    fig-width: 8
+    fig-height: 5
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  eval: true             
+---
+
+```{r}
+#| include: false
+#| eval: true
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(gapminder)
+library(ggthemes)
+library(scales)
+library(sf)
+library(ggspatial)
+```
+
+::: callout-important
+## Antes de comenzar
+
+Asegúrense de tener instalados los siguientes paquetes. Si no los tienen, instálenlos una sola vez con `install.packages("nombre_paquete")` en la consola:
+
+```{r}
+#| eval: false
+install.packages("tidyverse")
+install.packages("readxl")
+install.packages("janitor")
+install.packages("ggthemes")
+install.packages("scales")
+install.packages("sf")
+install.packages("ggspatial")
+```
+
+Luego cárguenlos al inicio de su script:
+
+```{r}
+library(tidyverse)   # incluye ggplot2, dplyr, tidyr, stringr y readr
+library(readxl)      # para leer archivos .xlsx
+library(janitor)     # para usar clean_names()
+library(ggthemes)    # para temas prediseñados como theme_clean()
+library(scales)      # para formatear etiquetas (separador de miles, etc.)
+library(sf)          # para datos espaciales
+library(ggspatial)   # para escala y norte en mapas
+```
+:::
+
+::: callout-tip
+## Organicen el proyecto
+
+Creen una nueva carpeta de la clase 3 (Ej: "clase_03") y un nuevo **proyecto de RStudio** (`.Rproj`) dentro de ella. Se sugiere que archivos descargados queden dentro de la subcarpeta `data/clean/`:
+
+```         
+clase_03/
+├── clase_03.Rproj
+├── data/
+│   └── clean/
+│       ├── homicidios_wide.xlsx
+│       ├── homicidios_long.xlsx
+│       ├── homicidios_rm_sf.rds
+├── output/
+└── scripts/
+    └── ejercicio_grupal.R
+```
+
+Recuerden crear la carpeta `output/` para guardar los gráficos exportados.
+:::
+
+------------------------------------------------------------------------
+
+# Ejercicio Grupal
+
+En esta actividad pondremos en práctica, **en grupos de 4 a 6 personas**, los contenidos de la **Clase 3**: construir visualizaciones con `ggplot2` para comunicar patrones en los datos.
+
+## Introducción
+
+Seguiremos trabajando con los datos de **víctimas de homicidio consumado** del [Centro para la Prevención de Homicidios y Delitos Violentos](https://prevenciondehomicidios.cl/) que procesamos en la Clase 2. En esta ocasión, usaremos dos versiones preprocesadas del dataset:
+
+- **`homicidios_wide.xlsx`**: una fila por comuna con los homicidios de cada año como columnas separadas, junto con datos de población, pobreza y región.
+- **`homicidios_long.xlsx`**: un registro por víctima con la variable `anio` indicando el año.
+- **`homicidios_rm_sf.rds`**: datos espaciales de las comunas de la RM con las estadísticas de homicidios ya incorporadas.
+
+El objetivo es construir una secuencia de gráficos que permitan analizar distintas variables de los datos de homicidio y pobreza a nivel comunal: desde la evolución temporal de los homicidios en Chile, pasando por la relación entre pobreza y violencia, hasta un mapa comunal para la Región Metropolitana.
+
+::: callout-note
+## Modalidad de trabajo
+
+-   Trabajen en **grupos de 4 a 6 personas** en las *breakout rooms* de zoom.
+-   Tiempo estimado: **30 a 40 minutos**.
+-   Designen a una persona que **comparta pantalla** y vaya escribiendo el código; el resto acompaña la resolución del ejercicio probando en su computador local y aportando a la discusión.
+-   Intenten primero resolver cada parte y solo entonces revisen la **pauta** desplegable.
+:::
+
+## Funciones utilizadas
+
+Un repaso breve de las herramientas de `ggplot2` que son necesarias para la resolución del ejercicio:
+
+-   **`ggplot(data, aes(x, y, ...))`**: inicializa el gráfico definiendo los datos y las variables que se mapean a los ejes y otros atributos estéticos.
+-   **`geom_line()`**: traza una línea que conecta los puntos en orden del eje x.
+-   **`geom_point()`**: dibuja puntos (diagrama de dispersión).
+-   **`geom_col()`**: grafica barras cuya altura corresponde al valor de la variable `y`.
+-   **`geom_text(aes(label = ...))`**: añade etiquetas de texto sobre el gráfico.
+-   **`geom_smooth()`**: agrega una línea de tendencia suavizada (por defecto usa LOESS). Con `method = lm` traza una recta de regresión lineal.
+-   **`geom_sf()`**: dibuja geometrías espaciales (polígonos, líneas, puntos) a partir de un objeto `sf`.
+-   **`scale_x_continuous()` / `scale_y_continuous()`**: controlan los ejes numéricos (límites, cortes, formato).
+-   **`scale_fill_distiller()`**: aplica paletas de color continuas a los rellenos.
+-   **`labs(title, subtitle, x, y, caption, fill)`**: define títulos y etiquetas del gráfico.
+-   **`theme_clean()`** (de `ggthemes`): un tema limpio y profesional.
+
+------------------------------------------------------------------------
+
+### Pregunta 1: Preparar los datos {#sec-p1}
+
+Cargue los archivos `homicidios_wide.xlsx` y `homicidios_long.xlsx` desde la carpeta `data/clean/`. Luego:
+
+a. Sobre `homicidios_wide`, cree dos nuevas variables:
+    - `tasa_hom_2024`: la tasa de homicidios por cada 100.000 habitantes (`hom_2024 / poblacion_censada * 100000`).
+    - `zona`: una clasificación geográfica usando `case_when()` sobre `codigo_region`: "Norte" (regiones 15, 1, 2, 3, 4), "Centro" (5, 13, 6, 7, 16, 8), "Sur" (9, 14, 10) y "Austral" (el resto).
+
+b. A partir de `homicidios_long`, cree un resumen anual llamado `homicidios_anual` que cuente el total de homicidios por año.
+
+c. Cree un objeto `homicidios_wide_p` filtrando `homicidios_wide` para conservar solo las comunas con **al menos 1 homicidio** en 2024 (`hom_2024 > 0`). Este objeto lo usaremos en los gráficos de dispersión.
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+homicidios_wide <- read_excel('data/clean/homicidios_wide.xlsx') |> 
+  mutate(
+    tasa_hom_2024 = hom_2024 / poblacion_censada * 100000,
+    zona = case_when(
+      codigo_region %in% c(15, 1, 2, 3, 4)    ~ "Norte",
+      codigo_region %in% c(5, 13, 6, 7, 16, 8) ~ "Centro",
+      codigo_region %in% c(9, 14, 10)          ~ "Sur",
+      .default = "Austral"
+    )
+  )
+
+homicidios_long <- read_excel('data/clean/homicidios_long.xlsx')
+
+homicidios_anual <- homicidios_long |> 
+  count(anio, name = "homicidios")
+
+homicidios_wide_p <- homicidios_wide |> 
+  filter(hom_2024 > 0)
+```
+
+La tasa de homicidios **por 100.000 habitantes** es la forma estándar de comparar comunas de distinto tamaño: sin ella, es altamente posible que las comunas más grandes  aparezcan con más homicidios simplemente por tener más población, siendo así la tasa un indicador más adecuado para comparar el nivel de violencia entre territorios. El filtro `hom_2024 > 0` excluye las comunas sin homicidios, que de otro modo aparecerían apiladas en `y = 0` distorsionando la visualización.
+:::
+
+### Pregunta 2: Gráfico de línea {#sec-p2}
+
+Usando `homicidios_anual`, construya un gráfico de **línea** de color azul (por ejemplo, `"#4393C3"`) que muestre la evolución del total de homicidios en Chile a lo largo de los años. Añada puntos sobre la línea para marcar cada observación. Configure el eje x para que muestre todos los años (de 2018 a 2025) y el eje y para que comience en 0 y termine en 1500. Use `theme_clean()` del paquete `ggthemes`. Guarde el gráfico en el objeto `p2`.
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+p2 <- ggplot(homicidios_anual, aes(x = anio, y = homicidios)) +
+  geom_line(color = '#4393C3', linewidth = 2, alpha = .8) +
+  geom_point(alpha = .7, size = 2) +
+  scale_x_continuous(breaks = seq(2018, 2025, 1)) +
+  scale_y_continuous(limits = c(0, 1500)) +
+  theme_clean(base_size = 14)
+
+p2
+```
+
+`geom_line()` conecta los puntos en el orden del eje x, creando la serie de tiempo. `geom_point()` superpone los puntos para facilitar la lectura de cada año. `scale_x_continuous(breaks = ...)` fuerza a que el eje x muestre cada año individualmente en vez de dejar que R elija los cortes automáticamente. `limits = c(0, 1400)` asegura que el eje y parta de 0, lo que evita exagerar visualmente las variaciones.
+:::
+
+### Pregunta 3: Gráfico de columnas con etiquetas {#sec-p3}
+
+Construya un gráfico de **columnas** (*barras verticales*) con los mismos datos de `homicidios_anual`. Agregue **etiquetas** sobre cada barra con el valor exacto de homicidios con `geom_text()` fijando un tamaño de 4, un ajuste vertical de -.4 y fuente **"bold"**. Ajuste el **eje y** entre 0 y 1500 con breaks de 500 y ocupando  `expansion(mult = c(0, 0.05))` dentro del argumento `expand()` [^expansion]. Asigne títulos a los ejes (`"Año"` y `"Frecuencia"`). Guarde el gráfico en `p3`.
+
+[^expansion]: Documentación oficial de ggplot2 sobre [expansion()](https://ggplot2.tidyverse.org/reference/expansion.html)
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+p3 <- ggplot(homicidios_anual, aes(x = anio, y = homicidios)) +
+  geom_col(fill = '#173277', width = 0.7) +
+  geom_text(
+    aes(label = homicidios),
+    vjust = -0.4,
+    size = 4,
+    fontface = "bold"
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1500),
+    breaks = seq(0, 1500, 500),
+    expand = expansion(mult = c(0, 0.05))
+  ) +
+  labs(x = "Año", y = "Frecuencia") +
+  scale_x_continuous(breaks = seq(2018, 2025, 1)) +
+  theme_clean(base_size = 14)
+
+p3
+```
+
+`geom_col()` usa directamente el valor de `y` como altura de la barra (a diferencia de `geom_bar()`, que por defecto cuenta filas). `geom_text()` superpone el texto y `vjust = -0.4` lo posiciona justo arriba de la barra. `expansion(mult = c(0, 0.05))` elimina el espacio entre la base del eje y la primera barra (margen inferior = 0) y deja un pequeño margen superior para las etiquetas.
+:::
+
+### Pregunta 4: Gráfico de dispersión {#sec-p4}
+
+Usando `homicidios_wide_p`, construya un gráfico de **dispersión** que muestre la relación entre la **tasa de pobreza** (eje x) y la **tasa de homicidios 2024** (eje y). Coloree los puntos según la variable `zona` para distinguir las macroregiones. Añada títulos a los ejes. Guarde el gráfico en `p4` y muestre el resultado.
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+p4 <- ggplot(homicidios_wide_p, aes(x = tasa_pobreza, y = tasa_hom_2024)) +
+  geom_point(aes(color = zona)) +
+  labs(
+    x = "Tasa de Pobreza",
+    y = "Tasa de Homicidios 2024"
+  ) +
+  theme_clean(base_size = 14)
+
+p4
+```
+
+En `ggplot2`, los atributos estéticos que dependen de los datos (como el color por zona) se especifican **dentro de `aes()`**, mientras que los atributos fijos (como el tamaño o la transparencia) se definen **fuera de `aes()`**. En este caso, `color = zona` va dentro de `aes()` porque queremos que cada zona tenga un color distinto asignado automáticamente por ggplot.
+:::
+
+### Pregunta 5: Agregar línea de tendencia {#sec-p5}
+
+Tome el gráfico `p4` y agréguele una **línea de tendencia suavizada** con `geom_smooth()`. Guárdelo en `p5`. ¿Qué patrón sugiere la curva sobre la relación entre pobreza y homicidios?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+p5 <- p4 +
+  geom_smooth()
+
+p5
+```
+
+Una de las ventajas de `ggplot2` es que los gráficos son **objetos acumulables**: podemos tomar un gráfico existente (`p4`) y sumarle nuevas capas con `+`. `geom_smooth()` sin argumentos ajusta una curva LOESS (*Locally Estimated Scatterplot Smoothing*), que es una regresión local que se adapta a la forma de los datos sin asumir linealidad. La banda gris alrededor de la curva es el **intervalo de confianza al 95%**.
+
+Notar que la presencia de algunos **puntos extremos** (comunas pequeñas con tasas de homicidio muy altas) puede distorsionar la interpretación visual. La siguiente pregunta aborda este problema.
+:::
+
+### Pregunta 6: Filtrar y ajustar tendencia lineal {#sec-p6}
+
+Para reducir el efecto de los valores extremos, filtre `homicidios_wide_p` conservando solo las comunas con **más de 10.000 habitantes** y guárdelo en `homicidios_wide_p_filter`. Con estos datos, construya un nuevo gráfico de dispersión similar al anterior pero esta vez con una **línea de tendencia lineal** (`method = lm`). Guárdelo en `p6`. ¿Cambia la interpretación respecto al gráfico anterior?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+homicidios_wide_p_filter <- homicidios_wide_p |> 
+  filter(poblacion_censada > 10000)
+
+p6 <- ggplot(homicidios_wide_p_filter, aes(x = tasa_pobreza, y = tasa_hom_2024)) +
+  geom_point(aes(color = zona)) +
+  labs(
+    x = "Tasa de Pobreza",
+    y = "Tasa de Homicidios 2024"
+  ) +
+  theme_clean(base_size = 14) +
+  geom_smooth(method = lm)
+
+p6
+```
+
+Al filtrar las comunas muy pequeñas (donde una sola víctima genera una tasa artificialmente alta), el patrón se vuelve más claro. `method = lm` ajusta una **recta de regresión lineal** en vez de la curva LOESS. La pendiente de esta recta sugiere una asociación positiva entre pobreza y homicidios, aunque no necesariamente implica causalidad.
+
+::: callout-warning
+### Sobre la interpretación
+
+Las comunas pequeñas no son "datos erróneos", sino que simplemente tienen tasas más volátiles porque un solo caso pesa mucho en el denominador. Filtrarlas es una decisión analítica que debe **documentarse y justificarse**. 
+:::
+:::
+
+### Pregunta 7: Mapa temático de la RM {#sec-p7}
+
+Cargue el archivo `homicidios_rm_sf.rds` (un objeto espacial de clase `sf` que contiene las geometrías de las comunas de la RM junto con las estadísticas de homicidios). Filtre solo la **provincia de Santiago** y construya un **mapa temático** (*choropleth*) que coloree cada comuna según su `tasa_hom_2024`.
+
+Requisitos:
+
+- Use la paleta de color `"RdBu"` (rojo-azul) con `scale_fill_distiller()` y `direction = -1` para que los colores más rojos indiquen tasas más altas.
+- Agregue título, subtítulo, fuente (`caption`) y nombre de la leyenda usando `labs()`.
+- Incluya una **barra de escala** y una **flecha de norte** usando las funciones `annotation_scale()` y `annotation_north_arrow()` del paquete `ggspatial`.
+- Exporte el mapa a `output/mapa_homicidios_rm.png` con `ggsave()`.
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+homicidios_rm_sf <- read_rds('data/clean/homicidios_rm_sf.rds')
+
+ggplot(homicidios_rm_sf |> 
+         filter(provincia == 'Santiago')) +
+  geom_sf(aes(fill = tasa_hom_2024), color = 'grey100', linewidth = 0.05) +
+  scale_fill_distiller(
+    palette = "RdBu",
+    direction = -1,
+    labels = scales::label_number(accuracy = 1)
+  ) +
+  labs(
+    title    = "Tasa de Homicidios Comunal 2024",
+    subtitle = "Región Metropolitana - Provincia de Santiago",
+    caption  = "Fuente: Centro para la Prevención de Homicidios y Delitos Violentos",
+    fill     = str_wrap("Tasa de Víctimas de Homicidio", 15)
+  ) +
+  annotation_scale() +
+  annotation_north_arrow(location = "tl") +
+  theme_minimal()
+```
+
+`geom_sf()` detecta automáticamente la columna de geometría del objeto `sf` y dibuja los polígonos comunales. `aes(fill = tasa_hom_2024)` mapea el color de relleno a la tasa de homicidios. Algunos detalles de estilo:
+
+- `color = 'grey100'` y `linewidth = 0.05` hacen los bordes comunales muy sutiles para que no compitan con el relleno.
+- `scale_fill_distiller(palette = "RdBu", direction = -1)` aplica una paleta divergente donde el rojo indica tasas altas y el azul tasas bajas. `direction = -1` invierte la dirección por defecto de la paleta.
+- `str_wrap("Tasa de Víctimas de Homicidio", 15)` corta el título de la leyenda cada 15 caracteres para que no quede demasiado ancho.
+- `annotation_scale()` y `annotation_north_arrow()` son elementos cartográficos estándar que dan contexto geográfico al mapa.
+
+Para exportar el mapa:
+
+```{r}
+#| eval: false
+ggsave(
+  "output/mapa_homicidios_rm.png",
+  width  = 10,
+  height = 10,
+  dpi    = 300,
+  bg     = "white"
+)
+```
+
+`ggsave()` guarda el **último gráfico** generado. `dpi = 300` permite una resolución adecuada para impresión, y `bg = "white"` fuerza un fondo blanco (por defecto `theme_minimal()` tiene fondo transparente, lo que puede verse extraño al abrir el PNG).
+:::
+
+------------------------------------------------------------------------
+
+# Resumen de Funciones Utilizadas
+
+| Función | Paquete | Descripción |
+|---------------------|-----------------|------------------------------|
+| `ggplot(data, aes())` | ggplot2 | Inicializa el gráfico con datos y estéticas |
+| `geom_line()` | ggplot2 | Gráfico de línea (serie de tiempo) |
+| `geom_point()` | ggplot2 | Gráfico de puntos (dispersión) |
+| `geom_col()` | ggplot2 | Gráfico de barras/columnas |
+| `geom_text()` | ggplot2 | Etiquetas de texto sobre el gráfico |
+| `geom_smooth()` | ggplot2 | Línea de tendencia (LOESS o lineal) |
+| `geom_sf()` | ggplot2 | Geometrías espaciales (mapas) |
+| `scale_fill_distiller()` | ggplot2 | Paleta de color continua para rellenos |
+| `labs()` | ggplot2 | Títulos, subtítulos, ejes y leyenda |
+| `theme_clean()` | ggthemes | Tema limpio y profesional |
+| `annotation_scale()` | ggspatial | Barra de escala en mapas |
+| `annotation_north_arrow()` | ggspatial | Flecha de norte en mapas |
+| `ggsave()` | ggplot2 | Exportar gráfico a archivo |
+
+------------------------------------------------------------------------
+
+::: callout-note
+## ¿Hacia dónde seguimos?
+
+En este ejercicio construyeron una secuencia de visualizaciones que comunican distintas facetas de los datos de homicidios: evolución temporal, relación con pobreza y distribución geográfica. En la **Clase 4** aprenderemos a integrar estas visualizaciones, tablas y análisis en **documentos reproducibles** usando Quarto.
+:::

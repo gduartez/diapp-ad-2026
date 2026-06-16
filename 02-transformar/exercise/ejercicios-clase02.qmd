@@ -1,0 +1,443 @@
+---
+title: "Guía de Ejercicios N°2 - Análisis de Datos y Estadística Computacional"
+subtitle: "Transformar y Manipular Datos con R"
+author: "Prof. Gabriel Duarte Zúñiga"
+institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
+date: "2026-06-13"
+lang: es
+format:
+  html:
+    toc: true
+    toc-title: "Contenidos"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+    theme: [flatly, styles_ex.scss]
+    highlight-style: github
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    df-print: paged
+    fig-align: center
+    fig-width: 8
+    fig-height: 5
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  eval: true             
+---
+
+```{r}
+#| include: false
+#| eval: true
+library(tidyverse)
+library(readxl)
+library(janitor)
+```
+
+::: callout-important
+## Antes de comenzar
+
+Asegúrense de tener instalados los siguientes paquetes. Si no los tienen, instálenlos una sola vez con `install.packages("nombre_paquete")` en la consola:
+
+```{r}
+#| eval: false
+install.packages("tidyverse")
+install.packages("readxl")
+install.packages("janitor")
+```
+
+Luego cárguenlos al inicio de su script:
+
+```{r}
+library(tidyverse)   # incluye dplyr, tidyr, stringr y readr
+library(readxl)      # para leer archivos .xlsx
+library(janitor)     # para usar clean_names()
+```
+:::
+
+::: callout-tip
+## Organicen el proyecto
+
+Trabajen dentro del **proyecto de RStudio** (`.Rproj`) de la clase anterior y coloquen los nuevos archivos en la subcarpeta `data/clean/`:
+
+```         
+clase_02/
+├── clase_02.Rproj
+├── data/
+│   └── clean/
+│       ├── homicidios-2024.xlsx
+│       ├── homicidios-2025.xlsx
+│       └── pobreza_pob_censo_2024.xlsx
+└── scripts/
+    └── ejercicio_grupal.R
+```
+
+Así podrán usar **rutas relativas** (`"data/clean/archivo.xlsx"`) sin necesidad de `setwd()`.
+:::
+
+------------------------------------------------------------------------
+
+# Ejercicio Grupal
+
+En esta actividad pondremos en práctica, **en grupos de 4 a 6 personas**, los contenidos de la **Clase 2** del módulo: reestructurar, transformar y resumir bases de datos.
+
+## Introducción
+
+En este ejercicio trabajaremos con datos reales de **víctimas de homicidios consumado** registrados por el [Centro para la Prevención de Homicidios y Delitos Violentos](https://prevenciondehomicidios.cl/) para los años **2024 y 2025**. Cada archivo contiene un registro por víctima en el año respectivo, con información de la comuna, región, tipo de arma, contexto del delito, entre otros.
+
+El objetivo es combinar los registros de víctimas de homicidios del año 2024 y 2025 en una sola base, construir una tabla resumen por comuna, y finalmente cruzarla con los datos de **pobreza y población** que construimos en la Clase 1.
+
+::: callout-note
+## Modalidad de trabajo
+
+-   Trabajen en **grupos de 4 a 6 personas** en las *breakout rooms* de zoom.
+-   Tiempo estimado: **30 a 40 minutos**.
+-   Designen a una persona que **comparta pantalla** y vaya escribiendo el código; el resto acompaña la resolución del ejercicio probando en su computador local y discute.
+-   Intenten primero resolver cada parte y solo entonces revisen la **pauta** desplegable.
+:::
+
+## Las bases de datos
+
+**`homicidios-2024.xlsx`** y **`homicidios-2025.xlsx`** — registros individuales de víctimas consumadas de homicidio a nivel nacional (cada fila es una víctima).
+
+| Variable | Descripción |
+|-----|------|
+| `COMUN_AGR` | Nombre de la comuna donde ocurrió el hecho |
+| `NOM_REG` | Nombre de la región |
+| `ID_ANO` | Año del registro (2024 o 2025) |
+| `SEXO`, `EDAD_RECOD` | Sexo y grupo etario de la víctima |
+| `ARMA_RECOD` | Tipo de arma utilizada |
+| `CONTEXTO_RECOD` | Contexto del delito |
+
+**`pobreza_pob_censo_2024.xlsx`** — base construida en la Clase 1 con datos de pobreza y población censal para las 345 comunas del país.
+
+## Funciones que utilizarás
+
+Un repaso breve de las herramientas de la clase que necesitarás:
+
+-   **`bind_rows(x, y)`**: apila dos *data frames* uno debajo del otro (pega filas).
+-   **`clean_names()`** (de `janitor`): estandariza los nombres de columna a minúsculas, sin tildes ni espacios.
+-   **`count(var1, var2)`**: cuenta el número de filas por cada combinación de las variables indicadas.
+-   **`arrange(var)` / `arrange(desc(var))`**: ordena las filas de forma ascendente o descendente.
+-   **`pivot_wider(names_from, values_from)`**: ensancha la tabla convirtiendo valores de una columna en nuevas columnas.
+-   **`mutate(nueva_var = expresión)`**: crea o modifica variables.
+-   **`rename(nuevo = actual)`**: cambia el nombre de una columna.
+-   **`filter(condición)`**: conserva las filas que cumplen una condición.
+-   **`left_join(x, y, join_by(a == b))`**: cruza dos tablas por una llave común.
+-   **`select(var1, var2, ...)`**: conserva solo las columnas indicadas.
+-   **`group_by(var) |> summarise(...)`**: calcula estadísticas de resumen para cada grupo.
+
+------------------------------------------------------------------------
+
+### Pregunta 1: Importar y combinar {#sec-p1}
+
+Importe los archivos `homicidios-2024.xlsx` y `homicidios-2025.xlsx` desde la carpeta `data/clean/`. Luego, únalos en un solo *data frame* llamado `homicidios_24_25` usando `bind_rows()` y limpie los nombres de las columnas. ¿Cuántas observaciones tiene el dataset combinado?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+homicidios_2024 <- read_excel('data/clean/homicidios-2024.xlsx')
+homicidios_2025 <- read_excel('data/clean/homicidios-2025.xlsx')
+
+homicidios_24_25 <- bind_rows(homicidios_2024, homicidios_2025) |> 
+  clean_names()
+
+glimpse(homicidios_24_25)
+```
+
+`bind_rows()` apila ambos *data frames* uno debajo del otro: como tienen exactamente las mismas columnas, el resultado es una tabla con todas las filas de ambos años. Luego `clean_names()` convierte los nombres de mayúsculas (como `COMUN_AGR`) a minúsculas con guion bajo (`comun_agr`). El dataset combinado tiene **2.300 observaciones** (1.209 de 2024 + 1.091 de 2025).
+:::
+
+### Pregunta 2: Contar homicidios por año y comuna {#sec-p2}
+
+Usando `count()`, cuente la cantidad de homicidios por **año** (`id_ano`), **región** (`nom_reg`) y **comuna** (`comun_agr`). Guarde el resultado en `homicidios_count`. Luego, ordénelo por año de forma ascendente y por cantidad de homicidios de forma descendente. ¿Cuál es la comuna con más homicidios en 2024?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+homicidios_count <- homicidios_24_25 |> 
+  count(id_ano, nom_reg, comun_agr)
+
+homicidios_count <- homicidios_count |> 
+  arrange(id_ano, desc(n))
+
+head(homicidios_count)
+```
+
+`count()` colapsa la tabla original a una fila por cada combinación única de año, región y comuna, creando la variable `n` con el conteo de casos. Luego `arrange()` ordena por año de forma ascendente (por defecto) y dentro de cada año por `n` en forma descendente (usando `desc()`). La comuna con más homicidios en 2024 es **Puente Alto** con 49 casos, seguida de Santiago con 46.
+:::
+
+### Pregunta 3: Pivotear a formato ancho {#sec-p3}
+
+Usando `pivot_wider()`, transforme `homicidios_count` para que cada año sea una columna separada (es decir, que existan columnas `2024` y `2025` con la cantidad de homicidios). Guarde el resultado en `homicidios_wide`. ¿Qué variable define los nuevos nombres de columna y cuál los valores?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+homicidios_wide <- homicidios_count |> 
+  pivot_wider(names_from  = "id_ano",
+              values_from = "n")
+
+head(homicidios_wide)
+```
+
+`names_from = "id_ano"` toma los valores de la columna `id_ano` (2024 y 2025) y los convierte en nuevas columnas. `values_from = "n"` rellena esas columnas con la cantidad de homicidios. Observe que algunas celdas quedan con `NA`: esto significa que esa comuna tuvo homicidios en un año pero no en el otro.
+:::
+
+### Pregunta 4: Crear la variable de variación {#sec-p4}
+
+Intente crear una nueva variable `dif` que calcule la diferencia entre los homicidios de 2025 y 2024 ejecutando el siguiente código:
+
+```{r}
+#| eval: false
+#| code-fold: false
+homicidios_wide <- homicidios_wide |> 
+  mutate(dif = 2025 - 2024)
+```
+
+¿Qué resultado obtiene?. Si el resultado no es lo que espera, esto se debe a que `R` no permite que un nombre de variable empiece con un número. Para solucionarlo explore los argumentos de la función `pivot_wider()` que permitan añadir un **prefijo** de manera de que las variables comiencen con un texto y no un número, o bien, usando acentos graves ```.
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+El código **no produce un error**, pero da un resultado incorrecto: la variable `dif` tiene el valor **1** en todas las filas. Esto ocurre porque R interpreta `2025` y `2024` como **números** (y 2025 − 2024 = 1), no como nombres de columna.
+
+El problema es que las columnas generadas por `pivot_wider()` se llaman `2024` y `2025`, que son nombres que comienzan con un número. En R, los nombres de variables **no pueden empezar con un número**, por lo que para referirse a ellas dentro de `mutate()` debemos encerrarlas en **acentos graves** (*backticks*: `` ` ` ``):
+
+**Opción 1: usar acentos graves (*backticks*)**
+
+```{r}
+homicidios_wide |> 
+  mutate(dif = `2025` - `2024`) |> 
+  head(3)
+```
+
+**Opción 2: evitar el problema desde el origen con `names_prefix`**
+
+Una alternativa más limpia es usar el argumento `names_prefix` dentro de `pivot_wider()` para que las columnas se creen con un prefijo que las haga nombres válidos:
+
+```{r}
+homicidios_wide <- homicidios_count |> 
+  pivot_wider(names_from    = "id_ano",
+              values_from   = "n",
+              names_prefix  = "anio_") |> 
+  mutate(dif = anio_2025 - anio_2024)
+
+head(homicidios_wide)
+```
+
+Así las columnas se llaman `anio_2024` y `anio_2025`, que son nombres válidos en R y no necesitan acentos graves.
+
+::: callout-warning
+### ¿Cuándo usar acentos graves?
+
+Los acentos graves (`` ` ` ``) le dicen a R: *"lo que está entre estos símbolos es un nombre de variable, no un valor numérico ni una operación"*. Son necesarios siempre que un nombre de columna contenga espacios, empiece con un número o tenga caracteres especiales. Si bien funcionan perfectamente, la mejor práctica es **evitar** estos nombres problemáticos desde el origen, ya sea con `clean_names()` o con `names_prefix`.
+:::
+:::
+
+### Pregunta 5: Renombrar variables {#sec-p5}
+
+Usando `rename()`, cambie los nombres de las columnas `comun_agr`, `nom_reg` y `dif` por nombres más descriptivos: `comuna`, `region` y `variacion` respectivamente. Sobrescriba `homicidios_wide` con el resultado y llámelo `homicidios`.
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+homicidios <- homicidios_wide |> 
+  rename(comuna    = comun_agr,
+         region    = nom_reg,
+         variacion = dif)
+
+head(homicidios)
+```
+
+Recuerde que la sintaxis de `rename()` es `nuevo_nombre = nombre_actual`. Los nombres que no se mencionan en `rename()` quedan intactos.
+:::
+
+### Pregunta 6: Filtrar la Región Metropolitana {#sec-p6}
+
+Filtre el objeto `homicidios` para conservar solo las comunas de la **Región Metropolitana de Santiago** y guárdelo en `homicidios_rm`. ¿Cuántas comunas de la RM registraron homicidios en al menos uno de los dos años?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+homicidios_rm <- homicidios |> 
+  filter(region == "Metropolitana de Santiago")
+
+nrow(homicidios_rm)
+```
+
+La RM tiene **52 comunas** en total y efectivamente hay `r nrow(homicidios_rm)` que registran al menos un homicidio en 2024 o 2025. En caso de que faltaran filas, esto se debería a que algunas comunas no tuvieron víctimas de homicidio en ninguno de los dos años.
+:::
+
+### Pregunta 7: Cruzar con pobreza y población {#sec-p7}
+
+Cargue el dataset `pobreza_pob_censo_2024.xlsx` construido en la Clase 1. Renombre la variable de tasa de pobreza a `tasa_pobreza` y seleccione únicamente las columnas `codigo`, `comuna`, `provincia`, `tasa_pobreza` y `poblacion_censada`. Guárdelo en el objeto `poblacion_pobreza`. Luego, cruce `homicidios_rm` con `poblacion_pobreza` usando `left_join()` por el nombre de la comuna.
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+poblacion_pobreza <- read_excel('data/clean/pobreza_pob_censo_2024.xlsx') |> 
+  rename(tasa_pobreza = porcentaje_de_personas_en_situacion_de_pobreza_de_ingresos_2024) |> 
+  select(codigo, comuna, provincia, tasa_pobreza, poblacion_censada)
+
+homicidios_rm <- homicidios_rm |> 
+  left_join(poblacion_pobreza, join_by(comuna))
+
+glimpse(homicidios_rm)
+```
+
+En este caso usamos `join_by(comuna)` porque la variable se llama `comuna` en ambas tablas (gracias al `rename()` de la Pregunta 5). El resultado agrega a cada comuna de la RM sus datos de provincia, tasa de pobreza y población censada. Esto nos permite, en la siguiente pregunta, resumir la información a nivel de provincia.
+
+::: callout-warning
+### Sobre el cruce por nombre
+
+En la Clase 1 aprendimos que cruzar por nombre de comuna puede fallar por diferencias de escritura. En este caso funciona porque los nombres del dataset de víctimas de homicidio y de  pobreza coinciden para las comunas de la RM. Sin embargo, lo más robusto siempre es cruzar por **código único territorial** cuando esté disponible.
+:::
+:::
+
+### Pregunta 8: Resumen por provincia {#sec-p8}
+
+Usando `group_by()` y `summarise()`, calcule para cada **provincia** de la RM dos estadísticas: la **variación total** de homicidios entre 2024 y 2025 (sumando la variable `variacion`) y la **tasa de pobreza promedio** de sus comunas. ¿Qué provincia concentra la mayor disminución de homicidios? ¿Coincide con la de mayor o menor pobreza?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+homicidios_rm |> 
+  group_by(provincia) |> 
+  summarise(
+    variacion_total = sum(variacion, na.rm = TRUE),
+    pobreza_media   = mean(tasa_pobreza)
+  )
+```
+
+`group_by(provincia)` prepara el *data frame* para que cada operación posterior se calcule **dentro de cada provincia**. Luego, `summarise()` colapsa las filas de cada grupo en una sola fila con dos estadísticas de resumen:
+
+- **`sum(variacion, na.rm = TRUE)`**: suma la variación de homicidios de todas las comunas de la provincia. El argumento `na.rm = TRUE` es necesario porque algunas comunas tienen `NA` en la variación (aquellas que solo tuvieron homicidios en uno de los dos años). Sin este argumento, la suma de cualquier grupo que contenga un `NA` daría `NA` como resultado.
+
+- **`mean(tasa_pobreza)`**: calcula el promedio simple de la tasa de pobreza de las comunas del grupo.
+
+El resultado muestra que la provincia de **Santiago** concentra la mayor disminución de homicidios. Al mismo tiempo, es la provincia con la tasa de pobreza más baja dentro la RM, pero esto difícilmente sugiere una relación directa entre pobreza y variación de homicidios, lo que merece un análisis estadístico más detallado y mejor formulado (algo que abordaremos en la Unidad II del curso).
+:::
+
+### Pregunta 9: Corregir el cálculo {#sec-p9}
+
+Observe la tabla de la Pregunta 8. Hay **dos errores** en el cálculo de las estadísticas resumen que hacen que los valores no sean los correctos:
+
+1. **Los `NA` en `variacion` deberían ser 0**: una comuna con `NA` en `anio_2024` o `anio_2025` no es un dato faltante, sino que simplemente **no registró homicidios** ese año. Al usar `na.rm = TRUE` en la suma, estamos ignorando esas comunas en vez de contarlas como 0.
+
+2. **Promediar porcentajes es incorrecto**: la tasa de pobreza de una provincia **no es el promedio** de las tasas de sus comunas, porque cada comuna tiene un tamaño de población distinto. Una comuna de 500.000 habitantes debería pesar más que una de 5.000. El cálculo correcto requiere sumar las **personas en situación de pobreza** y las **personas totales** del grupo, y luego dividir.
+
+Corrija ambos problemas y compare la tabla resultante con la de la Pregunta 8. Para ello, siga los siguientes pasos:
+
+1. Cargue nuevamente el dataset `pobreza_pob_censo_2024.xlsx` asignándolo al objeto `poblacion_pobreza` pero ahora incluyendo adicionalmente las variables de número de personas proyectadas (columna 4) con el nombre de `pob_proyectada` y número personas en situación de pobreza por ingresos (columna 5) con el nombre de `pob_pobreza`.
+2. Cree un nuevo objeto llamado `homicidios_rm2` filtrando el objeto `homicidios` para la región metropolitana pero ahora modificando las variables `anio_2024` y `anio_2025` reemplazando los valores `NA` por 0. Esto puede hacerlo de manera más directa con la función `replace_na()`. Por último, vuelva a calcular la variación y crearla como variable considerando los valores con 0.
+3. Cruce el objeto `homicidios_rm2` con el nuevo objeto `poblacion_pobreza` y guárdelo en el objeto con el mismo nombre de `homicidios_rm2`
+4. Calcule las siguientes estadísticas por provincia:
+  i. `variacion_total` correspondiente a la suma de las variaciones comunales
+  i. `personas_proyectadas` correspondiente a la suma de personas proyectadas por comuna
+  i. `personas_pobreza` correspondiente a la suma de personas en situación de pobreza por ingresos por comuna
+  i. `tasa_pobreza` correspondiente a la tasa de pobreza provincial $\frac{\text{Personas en situación de pobreza}}{\text{Personas proyectadas}}$
+  
+*Hints:*
+
+- Para reemplazar los `NA` por 0, investigue la función `replace_na()` del paquete `tidyr` combinada con `across()`.
+- Para la tasa de pobreza correcta, necesitará traer dos variables adicionales del dataset de pobreza: la **población proyectada** (columna 4) y el **número de personas en situación de pobreza** (columna 5). `rename()` permite renombrar columnas por su **posición numérica** para no tener que escribir el nombre completo.
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+El primer paso es volver a preparar el dataset de pobreza, esta vez trayendo las variables de **volumen** (personas proyectadas y personas en pobreza) que necesitamos para calcular correctamente la tasa a nivel provincial:
+
+```{r}
+poblacion_pobreza <- read_excel('data/clean/pobreza_pob_censo_2024.xlsx') |> 
+  rename(tasa_pobreza    = porcentaje_de_personas_en_situacion_de_pobreza_de_ingresos_2024,
+         pob_proyectada  = 4,
+         pob_pobreza     = 5) |> 
+  select(codigo, comuna, provincia, tasa_pobreza, starts_with("pob")) |> 
+  mutate(pob_pobreza = round(pob_pobreza))
+```
+
+Noten que `rename(pob_proyectada = 4, pob_pobreza = 5)` renombra las columnas por su **posición** (columna 4 y 5). Esto es útil cuando los nombres originales son muy largos. `round()` elimina los decimales de la estimación de personas en pobreza, ya que no tiene sentido hablar de fracciones de persona.
+
+Luego, reconstruimos la tabla de homicidios de la RM **reemplazando los `NA` por 0** antes de calcular la variación:
+
+```{r}
+homicidios_rm2 <- homicidios |> 
+  filter(region == "Metropolitana de Santiago") |> 
+  mutate(across(starts_with("anio"), ~ replace_na(.x, 0)),
+         variacion = anio_2025 - anio_2024)
+```
+
+`across(starts_with("anio"), ~ replace_na(.x, 0))` aplica `replace_na()` a **todas** las columnas que comienzan con `"anio"` (es decir, `anio_2024` y `anio_2025`), reemplazando cada `NA` por 0. Ahora la variación se calcula correctamente para todas las comunas.
+
+Cruzamos con el dataset de pobreza actualizado:
+
+```{r}
+homicidios_rm2 <- homicidios_rm2 |> 
+  left_join(poblacion_pobreza, join_by(comuna))
+```
+
+Finalmente, calculamos las estadísticas correctas por provincia:
+
+```{r}
+homicidios_rm2 |> 
+  group_by(provincia) |> 
+  summarise(
+    variacion_total      = sum(variacion),
+    personas_proyectadas = sum(pob_proyectada),
+    personas_pobreza     = sum(pob_pobreza)
+  ) |> 
+  mutate(tasa_pobreza = personas_pobreza / personas_proyectadas)
+```
+
+Ahora la **tasa de pobreza provincial** se calcula como el total de personas en pobreza dividido por el total de personas proyectadas de la provincia, lo que pondera correctamente por el tamaño de cada comuna.
+
+Al comparar con la tabla de la Pregunta 8, se observan dos diferencias:
+
+- La **variación total** cambia en las provincias que tenían comunas con `NA` (ahora esos 0 suman correctamente en vez de ser ignorados).
+- La **tasa de pobreza** difiere de la media aritmética, especialmente en provincias donde conviven comunas muy grandes y muy pequeñas. Por ejemplo, en la provincia de Santiago el promedio simple sobreestima la pobreza porque le da el mismo peso a comunas de 3.000 habitantes que a comunas de 400.000.
+
+::: callout-warning
+### Lección general
+
+Promediar porcentajes o tasas es un error estadístico frecuente al ser un **promedio no ponderado**. Siempre que necesiten agregar una tasa a un nivel geográfico superior, deben volver a los **valores absolutos** (numerador y denominador), sumarlos por separado, y luego recalcular la tasa del grupo.
+:::
+:::
+
+------------------------------------------------------------------------
+
+# Resumen de Funciones Utilizadas
+
+| Función | Paquete | Descripción |
+|---------------------|-----------------|------------------------------|
+| `bind_rows(x, y)` | dplyr | Apila dos *data frames* (pega filas) |
+| `clean_names()` | janitor | Estandariza nombres de columna |
+| `count(var1, var2)` | dplyr | Cuenta filas por grupo |
+| `arrange()` / `desc()` | dplyr | Ordena filas (ascendente / descendente) |
+| `pivot_wider()` | tidyr | Ensancha la tabla (valores → columnas) |
+| `mutate()` | dplyr | Crea o modifica variables |
+| `rename(nuevo = actual)` | dplyr | Cambia nombre de columnas |
+| `filter()` | dplyr | Conserva filas que cumplen una condición |
+| `select()` | dplyr | Conserva solo las columnas indicadas |
+| `left_join()` | dplyr | Cruza dos tablas por una llave |
+| `group_by()` + `summarise()` | dplyr | Calcula estadísticas por grupo |
+| `replace_na(x, 0)` | tidyr | Reemplaza valores `NA` por un valor especificado |
+| `across(cols, fun)` | dplyr | Aplica una función a múltiples columnas a la vez |
+
+------------------------------------------------------------------------
+
+::: callout-note
+## ¿Hacia dónde seguimos?
+
+En este ejercicio construyeron un pipeline completo de transformación de datos: importar, combinar, reestructurar, filtrar, cruzar y resumir. En la **Clase 3** aprenderemos a **visualizar** estos resultados con `ggplot2`, incluyendo gráficos de barras, dispersión y mapas temáticos.
+:::

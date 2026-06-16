@@ -8,7 +8,7 @@ project:
     - "00-nivelacion2/*.qmd"
     - "01-importar/*.qmd"
     - "02-transformar/*.qmd"
-    - "!03-visualizar/*.qmd"
+    - "03-visualizar/*.qmd"
     - "!04-comunicar/*.qmd"
     - "!05-inferencia/*.qmd"
     - "!06-regresion1/*.qmd"
