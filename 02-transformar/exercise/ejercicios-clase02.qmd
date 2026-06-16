@@ -243,7 +243,7 @@ Los acentos graves (`` ` ` ``) le dicen a R: *"lo que está entre estos símbolo
 
 ### Pregunta 5: Renombrar variables {#sec-p5}
 
-Usando `rename()`, cambie los nombres de las columnas `comun_agr`, `nom_reg` y `dif` por nombres más descriptivos: `comuna`, `region` y `variacion` respectivamente. Sobrescriba `homicidios_wide` con el resultado y llámelo `homicidios`.
+Usando `rename()`, cambie los nombres de las columnas `comun_agr`, `nom_reg` y `dif`  en `homicidios_wide` por nombres más descriptivos: `comuna`, `region` y `variacion` respectivamente. Cree un nuevo objeto llamado `homicidios` a partir de las modificaciones realizadas.
 
 ::: {.callout-tip collapse="true"}
 ### Pauta
