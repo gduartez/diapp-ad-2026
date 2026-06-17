@@ -341,33 +341,6 @@ h4 {
 }
 
 
-/*
-.reveal ul {
-  list-style-type: none; 
-  padding-left: 2px; 
-}
-
-.reveal ul ul {
-  list-style-type: none; 
-  padding-left: 2px; 
-}
-
-.reveal ul li {
-  position: relative; 
-  padding-left: 30px; 
-  margin-bottom: 2px;
-}
-
-// Limitar ▶ solo a listas no-ordenadas
-.reveal ul > li::before {
-  content: "▶";
-  position: absolute;
-  left: 0;
-  color: $black;
-  font-size: 20px;
-  line-height: 1.8;
-}
-
 // Listas ordenadas: sin símbolo extra, con numeración normal
 .reveal ol {
   list-style-type: decimal !important;
@@ -403,7 +376,13 @@ h4 {
   list-style-type: none;
 }
 
-*/
+.reveal .panel-tabset ul > li::before {
+  content: none !important;
+}
+
+.reveal .panel-tabset ul li {
+  padding-left: 0 !important;
+}
 
 .rosa {
   filter: saturate(200%) brightness(90%);

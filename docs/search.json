@@ -4,7 +4,7 @@
     "href": "03-visualizar/clase-03.html#objetivo-clase-3",
     "title": "Clase 3: Visualización de Datos",
     "section": "Objetivo Clase 3",
-    "text": "Objetivo Clase 3\nEsta clase tiene como objetivo aprender los principios fundamentales de la visualización de datos y aplicarlos mediante el paquete ggplot2 de R.\nComo objetivos específicos se busca:\n\nComprender la importancia de una buena visualización y los errores más comunes a evitar.\nConstruir visualizaciones con la gramática de gráficos (grammar of graphics): datos, estéticas, geometrías, escalas y temas.\nAplicar distintos tipos de gráficos según el tipo de variable: geom_bar(), geom_histogram(), geom_col(), geom_line(), geom_point(), entre otros.\nControlar los elementos de un gráfico: etiquetas, escalas y temas.\nConocer extensiones: gghighlight, heatmaps y mapas geográficos.",
+    "text": "Objetivo Clase 3\nEsta clase tiene como objetivo aprender los principios fundamentales de la visualización de datos y aplicarlos mediante el paquete ggplot2 de R (Wickham 2015).\nComo objetivos específicos se busca:\n\nComprender la importancia de una buena visualización y los errores más comunes a evitar.\nConstruir visualizaciones con la gramática de gráficos (grammar of graphics): datos, estéticas, geometrías, escalas y temas.\nAplicar distintos tipos de gráficos según el tipo de variable: geom_bar(), geom_histogram(), geom_col(), geom_line(), geom_point(), entre otros.\nControlar los elementos de un gráfico: etiquetas, escalas y temas.\nConocer extensiones: gghighlight, heatmaps y mapas geográficos.",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -16,7 +16,7 @@
     "href": "03-visualizar/clase-03.html#por-qué-visualizar",
     "title": "Clase 3: Visualización de Datos",
     "section": "¿Por qué visualizar?",
-    "text": "¿Por qué visualizar?\n\nEl mayor valor de una imagen está en que nos obliga a notar algo que nunca esperamos ver (Tukey, 1977).\n\n\n\nExplorar: entender los datos para guiar análisis posteriores. Una visualización exploratoria es una forma de pensar y de usar gráficos como herramientas cognitivas para descubrir patrones (Wilke, 2019). → Análisis exploratorio\nComunicar: contar una historia con propósito, simplificando lo complejo y guiando la atención del público hacia el mensaje clave. → Análisis aclaratorio",
+    "text": "¿Por qué visualizar?\n\nEl mayor valor de una imagen está en que nos obliga a notar algo que nunca esperamos ver (Tukey 1977).\n\n\n\nExplorar: entender los datos para guiar análisis posteriores. Una visualización exploratoria es una forma de pensar y de usar gráficos como herramientas cognitivas para descubrir patrones (Wilke, 2019). → Análisis exploratorio\nComunicar: contar una historia con propósito, simplificando lo complejo y guiando la atención del público hacia el mensaje clave. → Análisis aclaratorio",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -64,7 +64,7 @@
     "href": "03-visualizar/clase-03.html#el-cuarteto-de-anscombe",
     "title": "Clase 3: Visualización de Datos",
     "section": "El cuarteto de Anscombe",
-    "text": "El cuarteto de Anscombe\n\n\nGráfico\nDatos\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nx1\nx2\nx3\nx4\ny1\ny2\ny3\ny4\n\n\n\n10\n10\n10\n8\n8.04\n9.14\n7.46\n6.58\n\n\n8\n8\n8\n8\n6.95\n8.14\n6.77\n5.76\n\n\n13\n13\n13\n8\n7.58\n8.74\n12.74\n7.71\n\n\n9\n9\n9\n8\n8.81\n8.77\n7.11\n8.84\n\n\n11\n11\n11\n8\n8.33\n9.26\n7.81\n8.47\n\n\n14\n14\n14\n8\n9.96\n8.10\n8.84\n7.04\n\n\n6\n6\n6\n8\n7.24\n6.13\n6.08\n5.25\n\n\n4\n4\n4\n19\n4.26\n3.10\n5.39\n12.50\n\n\n12\n12\n12\n8\n10.84\n9.13\n8.15\n5.56\n\n\n7\n7\n7\n8\n4.82\n7.26\n6.42\n7.91\n\n\n5\n5\n5\n8\n5.68\n4.74\n5.73\n6.89",
+    "text": "El cuarteto de Anscombe\n\n\nGráficos\nDatos\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nx1\nx2\nx3\nx4\ny1\ny2\ny3\ny4\n\n\n\n10\n10\n10\n8\n8.04\n9.14\n7.46\n6.58\n\n\n8\n8\n8\n8\n6.95\n8.14\n6.77\n5.76\n\n\n13\n13\n13\n8\n7.58\n8.74\n12.74\n7.71\n\n\n9\n9\n9\n8\n8.81\n8.77\n7.11\n8.84\n\n\n11\n11\n11\n8\n8.33\n9.26\n7.81\n8.47\n\n\n14\n14\n14\n8\n9.96\n8.10\n8.84\n7.04\n\n\n6\n6\n6\n8\n7.24\n6.13\n6.08\n5.25\n\n\n4\n4\n4\n19\n4.26\n3.10\n5.39\n12.50\n\n\n12\n12\n12\n8\n10.84\n9.13\n8.15\n5.56\n\n\n7\n7\n7\n8\n4.82\n7.26\n6.42\n7.91\n\n\n5\n5\n5\n8\n5.68\n4.74\n5.73\n6.89",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -100,7 +100,7 @@
     "href": "03-visualizar/clase-03.html#atributos-preatentivos",
     "title": "Clase 3: Visualización de Datos",
     "section": "Atributos preatentivos",
-    "text": "Atributos preatentivos\n\nEl cerebro solo puede procesar un cierto número de atributos de forma instantánea (pre-attentive attributes). Los principales son: forma, posición, color y tamaño.\nQueremos buscar la variación justa en estos atributos para enfocarnos en lo que importa.\n\n\n\n\n\n\n\n\n\n\n\n(NUSSBAUMER KNAFLIC 2025)",
+    "text": "Atributos preatentivos\n\nEl cerebro solo puede procesar un cierto número de atributos de forma instantánea (pre-attentive attributes). Los principales son: forma, posición, color y tamaño.\nQueremos buscar la variación justa en estos atributos para enfocarnos en lo que importa.\n\n\n\n\n(NUSSBAUMER KNAFLIC 2025)",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -136,7 +136,7 @@
     "href": "03-visualizar/clase-03.html#error-1-violar-el-principio-de-proporcionalidad",
     "title": "Clase 3: Visualización de Datos",
     "section": "Error #1: Violar el principio de proporcionalidad",
-    "text": "Error #1: Violar el principio de proporcionalidad\n\n\n\n\n\n\nThe principle of proportional ink\n\n\nLos tamaños de las áreas sombreadas en una visualización deben ser proporcionales a los valores de datos que representan.\n\n\n\nEn particular, este principio no se cumple en los gráficos de barra cuyo eje y no parte en 0.",
+    "text": "Error #1: Violar el principio de proporcionalidad\n\n\n\n\n\n\nThe principle of proportional ink\n\n\nLos tamaños de las áreas sombreadas en una visualización deben ser proporcionales a los valores de datos que representan.\n\n\n\nEn particular, este principio no se cumple en los gráficos de barra cuyo eje y no parte en 0.\n\n\n\nMisleading Graphs",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -148,7 +148,19 @@
     "href": "03-visualizar/clase-03.html#error-2-no-entregar-contexto",
     "title": "Clase 3: Visualización de Datos",
     "section": "Error #2: No entregar contexto",
-    "text": "Error #2: No entregar contexto\n\nCuando mostramos una evolución, es importante preguntarse: ¿comparado con qué?",
+    "text": "Error #2: No entregar contexto\n\nCuando mostramos una evolución, es importante preguntarse: ¿comparado con qué?\n\n\n\n\n\n\n\n(Tufte 2001)\n\n\n\n\n\nPosibles tendencias (Tufte 2001)",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 3: Visualizar datos"
+    ]
+  },
+  {
+    "objectID": "03-visualizar/clase-03.html#error-2-no-entregar-contexto-1",
+    "href": "03-visualizar/clase-03.html#error-2-no-entregar-contexto-1",
+    "title": "Clase 3: Visualización de Datos",
+    "section": "Error #2: No entregar contexto",
+    "text": "Error #2: No entregar contexto\n\n(Tufte 2001)",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -160,7 +172,7 @@
     "href": "03-visualizar/clase-03.html#error-3-mostrar-demasiada-información",
     "title": "Clase 3: Visualización de Datos",
     "section": "Error #3: Mostrar demasiada información",
-    "text": "Error #3: Mostrar demasiada información\n\n\n\n\n\n\nReducir las categorías de color y etiquetar directamente mejora significativamente la legibilidad (Wilke, 2019).",
+    "text": "Error #3: Mostrar demasiada información\n\n\n\n(Wilke 2019)\n\n\n\nReducir las categorías de color y etiquetar directamente mejora significativamente la legibilidad (Wilke 2019).",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -216,11 +228,11 @@
     ]
   },
   {
-    "objectID": "03-visualizar/clase-03.html#practiquemos-primer-gráfico",
-    "href": "03-visualizar/clase-03.html#practiquemos-primer-gráfico",
+    "objectID": "03-visualizar/clase-03.html#ejercicio-1-histograma",
+    "href": "03-visualizar/clase-03.html#ejercicio-1-histograma",
     "title": "Clase 3: Visualización de Datos",
-    "section": "💻 Practiquemos: primer gráfico",
-    "text": "💻 Practiquemos: primer gráfico\nUsando gapminder (año 2007), construya un histograma de la esperanza de vida (lifeExp). Rellene las barras de azul y use 10 intervalos.",
+    "section": "💻 Ejercicio 1: Histograma",
+    "text": "💻 Ejercicio 1: Histograma\nUsando gapminder (año 2007), construya un histograma de la esperanza de vida (lifeExp). Rellene las barras de azul y use 10 intervalos.",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -244,7 +256,7 @@
     "href": "03-visualizar/clase-03.html#barras-para-datos-categóricos-geom_bar",
     "title": "Clase 3: Visualización de Datos",
     "section": "Barras para datos categóricos: geom_bar()\n",
-    "text": "Barras para datos categóricos: geom_bar()\n\n\n\ngeom_bar() cuenta las observaciones por categoría (no necesita eje y):\n\n\n\nggplot(gap_2007, aes(x = continent)) +\n  geom_bar(fill = \"steelblue\") +\n  labs(x = \"Continente\", y = \"N° de países\") +\n  theme_clean(base_size = 14)",
+    "text": "Barras para datos categóricos: geom_bar()\n\n\n\ngeom_bar() cuenta las observaciones por categoría de manera automática, por lo que no necesita especificar en aes() el eje y:\n\n\n\nggplot(gap_2007, aes(x = continent)) +\n  geom_bar(fill = \"steelblue\") +\n  labs(x = \"Continente\", y = \"N° de países\") +\n  theme_clean(base_size = 14)",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -256,7 +268,7 @@
     "href": "03-visualizar/clase-03.html#barras-agrupadas-y-apiladas",
     "title": "Clase 3: Visualización de Datos",
     "section": "Barras agrupadas y apiladas",
-    "text": "Barras agrupadas y apiladas\n\n\n\nggplot(gap_2007, aes(x = continent,\n  fill = if_else(lifeExp &gt; 70,\n    \"Alta\", \"Baja\"))) +\n  geom_bar(position = \"dodge\") +\n  labs(fill = \"Esp. de vida\") +\n  theme_clean(base_size = 12)\n\n\n\n\n\n\n\n\n\nggplot(gap_2007, aes(x = continent,\n  fill = if_else(lifeExp &gt; 70,\n    \"Alta\", \"Baja\"))) +\n  geom_bar(position = \"fill\") +\n  labs(y = \"Proporción\",\n       fill = \"Esp. de vida\") +\n  theme_clean(base_size = 12)",
+    "text": "Barras agrupadas y apiladas\n\n\nCon position = \"dodge\" dentro de geom_bar() podemos agrupar las barras (ponerlas juntas) en función de una segunda categoría indicada en fill:\n\nggplot(gap_2007, aes(x = continent,\n  fill = if_else(lifeExp &gt; 70,\n    \"Alta\", \"Baja\"))) +\n  geom_bar(position = \"dodge\") +\n  labs(fill = \"Esp. de vida\") +\n  theme_clean(base_size = 12)\n\n\n\n\n\n\n\n\nCon position = \"fill\" dentro de geom_bar() podemos apilar las barras (una encima de otra) en función de una segunda categoría indicada en fill:\n\nggplot(gap_2007, aes(x = continent,\n  fill = if_else(lifeExp &gt; 70,\n    \"Alta\", \"Baja\"))) +\n  geom_bar(position = \"fill\") +\n  labs(y = \"Proporción\", fill = \"Esp. de vida\") +\n  theme_clean(base_size = 12)",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -280,7 +292,7 @@
     "href": "03-visualizar/clase-03.html#distribuciones-geom_density-y-geom_boxplot",
     "title": "Clase 3: Visualización de Datos",
     "section": "Distribuciones: geom_density() y geom_boxplot()\n",
-    "text": "Distribuciones: geom_density() y geom_boxplot()\n\n\n\n\nggplot(gap_2007,\n  aes(x = lifeExp,\n      fill = continent)) +\n  geom_density(alpha = 0.5) +\n  labs(x = \"Esperanza de vida\",\n       fill = \"Continente\") +\n  theme_clean(base_size = 12)\n\n\n\n\n\n\n\n\n\nggplot(gap_2007,\n  aes(x = continent,\n      y = lifeExp)) +\n  geom_boxplot(fill = \"cornflowerblue\",\n               alpha = 0.7) +\n  labs(x = \"\", y = \"Esp. de vida\") +\n  theme_clean(base_size = 12)",
+    "text": "Distribuciones: geom_density() y geom_boxplot()\n\n\n\ngeom_density() es útil para ver la forma de la distribución de una variable y compararla con otras distribuciones:\n\nggplot(gap_2007,\n  aes(x = lifeExp,\n      fill = continent)) +\n  geom_density(alpha = 0.5) +\n  labs(x = \"Esperanza de vida\",\n       fill = \"Continente\") +\n  theme_clean(base_size = 12)\n\n\n\n\n\n\n\n\ngeom_boxplot() es útil para visualizar las estadísticas descriptivas de posición más importantes de una variable (Q1 o p25, mediana, Q3 o p75 y outliers) y permite compararla entre distintos grupos:\n\nggplot(gap_2007,\n  aes(x = continent,\n      y = lifeExp)) +\n  geom_boxplot(fill = \"cornflowerblue\",\n               alpha = 0.7) +\n  labs(x = \"\", y = \"Esp. de vida\") +\n  theme_clean(base_size = 12)",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -304,7 +316,7 @@
     "href": "03-visualizar/clase-03.html#columnas-numéricas-geom_col",
     "title": "Clase 3: Visualización de Datos",
     "section": "Columnas numéricas: geom_col()\n",
-    "text": "Columnas numéricas: geom_col()\n\n\nA diferencia de geom_bar() (que cuenta), geom_col() usa directamente el valor de y como altura de la barra:\n\n\ngap_2007 |&gt;\n  group_by(continent) |&gt;\n  summarise(media_vida = mean(lifeExp)) |&gt;\n  ggplot(aes(x = reorder(continent, media_vida), y = media_vida)) +\n  geom_col(fill = \"steelblue\") +\n  geom_text(aes(label = round(media_vida, 1)), hjust = -0.2) +\n  coord_flip() +\n  labs(x = \"\", y = \"Esperanza de vida promedio\") +\n  theme_clean(base_size = 14)",
+    "text": "Columnas numéricas: geom_col()\n\n\nA diferencia de geom_bar() (que cuenta), geom_col() usa directamente el valor de y como altura de la barra:\n\n\n\n\ngap_2007 |&gt;\n  group_by(continent) |&gt;\n  summarise(media_vida = mean(lifeExp)) |&gt;\n  ggplot(aes(\n    x = reorder(continent, media_vida),\n    y = media_vida)\n    ) +\n  geom_col(fill = \"steelblue\") +\n  geom_text(aes(\n    label = round(media_vida, 1)),\n    hjust = -0.2\n    ) +\n  coord_flip() +\n  labs(x = \"\", y = \"Esperanza de vida promedio\") +\n  theme_clean(base_size = 14)",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -316,7 +328,7 @@
     "href": "03-visualizar/clase-03.html#series-de-tiempo-geom_line",
     "title": "Clase 3: Visualización de Datos",
     "section": "Series de tiempo: geom_line()\n",
-    "text": "Series de tiempo: geom_line()\n\n\ngapminder |&gt;\n  filter(country == \"Chile\") |&gt;\n  ggplot(aes(x = year, y = lifeExp)) +\n  geom_line(linewidth = 1.5, color = \"steelblue\") +\n  geom_point(size = 2, color = \"gray30\", alpha = 0.8) +\n  scale_y_continuous(limits = c(0, 80)) +\n  labs(title = \"Evolución de la esperanza de vida en Chile\",\n       subtitle = \"1952–2007\",\n       x = \"Año\", y = \"Esperanza de vida\",\n       caption = \"Fuente: Gapminder\") +\n  theme_classic(base_size = 15)",
+    "text": "Series de tiempo: geom_line()\n\nCon geom_line() podemos generar líneas, las cuales son muy útiles para mostrar evoluciones de indicadores a lo largo del tiempo:\n\n\n\ngapminder |&gt;\n  filter(country == \"Chile\") |&gt;\n  ggplot(aes(x = year, y = lifeExp)) +\n  geom_line(linewidth = 1.5, color = \"steelblue\") +\n  geom_point(size = 2, color = \"gray30\", alpha = 0.8) +\n  scale_y_continuous(limits = c(0, 80)) +\n  labs(title = \"Evolución de la esperanza de vida en Chile\",\n       subtitle = \"1952–2007\",\n       x = \"Año\", y = \"Esperanza de vida\",\n       caption = \"Fuente: Gapminder\") +\n  theme_classic(base_size = 15)",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -324,11 +336,11 @@
     ]
   },
   {
-    "objectID": "03-visualizar/clase-03.html#practiquemos-serie-de-tiempo-por-continente",
-    "href": "03-visualizar/clase-03.html#practiquemos-serie-de-tiempo-por-continente",
+    "objectID": "03-visualizar/clase-03.html#ejercicio-2-gráficos-de-línea",
+    "href": "03-visualizar/clase-03.html#ejercicio-2-gráficos-de-línea",
     "title": "Clase 3: Visualización de Datos",
-    "section": "💻 Practiquemos: serie de tiempo por continente",
-    "text": "💻 Practiquemos: serie de tiempo por continente\nComplete el código para graficar la evolución de la esperanza de vida promedio por continente, coloreando cada línea por continente:",
+    "section": "💻 Ejercicio 2: Gráficos de línea",
+    "text": "💻 Ejercicio 2: Gráficos de línea\nComplete el código para graficar la evolución de la esperanza de vida promedio por continente, coloreando cada línea por continente:",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -340,7 +352,7 @@
     "href": "03-visualizar/clase-03.html#scatterplot-geom_point",
     "title": "Clase 3: Visualización de Datos",
     "section": "Scatterplot: geom_point()\n",
-    "text": "Scatterplot: geom_point()\n\n\nggplot(gap_2007, aes(x = gdpPercap, y = lifeExp)) +\n  geom_point(aes(color = continent), alpha = 0.7, size = 2.5) +\n  geom_smooth(se = FALSE, method = \"lm\", color = \"#E69F00\") +\n  labs(x = \"PIB per cápita\", y = \"Esperanza de vida\",\n       color = \"Continente\") +\n  theme_clean(base_size = 14)",
+    "text": "Scatterplot: geom_point()\n\nCon geom_point() y dos variables cuantitativas en x e y podemos hacer un gráfico de dispersión o scatterplot, el cual es muy útil para mostrar la relación entre dos variables numéricas. Adicionalmente, con geom_smooth() podemos ajustar una recta o curva para entender el patrón que hay en los datos:\n\n\nggplot(gap_2007, aes(x = gdpPercap, y = lifeExp)) +\n  geom_point(aes(color = continent), #Color por continente\n             alpha = 0.7, #Transparencia\n             size = 2.5) + #Tamaño de los puntos\n  geom_smooth(se = FALSE, #Sin intervalo de confianza\n              method = \"lm\", #Recta ajusta por MCO\n              color = \"#E69F00\") + #Color de la recta\n  labs(x = \"PIB per cápita\", y = \"Esperanza de vida\",\n       color = \"Continente\") +\n  theme_clean(base_size = 14)",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -352,7 +364,7 @@
     "href": "03-visualizar/clase-03.html#entendiendo-el-nivel-del-aes",
     "title": "Clase 3: Visualización de Datos",
     "section": "Entendiendo el nivel del aes()\n",
-    "text": "Entendiendo el nivel del aes()\n\nDonde se ubica el color cambia qué capas lo heredan:\n\n\n\n\n# Color SOLO en los puntos\nggplot(gap_2007,\n  aes(x = gdpPercap,\n      y = lifeExp)) +\n  geom_point(aes(color = continent)) +\n  geom_smooth(method = \"lm\",\n    se = FALSE, color = \"#E69F00\") +\n  theme_bw()\n\n\n\n\n\n\n\n\n\n\n\n# Color en puntos Y líneas\nggplot(gap_2007,\n  aes(x = gdpPercap,\n      y = lifeExp,\n      color = continent)) +\n  geom_point() +\n  geom_smooth(method = \"lm\",\n    se = FALSE) +\n  theme_bw()",
+    "text": "Entendiendo el nivel del aes()\n\nEn qué nivel del aes se fija el color determina qué capas lo heredan:\n\n\n\n\n# Color SOLO en los puntos\nggplot(gap_2007,\n  aes(x = gdpPercap,\n      y = lifeExp)) +\n  geom_point(aes(color = continent)) +\n  geom_smooth(method = \"lm\",\n    se = FALSE, color = \"#E69F00\") +\n  theme_bw()\n\n\n\n\n\n\n\n\n\n\n\n# Color en puntos + líneas\nggplot(gap_2007,\n  aes(x = gdpPercap,\n      y = lifeExp,\n      color = continent)) +\n  geom_point() +\n  geom_smooth(method = \"lm\",\n    se = FALSE) +\n  theme_bw()",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -364,7 +376,7 @@
     "href": "03-visualizar/clase-03.html#etiquetas-labs",
     "title": "Clase 3: Visualización de Datos",
     "section": "Etiquetas: labs()\n",
-    "text": "Etiquetas: labs()\n\n\n\nlabs() permite definir todos los textos del gráfico en un solo lugar:\n\n\nggplot(gap_2007, aes(x = gdpPercap, y = lifeExp)) +\n  geom_point() +\n  labs(\n    title    = \"Relación entre PIB y esperanza de vida\",\n    subtitle = \"Año 2007\",\n    x        = \"PIB per cápita (USD)\",\n    y        = \"Esperanza de vida (años)\",\n    color    = \"Continente\",\n    caption  = \"Fuente: Gapminder\"\n  )",
+    "text": "Etiquetas: labs()\n\n\n\nlabs() permite definir todos los textos del gráfico en un solo lugar:\n\n\n\nggplot(gap_2007, aes(x = gdpPercap, y = lifeExp)) +\n  geom_point() +\n  labs(\n    title    = \"Relación entre PIB y esperanza de vida\",\n    subtitle = \"Año 2007\",\n    x        = \"PIB per cápita (USD)\",\n    y        = \"Esperanza de vida (años)\",\n    color    = \"Continente\",\n    caption  = \"Fuente: Gapminder\"\n  )",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -376,7 +388,7 @@
     "href": "03-visualizar/clase-03.html#escalas-scale_",
     "title": "Clase 3: Visualización de Datos",
     "section": "Escalas: scale_*()\n",
-    "text": "Escalas: scale_*()\n\nLas funciones scale_*() controlan los ejes y leyendas:\n\nggplot(gap_2007, aes(x = gdpPercap, y = lifeExp)) +\n  geom_point(aes(color = continent)) +\n  scale_x_continuous(\n    labels = label_number(big.mark = \".\", decimal.mark = \",\"),\n    breaks = seq(0, 50000, 10000)\n  ) +\n  scale_color_brewer(palette = \"Set2\") +\n  labs(x = \"PIB per cápita\", y = \"Esperanza de vida\",\n       color = \"Continente\") +\n  theme_bw(base_size = 14)",
+    "text": "Escalas: scale_*()\n\nLas funciones scale_*() controlan los ejes y leyendas. Por ejemplo, con scale_x_continuous() indicamos que el eje x es una variable continua y con sus argumentos de labelsy breaks podemos especificar el formato en que se muestran las etiquetas y los quiebres o cantidad de etiquetas que aparezcan. Por último, si se ha fijado un color o fill dentro de un aes(), las funciones scale_color_*() o scale_fill_*() permiten usar paletas de colores predefinidas:\n\n\n\nggplot(gap_2007, aes(\n  x = gdpPercap,\n  y = lifeExp)\n  ) +\n  geom_point(aes(color = continent)) +\n  scale_x_continuous(\n    labels = label_number(\n      big.mark = \".\",\n      decimal.mark = \",\"\n      ),\n    breaks = seq(0, 50000, 10000)\n  ) +\n  scale_color_brewer(palette = \"Set2\") +\n  labs(x = \"PIB per cápita\",\n       y = \"Esperanza de vida\",\n       color = \"Continente\") +\n  theme_bw(base_size = 14)",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -412,7 +424,7 @@
     "href": "03-visualizar/clase-03.html#subgráficos-por-grupo-facet_wrap",
     "title": "Clase 3: Visualización de Datos",
     "section": "Subgráficos por grupo: facet_wrap()\n",
-    "text": "Subgráficos por grupo: facet_wrap()\n\n\nggplot(gap_2007, aes(x = gdpPercap, y = lifeExp)) +\n  geom_point() +\n  geom_smooth(se = FALSE, method = \"lm\", color = \"#E69F00\") +\n  facet_wrap(vars(continent), scales = \"free\") +\n  labs(x = \"PIB per cápita\", y = \"Esperanza de vida\") +\n  theme_bw(base_size = 12)",
+    "text": "Subgráficos por grupo: facet_wrap()\n\nLa función facet_wrap() crea una cuadrícula de gráficos, uno por cada grupo de una variable, permitiendo comparar visualmente los datos entre categorías de forma rápida y ordenada. Con la función vars como primer argumento se pueden especificar las variables por las cuales se quieren generar las combinaciones de subgráficos. Con el argumento scales es posible dejar que la escala de los ejes x e y se ajusten automáticamente a partir de la distribución de datos en cada subgrupo:\n\n\n\nggplot(gap_2007,\n       aes(x = gdpPercap,\n           y = lifeExp)) +\n  geom_point() +\n  geom_smooth(se = FALSE,\n              method = \"lm\",\n              color = \"#E69F00\") +\n  facet_wrap(vars(continent),\n             scales = \"free\") +\n  labs(x = \"PIB per cápita\", y = \"Esperanza de vida\") +\n  theme_bw(base_size = 12)",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -432,11 +444,11 @@
     ]
   },
   {
-    "objectID": "03-visualizar/clase-03.html#practiquemos-gráfico-completo",
-    "href": "03-visualizar/clase-03.html#practiquemos-gráfico-completo",
+    "objectID": "03-visualizar/clase-03.html#ejercicio-3-scatterplot-y-tendencia",
+    "href": "03-visualizar/clase-03.html#ejercicio-3-scatterplot-y-tendencia",
     "title": "Clase 3: Visualización de Datos",
-    "section": "💻 Practiquemos: gráfico completo",
-    "text": "💻 Practiquemos: gráfico completo\nConstruya un scatterplot con PIB per cápita vs esperanza de vida, coloreado por continente, con una recta de tendencia por continente, títulos en español y un tema limpio:",
+    "section": "💻 Ejercicio 3: Scatterplot y tendencia",
+    "text": "💻 Ejercicio 3: Scatterplot y tendencia\nConstruya un scatterplot con PIB per cápita vs esperanza de vida, coloreado por continente, con una recta de tendencia por continente, títulos en español y un tema limpio:",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -460,7 +472,7 @@
     "href": "03-visualizar/clase-03.html#resaltar-objetos-gghighlight",
     "title": "Clase 3: Visualización de Datos",
     "section": "Resaltar objetos: gghighlight\n",
-    "text": "Resaltar objetos: gghighlight\n\nCuando hay muchas categorías en un gráfico, una leyenda larga lo hace ilegible. gghighlight() resalta solo lo que importa:\n\nlibrary(gghighlight)\n\nggplot(gapminder |&gt; filter(continent == \"Americas\")) +\n  geom_line(aes(year, lifeExp, color = country), linewidth = 2) +\n  gghighlight(country == \"Chile\") +\n  labs(x = \"Año\", y = \"Esperanza de vida\",\n       title = \"Chile en el contexto americano\") +\n  theme_minimal(base_size = 14)",
+    "text": "Resaltar objetos: gghighlight\n\nCuando hay muchas categorías en un gráfico, una leyenda cada elemento desvía la atención del gráfico (recordar el error #3). Una solución directa es usar gghighlight() para resaltar solo lo que nos importa comunicar. Por ejemplo, veamos la evolución de la esperanza de vida en Chile dentro del continente Americano\n\n\n\nlibrary(gghighlight)\nggplot(gapminder |&gt; filter(continent == \"Americas\")) +\n  geom_line(aes(year, lifeExp, color = country), linewidth = 2) +\n  gghighlight(country == \"Chile\") +\n  labs(x = \"Año\", y = \"Esperanza de vida\",\n       title = \"Chile en el contexto Americano\") +\n  theme_minimal(base_size = 14)",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -472,7 +484,7 @@
     "href": "03-visualizar/clase-03.html#resaltar-con-múltiples-condiciones",
     "title": "Clase 3: Visualización de Datos",
     "section": "Resaltar con múltiples condiciones",
-    "text": "Resaltar con múltiples condiciones\n\nggplot(gapminder |&gt; filter(continent == \"Americas\")) +\n  geom_line(aes(year, lifeExp, color = country), linewidth = 1.5) +\n  gghighlight(country %in% c(\"Chile\", \"Argentina\", \"Brazil\")) +\n  labs(x = \"Año\", y = \"Esperanza de vida\") +\n  theme_minimal(base_size = 14)",
+    "text": "Resaltar con múltiples condiciones\n\n\n\nTambién podemos especificar que elementos resaltar explícitamente, generar una leyenda con use_direct_label y muchas otras opciones revisando la documentación:\n\n\n\nggplot(gapminder |&gt; filter(continent == \"Americas\")) +\n  geom_line(aes(year, lifeExp, color = country), linewidth = 1.5) +\n  gghighlight(country %in% c(\"Chile\", \"Argentina\", \"Brazil\")) +\n  labs(x = \"Año\", y = \"Esperanza de vida\") +\n  theme_minimal(base_size = 14)\n\n\n\n\n\n\n\n\n\n\nPor último, podemos filtrar por valores usando condiciones o el argumento max_highlight para resaltar un número específico de objetos:\n\n\n\nggplot(gapminder |&gt;\n         filter(continent == \"Americas\")) +\n  geom_line(aes(year, lifeExp, color = country), linewidth = 1.5) +\n  gghighlight(max(lifeExp), max_highlight = 5L) +\n  labs(x = \"Año\", y = \"Esperanza de vida\") +\n  theme_minimal(base_size = 14)",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -484,7 +496,7 @@
     "href": "03-visualizar/clase-03.html#heatmaps-geom_tile",
     "title": "Clase 3: Visualización de Datos",
     "section": "Heatmaps: geom_tile()\n",
-    "text": "Heatmaps: geom_tile()\n\nUn heatmap muestra la intensidad de una variable en una cuadrícula de dos categóricas:\n\ngapminder |&gt;\n  filter(continent == \"Americas\") |&gt;\n  ggplot(aes(x = year, y = reorder(country, lifeExp), fill = lifeExp)) +\n  geom_tile(color = \"white\", linewidth = 0.2) +\n  scale_fill_distiller(palette = \"YlOrRd\", direction = 1) +\n  labs(x = \"Año\", y = \"\", fill = \"Esp. de vida\",\n       title = \"Esperanza de vida en América\") +\n  theme_minimal(base_size = 11) +\n  theme(axis.text.y = element_text(size = 7))",
+    "text": "Heatmaps: geom_tile()\n\nUn heatmap muestra la intensidad de una variable en una cuadrícula de dos categóricas y se puede crear mediante geom_tile()\n\n\n\ngapminder |&gt;\n  filter(continent == \"Americas\") |&gt;\n  ggplot(aes(x = year,\n             y = reorder(country, lifeExp),\n             fill = lifeExp)) +\n  geom_tile(color = \"white\",\n            linewidth = 0.2) +\n  scale_fill_distiller(\n    palette = \"YlOrRd\",\n    direction = 1) +\n  labs(x = \"Año\",\n       y = \"\",\n       fill = \"Esp. de vida\",\n       title = \"Esperanza de vida en América\") +\n  theme_minimal(base_size = 11) +\n  theme(axis.text.y = element_text(size = 7))",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -508,7 +520,43 @@
     "href": "03-visualizar/clase-03.html#mapas-geográficos-geom_sf",
     "title": "Clase 3: Visualización de Datos",
     "section": "Mapas geográficos: geom_sf()\n",
-    "text": "Mapas geográficos: geom_sf()\n\nPara datos espaciales, geom_sf() dibuja polígonos desde un objeto sf y se combina con scale_fill_distiller() para mapas temáticos (choropleth):\n\n\n\nhomicidios_rm_sf &lt;- read_rds(\"data/clean/homicidios_rm_sf.rds\")\n\nggplot(homicidios_rm_sf |&gt; filter(provincia == \"Santiago\")) +\n  geom_sf(aes(fill = tasa_hom_2024), color = \"grey100\",\n          linewidth = 0.05) +\n  scale_fill_distiller(palette = \"RdBu\", direction = -1) +\n  labs(title = \"Tasa de Homicidios Comunal 2024\",\n       subtitle = \"Provincia de Santiago\",\n       fill = str_wrap(\"Tasa Víctimas\\nde Homicidio\", 15)) +\n  annotation_scale() +\n  annotation_north_arrow(location = \"tl\") +\n  theme_minimal()",
+    "text": "Mapas geográficos: geom_sf()\n\nPara datos espaciales, geom_sf() dibuja polígonos desde un objeto sf. Si se combina con scale_fill_distiller(), es posible dibujar mapas temáticos coropléticos (choropleth maps) que pintan regiones geográficas en función de una variable numérica:\n\n\n\nhomicidios_rm_sf &lt;- read_rds(\"data/clean/homicidios_rm_sf.rds\")\n\nggplot(homicidios_rm_sf |&gt; filter(provincia == \"Santiago\")) +\n  geom_sf(aes(fill = tasa_hom_2024), color = \"grey100\",\n          linewidth = 0.05) +\n  scale_fill_distiller(palette = \"RdBu\", direction = -1) +\n  labs(title = \"Tasa de Homicidios Comunal 2024\",\n       subtitle = \"Provincia de Santiago\",\n       fill = str_wrap(\"Tasa Víctimas\\nde Homicidio\", 15)) +\n  annotation_scale() + #Escala del mapa\n  annotation_north_arrow(location = \"tl\") + #Flecha de orientación. tl = top left\n  theme_minimal()",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 3: Visualizar datos"
+    ]
+  },
+  {
+    "objectID": "03-visualizar/clase-03.html#mapas-interactivos",
+    "href": "03-visualizar/clase-03.html#mapas-interactivos",
+    "title": "Clase 3: Visualización de Datos",
+    "section": "Mapas Interactivos",
+    "text": "Mapas Interactivos\nCon la librería mapgl es posible realizar mapas interactivos modernos y con una sintaxis moderna (también existen otros paquetes como leaflet o mapview)\n\n\nlibrary(mapgl)\nmanzanas_ind &lt;- read_rds('data/clean/manzanas_independencia.rds') |&gt;\n  select(comuna, manzent, n_per, n_inmigrantes, pct_inm_num) |&gt; \n  rename(`% Inmigrantes` = pct_inm_num)\n\nmaplibre_view(manzanas_ind, column = \"% Inmigrantes\")",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 3: Visualizar datos"
+    ]
+  },
+  {
+    "objectID": "03-visualizar/clase-03.html#resumen-y-recomendaciones",
+    "href": "03-visualizar/clase-03.html#resumen-y-recomendaciones",
+    "title": "Clase 3: Visualización de Datos",
+    "section": "Resumen y Recomendaciones",
+    "text": "Resumen y Recomendaciones\n\nRecuerden que los 3 elementos básicos para mostrar un gráfico en ggplot2 son:\n\nDatos (data): ggplot(data)\n\nAesthetics (aes): aes(x = variable_x, y= variable_y\n\nObjeto Geométrico (geom_*): Por ejemplo geom_line()\n\n\n\nLa lógica de ggplot2 es ir añadiendo capas a la estructura definida previamente. Para añadir capas usamos + no el pipe |&gt;\n\nAl momento de construir una visualización siempre piensen en la historia que quieren contar (o el mensaje que quieren transmitir) y quién es su audiencia. A veces menos es más o lo simple es más efectivo que lo complejo.\n\nAwesome ggplot2 resume más de 100 paquetes relacionados con ggplot2. En función del objetivo que tengan, pueden encontrar paquetes que facilitan la visualización de información o ejecución de análisis específicos.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 3: Visualizar datos"
+    ]
+  },
+  {
+    "objectID": "03-visualizar/clase-03.html#y-muchos-recursos-más",
+    "href": "03-visualizar/clase-03.html#y-muchos-recursos-más",
+    "title": "Clase 3: Visualización de Datos",
+    "section": "Y muchos recursos más",
+    "text": "Y muchos recursos más\n\nThe R Graph Gallery\nModern Data Visualization with R\nR CHARTS\nPublicaciones de #TidyTuesday en donde la comunidad aporta soluciones a desafíos semanales con diversos datasets.",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",
@@ -520,7 +568,19 @@
     "href": "03-visualizar/clase-03.html#qué-aprendimos-hoy",
     "title": "Clase 3: Visualización de Datos",
     "section": "¿Qué aprendimos hoy?",
-    "text": "¿Qué aprendimos hoy?\n\n\n\n\n\n\nGrupo\nContenido\n\n\n\nPrincipios\nExplorar vs comunicar, Anscombe, errores de proporcionalidad/contexto/exceso de info\n\n\nGrammar of graphics\n\ndata → aes() → geom_*() → scale_*() → theme_*()\n\n\n\nGeoms\n\ngeom_bar(), geom_histogram(), geom_density(), geom_boxplot(), geom_col(), geom_line(), geom_point()\n\n\n\nControl\n\nlabs(), scale_x/y_continuous(), scale_color_brewer(), facet_wrap()\n\n\n\nExtensiones\n\ngghighlight(), geom_tile() (heatmap), geom_sf() (mapas)\n\n\nExportar\nggsave()\n\n\n\n\nLa próxima clase aprenderemos a integrar estas visualizaciones, tablas y análisis en documentos reproducibles usando Quarto.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNUSSBAUMER KNAFLIC, COLE. 2025. STORYTELLING WITH DATA: a data visualization guide for business professionals. S.l.: JOHN WILEY.",
+    "text": "¿Qué aprendimos hoy?\n\n\n\n\n\n\nSección\nContenido y Funciones\n\n\n\nPrincipios\nExplorar vs comunicar, Anscombe, errores de proporcionalidad/contexto/exceso de info\n\n\nGrammar of graphics\n\ndata → aes() → geom_*() → scale_*() → theme_*()\n\n\n\nGeoms\n\ngeom_bar(), geom_histogram(), geom_density(), geom_boxplot(), geom_col(), geom_line(), geom_point()\n\n\n\nControl\n\nlabs(), scale_x/y_continuous(), scale_color_brewer(), facet_wrap()\n\n\n\nExtensiones\n\ngghighlight(), geom_tile() (heatmap), geom_sf() (mapas)\n\n\nExportar\nggsave()\n\n\n\n\nLa próxima clase aprenderemos a integrar estas visualizaciones, tablas y análisis en documentos reproducibles usando Quarto.",
+    "crumbs": [
+      "🏠 Inicio",
+      "Módulo 2",
+      "Clase 3: Visualizar datos"
+    ]
+  },
+  {
+    "objectID": "03-visualizar/clase-03.html#bibliografía",
+    "href": "03-visualizar/clase-03.html#bibliografía",
+    "title": "Clase 3: Visualización de Datos",
+    "section": "Bibliografía",
+    "text": "Bibliografía\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNUSSBAUMER KNAFLIC, COLE. 2025. STORYTELLING WITH DATA: a data visualization guide for business professionals. S.l.: JOHN WILEY.\n\n\nTufte, Edward R. 2001. The Visual Display of Quantitative Information, 2nd Ed. Cheshire, Conn.\n\n\nTukey, John Wilder. 1977. Exploratory data analysis. Addison-Wesley series en behavioral science. Reading, Mass: Addison-Wesley Pub. Co.\n\n\nWickham, Hadley. 2015. «ggplot2: Elegant Graphics for Data Analysis (3e)». https://ggplot2-book.org/.\n\n\nWilke, C. 2019. Fundamentals of data visualization: a primer on making informative and compelling figures. First edition. Sebastopol, CA: O’Reilly Media.",
     "crumbs": [
       "🏠 Inicio",
       "Módulo 2",

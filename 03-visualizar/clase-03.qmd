@@ -60,7 +60,7 @@ bibliography: references.bib
 #| include: false
 library(pacman)
 p_load(tidyverse, gapminder, ggthemes, scales, gghighlight,
-       readxl, sf, ggspatial, knitr)
+       readxl, sf, ggspatial, knitr, maplibre)
 
 theme_set(
   theme_classic(base_size = 16) +
@@ -84,7 +84,7 @@ gap_2007 <- gapminder |> filter(year == 2007)
 
 Esta clase tiene como objetivo aprender los principios fundamentales de
 la **visualización de datos** y aplicarlos mediante el paquete `ggplot2`
-de R.
+de R [@wickham2015].
 
 Como objetivos específicos se busca:
 
@@ -100,10 +100,10 @@ Como objetivos específicos se busca:
 
 # [La importancia de una buena visualización]{style="color:white"} {background-color="#173277"}
 
-## ¿Por qué visualizar? {.justify .smaller}
+## ¿Por qué visualizar? {.medium}
 
 > El mayor valor de una imagen está en que nos obliga a notar algo que
-> nunca esperamos ver (Tukey, 1977).
+> nunca esperamos ver [@tukey1977].
 
 ::: fragment
 1.  **Explorar**: entender los datos para guiar análisis posteriores.
@@ -135,7 +135,7 @@ que al graficarse revelan patrones completamente distintos.
 ## El cuarteto de Anscombe {.smaller}
 
 ::: panel-tabset
-### Gráfico
+### Gráficos
 
 ```{r}
 #| fig-height: 6
@@ -173,7 +173,7 @@ incompletas!
 Por eso **es importante visualizar los datos antes de empezar a
 modelar**.
 
-## Lo que deberíamos buscar {.smaller}
+## Lo que deberíamos buscar
 
 - Mostrar los datos y no mentir con estos.
   - Contar una historia (¿una relación? ¿causalidad? ¿un patrón? ¿un
@@ -194,13 +194,8 @@ modelar**.
 
 . . .
 
-![](img/atributos-preatentivos.png){width="70%" fig-align="center"}
-
-. . .
-
-::: {.aside .fragment}
-[@nussbaumerknaflic2025]
-:::
+![[@nussbaumerknaflic2025]](img/atributos-preatentivos.png){width="70%"
+fig-align="center"}
 
 ## ¿Cuántos 3 hay? {.nostretch auto-animate="true"}
 
@@ -224,30 +219,40 @@ cuyo **eje y no parte en 0**.
 
 . . .
 
-![](img/mal_grafico_base1.webp){width="400px" fig-align="center"}
+![[Misleading
+Graphs](https://www.statisticshowto.com/probability-and-statistics/descriptive-statistics/misleading-graphs/)](img/mal_grafico_base1.webp){width="400px"
+fig-align="center"}
 
 ## Error #2: No entregar contexto {.smaller}
 
 - Cuando mostramos una evolución, es importante preguntarse:
   **¿comparado con qué?**
 
+. . .
+
 :::::: columns
-::: {.column width="45%"}
-![](img/contexto1.png){width="100%"}
+::: {.column width="50%"}
+![[@tufte2001]](img/contexto1.png){width="100%"}
 :::
 
-:::: {.column width="55%"}
+:::: {.column width="50%"}
 ::: fragment
-![](img/contexto3.png){width="100%"}
+![Posibles tendencias [@tufte2001]](img/contexto2.png){width="100%"}
 :::
 ::::
 ::::::
+
+## Error #2: No entregar contexto {.smaller}
+
+![[@tufte2001]](img/contexto3.png){width="100%"}
 
 ## Error #3: Mostrar demasiada información {.smaller}
 
 :::::: columns
 ::: {.column width="50%"}
 ![](img/popgrowth-vs-popsize-colored-1.png){width="100%"}
+
+[@wilke2019]
 :::
 
 :::: {.column width="50%"}
@@ -255,12 +260,12 @@ cuyo **eje y no parte en 0**.
 ![](img/popgrowth-vs-popsize-bw-1.png){width="100%"}
 
 Reducir las categorías de color y etiquetar directamente mejora
-significativamente la legibilidad (Wilke, 2019).
+significativamente la legibilidad [@wilke2019].
 :::
 ::::
 ::::::
 
-# [Construyendo visualizaciones con `ggplot2`]{style="color:white"} {background-color="#173277"}
+# [Construyendo visualizaciones con ggplot2]{style="color:white"} {background-color="#173277"}
 
 ## `ggplot2` {.smaller .justify}
 
@@ -324,7 +329,7 @@ ggplot(gap_2007, aes(x = gdpPercap, y = lifeExp)) +
   theme_bw()
 ```
 
-## 💻 Practiquemos: primer gráfico {.smaller}
+## 💻 Ejercicio 1: Histograma {.smaller}
 
 Usando `gapminder` (año 2007), construya un histograma de la esperanza
 de vida (`lifeExp`). Rellene las barras de azul y use 10 intervalos.
@@ -356,14 +361,13 @@ ggplot(gap_2007, aes(x = ___)) +
 
 ## Barras para datos categóricos: `geom_bar()` {.smaller}
 
-- `geom_bar()` **cuenta** las observaciones por categoría (no necesita
-  eje y):
+- `geom_bar()` **cuenta** las observaciones por categoría de manera automática, por lo que **no necesita** especificar en `aes()` el eje y:
 
 . . .
 
 ```{r}
 #| echo: true
-#| out-width: "70%"
+#| out-width: "50%"
 ggplot(gap_2007, aes(x = continent)) +
   geom_bar(fill = "steelblue") +
   labs(x = "Continente", y = "N° de países") +
@@ -373,10 +377,13 @@ ggplot(gap_2007, aes(x = continent)) +
 ## Barras agrupadas y apiladas {.smaller}
 
 ::::: columns
-::: {.column width="50%"}
+::: {.column width="50%" .fragment}
+
+Con `position = "dodge"` dentro de `geom_bar()` podemos **agrupar las barras** (ponerlas juntas) en función de una segunda categoría indicada en `fill`:
+
 ```{r}
 #| echo: true
-#| fig-height: 4
+#| fig-height: 5
 ggplot(gap_2007, aes(x = continent,
   fill = if_else(lifeExp > 70,
     "Alta", "Baja"))) +
@@ -386,16 +393,18 @@ ggplot(gap_2007, aes(x = continent,
 ```
 :::
 
-::: {.column width="50%"}
+::: {.column width="50%" .fragment}
+
+Con `position = "fill"` dentro de `geom_bar()` podemos **apilar las barras** (una encima de otra) en función de una segunda categoría indicada en `fill`:
+
 ```{r}
 #| echo: true
-#| fig-height: 4
+#| fig-height: 5
 ggplot(gap_2007, aes(x = continent,
   fill = if_else(lifeExp > 70,
     "Alta", "Baja"))) +
   geom_bar(position = "fill") +
-  labs(y = "Proporción",
-       fill = "Esp. de vida") +
+  labs(y = "Proporción", fill = "Esp. de vida") +
   theme_clean(base_size = 12)
 ```
 :::
@@ -414,10 +423,13 @@ ggplot(gap_2007, aes(x = lifeExp)) +
 ## Distribuciones: `geom_density()` y `geom_boxplot()` {.smaller}
 
 ::::: columns
-::: {.column width="50%"}
+::: {.column width="50%" .fragment}
+
+`geom_density()` es útil para ver la **forma** de la distribución de una variable y compararla con otras distribuciones:
+
 ```{r}
 #| echo: true
-#| fig-height: 4
+#| fig-height: 5
 ggplot(gap_2007,
   aes(x = lifeExp,
       fill = continent)) +
@@ -428,10 +440,13 @@ ggplot(gap_2007,
 ```
 :::
 
-::: {.column width="50%"}
+::: {.column width="50%" .fragment}
+
+`geom_boxplot()` es útil para visualizar las estadísticas descriptivas de posición más importantes de una variable (Q1 o p25, mediana, Q3 o p75 y outliers) y permite compararla entre distintos grupos:
+
 ```{r}
 #| echo: true
-#| fig-height: 4
+#| fig-height: 5
 ggplot(gap_2007,
   aes(x = continent,
       y = lifeExp)) +
@@ -463,23 +478,38 @@ comparando visualmente **África vs. América** en el mismo gráfico.
 - A diferencia de `geom_bar()` (que cuenta), `geom_col()` usa
   directamente el valor de `y` como altura de la barra:
 
+. . . 
+
 ```{r}
 #| echo: true
+#| output-location: column
+#| fig-height: 6
 gap_2007 |>
   group_by(continent) |>
   summarise(media_vida = mean(lifeExp)) |>
-  ggplot(aes(x = reorder(continent, media_vida), y = media_vida)) +
+  ggplot(aes(
+    x = reorder(continent, media_vida),
+    y = media_vida)
+    ) +
   geom_col(fill = "steelblue") +
-  geom_text(aes(label = round(media_vida, 1)), hjust = -0.2) +
+  geom_text(aes(
+    label = round(media_vida, 1)),
+    hjust = -0.2
+    ) +
   coord_flip() +
   labs(x = "", y = "Esperanza de vida promedio") +
   theme_clean(base_size = 14)
 ```
-
 ## Series de tiempo: `geom_line()` {.smaller}
+
+Con `geom_line()` podemos generar líneas, las cuales son muy útiles para mostrar evoluciones de indicadores a lo largo del **tiempo**:
+
+. . . 
 
 ```{r}
 #| echo: true
+#| output-location: column
+#| code-line-numbers: "4-6"
 gapminder |>
   filter(country == "Chile") |>
   ggplot(aes(x = year, y = lifeExp)) +
@@ -493,7 +523,7 @@ gapminder |>
   theme_classic(base_size = 15)
 ```
 
-## 💻 Practiquemos: serie de tiempo por continente {.smaller}
+## 💻 Ejercicio 2: Gráficos de línea {.smaller}
 
 Complete el código para graficar la evolución de la esperanza de vida
 **promedio por continente**, coloreando cada línea por continente:
@@ -518,11 +548,19 @@ gapminder |>
 
 ## Scatterplot: `geom_point()` {.smaller}
 
+Con `geom_point()` y dos variables cuantitativas en x e y podemos hacer un gráfico de dispersión o *scatterplot*, el cual es muy útil para mostrar la **relación entre dos variables numéricas**. Adicionalmente, con `geom_smooth()` podemos ajustar una recta o curva para entender el patrón que hay en los datos:
+
 ```{r}
 #| echo: true
+#| output-location: column
+#| code-line-numbers: "2-7"
 ggplot(gap_2007, aes(x = gdpPercap, y = lifeExp)) +
-  geom_point(aes(color = continent), alpha = 0.7, size = 2.5) +
-  geom_smooth(se = FALSE, method = "lm", color = "#E69F00") +
+  geom_point(aes(color = continent), #Color por continente
+             alpha = 0.7, #Transparencia
+             size = 2.5) + #Tamaño de los puntos
+  geom_smooth(se = FALSE, #Sin intervalo de confianza
+              method = "lm", #Recta ajusta por MCO
+              color = "#E69F00") + #Color de la recta
   labs(x = "PIB per cápita", y = "Esperanza de vida",
        color = "Continente") +
   theme_clean(base_size = 14)
@@ -530,14 +568,15 @@ ggplot(gap_2007, aes(x = gdpPercap, y = lifeExp)) +
 
 ## Entendiendo el nivel del `aes()` {.smaller}
 
-Donde se ubica el `color` cambia **qué capas** lo heredan:
+En qué nivel del `aes` se fija el `color` determina **qué capas** lo heredan:
 
 ::::::: columns
 :::: {.column width="50%"}
 ::: fragment
 ```{r}
 #| echo: true
-#| fig-height: 4
+#| fig-height: 5
+#| code-line-numbers: "5"
 # Color SOLO en los puntos
 ggplot(gap_2007,
   aes(x = gdpPercap,
@@ -554,8 +593,9 @@ ggplot(gap_2007,
 ::: fragment
 ```{r}
 #| echo: true
-#| fig-height: 4
-# Color en puntos Y líneas
+#| fig-height: 5
+#| code-line-numbers: "1-5"
+# Color en puntos + líneas
 ggplot(gap_2007,
   aes(x = gdpPercap,
       y = lifeExp,
@@ -573,8 +613,9 @@ ggplot(gap_2007,
 
 ## Etiquetas: `labs()` {.smaller}
 
-- `labs()` permite definir **todos** los textos del gráfico en un solo
-  lugar:
+- `labs()` permite definir **todos** los textos del gráfico en un solo lugar:
+
+. . . 
 
 ```{r}
 #| echo: true
@@ -593,23 +634,33 @@ ggplot(gap_2007, aes(x = gdpPercap, y = lifeExp)) +
 
 ## Escalas: `scale_*()` {.smaller}
 
-Las funciones `scale_*()` controlan los **ejes y leyendas**:
+Las funciones `scale_*()` controlan los **ejes y leyendas**. Por ejemplo, con `scale_x_continuous()` indicamos que el eje x es una variable continua y con sus argumentos de `labels`y `breaks` podemos especificar el formato en que se muestran las etiquetas y los quiebres o cantidad de etiquetas que aparezcan. Por último, si se ha fijado un `color` o `fill` dentro de un `aes()`, las funciones `scale_color_*()` o `scale_fill_*()` permiten usar [paletas de colores predefinidas](https://ggplot2-book.org/scales-colour.html#brewer-scales):
+
+. . . 
 
 ```{r}
 #| echo: true
-ggplot(gap_2007, aes(x = gdpPercap, y = lifeExp)) +
+#| output-location: column
+ggplot(gap_2007, aes(
+  x = gdpPercap,
+  y = lifeExp)
+  ) +
   geom_point(aes(color = continent)) +
   scale_x_continuous(
-    labels = label_number(big.mark = ".", decimal.mark = ","),
+    labels = label_number(
+      big.mark = ".",
+      decimal.mark = ","
+      ),
     breaks = seq(0, 50000, 10000)
   ) +
   scale_color_brewer(palette = "Set2") +
-  labs(x = "PIB per cápita", y = "Esperanza de vida",
+  labs(x = "PIB per cápita",
+       y = "Esperanza de vida",
        color = "Continente") +
   theme_bw(base_size = 14)
 ```
 
-## Temas: `theme_*()` {.smaller}
+## Temas: `theme_*()` {.medium}
 
 Los temas controlan los aspectos **no relacionados con los datos**:
 fondo, grillas, fuentes, etc. Algunos temas populares:
@@ -654,12 +705,23 @@ chilena). ¿Qué función usamos?
 
 ## Subgráficos por grupo: `facet_wrap()` {.smaller}
 
+La función `facet_wrap()` crea una cuadrícula de gráficos, uno por cada grupo de una variable, permitiendo comparar visualmente los datos entre categorías de forma rápida y ordenada. Con la función `vars` como primer argumento se pueden especificar las variables por las cuales se quieren generar las combinaciones de subgráficos. Con el argumento `scales` es posible dejar que la escala de los ejes x e y se ajusten automáticamente a partir de la distribución de datos en cada subgrupo:
+
+. . . 
+
 ```{r}
 #| echo: true
-ggplot(gap_2007, aes(x = gdpPercap, y = lifeExp)) +
+#| output-location: column
+#| code-line-numbers: "8-9"
+ggplot(gap_2007,
+       aes(x = gdpPercap,
+           y = lifeExp)) +
   geom_point() +
-  geom_smooth(se = FALSE, method = "lm", color = "#E69F00") +
-  facet_wrap(vars(continent), scales = "free") +
+  geom_smooth(se = FALSE,
+              method = "lm",
+              color = "#E69F00") +
+  facet_wrap(vars(continent),
+             scales = "free") +
   labs(x = "PIB per cápita", y = "Esperanza de vida") +
   theme_bw(base_size = 12)
 ```
@@ -687,7 +749,7 @@ ggsave("output/gapminder_continente.png",
 blanco cuando el tema tiene fondo transparente (como `theme_minimal()`).
 :::
 
-## 💻 Practiquemos: gráfico completo {.smaller}
+## 💻 Ejercicio 3: Scatterplot y tendencia {.smaller}
 
 Construya un scatterplot con PIB per cápita vs esperanza de vida,
 coloreado por continente, con una recta de tendencia **por continente**,
@@ -733,45 +795,84 @@ preprocesados. Los detalles están en la **Guía de Ejercicio Grupal N°
 
 ## Resaltar objetos: `gghighlight` {.smaller}
 
-Cuando hay **muchas categorías** en un gráfico, una leyenda larga lo
-hace ilegible. `gghighlight()` resalta solo lo que importa:
+Cuando hay **muchas categorías** en un gráfico, una leyenda cada elemento desvía la atención del gráfico (recordar el error #3). Una solución directa es usar `gghighlight()` para resaltar solo lo que nos importa comunicar. Por ejemplo, veamos la evolución de la esperanza de vida en Chile dentro del continente Americano
+
+. . .
 
 ```{r}
 #| echo: true
+#| code-line-numbers: "5"
+#| output-location: column
 library(gghighlight)
-
 ggplot(gapminder |> filter(continent == "Americas")) +
   geom_line(aes(year, lifeExp, color = country), linewidth = 2) +
   gghighlight(country == "Chile") +
   labs(x = "Año", y = "Esperanza de vida",
-       title = "Chile en el contexto americano") +
+       title = "Chile en el contexto Americano") +
   theme_minimal(base_size = 14)
 ```
 
 ## Resaltar con múltiples condiciones {.smaller}
 
+::::: columns
+::: {.column width="50%"}
+
+- También podemos especificar que elementos resaltar explícitamente, generar una leyenda con `use_direct_label` y muchas otras opciones revisando la [documentación](https://yutannihilation.github.io/gghighlight/articles/gghighlight.html):
+
+::: {.fragment}
 ```{r}
 #| echo: true
+#| code-line-numbers: "3"
 ggplot(gapminder |> filter(continent == "Americas")) +
   geom_line(aes(year, lifeExp, color = country), linewidth = 1.5) +
   gghighlight(country %in% c("Chile", "Argentina", "Brazil")) +
   labs(x = "Año", y = "Esperanza de vida") +
   theme_minimal(base_size = 14)
 ```
+:::
+:::
+
+::: {.column width="50%"}
+- Por último, podemos filtrar por valores usando condiciones o el argumento `max_highlight` para resaltar un número específico de objetos:
+
+::: {.fragment}
+```{r}
+#| echo: true
+#| code-line-numbers: "4"
+ggplot(gapminder |>
+         filter(continent == "Americas")) +
+  geom_line(aes(year, lifeExp, color = country), linewidth = 1.5) +
+  gghighlight(max(lifeExp), max_highlight = 5L) +
+  labs(x = "Año", y = "Esperanza de vida") +
+  theme_minimal(base_size = 14)
+```
+:::
+:::
+::::
 
 ## Heatmaps: `geom_tile()` {.smaller}
 
-Un *heatmap* muestra la intensidad de una variable en una cuadrícula de
-dos categóricas:
+Un *heatmap* muestra la intensidad de una variable en una cuadrícula de dos categóricas y se puede crear mediante `geom_tile()`
+
+. . .
 
 ```{r}
 #| echo: true
+#| output-location: column
+#| code-line-numbers: "6-10"
 gapminder |>
   filter(continent == "Americas") |>
-  ggplot(aes(x = year, y = reorder(country, lifeExp), fill = lifeExp)) +
-  geom_tile(color = "white", linewidth = 0.2) +
-  scale_fill_distiller(palette = "YlOrRd", direction = 1) +
-  labs(x = "Año", y = "", fill = "Esp. de vida",
+  ggplot(aes(x = year,
+             y = reorder(country, lifeExp),
+             fill = lifeExp)) +
+  geom_tile(color = "white",
+            linewidth = 0.2) +
+  scale_fill_distiller(
+    palette = "YlOrRd",
+    direction = 1) +
+  labs(x = "Año",
+       y = "",
+       fill = "Esp. de vida",
        title = "Esperanza de vida en América") +
   theme_minimal(base_size = 11) +
   theme(axis.text.y = element_text(size = 7))
@@ -799,13 +900,10 @@ mejor estrategia?
 
 ## Mapas geográficos: `geom_sf()` {.smaller}
 
-Para datos espaciales, `geom_sf()` dibuja polígonos desde un objeto `sf`
-y se combina con `scale_fill_distiller()` para mapas temáticos
-(*choropleth*):
+Para datos espaciales, `geom_sf()` dibuja polígonos desde un objeto `sf`. Si se combina con `scale_fill_distiller()`, es posible dibujar mapas temáticos coropléticos (*choropleth maps*) que pintan regiones geográficas en función de una variable numérica:
 
-:::: columns
-::: {.column width="50%" .fragment}
-
+::::: columns
+::: {.column .fragment width="50%"}
 ```{r}
 #| echo: true
 #| eval: false
@@ -818,17 +916,17 @@ ggplot(homicidios_rm_sf |> filter(provincia == "Santiago")) +
   labs(title = "Tasa de Homicidios Comunal 2024",
        subtitle = "Provincia de Santiago",
        fill = str_wrap("Tasa Víctimas\nde Homicidio", 15)) +
-  annotation_scale() +
-  annotation_north_arrow(location = "tl") +
+  annotation_scale() + #Escala del mapa
+  annotation_north_arrow(location = "tl") + #Flecha de orientación. tl = top left
   theme_minimal()
 ```
 :::
 
-::: {.column width="50%" .fragment}
-
+::: {.column .fragment width="50%"}
 ```{r}
 #| echo: false
 #| eval: true
+library(ggspatial) #Para añadir objetos espaciales como escalas y flechas
 homicidios_rm_sf <- read_rds("data/clean/homicidios_rm_sf.rds")
 
 ggplot(homicidios_rm_sf |> filter(provincia == "Santiago")) +
@@ -843,14 +941,47 @@ ggplot(homicidios_rm_sf |> filter(provincia == "Santiago")) +
   theme_minimal()
 ```
 :::
-::::
+:::::
 
+## Mapas Interactivos {.smaller}
+
+Con la librería `mapgl` es posible realizar mapas interactivos modernos y con una sintaxis moderna (también existen otros paquetes como `leaflet` o `mapview`)
+
+. . .
+
+```{r}
+#| out-height: "400px"
+#| echo: true
+library(mapgl)
+manzanas_ind <- read_rds('data/clean/manzanas_independencia.rds') |>
+  select(comuna, manzent, n_per, n_inmigrantes, pct_inm_num) |> 
+  rename(`% Inmigrantes` = pct_inm_num)
+
+maplibre_view(manzanas_ind, column = "% Inmigrantes")
+```
+
+## Resumen y Recomendaciones {.smaller}
+
+1. Recuerden que los 3 elementos básicos para mostrar un gráfico en ggplot2 son:
+    i) Datos (`data`): `ggplot(data)`
+    i) Aesthetics (`aes`): `aes(x = variable_x, y= variable_y` 
+    i) Objeto Geométrico (`geom_*`): Por ejemplo `geom_line()`
+1. La lógica de ggplot2 es ir **añadiendo capas** a la estructura definida previamente. Para añadir capas usamos `+` **no** el pipe `|>`
+1. Al momento de construir una visualización siempre piensen en la historia que quieren contar (o el **mensaje** que quieren transmitir) y quién es su **audiencia**. A veces *menos es más* o lo *simple* es más efectivo que lo *complejo*.
+1. [Awesome ggplot2](https://github.com/erikgahner/awesome-ggplot2) resume más de 100 paquetes relacionados con `ggplot2`. En función del objetivo que tengan, pueden encontrar paquetes que facilitan la visualización de información o ejecución de análisis específicos. 
+
+## Y muchos recursos más
+
+- [The R Graph Gallery](https://r-graph-gallery.com/)
+- [Modern Data Visualization with R](https://rkabacoff.github.io/datavis/)
+- [R CHARTS](https://r-charts.com/es/)
+- Publicaciones de [#TidyTuesday](https://shiny.posit.co/r/gallery/miscellaneous/tidy-tuesday/) en donde la comunidad aporta soluciones a desafíos semanales con diversos datasets.
 
 # Recapitulación
 
 ## ¿Qué aprendimos hoy? {.smaller}
 
-| Grupo | Contenido |
+| Sección | Contenido y Funciones |
 |---------------------------------|---------------------------------------|
 | **Principios** | Explorar vs comunicar, Anscombe, errores de proporcionalidad/contexto/exceso de info |
 | **Grammar of graphics** | `data` → `aes()` → `geom_*()` → `scale_*()` → `theme_*()` |
@@ -863,3 +994,5 @@ ggplot(homicidios_rm_sf |> filter(provincia == "Santiago")) +
 La próxima clase aprenderemos a integrar estas visualizaciones, tablas y
 análisis en **documentos reproducibles** usando Quarto.
 :::
+
+## Bibliografía
