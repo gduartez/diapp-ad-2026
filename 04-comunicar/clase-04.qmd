@@ -1,0 +1,630 @@
+---
+title: "Clase 4: Comunicar con R y Aplicaciones de uso de IA Generativa"
+subtitle: "**Análisis de Datos y Estadística Computacional**"
+institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
+author: '**Prof. Gabriel Duarte Zúñiga**'
+lang: es
+date: "06-20-2026"
+
+format:
+  live-revealjs: 
+    date-format: long
+    slide-number: true
+    incremental: true
+    # self-contained: true
+    transition: slide
+    background-transition: fade
+    highlight-style: github
+    code-link: true
+    theme: [styles.scss]
+    fig-width: 8
+    fig-height: 6
+    chalkboard:
+      buttons: true
+    preview-links: auto
+    logo: img/logo-26.png
+    # footer: <https://goblab.uai.cl/>
+    quiz:
+      checkKey: 'c'
+      resetKey: 'r'
+      shuffleOptions: false
+      disableOnCheck: false
+      includeScore: false
+
+revealjs-plugins:
+  - quiz
+filters:
+  - live                       
+engine: knitr
+
+webr:
+  render-df: DT
+  packages:
+    - dplyr
+    - ggplot2
+    - gapminder
+    
+editor: 
+  markdown: 
+    wrap: 72
+bibliography: references.bib
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+```{r}
+#| include: false
+library(pacman)
+p_load(tidyverse, gapminder, knitr)
+```
+
+# ¡Bienvenid\@s a la Clase 4!
+
+## Cierre de la Unidad I {.smaller .justify}
+
+Esta es la **última clase** de la Unidad I: *Herramientas de Ciencia de
+Datos con R*. El objetivo es cerrar el ciclo de trabajo con datos
+aprendiendo a **comunicar** resultados de forma reproducible y a
+**acelerar** nuestro flujo de trabajo con herramientas de IA generativa.
+
+Los contenidos específicos de la clase son:
+
+- Principios básicos para contar historias con datos.
+- Qué son R Markdown y Quarto, y por qué preferimos Quarto.
+- Estructura de un documento Quarto: YAML, chunks y texto.
+- Aplicaciones de IA generativa para programar en R.
+
+## Resumen Unidad I {.smaller}
+
+| Clase | Contenido |
+|---------------------------------|---------------------------------------|
+| **Clase 1** | Importar datos: `read_csv`, `read_excel`, `read_dta`, `left_join` |
+| **Clase 2** | Transformar datos: `dplyr`, `tidyr`, `lubridate`, `forcats` |
+| **Clase 3** | Visualizar datos: `ggplot2`, gramática de gráficos, extensiones |
+| **Clase 4** | Comunicar: documentos reproducibles + IA generativa |
+
+. . .
+
+![](img/clase4.png){width="80%" fig-align="center"}
+
+# [Contar historias con datos]{style="color:white"} {background-color="#173277"}
+
+## ¿Por qué contar una historia?
+
+- La mayor parte de la visualización y el análisis de datos se realiza
+  con el fin de **comunicar** algo a alguien [@schimel2012].
+- Una historia es un conjunto de observaciones o hechos presentados en
+  un orden que genera una **reacción** en la audiencia: curiosidad,
+  sorpresa, convicción.
+- La clave es construir un *arco narrativo* claro: ir de la **tensión**
+  (el problema o la pregunta) hacia la **resolución** (el hallazgo o la
+  recomendación).
+
+## El marco SUCCES {.smaller}
+
+Una buena historia con datos cumple seis principios [@heath2013]:
+
+| Principio | ¿Qué significa? |
+|---------------------------------|---------------------------------------|
+| **S**imple | El mensaje principal es claro y compacto |
+| **U**nexpected | Presenta algo novedoso que genera curiosidad |
+| **C**oncrete | Combina lo abstracto de las ideas con lo concreto de los datos |
+| **C**redible | Se sustenta en datos y metodología robusta |
+| **E**motional | Motiva a la audiencia: no solo informa, sino que genera conexión |
+| **S**tories | Tiene una estructura interna coherente |
+
+## Un plan para construir una historia con datos {.medium}
+
+A continuación, se propone un plan de acción para construir una historia
+con datos [@alexander2023]
+
+1.  **Planifiquen** el punto final: ¿qué quieren que la audiencia
+    recuerde o haga?
+2.  **Exploren** los datos buscando patrones y hallazgos relevantes.
+3.  **Diseñen** las visualizaciones que mejor comunican esos hallazgos.
+4.  **Estructuren** la narrativa: contexto → hallazgo → implicancia.
+5.  **Compartan** usando un formato reproducible (Quarto, R Markdown).
+
+. . .
+
+::: callout-tip
+Piensen en el gráfico como el **punto focal** de la historia: si alguien
+ve solo el gráfico sin leer el texto, ¿entiende el mensaje principal?
+[@nussbaumerknaflic2025]
+:::
+
+# [Documentos reproducibles]{style="color:white"} {background-color="#173277"}
+
+## ¿Por qué usar Quarto o R Markdown? {.medium}
+
+El flujo tradicional implica:
+
+1.  Analizar en R → copiar resultados → pegar en Word → formatear →
+    exportar.
+2.  Si los datos cambian → **repetir todo desde el paso 1**.
+
+. . .
+
+**R Markdown** y **Quarto** resuelven esto: integran código, resultados
+y texto en **un solo archivo** que se compila automáticamente.
+
+## ¿Qué es R Markdown? {.smaller}
+
+- Entorno para crear documentos reproducibles que combinan **código R**,
+  **resultados** (tablas, gráficos) y **texto narrativo** en un solo
+  archivo `.Rmd`.
+- Permite compilar (*knit*) a múltiples formatos: HTML, PDF, Word,
+  PowerPoint.
+- Fue creado por Yihui Xie (2014) y es mantenido por Posit (ex RStudio).
+
+. . .
+
+![](img/estructura_rmardown.png){width="70%" fig-align="center"}
+
+::: aside
+[@xie2019]
+[bookdown.org/yihui/rmarkdown](https://bookdown.org/yihui/rmarkdown/)
+:::
+
+## ¿Qué es Quarto? {.smaller}
+
+- **Quarto** (`.qmd`) es el sucesor de R Markdown: un sistema de
+  publicación científica de **código abierto** construido sobre Pandoc
+  [@quarto].
+- Ventajas sobre R Markdown:
+  - **Multilingüe**: funciona con R, Python y Julia.
+  - **Todo en uno**: no necesita paquetes adicionales (bookdown,
+    blogdown, xaringan) — todo está integrado.
+  - **Herramientas modernas**: callouts, paneles con tabs, cross-
+    references, layout avanzado, interactividad.
+  - **Independiente de RStudio**: funciona desde VS Code, terminal,
+    Jupyter.
+
+::: {.aside .fragment}
+Quarto (2022). [quarto.org](https://quarto.org/)
+:::
+
+## Características de cada uno {.smaller}
+
+|   | R Markdown (`.Rmd`) | Quarto (`.qmd`) |
+|------------------------|------------------------|------------------------|
+| **Lenguaje** | Solo R | R, Python, Julia, Observable |
+| **Ecosistema** | Muchos paquetes separados | Todo integrado |
+| **Funcionalidades** | Depende del paquete | Callouts, tabs, layouts nativos |
+| **Aprendizaje** | Amplia comunidad, mucha documentación | Documentación excelente, creciendo |
+| **Recomendación de uso** | Proyectos existentes en `.Rmd` | **Proyectos nuevos** |
+
+. . .
+
+::: callout-tip
+Para este curso y la **Tarea 1** podremos usar **Quarto** (`.qmd`) o **R
+Markdown** (.Rmd). La sintaxis es casi idéntica a R Markdown, por lo que
+si ya saben `.Rmd`, la transición es inmediata.
+:::
+
+## Estructura de un documento Quarto {.smaller}
+
+Un archivo `.qmd` tiene **tres componentes**:
+
+![](img/quarto-structure.png){width="70%" fig-align="center"}
+
+## 1. YAML (*Yet Another Markup Language*) {.smaller}
+
+- Va al **inicio** del documento, delimitado por `---`.
+- Define **metadatos** y opciones de configuración: título, autor,
+  fecha, formato de salida, tabla de contenidos, tema, etc.
+
+. . .
+
+``` yaml
+---
+title: "Análisis de Homicidios en la RM"
+author: "Gabriel Duarte"
+date: "2026-06-20"
+format:
+  html:
+    toc: true
+    theme: flatly
+    code-fold: true
+execute:
+  echo: true
+  warning: false
+---
+```
+
+## 2. Chunks de código {.smaller}
+
+- Bloques delimitados por ```` ```{r} ```` y ```` ``` ```` que contienen
+  código R ejecutable.
+- Atajo para insertar: **Ctrl + Alt + I** (Mac: **Cmd + Option + I**).
+- Se configuran con opciones `#|` al inicio del chunk:
+
+. . .
+
+```` markdown
+```{{r}}
+#| echo: true
+#| eval: true
+#| warning: false
+#| fig-width: 8
+
+library(ggplot2)
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point()
+```
+````
+
+## Opciones más comunes de los chunks {.smaller}
+
+| Opción                     | Efecto                                         |
+|---------------------------|---------------------------------------------|
+| `echo: true/false`         | ¿Muestra el código en el documento?            |
+| `eval: true/false`         | ¿Ejecuta el código?                            |
+| `warning: false`           | Oculta warnings                                |
+| `message: false`           | Oculta mensajes                                |
+| `include: false`           | Ejecuta pero no muestra ni código ni resultado |
+| `fig-width` / `fig-height` | Tamaño del gráfico                             |
+| `code-fold: true`          | Código colapsable (solo HTML)                  |
+
+## 3. Texto en Markdown {.smaller}
+
+- Todo lo que no es YAML ni chunk es **texto narrativo** escrito en
+  Markdown:
+
+. . .
+
+| Sintaxis       | Resultado          |
+|----------------|--------------------|
+| `# Título`     | Encabezado nivel 1 |
+| `## Subtítulo` | Encabezado nivel 2 |
+| `**negrita**`  | **negrita**        |
+| `*cursiva*`    | *cursiva*          |
+| `` `código` `` | `código`           |
+| `[texto](url)` | Hipervínculo       |
+| `![](img.png)` | Imagen             |
+
+## Compilar (*Render*) {.smaller}
+
+- Para generar el documento final: **Ctrl + Shift + K** (Mac: **Cmd +
+  Shift + K**), o hacer clic en el botón **Render**.
+- Quarto convierte el `.qmd` → ejecuta el código → genera el
+  HTML/PDF/Word.
+
+. . .
+
+::: callout-warning
+Para generar documentos **PDF** se necesita una distribución de LaTeX.
+La más sencilla es TinyTeX:
+
+``` r
+install.packages("tinytex")
+tinytex::install_tinytex()
+```
+:::
+
+# Demostración en vivo {background-color="#f8f9fa"}
+
+##  {.smaller}
+
+::: {.callout-note style="font-size: 1.3em; text-align: center; padding: 2em;"}
+## 🖥️ Demo: Crear un documento Quarto
+
+1.  **File → New File → Quarto Document**
+2.  Elegir título, autor y formato (HTML)
+3.  Explorar la estructura: YAML, chunks, texto
+4.  Insertar un chunk con un gráfico (`Ctrl + Alt + I`)
+5.  Compilar con **Render** y ver el resultado
+
+*(También veremos cómo crear un archivo R Markdown para comparar la
+diferencia)*
+:::
+
+## Recursos útiles {.smaller}
+
+- [Quarto — Get Started](https://quarto.org/docs/get-started/) — guía
+  oficial de instalación y primeros pasos.
+- [R for Data Science, Cap. 28: Quarto](https://r4ds.hadley.nz/quarto) —
+  el libro de referencia del curso (Wickham & Grolemund).
+- [R Markdown: The Definitive
+  Guide](https://bookdown.org/yihui/rmarkdown/) — referencia completa de
+  R Markdown (Xie et al., 2018).
+- [Quarto Cheat Sheet](https://rstudio.github.io/cheatsheets/quarto.pdf)
+  — resumen de una página.
+- [Get started with Quarto — Mine
+  Çetinkaya-Rundel](https://www.youtube.com/watch?v=_f3latmOhew) —
+  tutorial en video (recomendado).
+
+# [IA Generativa para programar en R]{style="color:white"} {background-color="#173277"}
+
+## ¿Qué es la IA generativa? {.smaller .justify}
+
+- Los modelos de lenguaje de gran escala (LLMs) como **ChatGPT**
+  (OpenAI), **Claude** (Anthropic), **Gemini** (Google) y **Copilot**
+  (Microsoft) pueden generar código, explicar funciones y asistir en el
+  análisis de datos.
+
+- Son especialmente útiles para:
+
+  - **Acelerar** tareas repetitivas.
+  - **Aprender** funciones o paquetes nuevos.
+  - **Depurar** errores en el código.
+
+. . .
+
+::: callout-warning
+## Precaución
+
+La IA no reemplaza el **juicio humano**: siempre verifiquen que el
+código generado sea correcto y que los resultados tengan sentido.
+Entiendan la IA como una **extensión** de sus capacidades, no un
+sustituto.
+:::
+
+## Herramientas de acceso gratuito {.smaller}
+
+| Herramienta | Acceso | Ventaja principal |
+|-----------------------|-----------------------|---------------------------|
+| [Google Gemini](https://gemini.google.com/) | Gratuito con cuenta Google | Integración con Google Colab para ejecutar R |
+| [ChatGPT](https://chat.openai.com/) | Gratuito (GPT-4o limitado) | Amplia comunidad, muchos ejemplos |
+| [Claude](https://claude.ai/) | Gratuito (limitado) | Respuestas detalladas, buen razonamiento |
+
+. . .
+
+::: callout-tip
+Para este curso recomendamos **Google Gemini** por su acceso gratuito y
+la posibilidad de ejecutar código R directamente en **Google Colab**.
+:::
+
+## Ingeniería de prompts: la clave {.smaller .justify}
+
+Un **prompt** es la instrucción que le damos a la IA. La calidad de la
+respuesta depende directamente de la calidad del prompt.
+
+::: fragment
+Un buen prompt tiene **4 componentes** [@white]:
+
+1.  **Rol**: quién es la IA en este contexto.
+2.  **Contexto**: qué datos tenemos, qué paquetes usamos.
+3.  **Tarea**: qué queremos que haga, de forma específica.
+4.  **Formato**: cómo queremos la respuesta.
+:::
+
+## Estructura de un buen prompt {.smaller}
+
+::::::: columns
+:::: {.column width="50%"}
+::: {.fragment .fade-in}
+[**Prompt vago**]{style="color:red"} ❌
+
+*"Hazme un gráfico de barras en R"*
+
+→ La IA no sabe qué datos usar, qué variable graficar ni qué estilo
+aplicar.
+:::
+::::
+
+:::: {.column width="50%"}
+::: {.fragment .fade-in}
+[**Prompt estructurado**]{style="color:green"} ✅
+
+*"Usando tidyverse y el dataset gapminder en R, crea un gráfico de
+barras horizontales que muestre la esperanza de vida promedio por
+continente en 2007. Usa theme_minimal(), colores de la paleta Set2 de
+RColorBrewer, y ordena las barras de mayor a menor. Agrega etiquetas con
+el valor sobre cada barra."*
+:::
+::::
+:::::::
+
+## Anatomía del prompt estructurado {.smaller}
+
+```         
+[ROL] Eres un experto en R y ggplot2.
+
+[CONTEXTO] Estoy trabajando con el dataset `gapminder` del paquete
+gapminder en R. Filtré los datos para el año 2007 y calculé la
+esperanza de vida promedio por continente.
+
+[TAREA] Necesito un gráfico de barras horizontales que muestre la
+esperanza de vida promedio por continente, ordenado de mayor a menor,
+con etiquetas numéricas sobre cada barra.
+
+[FORMATO] Dame solo el código en R usando tidyverse y ggplot2, con
+comentarios breves en español explicando cada paso.
+```
+
+. . .
+
+::: callout-tip
+## Consejo práctico
+
+Cuanto más contexto le den (qué paquetes usan, qué estructura tienen los
+datos, qué estilo visual prefieren), mejor será el resultado. Si el
+primer resultado no es perfecto, **iterar** corrigiendo el prompt.
+:::
+
+# [Aplicaciones concretas]{style="color:white"} {background-color="#173277"}
+
+## Aplicación 1: Explicar código {.smaller}
+
+Cuando encuentren código que no entienden, pueden pedirle a la IA que lo
+explique línea por línea:
+
+. . .
+
+```         
+Explícame qué hace este código de R línea por línea, en español
+y de forma sencilla para alguien que está aprendiendo:
+
+gapminder |>
+  filter(year == 2007) |>
+  group_by(continent) |>
+  summarise(media = mean(lifeExp)) |>
+  ggplot(aes(x = reorder(continent, media), y = media)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  theme_minimal()
+```
+
+. . .
+
+::: callout-tip
+Este uso es especialmente valioso para **aprender**: en vez de buscar
+cada función por separado, obtienen una explicación contextualizada del
+flujo completo.
+:::
+
+## Aplicación 2: Buscar funciones o generar código {.smaller}
+
+Cuando no saben qué función usar para resolver un problema:
+
+. . .
+
+```         
+Usando R y tidyverse, necesito leer un archivo Excel que tiene
+las primeras 3 filas con encabezados combinados y los datos reales
+comienzan en la fila 4. El archivo tiene datos hasta la fila 350
+y después hay filas de totales que no quiero incluir.
+¿Qué función y argumentos debo usar?
+```
+
+. . .
+
+O para generar código desde una descripción:
+
+```         
+Tengo un data frame llamado `homicidios` con columnas `comuna`,
+`anio` (2024 y 2025) y `n` (cantidad de homicidios). Necesito
+pivotear la tabla para que cada año sea una columna, calcular la
+diferencia entre 2025 y 2024, y ordenar de mayor a menor diferencia.
+Dame el código en R usando tidyverse.
+```
+
+## Aplicación 3: Modificar un gráfico con `ggplot2` {.smaller}
+
+Un uso muy práctico: partir de un gráfico base y pedirle mejoras
+específicas:
+
+. . .
+
+```         
+Tengo este gráfico en R:
+
+ggplot(gap_2007, aes(x = lifeExp)) +
+  geom_histogram()
+
+Necesito que le hagas las siguientes mejoras:
+1. Cambiar el color de relleno a "steelblue" con bordes blancos
+2. Usar 15 bins
+3. Agregar título "Distribución de la esperanza de vida (2007)"
+4. Poner etiquetas en español en los ejes
+5. Usar theme_clean() del paquete ggthemes
+6. Formato chileno en el eje y (punto separador de miles)
+```
+
+. . .
+
+::: callout-tip
+La ventaja de este enfoque es que **ustedes mantienen el control**:
+parten de código que ya entienden y le piden mejoras incrementales,
+verificando cada resultado.
+:::
+
+## Ejemplo en vivo con Gemini en Google Colab {.smaller}
+
+::: {.callout-note style="font-size: 1.2em; text-align: center; padding: 2em;"}
+## 🤖 Demo: IA generativa en acción
+
+1.  Abrir [Google Colab](https://colab.research.google.com/) con R
+2.  Usar Gemini integrado para:
+    - **Explicar** un bloque de código
+    - **Generar** un gráfico paso a paso
+    - **Iterar** pidiendo mejoras al gráfico
+3.  Copiar el resultado final a RStudio
+:::
+
+## Buenas prácticas con IA {.smaller}
+
+- **Siempre verificar** el código generado: ejecutarlo, revisar el
+  resultado, entender qué hace cada línea.
+- **No copiar sin entender**: si no pueden explicar qué hace el código,
+  no lo usen. La Tarea 1 requiere **justificación escrita**.
+- **Iterar**: si la primera respuesta no es perfecta, refinan el prompt.
+  La conversación es un ida y vuelta.
+- **Citar**: si usaron IA para generar código, indíquenlo. La
+  transparencia es parte de la integridad académica.
+- **Aprender**: usen la IA como **tutor**, no como atajo. Pedir
+  explicaciones es más valioso que pedir soluciones.
+
+## 🧠 Pregunta N° 1 {.quiz-question .smaller}
+
+Un alumno le pide a la IA: *"Hazme la tarea 1 del curso"*. ¿Cuál es el
+principal problema con este prompt?
+
+::: nonincremental
+***¿Qué falla?***
+
+- [Falta especificar el formato de
+  salida]{data-explanation="El formato es un problema menor. El problema principal es que la IA no tiene contexto sobre qué es 'la tarea 1': no conoce los datos, los requisitos ni los criterios de evaluación."}
+- [La IA no sabe programar en
+  R]{data-explanation="Los LLMs actuales son bastante competentes en R. El problema no es la capacidad de la IA."}
+- [Falta contexto, datos y una tarea específica]{.correct
+  data-explanation="Correcto. Sin especificar qué datos usar, qué análisis hacer, qué paquetes emplear y qué formato de respuesta se espera, la IA no puede generar algo útil. Además, copiar sin entender viola la integridad académica."}
+- [Debería usar Python en vez de
+  R]{data-explanation="El lenguaje no es el problema. El prompt falla por falta de estructura, no por la elección de herramienta."}
+:::
+
+# Cierre de la Unidad I
+
+## Tarea 1 {.smaller}
+
+- **Fecha de entrega**: 28 de junio de 2026.
+- **Formato**: documento Quarto (`.qmd`) o R Markdown (.Rmd) compilado a
+  **HTML**.
+- **Contenido**: manejo, transformación y visualización de datos con R.
+- **Entrega**: a través de **webcursos** en el buzón correspondiente.
+
+. . .
+
+::: callout-important
+## Recordatorio
+
+La tarea es **individual**. El código debe estar completo y documentado
+con comentarios. Se permite herramientas de IA generativa solo como
+apoyo. Si usan funciones distintas a las vistas en clases o
+explicitadas, deben justificarlo. La IA **no** reemplaza su trabajo,
+solo lo puede potenciar y ayudar a entender mejor lo que hacen.
+:::
+
+## Próxima clase: Unidad II {.smaller}
+
+A partir de la **Clase 5** comenzamos la Unidad II: *Estadística
+Aplicada con R*, donde aprenderemos a:
+
+- Realizar **inferencia estadística**: intervalos de confianza y pruebas
+  de hipótesis.
+- Construir modelos de **regresión lineal**.
+- Usar el paquete `infer` para inferencia tidy.
+
+. . .
+
+::: callout-note
+## Referencia principal Unidad II
+
+[**ModernDive**](https://moderndive.com/v2/) — Ismay, Kim & Valdivia
+(2025). *Statistical Inference via Data Science: A ModernDive into R and
+the Tidyverse* (2ª ed.).
+:::
+
+## Recapitulación {.smaller}
+
+| Tema | Contenido clave |
+|---------------------------------|---------------------------------------|
+| **Comunicar** | Marco SUCCES, arco narrativo, estructura contexto → hallazgo → implicancia |
+| **R Markdown** | Archivo `.Rmd`, compilar con *knit*, múltiples formatos de salida |
+| **Quarto** | Archivo `.qmd`, sucesor de R Markdown, multilingüe, todo integrado |
+| **Estructura** | YAML (metadatos) + Chunks (código) + Texto (Markdown) |
+| **IA generativa** | Prompt = Rol + Contexto + Tarea + Formato |
+| **Aplicaciones** | Explicar código, buscar funciones, modificar gráficos |
+
+## Bibliografía {.smaller}

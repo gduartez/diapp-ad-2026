@@ -1,0 +1,247 @@
+---
+title: "Tarea 1"
+author: 'Nombre Apellido'
+subtitle: 'Módulo 2 DCDPP UAI'
+date: "2024-06-25"
+date-format: "D MMM YYYY"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+# Instrucciones {style="text-align: justify"}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, warning = FALSE, message = FALSE)
+```
+
+La tarea debe responderse usando como base el archivo `.Rmd` (RMarkdown) o `.qmd` (Quarto document) que se ha compartido en [WebCursos](https://webcursos.uai.cl/).
+
+Al terminar deberá hacer click en `Knit` o `Render` para generar un archivo `HTML`.
+
+Deberá enviar tanto el archivo `.Rmd` o `.qmd` donde escribió su código y respuestas indicando su apellido y nombre como nombre del archivo (`Tarea1M2_ApellidoNombre.Rmd` o `Tarea1M2_ApellidoNombre.qmd`) así como el `HTML` generado a partir de este mismo (`Tarea1M2_ApellidoNombre.html`). **Se descontarán puntos si no se siguen estas instrucciones**. Asegúrese de que el archivo `HTML` efectivamente muestre las respuestas que usted vio en su código.
+
+Recuerde que el código en un archivo `.Rmd` o `.qmd` va dentro de un *code chunk*, el cual se puede insertar en su documento con `ALT` + `CTRL` + `I` o con el botón *Insert* en la esquina superior derecha del archivo `.Rmd`.
+
+Esta tarea consta de 24 preguntas en total (17 en la primera parte y 7 en la segunda) y cada pregunta vale 1 punto. El cálculo de la nota final se realiza bajo la siguiente fórmula: $$\frac{\sum_{i=1}^{24}x_i}{24}\times 6 +1$$ donde $x_i$ corresponde al puntaje obtenido en la pregunta $i$.
+
+Adicionalmente, hay una última pregunta de bonus la cual es **OPCIONAL** y cuyo puntaje se sumará a su puntaje final en caso de que la responda.
+
+Cuando se solicite, en sus respuestas no solo deberá entregar el código que produce la respuesta a cada pregunta, sino que también será necesario que **redacte brevemente qué es lo que obtiene. Además, su respuesta debe incorporar una justificación o análisis cuando así se solicite**.
+
+La tarea debe ser entregada a través de [WebCursos](https://webcursos.uai.cl/) **hasta las 23:59 del domingo 28 de junio de 2024 (28/06/2026)**.
+
+Esta evaluación es **INDIVIDUAL**, por lo que cualquier evidencia de copia/plagio será penalizada e informada a la coordinación académica de este diplomado.
+
+El uso de la Inteligencia Artifificial (IA) está permitido solo como **asistencia en la generación del código o en su explicación**. En este sentido, la IA es una herramienta de **apoyo** al aprendizaje y **no de reemplazo** de las habilidades humanas. Los códigos generados por IA con *prompts* generales pueden llevar a errores y/o generar código ineficiente para los objetivos dispuestos.
+
+Dicho lo anterior, deben usar **solo las funciones revisadas en clases** (ya sea en las presentaciones o en las guías de ejercicios), a menos que las instrucciones de la pregunta permitan lo contrario. Cualquier otra función o librería usada deberá ser **justificada** por el alumno en su respuesta, indicando el motivo de uso de esa función y/o librería y porqué la utiliza en lugar de las enseñadas en el marco del curso. **Se penalizará con una reducción parcial o total del puntaje de cada pregunta en la cual no se cumpla con lo anterior.**
+
+Antes de comenzar, cargue los paquetes/librerías que serán necesarios para el desarrollo de la tarea.
+
+Recuerde que si no tiene instalados los paquetes deberá hacerlo usando la función `install.packages(...)` antes de cargarlos usando `library()`, o bien, puede utilizar la función `p_load()` del paquete `pacman` (recuerde instalarlo y cargarlo primero antes de instalar/cargar el resto de las librerías).
+
+A continuación se dejan las librerías que serán utilizadas:
+
+```{r, echo=TRUE}
+library(tidyverse) # Manipulación y Visualización de Datos
+library(readxl) #Importar archivos excel
+library(janitor) #Limpieza de datos
+library(openxlsx) #Guardar archivos excel
+library(scales) #Formatear visualización de texto
+
+rm(list = ls()) #Borrar objetos existentes en el environment
+```
+
+\newpage
+
+# Parte I: Importar Datos {style="text-align: justify"}
+
+En esta primera parte, se trabajará en la importación, ordenamiento y transformación de datos públicos correspondiente a las siguientes 3 fuentes de información:
+
+a.  [Proyecciones de Población en base al Censo 2024 a nivel **nacional** (INE):]{.underline}
+
+    <https://www.ine.gob.cl/estadisticas-por-tema/demografia-y-poblacion/estimaciones-y-proyecciones-de-poblacion>. Sección *cuadros estadísticos -\> Proyección base 2024*
+
+b.  [Proyecciones de Población en base al Censo 2017 a nivel **comunal** (INE):]{.underline} <https://www.ine.gob.cl/estadisticas/sociales/demografia-y-vitales/proyecciones-de-poblacion>. Sección *cuadros estadísticos -\> Proyección base 2017*
+
+c.  [Víctimas de homicidio consumado:]{.underline}
+
+    <https://prevenciondehomicidios.cl/> Sección: [**Bases de datos VHC con variables de informe**](https://prevenciondehomicidios.cl/wp-content/uploads/2026/03/Base_de_Datos_VHC_2018_2025.xlsx)
+
+d.  [Estimaciones de Pobreza Comunal:]{.underline} <https://observatorio.ministeriodesarrollosocial.gob.cl/pobreza-comunal-2022>.
+
+## 1.1 Población Comunal INE
+
+1.  Cargue el archivo `estimaciones-y-proyecciones-2002-2035-comunas.xlsx` y asígnelo a un objeto llamado `poblacion_comunas` ¿Cuántas variables y cuántas observaciones tiene este *dataframe*?
+
+```{r}
+
+```
+
+2.  Explique qué representa cada observación en el *dataframe* `poblacion_comunas`. Para hacerlo, puede utilizar como ejemplo algún **valor** de la población de la base de datos. Por ejemplo, el valor de la variable `Poblacion 2002` para la primera observación es 1469 ¿Qué representa ese número?
+
+3.  Modifique el nombre de las columnas o variables del objeto `poblacion_comunas` utilizando la función `clean_names()` y sobrescriba el resultado en este mismo objeto ¿Dentro de cuál paquete se encuentra esta función? *Nota: Cuando se le pida que sobrescriba un objeto x ya creado, implica que debe asignar al objeto x todas las funciones que se solicitan en la pregunta respectiva. Si solo imprime los resultados SE DESCONTARÁN PUNTOS*.
+
+```{r}
+
+```
+
+4.  Cambie el nombre de la variable que indica el sexo de la población observada por el siguiente nombre: `sexo`. Realice lo anterior sobrescribiendo el objeto `poblacion_comunas`.
+
+```{r}
+
+```
+
+5.  Pivotee el *dataframe* `poblacion_comunas` y conviértalo en uno en formato *long* llamado `poblacion_comunas_long`. Para hacerlo, considere como pivote las variables que indican la población por año (es decir, aquellas que comienzan con el nombre `poblacion_`). Haga que los nombres de las variables a pivotear se guarden en una nueva variable que tenga como nombre `agno_str` y que los valores de la población se asignen a la variable `poblacion`.
+
+```{r}
+
+```
+
+6.  Cree una nueva variable llamada `agno` que represente el año de estimación/proyección de la población a partir de la variable `agno_str` sobrescribiendo el objeto `poblacion_comunas_long`. Asegúrese que esta nueva variable `agno` sea de clase numérica utilizando la función `as.numeric()`. Visualice el objeto `poblacion_comunas_long` utilizando la función `glimpse()` para asegurarse de que `agno` sea de tipo `dbl` o `int`. *Hint: En clases revisamos una función que permite el manejo de cadenas de texto y extracción de valores a partir de posiciones. Analice entre qué posiciones siempre se encuentra el valor numérico del año dentro la cadena de texto de los valores de `agno_str`*.
+
+```{r}
+
+```
+
+7.  Cree un nuevo objeto llamado `poblacion_comunal_19_23` a partir del objeto `poblacion_comunas_long` filtrando por los años desde el 2019 hasta el 2023 inclusive (es decir, los siguientes 5 años: 2019, 2020, 2021, 2022 y 2023).
+
+```{r}
+
+```
+
+8.  Sobrescriba el objeto `poblacion_comunal_19_23` y calcule la población comunal total (`poblacion_total`) para cada año seleccionado (2019-2023) manteniendo todas las variables indicativas de comunas, provincias y regiones. Para realizarlo, agrupe solo por las variables `region`,`nombre_region`, `provincia`, `nombre_provincia`,`comuna` `nombre_comuna` y `agno`. Encadene al final de su código la función `ungroup()`. *Hint: Note que son 346 códigos de comunas, por lo que el dataframe resultante debe tener* $346\times 5 = 1730$ observaciones.
+
+```{r}
+
+```
+
+9.  ¿Cuáles son las 10 comunas más pobladas de Chile según la población proyectada para el año 2023? ¿Cuánta es la población total proyectada en Chile para el año 2023?
+
+```{r}
+
+```
+
+10. Exporte el objeto `poblacion_comunal_19_23` en formato excel y, al archivo `.xlsx` guardado, asígnele el mismo nombre del objeto: `poblacion_comunal_2019_2023`.
+
+```{r}
+
+```
+
+## 1.2 Pobreza Comunal CASEN
+
+Si no logró terminar la parte 1.1, puede utilizar el archivo `poblacion_comunal_2019_2023.xlsx` que está en la carpeta de `resultados`. Recuerde que si utilizará el archivo alojado en esta última carpeta, debe cargarlo en su environment utilizando una función que le permita leer archivos excel y asignarlo al objeto `poblacion_comunal_19_23`.
+
+11. Cargue el archivo `Estimaciones_Tasa_Pobreza_Ingresos_Comunas_2022.xslx` y asígnelo al objeto `pobreza_2022` de manera tal que el *dataset* quede en formato *tidy*, en donde la primera fila corresponda al nombre de las variables y el resto de las filas indiquen los valores observados de cada variable para cada comuna. Este dataset no tiene observaciones faltantes, por lo que procure verificar que se cumpla esta condición en el objeto que cree. *Hint: En este caso, el dataset tiene información sobre 345 comunas del país, ya que excluye la comuna 12202 (Antártica)*.
+
+```{r}
+
+```
+
+12. Sobrescriba el objeto `pobreza_2022` seleccionando solamente las siguientes columnas: `Código` `Número de personas según proyecciones de población (*)`, `Número de personas en situación de pobreza por ingresos (**)` y `Porcentaje de personas en situación de pobreza por ingresos 2022`. Renombre estas nuevas variables como `codigo`, `pob_pry`, `n_pobreza` y `pct_pobreza`.
+
+```{r}
+
+```
+
+13. Utilizando el objeto `poblacion_comunal_19_23`, cree un nuevo objeto llamado `poblacion_comunal_22` filtrando por las observaciones correspondientes a la población comunal para el año 2022 exclusivamente.
+
+```{r}
+
+```
+
+14. Cree un nuevo objeto llamado `pobreza_comunal_2022` cruzando el objeto `poblacion_comunal_22` con el objeto `pobreza_2022` (es decir, al objeto `poblacion_comunal_22` añádale las columnas del objeto `pobreza_2022`). Procure especificar correctamente la llave para realizar el cruce. *Nota: La población proyectada utilizada en la CASEN 2022 no coincide exactamente con la población proyectada por el INE en base al censo 2017, por lo que no debe preocuparse si es que ambos valores difieren*.
+
+```{r}
+
+```
+
+15. Exporte el objeto `pobreza_comunal_2022` en formato excel y, al archivo `.xlsx` guardado, asígnele el mismo nombre del objeto: `pobreza_comunal_2022`.
+
+```{r}
+
+```
+
+## 1.3 DMCS
+
+Si no logró terminar la parte 1.2, puede utilizar el archivo `pobreza_comunal_2022.xlsx` que está en la carpeta de `resultados`. Recuerde que si utilizará el archivo alojado en esta última carpeta, debe cargarlo en su environment utilizando una función que le permita leer archivos excel y asignarlo al objeto `pobreza_comunal_2022`.
+
+16. Cargue el *dataframe* `dmcs.xlsx` correspondiente a los casos policiales de los delitos de mayor connotación social por año y comuna y asígnelo a un objeto llamado `dmcs_22`. Filtre las observaciones correspondientes al año 2022; elimine las variables `comuna` y `agno`; y por último, cambie el nombre de la variable `frecuencia` por `frecuencia_dmcs`.
+
+```{r}
+
+```
+
+17. Cruce el objeto `pobreza_comunal_2022` con el objeto creado en la pregunta anterior (`dmcs_22`) y asígnelo al objeto `dataset_final`. Guarde este archivo en formato excel con el mismo nombre que le asignó al objeto. ¿Cuál es la comuna con la mayor cantidad de casos policiales de DMCS en el año 2022? ¿Cuántos casos policiales hubo en esa comuna?
+
+```{r}
+
+```
+
+# Parte II: Análisis de Pobreza y Casos Policiales de DMCS {style="text-align: justify"}
+
+En esta segunda parte, se utilizará el dataframe resultante del proceso de ordenamiento y transformación de la parte I con el objetivo de realizar análisis exploratorios y visualizaciones que permitan describir la relación entre 2 variables a nivel comunal: pobreza y tasa de delitos de mayor connotación social.
+
+Si no logró terminar la parte 1.3, puede utilizar el archivo `dataset_final.xlsx` que está en la carpeta de `resultados`. Recuerde que si utilizará el archivo alojado en esta última carpeta, debe cargarlo en su environment utilizando una función que le permita leer archivos excel y asignarlo al objeto `dataset_final`.
+
+18. Haga un histograma que muestre la distribución comunal de casos policiales para el país completo asignando a las barras un color de contorno negro (`'black'`) y un color de relleno azul. ¿Qué interpreta de este histograma?
+
+```{r}
+
+```
+
+19. Cree una nueva variable que se llame `tasa_dmcs` correspondiente a la tasa delictual por cada 100.000 habitantes sobrescribiendo el objeto `dataset_final`. La fórmula matemática que permite construir esta variable es la siguiente: $$Tasa = \frac{Frecuencia}{Poblacion}\times 100.000$$ Replique el histograma realizado en la pregunta 18 ¿Cambia la visualización? ¿Qué puede desprender de este nuevo gráfico?
+
+```{r}
+
+```
+
+20. Haga un *scatterplot* o gráfico de dispersión que muestre la relación entre la tasa de pobreza comunal (eje x) y tasa de DMCS por cada 100.000 habitantes (eje y). Adicionalmente, agregue una curva ajustada de los datos que permita entender aún mejor la relación estas dos variables. ¿Qué puede observar en términos generales?
+
+```{r}
+
+```
+
+21. Mejore la estética del gráfico anterior arreglando los siguientes aspectos:
+
+    i)  En el eje x asigne un formato de porcentaje
+    ii) En el eje y asigne un formato de número cuyo separador de miles o `big.mark` sea un `.`
+    iii) Agregue como título del eje x: `Porcentaje de Pobreza`
+    iv) Agregue como título del eje y: `Tasa de DMCS`
+    v)  Agregue como título del gráfico: `Relación entre pobreza y DMCS a nivel comunal`
+
+```{r}
+
+```
+
+22. Haga un gráfico de dispersión como el de la pregunta 20 pero ahora **para cada región** por separado y muéstrelo en una sola imagen. Deje la escala del eje y como libre y **no** muestre el intervalo de confianza. ¿Observa patrones diferenciados? Si su respuesta es sí, describa al menos una diferencia. *Hint: No es necesario que haga 16 gráficos distintos por separado, ya que existe una función que permite hacer gráficos por grupos o facets*.
+
+```{r}
+
+```
+
+23. Cree y sobrescriba en el objeto `dataset_final` una nueva variable que se llame `zona` y tome los siguientes valores en función de los criterios que se señalan a continuación:
+
+    i)  `Norte`: Para las regiones 15, 1, 2, 3 y 4.\
+    ii) `Centro`: Para las regiones 5, 13, 6, 7, 16 y 8.\
+    iii) `Sur`: Para las regiones 9, 14, 10, 11, 12.
+
+```{r}
+
+```
+
+24. Haga un nuevo *scatterplot* o gráfico de dispersión que muestre la relación entre la tasa de pobreza comunal (eje x) y tasa de DMCS por cada 100.000 habitantes (eje y) al igual que en la pregunta 21, pero ahora separado por **zona**. Agregue una línea ajustada de los datos a través del método de regresión lineal (es decir, ajuste una recta en vez de una curva) que permita explorar si hay diferencias en las tendencias entre zonas del país. Utilice una escala de color de su preferencia distinta a la que viene por defecto para mostrar los resultados. ¿Qué puede concluir?
+
+```{r}
+
+```
+
+# BONUS: Mapa de DMCS en la RM {style="text-align: justify"}
+
+25. Utilizando el paquete `chilemapas` y `sf`, realice un mapa estático que muestre en una escala graduada de colores, cómo difiere la tasa de DMCS entre las comunas de la Región Metropolitana para el año 2022.
+
+```{r}
+
+```

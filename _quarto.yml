@@ -9,7 +9,7 @@ project:
     - "01-importar/*.qmd"
     - "02-transformar/*.qmd"
     - "03-visualizar/*.qmd"
-    - "!04-comunicar/*.qmd"
+    - "04-comunicar/*.qmd"
     - "!05-inferencia/*.qmd"
     - "!06-regresion1/*.qmd"
     - "!07-regresion2/*.qmd"
@@ -56,5 +56,5 @@ website:
 
 format:
   html:
-    theme: united
+    theme: flatly
     toc: true

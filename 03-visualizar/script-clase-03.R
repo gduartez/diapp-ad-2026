@@ -22,10 +22,7 @@ theme_g1 <-   theme(
   panel.border = element_blank()
 )
 
-
 # Ejercicios Clase --------------------------------------------------------
-
-
 # 1 -----------------------------------------------------------------------
 library(gapminder)
 library(ggplot2)
@@ -43,7 +40,6 @@ ggplot(gap_2007, aes(x = lifeExp)) +
 
 
 # 3 -----------------------------------------------------------------------
-
 library(gapminder)
 library(ggplot2)
 library(dplyr)
@@ -65,7 +61,7 @@ ggplot(gap_2007, aes(x = gdpPercap, y = lifeExp,
 # Ejercicio Grupal --------------------------------------------------------
 ## 1 -----------------------------------------------------------------------
 homicidos_wide <- read_excel('data/clean/homicidios_wide.xlsx') |> 
-  mutate(tasa_hom_2024 = hom_2024/poblacion_censada*100000) |> 
+  mutate(tasa_hom_2024 = (hom_2024/poblacion_censada)*100000) |> 
   mutate(zona = case_when(
     codigo_region %in% c(15, 1, 2, 3, 4) ~ "Norte",
     codigo_region %in% c(5, 13, 6, 7, 16, 8) ~ "Centro",
@@ -78,13 +74,23 @@ homicidos_long <- read_excel('data/clean/homicidios_long.xlsx')
 homicidos_anual <- homicidos_long |> 
   count(anio, name = "homicidios")
 
+# O de manera alternativa
+homicidos_anual <- homicidos_long |> 
+  group_by(anio) |> 
+  summarise(homicidios = n())
+
 homicidos_wide_p <- homicidos_wide |> 
   filter(hom_2024 > 0)
 
 ## 2 -----------------------------------------------------------------------
 # Linea
+"blue"
+"blue4"
+"steelblue"
+'#4393C3'
+
 p2 <- ggplot(homicidos_anual, aes(x = anio, y = homicidios)) +
-  geom_line(color = '#4393C3', linewidth = 2, alpha = .8) +
+  geom_line(color = '#4393C3', linewidth = 2, alpha = .9) +
   geom_point(alpha = .7, size= 2) +
   scale_x_continuous(breaks = seq(2018,2025,1)) +
   scale_y_continuous(limits = c(0,1500)) +
@@ -99,7 +105,7 @@ p3 <- ggplot(homicidos_anual, aes(x = anio, y = homicidios)) +
   geom_col(fill = '#173277', width = 0.7) +
   geom_text(
     aes(label = comma(homicidos_anual$homicidios, big.mark = ".")),
-    vjust = -0.4,
+    vjust = -.4,
     size = 4,
     fontface = "bold"
   ) +
