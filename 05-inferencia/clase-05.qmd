@@ -4,7 +4,7 @@ subtitle: "**Análisis de Datos y Estadística Computacional**"
 institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
 author: '**Prof. Gabriel Duarte Zúñiga**'
 lang: es
-date: "06-27-2026"
+date: "06-23-2026"
 
 format:
   live-revealjs: 
