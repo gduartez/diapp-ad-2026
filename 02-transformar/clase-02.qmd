@@ -148,16 +148,16 @@ datos utilizando los verbos del paquete `dplyr` y herramientas de
 Como objetivos específicos se busca:
 
 - Reestructurar datos con `bind_rows()`, `pivot_longer()` y
-  `pivot_wider()`
+  `pivot_wider()`.
 - Ordenar filas con `arrange()`, filtrarlas con `filter()` y
-  `filter_out()`, y extraer subconjuntos con la familia `slice()`
+  `filter_out()`, y extraer subconjuntos con la familia `slice()`.
 - Seleccionar, reubicar, renombrar y crear variables con `select()`,
-  `relocate()`, `rename()` y `mutate()`
+  `relocate()`, `rename()` y `mutate()`.
 - Crear variables condicionales con `if_else()`, `case_when()` y las
-  nuevas funciones `recode_values()` y `replace_when()`
+  nuevas funciones `recode_values()` y `replace_when()`.
 - Resumir estadísticas por grupos con `group_by()` + `summarise()` y
-  `count()`
-- Manejar datos especiales: texto, fechas y factores
+  `count()`.
+- Manejar datos especiales: texto, fechas y factores.
 
 # [Reestructurar Datos]{style="color:white"} {background-color="#E49B0F"}
 
@@ -309,7 +309,7 @@ datos |>
 ## Filtrar filas: `filter()` {.smaller}
 
 - `filter()` conserva las filas que **cumplen todas** las condiciones
-  indicadas. Las condiciones se separan por coma (equivale a `&`).
+  indicadas. Las condiciones se separan por coma (equivale a utilizar `&` entre ellas).
 
 . . .
 
@@ -525,7 +525,7 @@ datos |>
   head(5)
 ```
 
-## 💻 Practiquemos: filtrar y ordenar {.smaller}
+## 💻 Filtrar y ordenar {.smaller}
 
 Usando el dataset `gapminder`, primero resuma la estructura del dataset con `glimpse()` y luego encuentre los **3 países del continente (`continent`) `Americas`** con mayor esperanza de vida (`lifeExp`) en el **año 2007**.
 
@@ -778,7 +778,7 @@ según la región: Norte (regiones 1 a 4 y 15), Centro (5 y 13) y Sur
 - [`replace_when()`]{data-explanation="replace_when() está diseñado para modificar parcialmente una columna existente, no para crear una columna nueva con categorías distintas."}
 :::
 
-## 💻 Practiquemos: crear y transformar {.smaller}
+## 💻 Crear y transformar {.smaller}
 
 Usando `gapminder`, filtre el año **2007** y cree una variable
 `nivel_desarrollo` que clasifique los países según su PIB per cápita:
@@ -830,10 +830,11 @@ Algunas consideraciones importantes:
 
 - `group_by()` prepara el *dataframe* pero **no** lo modifica
   visualmente.
+- Notar que es posible agrupar por **más de una variable**:
 - `summarise()` reduce el *dataframe* a **una fila por grupo**.
 - Si se desea seguir manipulando el resultado **sin agrupación**,
   siempre encadenar `ungroup()` al final. De lo contrario, las operaciones posteriores seguirán una lógica agrupada.
-- Es posible agrupar por **más de una variable**:
+- `.groups = "drop"` dentro de  `summarise()` hace explícito que el resultado final ya no tiene grupos: "*Una vez calculado el resumen con summarise(), elimina todos los agrupamientos para que el resultado se devuelva como una tabla sin grupos*":
 
 . . .
 
@@ -861,7 +862,7 @@ datos |>
 ## Contar: `count()` {.smaller}
 
 - Con el argumento `wt` podemos **sumar** una variable en vez de contar
-  filas:
+  filas, mientras que con el argumento `name` se puede cambiar el nombre de la variable de recuento (o suma):
 
 . . .
 
@@ -1089,7 +1090,7 @@ levels(f2) # orden personalizado
 **orden de las categorías en los gráficos** de `ggplot2` (Clase 3).
 :::
 
-## 💻 Practiquemos: factores {.smaller}
+## 💻 Factores {.smaller}
 
 Usando `gapminder` (año 2007), clasifique los países según su esperanza
 de vida en una variable numérica en función de un umbral de 70 años de edad (1 = alta (mayor igual a 70), 0 = baja (menor que 70)) y luego haga un recuento usando un factor con las etiquetas designadas (alta y baja).
@@ -1125,7 +1126,6 @@ gapminder |>
 | **Factores** | `factor()`, `fct_relevel()` |
 
 ::: fragment
-La próxima clase aprenderemos a **visualizar** estos datos con
-`ggplot2` para comunicar patrones y resultados.
+La próxima clase aprenderemos a **visualizar** estos datos con `ggplot2` para comunicar patrones y resultados.
 :::
 

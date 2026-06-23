@@ -1,0 +1,15 @@
+---
+title: "Documento de prueba"
+author: "Gabriel Duarte"
+editor: visual
+---
+
+Ejemplo de prueba
+
+```{r}
+library(tidyverse)
+
+ggplot(mtcars, aes(x = mpg, y = disp))+
+  geom_point()
+```
+

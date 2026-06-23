@@ -77,7 +77,7 @@ Los contenidos específicos de la clase son:
 ## Resumen Unidad I {.smaller}
 
 | Clase | Contenido |
-|---------------------------------|---------------------------------------|
+|----|----|
 | **Clase 1** | Importar datos: `read_csv`, `read_excel`, `read_dta`, `left_join` |
 | **Clase 2** | Transformar datos: `dplyr`, `tidyr`, `lubridate`, `forcats` |
 | **Clase 3** | Visualizar datos: `ggplot2`, gramática de gráficos, extensiones |
@@ -105,7 +105,7 @@ Los contenidos específicos de la clase son:
 Una buena historia con datos cumple seis principios [@heath2013]:
 
 | Principio | ¿Qué significa? |
-|---------------------------------|---------------------------------------|
+|----|----|
 | **S**imple | El mensaje principal es claro y compacto |
 | **U**nexpected | Presenta algo novedoso que genera curiosidad |
 | **C**oncrete | Combina lo abstracto de las ideas con lo concreto de los datos |
@@ -187,11 +187,10 @@ Quarto (2022). [quarto.org](https://quarto.org/)
 ## Características de cada uno {.smaller}
 
 |   | R Markdown (`.Rmd`) | Quarto (`.qmd`) |
-|------------------------|------------------------|------------------------|
-| **Lenguaje** | Solo R | R, Python, Julia, Observable |
+|----|----|----|
+| **Lenguaje** | Solo R | R, Python, Julia |
 | **Ecosistema** | Muchos paquetes separados | Todo integrado |
 | **Funcionalidades** | Depende del paquete | Callouts, tabs, layouts nativos |
-| **Aprendizaje** | Amplia comunidad, mucha documentación | Documentación excelente, creciendo |
 | **Recomendación de uso** | Proyectos existentes en `.Rmd` | **Proyectos nuevos** |
 
 . . .
@@ -200,6 +199,28 @@ Quarto (2022). [quarto.org](https://quarto.org/)
 Para este curso y la **Tarea 1** podremos usar **Quarto** (`.qmd`) o **R
 Markdown** (.Rmd). La sintaxis es casi idéntica a R Markdown, por lo que
 si ya saben `.Rmd`, la transición es inmediata.
+:::
+
+. . .
+
+::: callout-warning
+## Atención
+
+Aunque **Quarto** y **R Markdown** cumplen funciones similares, la sintaxis del encabezado YAML no es exactamente la misma.
+
+Por ejemplo, para generar un documento HTML:
+
+```yaml
+# R Markdown
+output: html_document
+```
+
+```yaml
+# Quarto
+format: html
+```
+
+Si copian código desde internet o utilizan IA generativa, verifiquen siempre si el ejemplo fue escrito para **R Markdown** o para **Quarto**, ya que algunos argumentos y opciones cambian entre ambos formatos.
 :::
 
 ## Estructura de un documento Quarto {.smaller}
@@ -257,7 +278,7 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 ## Opciones más comunes de los chunks {.smaller}
 
 | Opción                     | Efecto                                         |
-|---------------------------|---------------------------------------------|
+|----------------------------|------------------------------------------------|
 | `echo: true/false`         | ¿Muestra el código en el documento?            |
 | `eval: true/false`         | ¿Ejecuta el código?                            |
 | `warning: false`           | Oculta warnings                                |
@@ -304,7 +325,7 @@ tinytex::install_tinytex()
 
 # Demostración en vivo {background-color="#f8f9fa"}
 
-##  {.smaller}
+## Crear un documento Quarto y R Markdown {.smaller}
 
 ::: {.callout-note style="font-size: 1.3em; text-align: center; padding: 2em;"}
 ## 🖥️ Demo: Crear un documento Quarto
@@ -314,6 +335,8 @@ tinytex::install_tinytex()
 3.  Explorar la estructura: YAML, chunks, texto
 4.  Insertar un chunk con un gráfico (`Ctrl + Alt + I`)
 5.  Compilar con **Render** y ver el resultado
+
+. . .
 
 *(También veremos cómo crear un archivo R Markdown para comparar la
 diferencia)*
@@ -336,43 +359,74 @@ diferencia)*
 
 # [IA Generativa para programar en R]{style="color:white"} {background-color="#173277"}
 
-## ¿Qué es la IA generativa? {.smaller .justify}
+## ¿Qué es la IA generativa? {.smaller}
 
-- Los modelos de lenguaje de gran escala (LLMs) como **ChatGPT**
-  (OpenAI), **Claude** (Anthropic), **Gemini** (Google) y **Copilot**
-  (Microsoft) pueden generar código, explicar funciones y asistir en el
-  análisis de datos.
+- Es un tipo de Inteligencia Artificial capaz de **crear contenido nuevo**
+  (texto, código, imágenes, audio, video) a partir de instrucciones en
+  **lenguaje natural**.
 
-- Son especialmente útiles para:
+- Su gran salto fue justamente ese: **añadir una capa de lenguaje
+  natural**, de modo que ya no necesitamos ser expertos para "conversar"
+  con la herramienta y pedirle lo que necesitamos.
 
-  - **Acelerar** tareas repetitivas.
-  - **Aprender** funciones o paquetes nuevos.
-  - **Depurar** errores en el código.
+- En el contexto de **ciencia de datos con R**, herramientas como
+  **ChatGPT** (OpenAI), **Claude** (Anthropic), **Gemini** (Google) o
+  **Copilot** (GitHub) pueden generar, explicar y corregir código.
 
 . . .
 
-::: callout-warning
-## Precaución
-
-La IA no reemplaza el **juicio humano**: siempre verifiquen que el
-código generado sea correcto y que los resultados tengan sentido.
-Entiendan la IA como una **extensión** de sus capacidades, no un
-sustituto.
+::: callout-note
+Esta clase no busca que deleguen el trabajo en la IA, sino que la usen
+como una **extensión de sus capacidades** para programar mejor y más
+rápido.
 :::
 
-## Herramientas de acceso gratuito {.smaller}
+## Ventajas y riesgos en programación {.smaller}
 
-| Herramienta | Acceso | Ventaja principal |
-|-----------------------|-----------------------|---------------------------|
-| [Google Gemini](https://gemini.google.com/) | Gratuito con cuenta Google | Integración con Google Colab para ejecutar R |
-| [ChatGPT](https://chat.openai.com/) | Gratuito (GPT-4o limitado) | Amplia comunidad, muchos ejemplos |
-| [Claude](https://claude.ai/) | Gratuito (limitado) | Respuestas detalladas, buen razonamiento |
+::: columns
+::: {.column width="50%"}
+::: {.fragment}
+[**Ventajas** ✅]{style="color:green"}
+
+- **Acelera** tareas repetitivas y código rutinario.
+- Ayuda a **aprender** funciones y paquetes nuevos.
+- Facilita **depurar** errores difíciles de leer.
+- Permite **traducir** una idea en lenguaje natural a código.
+:::
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+[**Riesgos** ⚠️]{style="color:red"}
+
+- Puede generar código **incorrecto** o ineficiente.
+- Riesgo de **no entender** lo que se copia y pega.
+- Riesgos éticos en la producción de información y su uso en la toma de decisiones.
+- **Privacidad**: Incumplimientos legales de privacidad de los datos.
+:::
+:::
+:::
 
 . . .
 
 ::: callout-tip
-Para este curso recomendamos **Google Gemini** por su acceso gratuito y
-la posibilidad de ejecutar código R directamente en **Google Colab**.
+La regla de oro: **nunca usen código que no puedan explicar**. La IA
+propone, pero ustedes deciden, verifican y entienden.
+:::
+
+## Herramientas que pueden usar {.smaller}
+
+| Herramienta | Fortalezas principales |
+|------------|------------------------|
+| [Google Gemini](https://gemini.google.com/) | Integración con Google Colab, análisis de documentos extensos, programación y ciencia de datos. |
+| [ChatGPT](https://chat.openai.com/) | Programación, estadística, generación y corrección de código, explicación de conceptos y apoyo al aprendizaje. |
+| [Claude](https://claude.ai/) | Explicaciones detalladas, revisión de código largo, documentación y redacción técnica. |
+
+Todas son **gratuitas** (con límites de uso) y requieren únicamente crear una cuenta.
+
+::: callout-tip
+Para este curso recomendamos **Google Gemini** porque permite ejecutar
+código R directamente en **Google Colab** sin mayores requisitos.
 :::
 
 ## Ingeniería de prompts: la clave {.smaller .justify}
@@ -407,64 +461,72 @@ aplicar.
 ::: {.fragment .fade-in}
 [**Prompt estructurado**]{style="color:green"} ✅
 
-*"Usando tidyverse y el dataset gapminder en R, crea un gráfico de
-barras horizontales que muestre la esperanza de vida promedio por
-continente en 2007. Usa theme_minimal(), colores de la paleta Set2 de
-RColorBrewer, y ordena las barras de mayor a menor. Agrega etiquetas con
-el valor sobre cada barra."*
+*"Eres un experto en R, tidyverse y visualización de datos con ggplot2.
+Estoy trabajando con el dataset gapminder en R. Quiero analizar únicamente los datos correspondientes al año 2007. Genera un gráfico de dispersión entre PIB per cápita (gdpPercap) y esperanza de vida (lifeExp). Requisitos:
+- Colorea los puntos según continente.
+- Agrega una línea de tendencia lineal.
+- Utiliza ggplot2.
+- Utiliza sintaxis moderna con pipes (|>).
+- Incluye comentarios breves en español.
+Entrega únicamente el código en R."*
 :::
 ::::
 :::::::
 
-## Anatomía del prompt estructurado {.smaller}
+## Anatomía de un buen prompt {.smaller}
 
-```         
-[ROL] Eres un experto en R y ggplot2.
+Un buen prompt para programar combina **cuatro elementos**:
 
-[CONTEXTO] Estoy trabajando con el dataset `gapminder` del paquete
-gapminder en R. Filtré los datos para el año 2007 y calculé la
-esperanza de vida promedio por continente.
+::: callout-tip
+## Elementos para un buen prompt
 
-[TAREA] Necesito un gráfico de barras horizontales que muestre la
-esperanza de vida promedio por continente, ordenado de mayor a menor,
-con etiquetas numéricas sobre cada barra.
+**ROL**:
+Eres un experto en R, tidyverse y visualización de datos con ggplot2.
 
-[FORMATO] Dame solo el código en R usando tidyverse y ggplot2, con
-comentarios breves en español explicando cada paso.
-```
+**CONTEXTO:**
+Estoy trabajando en R con el dataset `gapminder`. Ya filtré los datos para el año 2007 y la base contiene las variables `gdpPercap`, `lifeExp` y `continent`.
+
+**TAREA:**
+Necesito crear un gráfico de dispersión entre PIB per cápita y esperanza de vida, con los puntos coloreados por continente y una línea de tendencia lineal.
+
+**FORMATO:**
+Dame solo el código en R usando tidyverse y ggplot2. Incluye comentarios breves en español para explicar cada paso.
+:::
 
 . . .
 
 ::: callout-tip
-## Consejo práctico
-
-Cuanto más contexto le den (qué paquetes usan, qué estructura tienen los
-datos, qué estilo visual prefieren), mejor será el resultado. Si el
-primer resultado no es perfecto, **iterar** corrigiendo el prompt.
+Mientras más específico sea el contexto, más útil será la respuesta. La IA no solo necesita saber **qué quieres hacer**, sino también **con qué datos, paquetes y formato de salida**.
 :::
 
 # [Aplicaciones concretas]{style="color:white"} {background-color="#173277"}
 
-## Aplicación 1: Explicar código {.smaller}
+<!-- ## Propuesta de plantilla {.smaller} -->
 
-Cuando encuentren código que no entienden, pueden pedirle a la IA que lo
-explique línea por línea:
+<!-- La mayoría de los prompts que utilizaremos seguirán la misma estructura: -->
 
-. . .
+<!-- 1. **Rol:** quién queremos que sea la IA. -->
+<!-- 2. **Contexto:** qué datos o información tiene disponible. -->
+<!-- 3. **Tarea:** qué queremos que haga. -->
+<!-- 4. **Formato:** cómo queremos recibir la respuesta. -->
 
-```         
-Explícame qué hace este código de R línea por línea, en español
-y de forma sencilla para alguien que está aprendiendo:
+<!-- . . . -->
 
+<!-- > [ROL: Eres un experto en R, tidyverse y visualización de datos]{style="color:red"}. [CONTEXTO: Estoy trabajando con el dataset gapminder en R]{style="color:blue"}. [TAREA: Describe exactamente lo que necesitas]{style="color:green"}. [FORMATO: -->
+<!-- Dame únicamente código en R utilizando tidyverse. Incluye comentarios breves en español]{style="color:orange"}. -->
+
+## Aplicación 1: Entender código existente {.smaller}
+
+> Eres un experto en R y tidyverse.
+Estoy aprendiendo análisis de datos con R y estoy trabajando con el dataset gapminder.
+Explícame paso a paso qué hace el siguiente código y cuál es el resultado esperado. No modifiques el código.
 gapminder |>
   filter(year == 2007) |>
   group_by(continent) |>
-  summarise(media = mean(lifeExp)) |>
-  ggplot(aes(x = reorder(continent, media), y = media)) +
-  geom_col(fill = "steelblue") +
-  coord_flip() +
-  theme_minimal()
-```
+  summarise(
+    esperanza_vida = mean(lifeExp)
+  ).
+Utiliza un lenguaje sencillo y explica cada función por separado antes de interpretar el resultado final.
 
 . . .
 
@@ -474,53 +536,30 @@ cada función por separado, obtienen una explicación contextualizada del
 flujo completo.
 :::
 
-## Aplicación 2: Buscar funciones o generar código {.smaller}
+## Aplicación 2: Generar código {.smaller}
 
-Cuando no saben qué función usar para resolver un problema:
+> Eres un experto en R, tidyverse y visualización de datos con ggplot2.
+Estoy trabajando con el dataset gapminder en R. Quiero analizar únicamente los datos correspondientes al año 2007.
+Genera un gráfico de dispersión entre PIB per cápita (gdpPercap) y esperanza de vida (lifeExp).
+Requisitos:
+- Colorea los puntos según continente.
+- Agrega una línea de tendencia lineal.
+- Utiliza ggplot2.
+- Utiliza sintaxis moderna con pipes (|>).
+- Incluye comentarios breves en español.
+Entrega únicamente el código en R.
 
-. . .
+## Aplicación 3: Mejorar un resultado {.smaller}
 
-```         
-Usando R y tidyverse, necesito leer un archivo Excel que tiene
-las primeras 3 filas con encabezados combinados y los datos reales
-comienzan en la fila 4. El archivo tiene datos hasta la fila 350
-y después hay filas de totales que no quiero incluir.
-¿Qué función y argumentos debo usar?
-```
+Una vez obtenido el gráfico, podemos iterar:
 
-. . .
-
-O para generar código desde una descripción:
-
-```         
-Tengo un data frame llamado `homicidios` con columnas `comuna`,
-`anio` (2024 y 2025) y `n` (cantidad de homicidios). Necesito
-pivotear la tabla para que cada año sea una columna, calcular la
-diferencia entre 2025 y 2024, y ordenar de mayor a menor diferencia.
-Dame el código en R usando tidyverse.
-```
-
-## Aplicación 3: Modificar un gráfico con `ggplot2` {.smaller}
-
-Un uso muy práctico: partir de un gráfico base y pedirle mejoras
-específicas:
-
-. . .
-
-```         
-Tengo este gráfico en R:
-
-ggplot(gap_2007, aes(x = lifeExp)) +
-  geom_histogram()
-
-Necesito que le hagas las siguientes mejoras:
-1. Cambiar el color de relleno a "steelblue" con bordes blancos
-2. Usar 15 bins
-3. Agregar título "Distribución de la esperanza de vida (2007)"
-4. Poner etiquetas en español en los ejes
-5. Usar theme_clean() del paquete ggthemes
-6. Formato chileno en el eje y (punto separador de miles)
-```
+> Mantén la lógica del gráfico anterior y realiza las siguientes mejoras:
+- Agrega un título descriptivo.
+- Agrega etiquetas para ambos ejes.
+- Utiliza otro tema distinto sugerido.
+- Mueve la leyenda a la parte inferior.
+- Aumenta ligeramente el tamaño de los puntos.
+Entrega únicamente el código actualizado en R.
 
 . . .
 
@@ -529,6 +568,23 @@ La ventaja de este enfoque es que **ustedes mantienen el control**:
 parten de código que ya entienden y le piden mejoras incrementales,
 verificando cada resultado.
 :::
+
+## Un mal prompt {.smaller}
+
+
+> Hazme un gráfico con gapminder.
+
+
+¿Por qué es problemático?
+
+- No especifica qué variables usar.
+- No indica qué análisis realizar.
+- No define el formato de salida.
+- Distintas IA producirán resultados distintos.
+
+. . .
+
+Mientras más específico sea el prompt, más útil será la respuesta.
 
 ## Ejemplo en vivo con Gemini en Google Colab {.smaller}
 
@@ -540,7 +596,7 @@ verificando cada resultado.
     - **Explicar** un bloque de código
     - **Generar** un gráfico paso a paso
     - **Iterar** pidiendo mejoras al gráfico
-3.  Copiar el resultado final a RStudio
+3.  Ejecutar el resultado (ya sea en colab o en Rstudio)
 :::
 
 ## Buenas prácticas con IA {.smaller}
@@ -619,7 +675,7 @@ the Tidyverse* (2ª ed.).
 ## Recapitulación {.smaller}
 
 | Tema | Contenido clave |
-|---------------------------------|---------------------------------------|
+|----|----|
 | **Comunicar** | Marco SUCCES, arco narrativo, estructura contexto → hallazgo → implicancia |
 | **R Markdown** | Archivo `.Rmd`, compilar con *knit*, múltiples formatos de salida |
 | **Quarto** | Archivo `.qmd`, sucesor de R Markdown, multilingüe, todo integrado |

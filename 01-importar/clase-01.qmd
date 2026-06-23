@@ -129,24 +129,24 @@ options(
 
 Esta primera clase tiene como objetivo general introducirlos al curso de
 **Análisis de Datos y Estadística Computacional** y aprender a
-**importar y cruzar** bases de datos en `R`. Las bases que trabajeremos hoy, serán trabajadas posteriormente en las siguiente clase. 
+**importar y cruzar** bases de datos en `R`. Las bases que trabajeremos hoy, serán utilizadas posteriormente en las siguientes clases. 
 
 Como objetivos específicos se busca:
 
-- Presentar el programa del curso y algunas de las reglas básicas
+- Presentar el programa del curso y algunas de las reglas básicas.
 - Trabajar de manera ordenada y reproducible mediante **proyectos**
-  (`.Rproj`)
+  (`.Rproj`).
 - Aprender a importar bases de datos de distintos formatos: `.csv`,
-  `.xlsx`, `.dta`, `.shp`
-- Realizar una limpieza inicial de nombres de columnas (variables) con el paquete `janitor`
-- Cruzar información de dos datasets con `left_join()`
+  `.xlsx`, `.dta`, `.shp`.
+- Realizar una limpieza inicial de nombres de columnas (variables) con el paquete `janitor`.
+- Cruzar información de dos datasets con `left_join()`.
 
-## Información General
+## Información General {.medium}
 
 - 8 clases en total con una duración de 3:20 hrs cada una.
 - Se subirá el **link** de la presentación el mismo día previo al inicio
   de la clase para que los alumnos puedan seguirla en línea.
-- El curso consta de **2 unidades** de **4 clases** cada una
+- El curso consta de **2 unidades** de **4 clases** cada una:
   - **Unidad I**: Herramientas de Ciencia de Datos con R
   - **Unidad II**: Estadística Aplicada con R.
 - Este curso requiere un **75% de asistencia** para ser aprobado. Toda
@@ -413,13 +413,13 @@ la identifica como proyecto.
 ::: fragment
 Sus principales ventajas:
 
-- **Rutas relativas**: el proyecto fija automáticamente el *directorio
-  de trabajo* en su carpeta raíz, por lo que no necesitamos usar
+- **Rutas relativas**: El proyecto fija automáticamente el *directorio
+  de trabajo* en su carpeta raíz, por lo que **no** necesitamos usar
   `setwd()` ni rutas absolutas del tipo
   `"C:/Users/.../mis documentos/..."`.
-- **Portabilidad**: el proyecto funciona igual en cualquier computador,
+- **Portabilidad**: El proyecto funciona igual en cualquier computador,
   sin tener que reescribir rutas.
-- **Reproducibilidad y orden**: cada análisis vive en su propia carpeta,
+- **Reproducibilidad y orden**: Cada análisis vive en su propia carpeta,
   autocontenido.
 :::
 
@@ -489,7 +489,7 @@ que siempre podamos reconstruir el resultado ejecutando el código.
 ## La importancia del orden {.smaller .justify .incremental}
 
 - Una de las ventajas de programar es la **reproducibilidad**: cualquier
-  persona (¡o nosotros mismos en seis meses!) debería poder obtener los
+  persona (¡o nosotros mismos en seis meses después!) debería poder obtener los
   mismos resultados ejecutando los mismos pasos.
 
 - Por eso importa mantener el orden tanto en la **carpeta** del proyecto
@@ -688,8 +688,8 @@ Con pipe, cada paso queda en su propia línea, en orden de ejecución:
 ## Atajo de teclado
 
 `Ctrl + Shift + M` inserta el pipe `|>` automáticamente en RStudio.
-Si te aparece `%>%` en vez de `|>`, ve a **Tools → Global Options →
-Code** y activa *"Use native pipe operator"*.
+Si les aparece `%>%` en vez de `|>`, vaya a **Tools → Global Options →
+Code** y activen la opción *"Use native pipe operator"*.
 :::
 
 # [Importar y Exportar Datos]{style="color:white"} {background-color="#E49B0F"}
@@ -712,7 +712,7 @@ Cada formato tiene su función y, muchas veces, su propio paquete:
 :::
 ::::
 
-## `readr`: importar CSV {.smaller}
+## `readr`: Importar archivos CSV {.smaller}
 
 - csv separados por **coma (,)**: `read_csv()`
 - csv separados por **punto y coma (;)**: `read_csv2()`
@@ -943,11 +943,11 @@ read_parquet(
 
 . . .
 
-::: callout-tip
-Para este curso no es obligatorio, pero es una buena práctica guardar
-sus bases procesadas en Parquet una vez limpias: la próxima vez que las
-carguen será notablemente más rápido.
-:::
+<!-- ::: callout-tip -->
+<!-- Para este curso no es obligatorio, pero es una buena práctica guardar -->
+<!-- sus bases procesadas en Parquet una vez limpias: la próxima vez que las -->
+<!-- carguen será notablemente más rápido. -->
+<!-- ::: -->
 
 ## Limpieza inicial de nombres: `janitor::clean_names()` {.smaller}
 
@@ -966,7 +966,7 @@ df <- tibble(`Nombre Comuna`  = c("Santiago", "Cerrillos"),
 df
 ```
 
-## 💻 Limpieza inicial de nombres: `janitor::clean_names()` {.medium}
+## 💻 Limpieza inicial de nombres: `janitor::clean_names()`
 
 ```{webr}
 df <- tibble(`Nombre Comuna`  = c("Santiago", "Cerrillos"),
@@ -993,14 +993,14 @@ Tenemos un archivo Excel generado por un servicio público chileno. Al abrirlo e
 - [`read_csv("archivo.xlsx")`]{data-explanation="`read_csv()` es para archivos de texto plano (`.csv`), no para Excel. Usarla con un `.xlsx` producirá un error."}
 :::
 
-## Ejercicio Guiado: importar y limpiar {.smaller}
+## Ejercicio Guiado: Importar diversos tipos de archivos
 
 Ver Guía de Ejercicios N°1, Parte I.
 
 ## Guardar o Exportar {.justify}
 
 - La familia de funciones es `write_`
-- Siempre deben especificar la extensión del archivo luego del *path*. Por ejemplo:
+- Siempre deben **especificar la extensión del archivo** luego del *path*. Por ejemplo:
     + `mtcars.csv` si queremos guardarlo como un archivo **csv**
     + `mtcars.dta` si queremos guardarlo como un archivo de **STATA**
     + `mtcars.xlsx` si queremos guardarlo como un archivo **excel**, etc.
@@ -1053,12 +1053,12 @@ write.xlsx(mtcars,'mtcars.xlsx')
 :::
 :::
 
-# [Cruce de Datos: left_join]{style="color:white"} {background-color="#000080"}
+# [Cruce de Datos: left_join()]{style="color:white"} {background-color="#000080"}
 
-## ¿Por qué cruzar bases de datos? {.smaller .justify}
+## ¿Por qué cruzar bases de datos? {.medium}
 
 - Al trabajar con datos rara vez tenemos toda la información en una sola
-  tabla: lo habitual es combinar **varias fuentes** vinculadas entre sí.
+  tabla. Por el contrario, uno de los casos comunes de trabajo con datos públicos requiere combinar **varias fuentes** vinculadas entre sí.
 
 - Existen dos grandes familias de uniones:
 
@@ -1096,9 +1096,8 @@ La llave se puede especificar con `join_by()`. Por ejemplo,
 
 <!-- Recomendado: descargarla a img/left_join.gif para no depender de internet al compilar. -->
 
-![Left
-Join](https://www.andrewheiss.com/blog/2024/04/04/group_by-summarize-ungroup-animations/img/left-join.gif){fig-align="center"
-width="70%"}
+![Left Join](https://www.andrewheiss.com/blog/2024/04/04/group_by-summarize-ungroup-animations/img/left-join.gif){fig-align="center" width="70%"}
+*Fuente: Animación de Garrick Aden-Buie (proyecto tidyexplain), disponible [aquí](https://www.garrickadenbuie.com/project/tidyexplain/#mutating-joins).*
 
 ## Aplicación: `left_join()` {.smaller}
 

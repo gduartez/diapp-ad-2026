@@ -321,17 +321,12 @@ $ razon_hombre_mujer                                              &lt;dbl&gt; 97
 <p>En esta segunda clase aprenderemos a <strong>transformar y manipular</strong> bases de datos utilizando los verbos del paquete <code>dplyr</code> y herramientas de <code>tidyr</code>.</p>
 <p>Como objetivos específicos se busca:</p>
 <ul>
-<li class="fragment">Reestructurar datos con <code>bind_rows()</code>, <code>pivot_longer()</code> y <code>pivot_wider()</code>
-</li>
-<li class="fragment">Ordenar filas con <code>arrange()</code>, filtrarlas con <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> y <code>filter_out()</code>, y extraer subconjuntos con la familia <code>slice()</code>
-</li>
-<li class="fragment">Seleccionar, reubicar, renombrar y crear variables con <code>select()</code>, <code>relocate()</code>, <code>rename()</code> y <code>mutate()</code>
-</li>
-<li class="fragment">Crear variables condicionales con <code>if_else()</code>, <code>case_when()</code> y las nuevas funciones <code>recode_values()</code> y <code>replace_when()</code>
-</li>
-<li class="fragment">Resumir estadísticas por grupos con <code>group_by()</code> + <code>summarise()</code> y <code>count()</code>
-</li>
-<li class="fragment">Manejar datos especiales: texto, fechas y factores</li>
+<li class="fragment">Reestructurar datos con <code>bind_rows()</code>, <code>pivot_longer()</code> y <code>pivot_wider()</code>.</li>
+<li class="fragment">Ordenar filas con <code>arrange()</code>, filtrarlas con <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> y <code>filter_out()</code>, y extraer subconjuntos con la familia <code>slice()</code>.</li>
+<li class="fragment">Seleccionar, reubicar, renombrar y crear variables con <code>select()</code>, <code>relocate()</code>, <code>rename()</code> y <code>mutate()</code>.</li>
+<li class="fragment">Crear variables condicionales con <code>if_else()</code>, <code>case_when()</code> y las nuevas funciones <code>recode_values()</code> y <code>replace_when()</code>.</li>
+<li class="fragment">Resumir estadísticas por grupos con <code>group_by()</code> + <code>summarise()</code> y <code>count()</code>.</li>
+<li class="fragment">Manejar datos especiales: texto, fechas y factores.</li>
 </ul></section></section><section><section id="reestructurar-datos" class="title-slide slide level1 center" data-background-color="#E49B0F"><h1><span style="color:white">Reestructurar Datos</span></h1>
 
 </section><section id="pegar-filas-bind_rows" class="slide level2 smaller"><h2>Pegar filas: <code>bind_rows()</code>
@@ -574,7 +569,7 @@ $ razon_hombre_mujer                                              &lt;dbl&gt; 97
 </h2>
 <ul>
 <li class="fragment">
-<code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> conserva las filas que <strong>cumplen todas</strong> las condiciones indicadas. Las condiciones se separan por coma (equivale a <code>&amp;</code>).</li>
+<code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> conserva las filas que <strong>cumplen todas</strong> las condiciones indicadas. Las condiciones se separan por coma (equivale a utilizar <code>&amp;</code> entre ellas).</li>
 </ul>
 <div class="fragment">
 <div class="cell">
@@ -872,7 +867,7 @@ Caused by error in `region_x == "Atacama" | "Ñuble"`:
 </div>
 </div>
 </div>
-</section><section id="practiquemos-filtrar-y-ordenar" class="slide level2 smaller"><h2>💻 Practiquemos: filtrar y ordenar</h2>
+</section><section id="filtrar-y-ordenar" class="slide level2 smaller"><h2>💻 Filtrar y ordenar</h2>
 <p>Usando el dataset <code>gapminder</code>, primero resuma la estructura del dataset con <code>glimpse()</code> y luego encuentre los <strong>3 países del continente (<code>continent</code>) <code>Americas</code></strong> con mayor esperanza de vida (<code>lifeExp</code>) en el <strong>año 2007</strong>.</p>
 <div class="cell">
 <div>
@@ -1208,7 +1203,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibGlicmFyeShnYXBtaW5kZXIp
 <li><span data-explanation="replace_when() está diseñado para modificar parcialmente una columna existente, no para crear una columna nueva con categorías distintas."><code>replace_when()</code></span></li>
 </ul>
 </div>
-</section><section id="practiquemos-crear-y-transformar" class="slide level2 smaller"><h2>💻 Practiquemos: crear y transformar</h2>
+</section><section id="crear-y-transformar" class="slide level2 smaller"><h2>💻 Crear y transformar</h2>
 <p>Usando <code>gapminder</code>, filtre el año <strong>2007</strong> y cree una variable <code>nivel_desarrollo</code> que clasifique los países según su PIB per cápita: “Alto” si supera los 20.000, “Medio” entre 5.000 y 20.000, y “Bajo” en caso contrario. Luego cuente cuántos países hay en cada nivel.</p>
 <div class="cell">
 <div>
@@ -1260,10 +1255,12 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibGlicmFyeShnYXBtaW5kZXIp
 <ul>
 <li class="fragment">
 <code>group_by()</code> prepara el <em>dataframe</em> pero <strong>no</strong> lo modifica visualmente.</li>
+<li class="fragment">Notar que es posible agrupar por <strong>más de una variable</strong>:</li>
 <li class="fragment">
 <code>summarise()</code> reduce el <em>dataframe</em> a <strong>una fila por grupo</strong>.</li>
 <li class="fragment">Si se desea seguir manipulando el resultado <strong>sin agrupación</strong>, siempre encadenar <code>ungroup()</code> al final. De lo contrario, las operaciones posteriores seguirán una lógica agrupada.</li>
-<li class="fragment">Es posible agrupar por <strong>más de una variable</strong>:</li>
+<li class="fragment">
+<code>.groups = "drop"</code> dentro de <code>summarise()</code> hace explícito que el resultado final ya no tiene grupos: “<em>Una vez calculado el resumen con summarise(), elimina todos los agrupamientos para que el resultado se devuelva como una tabla sin grupos</em>”:</li>
 </ul>
 <div class="fragment">
 <div class="cell">
@@ -1308,7 +1305,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibGlicmFyeShnYXBtaW5kZXIp
 </section><section id="contar-count-1" class="slide level2 smaller"><h2>Contar: <code>count()</code>
 </h2>
 <ul>
-<li class="fragment">Con el argumento <code>wt</code> podemos <strong>sumar</strong> una variable en vez de contar filas:</li>
+<li class="fragment">Con el argumento <code>wt</code> podemos <strong>sumar</strong> una variable en vez de contar filas, mientras que con el argumento <code>name</code> se puede cambiar el nombre de la variable de recuento (o suma):</li>
 </ul>
 <div class="fragment">
 <div class="cell">
@@ -1597,7 +1594,7 @@ Levels: Pequeña Mediana Grande</code></pre>
 </div>
 </div>
 </div>
-</section><section id="practiquemos-factores" class="slide level2 smaller"><h2>💻 Practiquemos: factores</h2>
+</section><section id="factores-1" class="slide level2 smaller"><h2>💻 Factores</h2>
 <p>Usando <code>gapminder</code> (año 2007), clasifique los países según su esperanza de vida en una variable numérica en función de un umbral de 70 años de edad (1 = alta (mayor igual a 70), 0 = baja (menor que 70)) y luego haga un recuento usando un factor con las etiquetas designadas (alta y baja).</p>
 <div class="cell">
 <div>

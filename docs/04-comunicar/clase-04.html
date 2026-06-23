@@ -246,8 +246,8 @@
 </ul></section><section id="resumen-unidad-i" class="slide level2 smaller"><h2>Resumen Unidad I</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 45%">
-<col style="width: 54%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead><tr class="header">
 <th>Clase</th>
@@ -291,8 +291,8 @@
 <p>Una buena historia con datos cumple seis principios <span class="citation" data-cites="heath2013">(<a href="#/bibliografía" role="doc-biblioref" onclick="">Heath y Heath 2013</a>)</span>:</p>
 <table class="caption-top">
 <colgroup>
-<col style="width: 45%">
-<col style="width: 54%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead><tr class="header">
 <th>Principio</th>
@@ -421,7 +421,7 @@
 <tr class="odd">
 <td><strong>Lenguaje</strong></td>
 <td>Solo R</td>
-<td>R, Python, Julia, Observable</td>
+<td>R, Python, Julia</td>
 </tr>
 <tr class="even">
 <td><strong>Ecosistema</strong></td>
@@ -434,11 +434,6 @@
 <td>Callouts, tabs, layouts nativos</td>
 </tr>
 <tr class="even">
-<td><strong>Aprendizaje</strong></td>
-<td>Amplia comunidad, mucha documentación</td>
-<td>Documentación excelente, creciendo</td>
-</tr>
-<tr class="odd">
 <td><strong>Recomendación de uso</strong></td>
 <td>Proyectos existentes en <code>.Rmd</code>
 </td>
@@ -461,6 +456,27 @@
 </div>
 </div>
 </div>
+<div class="fragment">
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Atención</strong></p>
+</div>
+<div class="callout-content">
+<p>Aunque <strong>Quarto</strong> y <strong>R Markdown</strong> cumplen funciones similares, la sintaxis del encabezado YAML no es exactamente la misma.</p>
+<p>Por ejemplo, para generar un documento HTML:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a></a><span class="co"># R Markdown</span></span>
+<span id="cb1-2"><a></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_document</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb2-1"><a></a><span class="co"># Quarto</span></span>
+<span id="cb2-2"><a></a><span class="fu">format</span><span class="kw">:</span><span class="at"> html</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Si copian código desde internet o utilizan IA generativa, verifiquen siempre si el ejemplo fue escrito para <strong>R Markdown</strong> o para <strong>Quarto</strong>, ya que algunos argumentos y opciones cambian entre ambos formatos.</p>
+</div>
+</div>
+</div>
+</div>
 </section><section id="estructura-de-un-documento-quarto" class="slide level2 smaller"><h2>Estructura de un documento Quarto</h2>
 <p>Un archivo <code>.qmd</code> tiene <strong>tres componentes</strong>:</p>
 
@@ -470,19 +486,19 @@
 <li class="fragment">Define <strong>metadatos</strong> y opciones de configuración: título, autor, fecha, formato de salida, tabla de contenidos, tema, etc.</li>
 </ul>
 <div class="fragment">
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a></a><span class="pp">---</span></span>
-<span id="cb1-2"><a></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Análisis de Homicidios en la RM"</span></span>
-<span id="cb1-3"><a></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Gabriel Duarte"</span></span>
-<span id="cb1-4"><a></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"2026-06-20"</span></span>
-<span id="cb1-5"><a></a><span class="fu">format</span><span class="kw">:</span></span>
-<span id="cb1-6"><a></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
-<span id="cb1-7"><a></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb1-8"><a></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> flatly</span></span>
-<span id="cb1-9"><a></a><span class="at">    </span><span class="fu">code-fold</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb1-10"><a></a><span class="fu">execute</span><span class="kw">:</span></span>
-<span id="cb1-11"><a></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb1-12"><a></a><span class="at">  </span><span class="fu">warning</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
-<span id="cb1-13"><a></a><span class="pp">---</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource yaml number-lines code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><a></a><span class="pp">---</span></span>
+<span id="cb3-2"><a></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Análisis de Homicidios en la RM"</span></span>
+<span id="cb3-3"><a></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Gabriel Duarte"</span></span>
+<span id="cb3-4"><a></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"2026-06-20"</span></span>
+<span id="cb3-5"><a></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb3-6"><a></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb3-7"><a></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-8"><a></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> flatly</span></span>
+<span id="cb3-9"><a></a><span class="at">    </span><span class="fu">code-fold</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-10"><a></a><span class="fu">execute</span><span class="kw">:</span></span>
+<span id="cb3-11"><a></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-12"><a></a><span class="at">  </span><span class="fu">warning</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb3-13"><a></a><span class="pp">---</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="chunks-de-código" class="slide level2 smaller"><h2>2. Chunks de código</h2>
 <ul>
@@ -491,22 +507,22 @@
 <li class="fragment">Se configuran con opciones <code>#|</code> al inicio del chunk:</li>
 </ul>
 <div class="fragment">
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a></a><span class="in">```{r}</span></span>
-<span id="cb2-2"><a></a><span class="in">#| echo: true</span></span>
-<span id="cb2-3"><a></a><span class="in">#| eval: true</span></span>
-<span id="cb2-4"><a></a><span class="in">#| warning: false</span></span>
-<span id="cb2-5"><a></a><span class="in">#| fig-width: 8</span></span>
-<span id="cb2-6"><a></a></span>
-<span id="cb2-7"><a></a><span class="in">library(ggplot2)</span></span>
-<span id="cb2-8"><a></a><span class="in">ggplot(mtcars, aes(x = wt, y = mpg)) +</span></span>
-<span id="cb2-9"><a></a><span class="in">  geom_point()</span></span>
-<span id="cb2-10"><a></a><span class="in">```</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a></a><span class="in">```{r}</span></span>
+<span id="cb4-2"><a></a><span class="in">#| echo: true</span></span>
+<span id="cb4-3"><a></a><span class="in">#| eval: true</span></span>
+<span id="cb4-4"><a></a><span class="in">#| warning: false</span></span>
+<span id="cb4-5"><a></a><span class="in">#| fig-width: 8</span></span>
+<span id="cb4-6"><a></a></span>
+<span id="cb4-7"><a></a><span class="in">library(ggplot2)</span></span>
+<span id="cb4-8"><a></a><span class="in">ggplot(mtcars, aes(x = wt, y = mpg)) +</span></span>
+<span id="cb4-9"><a></a><span class="in">  geom_point()</span></span>
+<span id="cb4-10"><a></a><span class="in">```</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="opciones-más-comunes-de-los-chunks" class="slide level2 smaller"><h2>Opciones más comunes de los chunks</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 37%">
-<col style="width: 62%">
+<col style="width: 36%">
+<col style="width: 63%">
 </colgroup>
 <thead><tr class="header">
 <th>Opción</th>
@@ -602,15 +618,15 @@
 </div>
 <div class="callout-content">
 <p>Para generar documentos <strong>PDF</strong> se necesita una distribución de LaTeX. La más sencilla es TinyTeX:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">install.packages</span>(<span class="st">"tinytex"</span>)</span>
-<span id="cb3-2"><a></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">install.packages</span>(<span class="st">"tinytex"</span>)</span>
+<span id="cb5-2"><a></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 </section></section><section><section id="demostración-en-vivo" class="title-slide slide level1 center" data-background-color="#f8f9fa"><h1>Demostración en vivo</h1>
 
-</section><section id="section" class="slide level2 smaller"><h2></h2>
+</section><section id="crear-un-documento-quarto-y-r-markdown" class="slide level2 smaller"><h2>Crear un documento Quarto y R Markdown</h2>
 <div style="font-size: 1.3em; text-align: center; padding: 2em;">
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -628,6 +644,7 @@
 <li class="fragment">Insertar un chunk con un gráfico (<code>Ctrl + Alt + I</code>)</li>
 <li class="fragment">Compilar con <strong>Render</strong> y ver el resultado</li>
 </ol>
+<p>. . .</p>
 <p><em>(También veremos cómo crear un archivo R Markdown para comparar la diferencia)</em></p>
 </div>
 </div>
@@ -647,61 +664,52 @@
 <a href="https://www.youtube.com/watch?v=_f3latmOhew">Get started with Quarto — Mine Çetinkaya-Rundel</a> — tutorial en video (recomendado).</li>
 </ul></section></section><section><section id="ia-generativa-para-programar-en-r" class="title-slide slide level1 center" data-background-color="#173277"><h1><span style="color:white">IA Generativa para programar en R</span></h1>
 
-</section><section id="qué-es-la-ia-generativa" class="slide level2 smaller justify"><h2>¿Qué es la IA generativa?</h2>
+</section><section id="qué-es-la-ia-generativa" class="slide level2 smaller"><h2>¿Qué es la IA generativa?</h2>
 <ul>
-<li class="fragment"><p>Los modelos de lenguaje de gran escala (LLMs) como <strong>ChatGPT</strong> (OpenAI), <strong>Claude</strong> (Anthropic), <strong>Gemini</strong> (Google) y <strong>Copilot</strong> (Microsoft) pueden generar código, explicar funciones y asistir en el análisis de datos.</p></li>
-<li class="fragment">
-<p>Son especialmente útiles para:</p>
-<ul>
-<li class="fragment">
-<strong>Acelerar</strong> tareas repetitivas.</li>
-<li class="fragment">
-<strong>Aprender</strong> funciones o paquetes nuevos.</li>
-<li class="fragment">
-<strong>Depurar</strong> errores en el código.</li>
-</ul>
-</li>
+<li class="fragment"><p>Es un tipo de Inteligencia Artificial capaz de <strong>crear contenido nuevo</strong> (texto, código, imágenes, audio, video) a partir de instrucciones en <strong>lenguaje natural</strong>.</p></li>
+<li class="fragment"><p>Su gran salto fue justamente ese: <strong>añadir una capa de lenguaje natural</strong>, de modo que ya no necesitamos ser expertos para “conversar” con la herramienta y pedirle lo que necesitamos.</p></li>
+<li class="fragment"><p>En el contexto de <strong>ciencia de datos con R</strong>, herramientas como <strong>ChatGPT</strong> (OpenAI), <strong>Claude</strong> (Anthropic), <strong>Gemini</strong> (Google) o <strong>Copilot</strong> (GitHub) pueden generar, explicar y corregir código.</p></li>
 </ul>
 <div class="fragment">
-<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Precaución</strong></p>
+<p><strong>Nota</strong></p>
 </div>
 <div class="callout-content">
-<p>La IA no reemplaza el <strong>juicio humano</strong>: siempre verifiquen que el código generado sea correcto y que los resultados tengan sentido. Entiendan la IA como una <strong>extensión</strong> de sus capacidades, no un sustituto.</p>
+<p>Esta clase no busca que deleguen el trabajo en la IA, sino que la usen como una <strong>extensión de sus capacidades</strong> para programar mejor y más rápido.</p>
 </div>
 </div>
 </div>
 </div>
-</section><section id="herramientas-de-acceso-gratuito" class="slide level2 smaller"><h2>Herramientas de acceso gratuito</h2>
-<table class="caption-top">
-<thead><tr class="header">
-<th>Herramienta</th>
-<th>Acceso</th>
-<th>Ventaja principal</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td><a href="https://gemini.google.com/">Google Gemini</a></td>
-<td>Gratuito con cuenta Google</td>
-<td>Integración con Google Colab para ejecutar R</td>
-</tr>
-<tr class="even">
-<td><a href="https://chat.openai.com/">ChatGPT</a></td>
-<td>Gratuito (GPT-4o limitado)</td>
-<td>Amplia comunidad, muchos ejemplos</td>
-</tr>
-<tr class="odd">
-<td><a href="https://claude.ai/">Claude</a></td>
-<td>Gratuito (limitado)</td>
-<td>Respuestas detalladas, buen razonamiento</td>
-</tr>
-</tbody>
-</table>
+</section><section id="ventajas-y-riesgos-en-programación" class="slide level2 smaller"><h2>Ventajas y riesgos en programación</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="fragment">
+<p><span style="color:green"><strong>Ventajas</strong> ✅</span></p>
+<ul>
+<li class="fragment">
+<strong>Acelera</strong> tareas repetitivas y código rutinario.</li>
+<li class="fragment">Ayuda a <strong>aprender</strong> funciones y paquetes nuevos.</li>
+<li class="fragment">Facilita <strong>depurar</strong> errores difíciles de leer.</li>
+<li class="fragment">Permite <strong>traducir</strong> una idea en lenguaje natural a código.</li>
+</ul>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="fragment">
+<p><span style="color:red"><strong>Riesgos</strong> ⚠️</span></p>
+<ul>
+<li class="fragment">Puede generar código <strong>incorrecto</strong> o ineficiente.</li>
+<li class="fragment">Riesgo de <strong>no entender</strong> lo que se copia y pega.</li>
+<li class="fragment">Riesgos éticos en la producción de información y su uso en la toma de decisiones.</li>
+<li class="fragment">
+<strong>Privacidad</strong>: Incumplimientos legales de privacidad de los datos.</li>
+</ul>
+</div>
+</div></div>
 <div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -712,8 +720,43 @@
 <p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<p>Para este curso recomendamos <strong>Google Gemini</strong> por su acceso gratuito y la posibilidad de ejecutar código R directamente en <strong>Google Colab</strong>.</p>
+<p>La regla de oro: <strong>nunca usen código que no puedan explicar</strong>. La IA propone, pero ustedes deciden, verifican y entienden.</p>
 </div>
+</div>
+</div>
+</div>
+</section><section id="herramientas-que-pueden-usar" class="slide level2 smaller"><h2>Herramientas que pueden usar</h2>
+<table class="caption-top">
+<thead><tr class="header">
+<th>Herramienta</th>
+<th>Fortalezas principales</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://gemini.google.com/">Google Gemini</a></td>
+<td>Integración con Google Colab, análisis de documentos extensos, programación y ciencia de datos.</td>
+</tr>
+<tr class="even">
+<td><a href="https://chat.openai.com/">ChatGPT</a></td>
+<td>Programación, estadística, generación y corrección de código, explicación de conceptos y apoyo al aprendizaje.</td>
+</tr>
+<tr class="odd">
+<td><a href="https://claude.ai/">Claude</a></td>
+<td>Explicaciones detalladas, revisión de código largo, documentación y redacción técnica.</td>
+</tr>
+</tbody>
+</table>
+<p>Todas son <strong>gratuitas</strong> (con límites de uso) y requieren únicamente crear una cuenta.</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Para este curso recomendamos <strong>Google Gemini</strong> porque permite ejecutar código R directamente en <strong>Google Colab</strong> sin mayores requisitos.</p>
 </div>
 </div>
 </div>
@@ -743,22 +786,27 @@
 </div><div class="column" style="width:50%;">
 <div class="fragment fade-in">
 <p><span style="color:green"><strong>Prompt estructurado</strong></span> ✅</p>
-<p><em>“Usando tidyverse y el dataset gapminder en R, crea un gráfico de barras horizontales que muestre la esperanza de vida promedio por continente en 2007. Usa theme_minimal(), colores de la paleta Set2 de RColorBrewer, y ordena las barras de mayor a menor. Agrega etiquetas con el valor sobre cada barra.”</em></p>
+<p><em>“Eres un experto en R, tidyverse y visualización de datos con ggplot2. Estoy trabajando con el dataset gapminder en R. Quiero analizar únicamente los datos correspondientes al año 2007. Genera un gráfico de dispersión entre PIB per cápita (gdpPercap) y esperanza de vida (lifeExp). Requisitos: - Colorea los puntos según continente. - Agrega una línea de tendencia lineal. - Utiliza ggplot2. - Utiliza sintaxis moderna con pipes (|&gt;). - Incluye comentarios breves en español. Entrega únicamente el código en R.”</em></p>
 </div>
 </div></div>
-</section><section id="anatomía-del-prompt-estructurado" class="slide level2 smaller"><h2>Anatomía del prompt estructurado</h2>
-<pre><code>[ROL] Eres un experto en R y ggplot2.
-
-[CONTEXTO] Estoy trabajando con el dataset `gapminder` del paquete
-gapminder en R. Filtré los datos para el año 2007 y calculé la
-esperanza de vida promedio por continente.
-
-[TAREA] Necesito un gráfico de barras horizontales que muestre la
-esperanza de vida promedio por continente, ordenado de mayor a menor,
-con etiquetas numéricas sobre cada barra.
-
-[FORMATO] Dame solo el código en R usando tidyverse y ggplot2, con
-comentarios breves en español explicando cada paso.</code></pre>
+</section><section id="anatomía-de-un-buen-prompt" class="slide level2 smaller"><h2>Anatomía de un buen prompt</h2>
+<p>Un buen prompt para programar combina <strong>cuatro elementos</strong>:</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Elementos para un buen prompt</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>ROL</strong>: Eres un experto en R, tidyverse y visualización de datos con ggplot2.</p>
+<p><strong>CONTEXTO:</strong> Estoy trabajando en R con el dataset <code>gapminder</code>. Ya filtré los datos para el año 2007 y la base contiene las variables <code>gdpPercap</code>, <code>lifeExp</code> y <code>continent</code>.</p>
+<p><strong>TAREA:</strong> Necesito crear un gráfico de dispersión entre PIB per cápita y esperanza de vida, con los puntos coloreados por continente y una línea de tendencia lineal.</p>
+<p><strong>FORMATO:</strong> Dame solo el código en R usando tidyverse y ggplot2. Incluye comentarios breves en español para explicar cada paso.</p>
+</div>
+</div>
+</div>
 <div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -766,31 +814,28 @@ comentarios breves en español explicando cada paso.</code></pre>
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Consejo práctico</strong></p>
+<p><strong>Tip</strong></p>
 </div>
 <div class="callout-content">
-<p>Cuanto más contexto le den (qué paquetes usan, qué estructura tienen los datos, qué estilo visual prefieren), mejor será el resultado. Si el primer resultado no es perfecto, <strong>iterar</strong> corrigiendo el prompt.</p>
+<p>Mientras más específico sea el contexto, más útil será la respuesta. La IA no solo necesita saber <strong>qué quieres hacer</strong>, sino también <strong>con qué datos, paquetes y formato de salida</strong>.</p>
 </div>
 </div>
 </div>
 </div>
 </section></section><section><section id="aplicaciones-concretas" class="title-slide slide level1 center" data-background-color="#173277"><h1><span style="color:white">Aplicaciones concretas</span></h1>
-
-</section><section id="aplicación-1-explicar-código" class="slide level2 smaller"><h2>Aplicación 1: Explicar código</h2>
-<p>Cuando encuentren código que no entienden, pueden pedirle a la IA que lo explique línea por línea:</p>
-<div class="fragment">
-<pre><code>Explícame qué hace este código de R línea por línea, en español
-y de forma sencilla para alguien que está aprendiendo:
-
-gapminder |&gt;
-  filter(year == 2007) |&gt;
-  group_by(continent) |&gt;
-  summarise(media = mean(lifeExp)) |&gt;
-  ggplot(aes(x = reorder(continent, media), y = media)) +
-  geom_col(fill = "steelblue") +
-  coord_flip() +
-  theme_minimal()</code></pre>
-</div>
+<!-- ## Propuesta de plantilla {.smaller} -->
+<!-- La mayoría de los prompts que utilizaremos seguirán la misma estructura: -->
+<!-- 1. **Rol:** quién queremos que sea la IA. -->
+<!-- 2. **Contexto:** qué datos o información tiene disponible. -->
+<!-- 3. **Tarea:** qué queremos que haga. -->
+<!-- 4. **Formato:** cómo queremos recibir la respuesta. -->
+<!-- . . . -->
+<!-- > [ROL: Eres un experto en R, tidyverse y visualización de datos]{style="color:red"}. [CONTEXTO: Estoy trabajando con el dataset gapminder en R]{style="color:blue"}. [TAREA: Describe exactamente lo que necesitas]{style="color:green"}. [FORMATO: -->
+<!-- Dame únicamente código en R utilizando tidyverse. Incluye comentarios breves en español]{style="color:orange"}. -->
+</section><section id="aplicación-1-entender-código-existente" class="slide level2 smaller"><h2>Aplicación 1: Entender código existente</h2>
+<blockquote>
+<p>Eres un experto en R y tidyverse. Estoy aprendiendo análisis de datos con R y estoy trabajando con el dataset gapminder. Explícame paso a paso qué hace el siguiente código y cuál es el resultado esperado. No modifiques el código. gapminder |&gt; filter(year == 2007) |&gt; group_by(continent) |&gt; summarise( esperanza_vida = mean(lifeExp) ). Utiliza un lenguaje sencillo y explica cada función por separado antes de interpretar el resultado final.</p>
+</blockquote>
 <div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -806,40 +851,15 @@ gapminder |&gt;
 </div>
 </div>
 </div>
-</section><section id="aplicación-2-buscar-funciones-o-generar-código" class="slide level2 smaller"><h2>Aplicación 2: Buscar funciones o generar código</h2>
-<p>Cuando no saben qué función usar para resolver un problema:</p>
-<div class="fragment">
-<pre><code>Usando R y tidyverse, necesito leer un archivo Excel que tiene
-las primeras 3 filas con encabezados combinados y los datos reales
-comienzan en la fila 4. El archivo tiene datos hasta la fila 350
-y después hay filas de totales que no quiero incluir.
-¿Qué función y argumentos debo usar?</code></pre>
-</div>
-<div class="fragment">
-<p>O para generar código desde una descripción:</p>
-<pre><code>Tengo un data frame llamado `homicidios` con columnas `comuna`,
-`anio` (2024 y 2025) y `n` (cantidad de homicidios). Necesito
-pivotear la tabla para que cada año sea una columna, calcular la
-diferencia entre 2025 y 2024, y ordenar de mayor a menor diferencia.
-Dame el código en R usando tidyverse.</code></pre>
-</div>
-</section><section id="aplicación-3-modificar-un-gráfico-con-ggplot2" class="slide level2 smaller"><h2>Aplicación 3: Modificar un gráfico con <code>ggplot2</code>
-</h2>
-<p>Un uso muy práctico: partir de un gráfico base y pedirle mejoras específicas:</p>
-<div class="fragment">
-<pre><code>Tengo este gráfico en R:
-
-ggplot(gap_2007, aes(x = lifeExp)) +
-  geom_histogram()
-
-Necesito que le hagas las siguientes mejoras:
-1. Cambiar el color de relleno a "steelblue" con bordes blancos
-2. Usar 15 bins
-3. Agregar título "Distribución de la esperanza de vida (2007)"
-4. Poner etiquetas en español en los ejes
-5. Usar theme_clean() del paquete ggthemes
-6. Formato chileno en el eje y (punto separador de miles)</code></pre>
-</div>
+</section><section id="aplicación-2-generar-código" class="slide level2 smaller"><h2>Aplicación 2: Generar código</h2>
+<blockquote>
+<p>Eres un experto en R, tidyverse y visualización de datos con ggplot2. Estoy trabajando con el dataset gapminder en R. Quiero analizar únicamente los datos correspondientes al año 2007. Genera un gráfico de dispersión entre PIB per cápita (gdpPercap) y esperanza de vida (lifeExp). Requisitos: - Colorea los puntos según continente. - Agrega una línea de tendencia lineal. - Utiliza ggplot2. - Utiliza sintaxis moderna con pipes (|&gt;). - Incluye comentarios breves en español. Entrega únicamente el código en R.</p>
+</blockquote>
+</section><section id="aplicación-3-mejorar-un-resultado" class="slide level2 smaller"><h2>Aplicación 3: Mejorar un resultado</h2>
+<p>Una vez obtenido el gráfico, podemos iterar:</p>
+<blockquote>
+<p>Mantén la lógica del gráfico anterior y realiza las siguientes mejoras: - Agrega un título descriptivo. - Agrega etiquetas para ambos ejes. - Utiliza otro tema distinto sugerido. - Mueve la leyenda a la parte inferior. - Aumenta ligeramente el tamaño de los puntos. Entrega únicamente el código actualizado en R.</p>
+</blockquote>
 <div class="fragment">
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -854,6 +874,20 @@ Necesito que le hagas las siguientes mejoras:
 </div>
 </div>
 </div>
+</div>
+</section><section id="un-mal-prompt" class="slide level2 smaller"><h2>Un mal prompt</h2>
+<blockquote>
+<p>Hazme un gráfico con gapminder.</p>
+</blockquote>
+<p>¿Por qué es problemático?</p>
+<ul>
+<li class="fragment">No especifica qué variables usar.</li>
+<li class="fragment">No indica qué análisis realizar.</li>
+<li class="fragment">No define el formato de salida.</li>
+<li class="fragment">Distintas IA producirán resultados distintos.</li>
+</ul>
+<div class="fragment">
+<p>Mientras más específico sea el prompt, más útil será la respuesta.</p>
 </div>
 </section><section id="ejemplo-en-vivo-con-gemini-en-google-colab" class="slide level2 smaller"><h2>Ejemplo en vivo con Gemini en Google Colab</h2>
 <div style="font-size: 1.2em; text-align: center; padding: 2em;">
@@ -878,7 +912,7 @@ Necesito que le hagas las siguientes mejoras:
 <strong>Iterar</strong> pidiendo mejoras al gráfico</li>
 </ul>
 </li>
-<li class="fragment">Copiar el resultado final a RStudio</li>
+<li class="fragment">Ejecutar el resultado (ya sea en colab o en Rstudio)</li>
 </ol>
 </div>
 </div>
@@ -960,8 +994,8 @@ Necesito que le hagas las siguientes mejoras:
 </section><section id="recapitulación" class="slide level2 smaller"><h2>Recapitulación</h2>
 <table class="caption-top">
 <colgroup>
-<col style="width: 45%">
-<col style="width: 54%">
+<col style="width: 50%">
+<col style="width: 50%">
 </colgroup>
 <thead><tr class="header">
 <th>Tema</th>

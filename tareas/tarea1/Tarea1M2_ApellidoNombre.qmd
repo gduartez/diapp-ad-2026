@@ -1,12 +1,17 @@
 ---
 title: "Tarea 1"
 author: 'Nombre Apellido'
-subtitle: 'Módulo 2 DCDPP UAI'
-date: "2024-06-25"
+subtitle: 'Módulo 2 - Análisis de Datos y Estadística Computacional DIAPP-2026 UAI'
+date: today
 date-format: "D MMM YYYY"
+lang: es
 format:
   html:
     embed-resources: true
+    toc: true
+    toc-title: "Contenidos"
+    toc-depth: 2
+    theme: flatly
 editor: visual
 ---
 
@@ -16,231 +21,246 @@ editor: visual
 knitr::opts_chunk$set(echo = TRUE, eval = TRUE, warning = FALSE, message = FALSE)
 ```
 
-La tarea debe responderse usando como base el archivo `.Rmd` (RMarkdown) o `.qmd` (Quarto document) que se ha compartido en [WebCursos](https://webcursos.uai.cl/).
+La tarea debe responderse usando como base este archivo `.qmd` (Quarto document) o `.Rmd` (R Markdown) que se ha compartido en [WebCursos](https://webcursos.uai.cl/).
 
-Al terminar deberá hacer click en `Knit` o `Render` para generar un archivo `HTML`.
+Al terminar deberá hacer clic en `Render` (o presionar `Ctrl + Shift + K`) o `knit` en R Markdown para generar un archivo `HTML`.
 
-Deberá enviar tanto el archivo `.Rmd` o `.qmd` donde escribió su código y respuestas indicando su apellido y nombre como nombre del archivo (`Tarea1M2_ApellidoNombre.Rmd` o `Tarea1M2_ApellidoNombre.qmd`) así como el `HTML` generado a partir de este mismo (`Tarea1M2_ApellidoNombre.html`). **Se descontarán puntos si no se siguen estas instrucciones**. Asegúrese de que el archivo `HTML` efectivamente muestre las respuestas que usted vio en su código.
+**Deberá enviar dos archivos:**
 
-Recuerde que el código en un archivo `.Rmd` o `.qmd` va dentro de un *code chunk*, el cual se puede insertar en su documento con `ALT` + `CTRL` + `I` o con el botón *Insert* en la esquina superior derecha del archivo `.Rmd`.
+1.  El archivo `.qmd` o `.Rmd` donde escribió su código y respuestas, renombrado con su apellido y nombre: `Tarea1M2_ApellidoNombre.qmd`.
+2.  El archivo `HTML` generado a partir de este: `Tarea1M2_ApellidoNombre.html`.
 
-Esta tarea consta de 24 preguntas en total (17 en la primera parte y 7 en la segunda) y cada pregunta vale 1 punto. El cálculo de la nota final se realiza bajo la siguiente fórmula: $$\frac{\sum_{i=1}^{24}x_i}{24}\times 6 +1$$ donde $x_i$ corresponde al puntaje obtenido en la pregunta $i$.
+**Se descontarán puntos si no se siguen estas instrucciones de nomenclatura y entrega.** Asegúrese de que el archivo `HTML` efectivamente muestre los resultados que usted vio en su computador antes de enviarlo.
 
-Adicionalmente, hay una última pregunta de bonus la cual es **OPCIONAL** y cuyo puntaje se sumará a su puntaje final en caso de que la responda.
+Recuerde que el código va dentro de un *code chunk*, el cual se puede insertar con el atajo `Ctrl + Alt + I` (Mac: `Cmd + Option + I`) o con el botón *Insert* en la esquina superior derecha del editor.
 
-Cuando se solicite, en sus respuestas no solo deberá entregar el código que produce la respuesta a cada pregunta, sino que también será necesario que **redacte brevemente qué es lo que obtiene. Además, su respuesta debe incorporar una justificación o análisis cuando así se solicite**.
+## Evaluación
 
-La tarea debe ser entregada a través de [WebCursos](https://webcursos.uai.cl/) **hasta las 23:59 del domingo 28 de junio de 2024 (28/06/2026)**.
+Esta tarea consta de **18 preguntas** en total (16 en la Parte I y 2 en la Parte II) y cada pregunta vale **1 punto**. La nota final se calcula con la siguiente fórmula:
 
-Esta evaluación es **INDIVIDUAL**, por lo que cualquier evidencia de copia/plagio será penalizada e informada a la coordinación académica de este diplomado.
+$$Nota = \frac{\text{Puntaje obtenido}}{18}\times 6 +1$$
 
-El uso de la Inteligencia Artifificial (IA) está permitido solo como **asistencia en la generación del código o en su explicación**. En este sentido, la IA es una herramienta de **apoyo** al aprendizaje y **no de reemplazo** de las habilidades humanas. Los códigos generados por IA con *prompts* generales pueden llevar a errores y/o generar código ineficiente para los objetivos dispuestos.
+Adicionalmente, hay una pregunta de **BONUS** que es **OPCIONAL** y cuyo puntaje se sumará al puntaje final en caso de responderla correctamente.
 
-Dicho lo anterior, deben usar **solo las funciones revisadas en clases** (ya sea en las presentaciones o en las guías de ejercicios), a menos que las instrucciones de la pregunta permitan lo contrario. Cualquier otra función o librería usada deberá ser **justificada** por el alumno en su respuesta, indicando el motivo de uso de esa función y/o librería y porqué la utiliza en lugar de las enseñadas en el marco del curso. **Se penalizará con una reducción parcial o total del puntaje de cada pregunta en la cual no se cumpla con lo anterior.**
+## Sobre las respuestas
 
-Antes de comenzar, cargue los paquetes/librerías que serán necesarios para el desarrollo de la tarea.
+Cuando se solicite, en sus respuestas no solo deberá entregar el código que produce la respuesta a cada pregunta, sino que también será necesario que **redacte brevemente qué es lo que obtiene**. Además, su respuesta debe incorporar una **justificación o análisis** cuando así se solicite.
 
-Recuerde que si no tiene instalados los paquetes deberá hacerlo usando la función `install.packages(...)` antes de cargarlos usando `library()`, o bien, puede utilizar la función `p_load()` del paquete `pacman` (recuerde instalarlo y cargarlo primero antes de instalar/cargar el resto de las librerías).
+## Fecha de entrega
 
-A continuación se dejan las librerías que serán utilizadas:
+**Hasta las 23:59 del sábado 28 de junio de 2026** a través de [WebCursos](https://webcursos.uai.cl/) en el buzón correspondiente.
 
-```{r, echo=TRUE}
-library(tidyverse) # Manipulación y Visualización de Datos
-library(readxl) #Importar archivos excel
-library(janitor) #Limpieza de datos
-library(openxlsx) #Guardar archivos excel
-library(scales) #Formatear visualización de texto
+## Sobre la integridad académica y el uso de IA
 
-rm(list = ls()) #Borrar objetos existentes en el environment
+Esta evaluación es **INDIVIDUAL**. Cualquier evidencia de copia o plagio será penalizada e informada a la coordinación académica del diplomado.
+
+El uso de Inteligencia Artificial (IA) está permitido **solo como asistencia** en la generación del código o en su explicación. La IA es una herramienta de **apoyo a la producción y entendimiento de código**, no de reemplazo de sus habilidades. Los códigos generados por IA con prompts genéricos pueden contener errores o ser ineficientes para los objetivos de la tarea.
+
+**Debe usar solo las funciones revisadas en clases** (presentaciones y guías de ejercicios) a menos que se señale el uso explícito de otras funciones. Cualquier otra función o librería utilizada deberá ser **justificada** por el alumno, indicando el motivo de uso. Se penalizará con reducción parcial o total del puntaje de cada pregunta que no cumpla con esta condición.
+
+## Paquetes necesarios
+
+Antes de comenzar, cargue los paquetes que serán necesarios para el desarrollo de la tarea. Recuerde que si no tiene algún paquete instalado, debe hacerlo con `install.packages("nombre_paquete")` antes de cargarlo, o bien usar `p_load()` del paquete `pacman`.
+
+```{r}
+library(tidyverse)  # Manipulación y visualización de datos
+library(readxl)     # Importar archivos Excel
+library(janitor)    # Limpieza de nombres de columnas
+library(scales)     # Formatear etiquetas en gráficos
+library(sf)         # Datos espaciales (solo para el bonus)
+
+rm(list = ls())     # Limpiar el environment
+```
+
+## Archivos de datos
+
+Coloque los siguientes archivos en una carpeta `data/` dentro de su proyecto:
+
+- `Base_de_Datos_VHC_2018_2025.xlsx` — Víctimas de homicidio consumado (2018–2025).
+- `estimaciones-y-proyecciones-de-población-1992-2070_base-2024_tabulados.xlsx` — Proyecciones de población nacional (INE, base Censo 2024).
+- `homicidios_wide_v2.xlsx` — Datos preprocesados de homicidios a nivel comunal con pobreza y población (para la Parte II).
+- `homicidios_sf.rds` — Datos espaciales de comunas con tasas de homicidio (para el bonus).
+
+\newpage
+
+# Parte I: Análisis temporal de homicidios en Chile {style="text-align: justify"}
+
+En esta primera parte trabajaremos con los datos del [Centro para la Prevención de Homicidios y Delitos Violentos](https://prevenciondehomicidios.cl/) y las proyecciones de población del [INE](https://www.ine.gob.cl/estadisticas-por-tema/demografia-y-poblacion/estimaciones-y-proyecciones-de-poblacion) para construir indicadores y visualizaciones que muestren cómo ha evolucionado la situación de los homicidios en Chile.
+
+## 1.1 Importar y preparar la base de homicidios
+
+1.  Cargue el archivo `Base_de_Datos_VHC_2018_2025.xlsx` y asígnelo a un objeto llamado `homicidios`. Aplique `clean_names()` para estandarizar los nombres de las columnas. Usando `glimpse()`, indique: ¿cuántas variables y cuántas observaciones tiene el *dataframe*? ¿Qué representa cada fila?
+
+```{r}
+
+```
+
+2.  Renombre las siguientes variables del objeto `homicidios` para hacerlas más legibles, sobrescribiendo el objeto:
+
+    | Nombre original | Nuevo nombre     |
+    |-----------------|------------------|
+    | `nacion_recod`  | `nacionalidad`   |
+    | `lug_agr_recod` | `lugar_agresion` |
+    | `comun_agr`     | `comuna`         |
+    | `nom_reg`       | `region`         |
+    | `id_ano`        | `anio`           |
+    | `hora_recod`    | `hora`           |
+
+```{r}
+
+```
+
+## 1.2 Proyecciones de población nacional
+
+3.  Cargue la **tercera hoja** del archivo `estimaciones-y-proyecciones-de-población-1992-2070_base-2024_tabulados.xlsx`. Inspeccione el archivo en Excel para determinar cuántas filas de encabezado debe saltar con el argumento `skip`. Luego, conserve solamente la fila que contiene la **población total de ambos sexos** usando `slice()`. Asigne el resultado al objeto `proyeccion_2024`. *Hint: la fila de interés es la que dice "Total" en la primera columna, después de saltar los encabezados.*
+
+```{r}
+
+```
+
+4.  Transforme `proyeccion_2024` a formato *long* creando el objeto `proyeccion_2024_long`. Las columnas de años deben pivotearse a una variable llamada `anio` y los valores a una variable llamada `poblacion`. Elimine la primera columna (que contiene el texto "Total") con `select(-1)` y convierta `anio` a numérico con `as.numeric()`. *Hint: use `pivot_longer(!1, ...)` para pivotear todas las columnas excepto la primera.*
+
+```{r}
+
+```
+
+## 1.3 Construir indicadores
+
+5.  A partir del objeto `homicidios`, cuente el número de víctimas de homicidios por año y guárdelo en `homicidios_anual`. La variable de conteo debe llamarse `n_homicidios`. *Hint: revise el argumento `name` de la función `count()`.*
+
+```{r}
+
+```
+
+6.  Cruce `homicidios_anual` con `proyeccion_2024_long` usando `left_join()` por la variable `anio`. Luego, cree una nueva variable llamada `tasa` que represente la **tasa de homicidios por cada 100.000 habitantes**, redondeada a 1 decimal. Sobrescriba el objeto `homicidios_anual`. La fórmula es de la tasa de homicidios es la siguiente: $$Tasa = \frac{N°\text{ de víctimas de homicidios}}{\text{Población proyectada}} \times 100.000$$
+
+```{r}
+
+```
+
+## 1.4 Gráfico de evolución: serie de tiempo
+
+En las preguntas 7, 8 y 9 construiremos **un mismo gráfico** de forma progresiva, añadiendo capas y mejoras estéticas en cada paso. Esto permite aplicar el flujo iterativo de `ggplot2` que vimos en clase.
+
+7.  Usando `homicidios_anual`, construya un gráfico de **línea** que muestre la evolución de la tasa de homicidios (`tasa`) a lo largo de los años (`anio`). Use color `"red3"` y grosor `linewidth = 2`. Guarde el gráfico en el objeto `p1`.
+
+```{r}
+
+```
+
+8.  Sobre el gráfico `p1`, añada las siguientes mejoras y guárdelo en `p1_v2`:
+
+    - Agregue puntos sobre la línea con `size = 2.5`.
+    - Configure el eje x para que muestre **todos los años** de 2018 a 2025.
+    - Configure el eje y para que parta en 0 y llegue hasta 7.
+
+```{r}
+
+```
+
+9.  Sobre `p1_v2`, añada las siguientes mejoras finales y guárdelo en `p1_v3`:
+
+    - Etiquetas numéricas sobre cada punto con `geom_text()` mostrando el valor de `tasa` (use `vjust = -1` y `fontface = "bold"`).
+    - Título: *"Tasa cada 100 mil habitantes de víctimas de homicidios consumados"*.
+    - Etiqueta del eje x: *"Año"*.
+    - Etiqueta del eje y: *"Tasa"*.
+    - Añada la siguiente fuente: *" Elaboración propia en base a datos del Centro para la Prevención de Homicidios y Delitos Violentos"*.
+    - Tema: `theme_classic()`.
+
+    ¿Qué tendencia observa en la evolución de la tasa de homicidios en Chile entre 2018 y 2025? Describa brevemente.
+
+```{r}
+
+```
+
+## 1.5 Gráfico comparativo: mes actual vs promedio histórico
+
+En las siguientes 4 preguntas, intentaremos replicar el gráfico 4 del [informe de víctimas de homicidio consumado 2025](https://prevenciondehomicidios.cl/wp-content/uploads/2026/03/Informe_de_victimas_de_homicidios_consumados_2025_VF.pdf) (página 16). Para ello necesitamos generar un dataframe que tenga 12 filas (1 fila por mes) y al menos las siguientes 2 variables:
+
+i) Víctimas de homicidios en el año 2025, la cual se usará para generar las columnas del gráfico; y 
+ii) El promedio histórico por mes calculado a partir de las víctimas de homicidios mensual en los años desde 2018 a 2024. Esto permitirá generar la línea de promedio histórico mensual que se observa en el gráfico 4 del informe. Puede utilizar los siguientes colores para intentar acercarse a la estética del gráfico:
+
+```{r}
+azul <- "#173277"
+verde <- "#46B9AE"
+```
+
+10. A partir del objeto `homicidios`, cree dos objetos:
+
+    a.  `homicidios_mensual`: Un dataset que cuente el número de homicidios agrupando por `anio` y `mes2`.
+    b.  `homicidios_promedio`: Usando el dataset creado en a. `homicidios_mensual` filtre por todos los años **excluyendo** el 2025, agrupe por `mes2` y resuma en una nueva variable llamada `promedio_historico` el promedio de homicidios por mes entre 2018 y 2024 a partir de la variable `n_homicidios` redondeado a **0 decimales**).
+
+```{r}
+
+```
+
+11. Cree el objeto `base_p2` conservando solo las observaciones del año 2025 del objeto `homicidios_mensual`. Crucélo con `homicidios_promedio` usando como llave `mes2`. Luego, cree una variable `mes` de tipo fecha usando `ymd(paste("año", mes2, "dia"))` donde "año" y "día" sean 2025 y 01 respectivamente, para así crear una fecha a partir de una cadena de texto. Con estos datos, construya un gráfico de **columnas** (`geom_col()`) que muestre los homicidios de 2025 por mes. Agregue etiquetas dentro de las barras usando `geom_text()` y configure el eje x con `scale_x_date(date_breaks = "1 month", date_labels = "%b")` para mostrar las abreviaciones de los meses. Guárdelo en `p2`.
+
+```{r}
+
+```
+
+12. Sobre `p2`, agregue el **promedio histórico** como una línea superpuesta con `geom_line()` y `geom_point()`, coloreando ambos en un color distinto al de las barras. Añada etiquetas del promedio con `geom_text()` y en **negrita**. Guarde en `p2_v2`. *Hint: los tres geoms nuevos deben usar `aes(y = promedio_historico)` para referirse a la variable correcta.*
+
+```{r}
+
+```
+
+13. Sobre `p2_v2`, ajuste la escala del eje y con `scale_y_continuous(breaks = seq(0, 125, 25), limits = c(0, 125))` y agregue un título descriptivo, etiquetas de ejes y un tema de su preferencia. Guarde en `p2_v3`. ¿En qué meses del 2025 se superó el promedio histórico?
+
+```{r}
+
+```
+
+## 1.6 Heatmap: concentración por hora y día
+
+En las siguientes 2 preguntas intentaremos replicar el gráfico 3.2 del [informe de víctimas de homicidio consumado 2025](https://prevenciondehomicidios.cl/wp-content/uploads/2026/03/Informe_de_victimas_de_homicidios_consumados_2025_VF.pdf) (página 15)
+
+14. A partir del objeto `homicidios`, filtre solo las observaciones del año 2025. Luego, resuma el número de víctimas de homicidio consumado agrupando por `hora` y `dia`. Guárdelo en `homicidios_hora_2025` encadenando la función `ungroup()` al final. Después, sobre este mismo objeto convierta las variables `hora` y `dia` a factores. Genere un vector llamado `levels_dia` con los días ordenados de la semana: Lunes, Martes, Miércoles, Jueves, Viernes, Sábado, Domingo y utílicelo para reordenar la variable `dia` con `fct_relevel()`, de manera tal que los niveles queden en el orden correcto. Para la variable `hora`, invierta el orden con `fct_relevel(hora, rev)` para preservar el orden del gráfico del informe.
+
+```{r}
+
+```
+
+15. Con el objeto anterior, construya un **heatmap** usando `geom_tile()` con `hora` en el eje y, `dia` en el eje x, y `cantidad` como relleno (`fill`). Agregue el número dentro de cada celda con `geom_text()`. Use la paleta `"Spectral"` de `scale_fill_distiller()` y aplique `theme_minimal()`. Agregue títulos adecuados. ¿En qué día y hora se concentran mayoritariamente los homicidios a nivel nacional?
+
+```{r}
+
+```
+
+## 1.7 Evolución de las condenas penales de las víctimas
+
+En esta sección vamos a intentar obtener un resultado **similar** al gráfico 8 del [informe de víctimas de homicidio consumado 2025](https://prevenciondehomicidios.cl/wp-content/uploads/2026/03/Informe_de_victimas_de_homicidios_consumados_2025_VF.pdf) (página 20).
+
+16. A partir del objeto `homicidios`, agrupe por `anio` y `condenas` y cuente el número de víctimas de homicidio consumado. Luego, calcule el **porcentaje** de víctimas con y sin condena por año (divida cada conteo por el total del año correspondiente). Construya un gráfico de **líneas** que muestre la evolución de estos porcentajes a lo largo de los años, coloreando por tipo de condena. Agregue etiquetas con el porcentaje formateado (`label_percent()`) sobre cada punto. ¿Qué tendencia se observa en relación a las condenas? 
+
+```{r}
+
 ```
 
 \newpage
 
-# Parte I: Importar Datos {style="text-align: justify"}
+# Parte II: Análisis territorial de homicidios y pobreza {style="text-align: justify"}
 
-En esta primera parte, se trabajará en la importación, ordenamiento y transformación de datos públicos correspondiente a las siguientes 3 fuentes de información:
+En esta segunda parte utilizaremos el dataset preprocesado `homicidios_wide_v2.xlsx` que contiene datos a nivel comunal de homicidios (2018–2025), tasa de pobreza y población censada, con el objetivo de explorar la relación entre pobreza y violencia letal a nivel comunal en Chile.
 
-a.  [Proyecciones de Población en base al Censo 2024 a nivel **nacional** (INE):]{.underline}
-
-    <https://www.ine.gob.cl/estadisticas-por-tema/demografia-y-poblacion/estimaciones-y-proyecciones-de-poblacion>. Sección *cuadros estadísticos -\> Proyección base 2024*
-
-b.  [Proyecciones de Población en base al Censo 2017 a nivel **comunal** (INE):]{.underline} <https://www.ine.gob.cl/estadisticas/sociales/demografia-y-vitales/proyecciones-de-poblacion>. Sección *cuadros estadísticos -\> Proyección base 2017*
-
-c.  [Víctimas de homicidio consumado:]{.underline}
-
-    <https://prevenciondehomicidios.cl/> Sección: [**Bases de datos VHC con variables de informe**](https://prevenciondehomicidios.cl/wp-content/uploads/2026/03/Base_de_Datos_VHC_2018_2025.xlsx)
-
-d.  [Estimaciones de Pobreza Comunal:]{.underline} <https://observatorio.ministeriodesarrollosocial.gob.cl/pobreza-comunal-2022>.
-
-## 1.1 Población Comunal INE
-
-1.  Cargue el archivo `estimaciones-y-proyecciones-2002-2035-comunas.xlsx` y asígnelo a un objeto llamado `poblacion_comunas` ¿Cuántas variables y cuántas observaciones tiene este *dataframe*?
+17. Cargue el archivo `homicidios_wide_v2.xlsx` y asígnelo al objeto `homicidios_wide`. Construya un gráfico de **dispersión** que muestre la relación entre la `tasa_pobreza` (eje x) y la `tasa_hom_2024` (eje y), separado por **región** usando `facet_wrap()`. Agregue una línea de tendencia lineal (`method = "lm"`) sin intervalo de confianza (`se = FALSE`). Deje la escala del eje y como libre (`scales = "free"`). Formatee el eje x como porcentaje. ¿Se observan patrones diferenciados entre regiones? Si es así, describa al menos una diferencia.
 
 ```{r}
 
 ```
 
-2.  Explique qué representa cada observación en el *dataframe* `poblacion_comunas`. Para hacerlo, puede utilizar como ejemplo algún **valor** de la población de la base de datos. Por ejemplo, el valor de la variable `Poblacion 2002` para la primera observación es 1469 ¿Qué representa ese número?
-
-3.  Modifique el nombre de las columnas o variables del objeto `poblacion_comunas` utilizando la función `clean_names()` y sobrescriba el resultado en este mismo objeto ¿Dentro de cuál paquete se encuentra esta función? *Nota: Cuando se le pida que sobrescriba un objeto x ya creado, implica que debe asignar al objeto x todas las funciones que se solicitan en la pregunta respectiva. Si solo imprime los resultados SE DESCONTARÁN PUNTOS*.
+18. Construya un gráfico de **dispersión** similar al anterior pero ahora identificando grupos por la variable `zona` (Norte, Centro, Sur y Austral) mediante el **color** de los puntos (no con facetas). Agregue **una** recta de regresión lineal **por zona** y use una paleta de colores distinta a la predeterminada (por ejemplo, `scale_color_brewer(palette = "Set1")`). ¿Qué diferencias observa entre las tendencias de las cuatro zonas?
 
 ```{r}
 
 ```
 
-4.  Cambie el nombre de la variable que indica el sexo de la población observada por el siguiente nombre: `sexo`. Realice lo anterior sobrescribiendo el objeto `poblacion_comunas`.
+\newpage
 
-```{r}
+# BONUS: Mapa de homicidios {style="text-align: justify"}
 
-```
-
-5.  Pivotee el *dataframe* `poblacion_comunas` y conviértalo en uno en formato *long* llamado `poblacion_comunas_long`. Para hacerlo, considere como pivote las variables que indican la población por año (es decir, aquellas que comienzan con el nombre `poblacion_`). Haga que los nombres de las variables a pivotear se guarden en una nueva variable que tenga como nombre `agno_str` y que los valores de la población se asignen a la variable `poblacion`.
-
-```{r}
-
-```
-
-6.  Cree una nueva variable llamada `agno` que represente el año de estimación/proyección de la población a partir de la variable `agno_str` sobrescribiendo el objeto `poblacion_comunas_long`. Asegúrese que esta nueva variable `agno` sea de clase numérica utilizando la función `as.numeric()`. Visualice el objeto `poblacion_comunas_long` utilizando la función `glimpse()` para asegurarse de que `agno` sea de tipo `dbl` o `int`. *Hint: En clases revisamos una función que permite el manejo de cadenas de texto y extracción de valores a partir de posiciones. Analice entre qué posiciones siempre se encuentra el valor numérico del año dentro la cadena de texto de los valores de `agno_str`*.
-
-```{r}
-
-```
-
-7.  Cree un nuevo objeto llamado `poblacion_comunal_19_23` a partir del objeto `poblacion_comunas_long` filtrando por los años desde el 2019 hasta el 2023 inclusive (es decir, los siguientes 5 años: 2019, 2020, 2021, 2022 y 2023).
-
-```{r}
-
-```
-
-8.  Sobrescriba el objeto `poblacion_comunal_19_23` y calcule la población comunal total (`poblacion_total`) para cada año seleccionado (2019-2023) manteniendo todas las variables indicativas de comunas, provincias y regiones. Para realizarlo, agrupe solo por las variables `region`,`nombre_region`, `provincia`, `nombre_provincia`,`comuna` `nombre_comuna` y `agno`. Encadene al final de su código la función `ungroup()`. *Hint: Note que son 346 códigos de comunas, por lo que el dataframe resultante debe tener* $346\times 5 = 1730$ observaciones.
-
-```{r}
-
-```
-
-9.  ¿Cuáles son las 10 comunas más pobladas de Chile según la población proyectada para el año 2023? ¿Cuánta es la población total proyectada en Chile para el año 2023?
-
-```{r}
-
-```
-
-10. Exporte el objeto `poblacion_comunal_19_23` en formato excel y, al archivo `.xlsx` guardado, asígnele el mismo nombre del objeto: `poblacion_comunal_2019_2023`.
-
-```{r}
-
-```
-
-## 1.2 Pobreza Comunal CASEN
-
-Si no logró terminar la parte 1.1, puede utilizar el archivo `poblacion_comunal_2019_2023.xlsx` que está en la carpeta de `resultados`. Recuerde que si utilizará el archivo alojado en esta última carpeta, debe cargarlo en su environment utilizando una función que le permita leer archivos excel y asignarlo al objeto `poblacion_comunal_19_23`.
-
-11. Cargue el archivo `Estimaciones_Tasa_Pobreza_Ingresos_Comunas_2022.xslx` y asígnelo al objeto `pobreza_2022` de manera tal que el *dataset* quede en formato *tidy*, en donde la primera fila corresponda al nombre de las variables y el resto de las filas indiquen los valores observados de cada variable para cada comuna. Este dataset no tiene observaciones faltantes, por lo que procure verificar que se cumpla esta condición en el objeto que cree. *Hint: En este caso, el dataset tiene información sobre 345 comunas del país, ya que excluye la comuna 12202 (Antártica)*.
-
-```{r}
-
-```
-
-12. Sobrescriba el objeto `pobreza_2022` seleccionando solamente las siguientes columnas: `Código` `Número de personas según proyecciones de población (*)`, `Número de personas en situación de pobreza por ingresos (**)` y `Porcentaje de personas en situación de pobreza por ingresos 2022`. Renombre estas nuevas variables como `codigo`, `pob_pry`, `n_pobreza` y `pct_pobreza`.
-
-```{r}
-
-```
-
-13. Utilizando el objeto `poblacion_comunal_19_23`, cree un nuevo objeto llamado `poblacion_comunal_22` filtrando por las observaciones correspondientes a la población comunal para el año 2022 exclusivamente.
-
-```{r}
-
-```
-
-14. Cree un nuevo objeto llamado `pobreza_comunal_2022` cruzando el objeto `poblacion_comunal_22` con el objeto `pobreza_2022` (es decir, al objeto `poblacion_comunal_22` añádale las columnas del objeto `pobreza_2022`). Procure especificar correctamente la llave para realizar el cruce. *Nota: La población proyectada utilizada en la CASEN 2022 no coincide exactamente con la población proyectada por el INE en base al censo 2017, por lo que no debe preocuparse si es que ambos valores difieren*.
-
-```{r}
-
-```
-
-15. Exporte el objeto `pobreza_comunal_2022` en formato excel y, al archivo `.xlsx` guardado, asígnele el mismo nombre del objeto: `pobreza_comunal_2022`.
-
-```{r}
-
-```
-
-## 1.3 DMCS
-
-Si no logró terminar la parte 1.2, puede utilizar el archivo `pobreza_comunal_2022.xlsx` que está en la carpeta de `resultados`. Recuerde que si utilizará el archivo alojado en esta última carpeta, debe cargarlo en su environment utilizando una función que le permita leer archivos excel y asignarlo al objeto `pobreza_comunal_2022`.
-
-16. Cargue el *dataframe* `dmcs.xlsx` correspondiente a los casos policiales de los delitos de mayor connotación social por año y comuna y asígnelo a un objeto llamado `dmcs_22`. Filtre las observaciones correspondientes al año 2022; elimine las variables `comuna` y `agno`; y por último, cambie el nombre de la variable `frecuencia` por `frecuencia_dmcs`.
-
-```{r}
-
-```
-
-17. Cruce el objeto `pobreza_comunal_2022` con el objeto creado en la pregunta anterior (`dmcs_22`) y asígnelo al objeto `dataset_final`. Guarde este archivo en formato excel con el mismo nombre que le asignó al objeto. ¿Cuál es la comuna con la mayor cantidad de casos policiales de DMCS en el año 2022? ¿Cuántos casos policiales hubo en esa comuna?
-
-```{r}
-
-```
-
-# Parte II: Análisis de Pobreza y Casos Policiales de DMCS {style="text-align: justify"}
-
-En esta segunda parte, se utilizará el dataframe resultante del proceso de ordenamiento y transformación de la parte I con el objetivo de realizar análisis exploratorios y visualizaciones que permitan describir la relación entre 2 variables a nivel comunal: pobreza y tasa de delitos de mayor connotación social.
-
-Si no logró terminar la parte 1.3, puede utilizar el archivo `dataset_final.xlsx` que está en la carpeta de `resultados`. Recuerde que si utilizará el archivo alojado en esta última carpeta, debe cargarlo en su environment utilizando una función que le permita leer archivos excel y asignarlo al objeto `dataset_final`.
-
-18. Haga un histograma que muestre la distribución comunal de casos policiales para el país completo asignando a las barras un color de contorno negro (`'black'`) y un color de relleno azul. ¿Qué interpreta de este histograma?
-
-```{r}
-
-```
-
-19. Cree una nueva variable que se llame `tasa_dmcs` correspondiente a la tasa delictual por cada 100.000 habitantes sobrescribiendo el objeto `dataset_final`. La fórmula matemática que permite construir esta variable es la siguiente: $$Tasa = \frac{Frecuencia}{Poblacion}\times 100.000$$ Replique el histograma realizado en la pregunta 18 ¿Cambia la visualización? ¿Qué puede desprender de este nuevo gráfico?
-
-```{r}
-
-```
-
-20. Haga un *scatterplot* o gráfico de dispersión que muestre la relación entre la tasa de pobreza comunal (eje x) y tasa de DMCS por cada 100.000 habitantes (eje y). Adicionalmente, agregue una curva ajustada de los datos que permita entender aún mejor la relación estas dos variables. ¿Qué puede observar en términos generales?
-
-```{r}
-
-```
-
-21. Mejore la estética del gráfico anterior arreglando los siguientes aspectos:
-
-    i)  En el eje x asigne un formato de porcentaje
-    ii) En el eje y asigne un formato de número cuyo separador de miles o `big.mark` sea un `.`
-    iii) Agregue como título del eje x: `Porcentaje de Pobreza`
-    iv) Agregue como título del eje y: `Tasa de DMCS`
-    v)  Agregue como título del gráfico: `Relación entre pobreza y DMCS a nivel comunal`
-
-```{r}
-
-```
-
-22. Haga un gráfico de dispersión como el de la pregunta 20 pero ahora **para cada región** por separado y muéstrelo en una sola imagen. Deje la escala del eje y como libre y **no** muestre el intervalo de confianza. ¿Observa patrones diferenciados? Si su respuesta es sí, describa al menos una diferencia. *Hint: No es necesario que haga 16 gráficos distintos por separado, ya que existe una función que permite hacer gráficos por grupos o facets*.
-
-```{r}
-
-```
-
-23. Cree y sobrescriba en el objeto `dataset_final` una nueva variable que se llame `zona` y tome los siguientes valores en función de los criterios que se señalan a continuación:
-
-    i)  `Norte`: Para las regiones 15, 1, 2, 3 y 4.\
-    ii) `Centro`: Para las regiones 5, 13, 6, 7, 16 y 8.\
-    iii) `Sur`: Para las regiones 9, 14, 10, 11, 12.
-
-```{r}
-
-```
-
-24. Haga un nuevo *scatterplot* o gráfico de dispersión que muestre la relación entre la tasa de pobreza comunal (eje x) y tasa de DMCS por cada 100.000 habitantes (eje y) al igual que en la pregunta 21, pero ahora separado por **zona**. Agregue una línea ajustada de los datos a través del método de regresión lineal (es decir, ajuste una recta en vez de una curva) que permita explorar si hay diferencias en las tendencias entre zonas del país. Utilice una escala de color de su preferencia distinta a la que viene por defecto para mostrar los resultados. ¿Qué puede concluir?
-
-```{r}
-
-```
-
-# BONUS: Mapa de DMCS en la RM {style="text-align: justify"}
-
-25. Utilizando el paquete `chilemapas` y `sf`, realice un mapa estático que muestre en una escala graduada de colores, cómo difiere la tasa de DMCS entre las comunas de la Región Metropolitana para el año 2022.
+19. Cargue el archivo `homicidios_sf.rds` (un objeto espacial de clase `sf`) y asígnelo al objeto `homicidios_mapa`. Filtre por **una región de su elección** y construya un mapa estático con `geom_sf()` que coloree cada comuna según su `tasa_hom_2024`. Agregue etiquetas con el nombre de la comuna y su tasa usando `geom_sf_label()`. Use una paleta de color de su gusto y aplique un tema limpio. Comente brevemente qué comunas presentan las tasas más altas en la región elegida.
 
 ```{r}
 

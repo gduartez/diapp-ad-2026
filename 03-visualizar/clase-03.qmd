@@ -109,11 +109,11 @@ Como objetivos específicos se busca:
 1.  **Explorar**: entender los datos para guiar análisis posteriores.
     Una visualización exploratoria es una forma de pensar y de usar
     gráficos como herramientas cognitivas para descubrir patrones
-    (Wilke, 2019). → *Análisis exploratorio*
+    (Wilke, 2019). → *Análisis exploratorio*.
 
 2.  **Comunicar**: contar una historia con propósito, simplificando lo
     complejo y guiando la atención del público hacia el mensaje clave. →
-    *Análisis aclaratorio*
+    *Análisis aclaratorio*.
 :::
 
 ## Comunicar: foco en las perlas, no en las ostras
@@ -357,7 +357,7 @@ ggplot(gap_2007, aes(x = ___)) +
 | 2 | Cuantitativa + Cuantitativa | `geom_point()`, `geom_line()` |
 | 2 | Categórica + Cuantitativa | `geom_col()`, `geom_boxplot()` |
 
-# [Aplicaciones: tipos de `geom`]{style="color:white"} {background-color="#173277"}
+# [Aplicaciones: tipos de objetos geométricos (geom_*)]{style="color:white"} {background-color="#173277"}
 
 ## Barras para datos categóricos: `geom_bar()` {.smaller}
 
@@ -446,7 +446,7 @@ ggplot(gap_2007,
 
 ```{r}
 #| echo: true
-#| fig-height: 5
+#| fig-height: 4.5
 ggplot(gap_2007,
   aes(x = continent,
       y = lifeExp)) +
@@ -801,7 +801,7 @@ Cuando hay **muchas categorías** en un gráfico, una leyenda cada elemento desv
 
 ```{r}
 #| echo: true
-#| code-line-numbers: "5"
+#| code-line-numbers: "4"
 #| output-location: column
 library(gghighlight)
 ggplot(gapminder |> filter(continent == "Americas")) +

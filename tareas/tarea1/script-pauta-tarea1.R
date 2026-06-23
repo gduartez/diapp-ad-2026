@@ -98,17 +98,17 @@ base_p2 <- homicidios_mensual |>
 
 base_p2 <- base_p2 |> 
   mutate(
-    mes = make_date(
-    month = mes2,
-    year = 2025,
-    day = 1
-    ))
+    mes = ymd(paste("2025", mes2, "01"))
+  )
 
 # Opción 2
 base_p2 <- base_p2 |> 
   mutate(
-    mes = ymd(paste("2025", mes2, "01"))
-    )
+    mes = make_date(
+      month = mes2,
+      year = 2025,
+      day = 1
+    ))
 
 # Pregunta 11 -------------------------------------------------------------
 azul <- "#173277"
@@ -252,6 +252,7 @@ ggplot(homicidios_wide, aes(
 
 # Pregunta 19: BONUS ------------------------------------------------------
 homicidios_mapa <- read_rds("data/homicidios_sf.rds")
+library(sf)
 
 homicidios_mapa |> 
   filter(region == "Antofagasta") |> 

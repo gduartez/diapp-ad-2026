@@ -270,22 +270,19 @@
 </div>
 </div></div>
 </section><section id="objetivo-clase-1" class="slide level2 smaller justify"><h2>Objetivo Clase 1</h2>
-<p>Esta primera clase tiene como objetivo general introducirlos al curso de <strong>Análisis de Datos y Estadística Computacional</strong> y aprender a <strong>importar y cruzar</strong> bases de datos en <code>R</code>. Las bases que trabajeremos hoy, serán trabajadas posteriormente en las siguiente clase.</p>
+<p>Esta primera clase tiene como objetivo general introducirlos al curso de <strong>Análisis de Datos y Estadística Computacional</strong> y aprender a <strong>importar y cruzar</strong> bases de datos en <code>R</code>. Las bases que trabajeremos hoy, serán utilizadas posteriormente en las siguientes clases.</p>
 <p>Como objetivos específicos se busca:</p>
 <ul>
-<li class="fragment">Presentar el programa del curso y algunas de las reglas básicas</li>
-<li class="fragment">Trabajar de manera ordenada y reproducible mediante <strong>proyectos</strong> (<code>.Rproj</code>)</li>
-<li class="fragment">Aprender a importar bases de datos de distintos formatos: <code>.csv</code>, <code>.xlsx</code>, <code>.dta</code>, <code>.shp</code>
-</li>
-<li class="fragment">Realizar una limpieza inicial de nombres de columnas (variables) con el paquete <code>janitor</code>
-</li>
-<li class="fragment">Cruzar información de dos datasets con <code>left_join()</code>
-</li>
-</ul></section><section id="información-general" class="slide level2"><h2>Información General</h2>
+<li class="fragment">Presentar el programa del curso y algunas de las reglas básicas.</li>
+<li class="fragment">Trabajar de manera ordenada y reproducible mediante <strong>proyectos</strong> (<code>.Rproj</code>).</li>
+<li class="fragment">Aprender a importar bases de datos de distintos formatos: <code>.csv</code>, <code>.xlsx</code>, <code>.dta</code>, <code>.shp</code>.</li>
+<li class="fragment">Realizar una limpieza inicial de nombres de columnas (variables) con el paquete <code>janitor</code>.</li>
+<li class="fragment">Cruzar información de dos datasets con <code>left_join()</code>.</li>
+</ul></section><section id="información-general" class="slide level2 medium"><h2>Información General</h2>
 <ul>
 <li class="fragment">8 clases en total con una duración de 3:20 hrs cada una.</li>
 <li class="fragment">Se subirá el <strong>link</strong> de la presentación el mismo día previo al inicio de la clase para que los alumnos puedan seguirla en línea.</li>
-<li class="fragment">El curso consta de <strong>2 unidades</strong> de <strong>4 clases</strong> cada una
+<li class="fragment">El curso consta de <strong>2 unidades</strong> de <strong>4 clases</strong> cada una:
 <ul>
 <li class="fragment">
 <strong>Unidad I</strong>: Herramientas de Ciencia de Datos con R</li>
@@ -502,11 +499,11 @@
 <p>Sus principales ventajas:</p>
 <ul>
 <li class="fragment">
-<strong>Rutas relativas</strong>: el proyecto fija automáticamente el <em>directorio de trabajo</em> en su carpeta raíz, por lo que no necesitamos usar <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> ni rutas absolutas del tipo <code>"C:/Users/.../mis documentos/..."</code>.</li>
+<strong>Rutas relativas</strong>: El proyecto fija automáticamente el <em>directorio de trabajo</em> en su carpeta raíz, por lo que <strong>no</strong> necesitamos usar <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> ni rutas absolutas del tipo <code>"C:/Users/.../mis documentos/..."</code>.</li>
 <li class="fragment">
-<strong>Portabilidad</strong>: el proyecto funciona igual en cualquier computador, sin tener que reescribir rutas.</li>
+<strong>Portabilidad</strong>: El proyecto funciona igual en cualquier computador, sin tener que reescribir rutas.</li>
 <li class="fragment">
-<strong>Reproducibilidad y orden</strong>: cada análisis vive en su propia carpeta, autocontenido.</li>
+<strong>Reproducibilidad y orden</strong>: Cada análisis vive en su propia carpeta, autocontenido.</li>
 </ul>
 </div>
 </section><section id="crear-un-proyecto-en-rstudio" class="slide level2 smaller"><h2>Crear un proyecto en RStudio</h2>
@@ -582,7 +579,7 @@
 </div>
 </section><section id="la-importancia-del-orden" class="slide level2 smaller justify incremental"><h2>La importancia del orden</h2>
 <ul>
-<li class="fragment"><p>Una de las ventajas de programar es la <strong>reproducibilidad</strong>: cualquier persona (¡o nosotros mismos en seis meses!) debería poder obtener los mismos resultados ejecutando los mismos pasos.</p></li>
+<li class="fragment"><p>Una de las ventajas de programar es la <strong>reproducibilidad</strong>: cualquier persona (¡o nosotros mismos en seis meses después!) debería poder obtener los mismos resultados ejecutando los mismos pasos.</p></li>
 <li class="fragment"><p>Por eso importa mantener el orden tanto en la <strong>carpeta</strong> del proyecto como en la <strong>sintaxis del script</strong>. Piensen en escribir su código como si escribieran una receta.</p></li>
 <li class="fragment"><p>Ordenen su script en <strong>secciones</strong> (atajo: <code>CTRL + SHIFT + R</code>) e intenten comentar el <em>por qué</em> de cada paso más que el <em>cómo</em>: el qué y el cómo siempre se pueden deducir del código, pero el <em>por qué</em> es lo más difícil de recuperar después.</p></li>
 </ul></section><section id="identación-y-estilo-de-código" class="slide level2 smaller"><h2>Identación y estilo de código</h2>
@@ -729,7 +726,7 @@
 <p><strong>Atajo de teclado</strong></p>
 </div>
 <div class="callout-content">
-<p><code>Ctrl + Shift + M</code> inserta el pipe <code>|&gt;</code> automáticamente en RStudio. Si te aparece <code>%&gt;%</code> en vez de <code>|&gt;</code>, ve a <strong>Tools → Global Options → Code</strong> y activa <em>“Use native pipe operator”</em>.</p>
+<p><code>Ctrl + Shift + M</code> inserta el pipe <code>|&gt;</code> automáticamente en RStudio. Si les aparece <code>%&gt;%</code> en vez de <code>|&gt;</code>, vaya a <strong>Tools → Global Options → Code</strong> y activen la opción <em>“Use native pipe operator”</em>.</p>
 </div>
 </div>
 </div>
@@ -767,8 +764,8 @@
 </div>
 </div>
 </div>
-</section><section id="readr-importar-csv" class="slide level2 smaller"><h2>
-<code>readr</code>: importar CSV</h2>
+</section><section id="readr-importar-archivos-csv" class="slide level2 smaller"><h2>
+<code>readr</code>: Importar archivos CSV</h2>
 <ul>
 <li class="fragment">csv separados por <strong>coma (,)</strong>: <code>read_csv()</code>
 </li>
@@ -1146,19 +1143,11 @@
 </div></div>
 </div>
 <div class="fragment">
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Tip</strong></p>
-</div>
-<div class="callout-content">
-<p>Para este curso no es obligatorio, pero es una buena práctica guardar sus bases procesadas en Parquet una vez limpias: la próxima vez que las carguen será notablemente más rápido.</p>
-</div>
-</div>
-</div>
+<!-- ::: callout-tip -->
+<!-- Para este curso no es obligatorio, pero es una buena práctica guardar -->
+<!-- sus bases procesadas en Parquet una vez limpias: la próxima vez que las -->
+<!-- carguen será notablemente más rápido. -->
+<!-- ::: -->
 </div>
 </section><section id="limpieza-inicial-de-nombres-janitorclean_names" class="slide level2 smaller"><h2>Limpieza inicial de nombres: <code>janitor::clean_names()</code>
 </h2>
@@ -1181,7 +1170,7 @@
 </div>
 </div>
 </div>
-</section><section id="limpieza-inicial-de-nombres-janitorclean_names-1" class="slide level2 medium"><h2>💻 Limpieza inicial de nombres: <code>janitor::clean_names()</code>
+</section><section id="limpieza-inicial-de-nombres-janitorclean_names-1" class="slide level2"><h2>💻 Limpieza inicial de nombres: <code>janitor::clean_names()</code>
 </h2>
 <div class="cell">
 <div>
@@ -1219,13 +1208,13 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZGYgPC0gdGliYmxlKGBOb21i
 <li><span data-explanation="`read_csv()` es para archivos de texto plano (`.csv`), no para Excel. Usarla con un `.xlsx` producirá un error."><code>read_csv("archivo.xlsx")</code></span></li>
 </ul>
 </div>
-</section><section id="ejercicio-guiado-importar-y-limpiar" class="slide level2 smaller"><h2>Ejercicio Guiado: importar y limpiar</h2>
+</section><section id="ejercicio-guiado-importar-diversos-tipos-de-archivos" class="slide level2"><h2>Ejercicio Guiado: Importar diversos tipos de archivos</h2>
 <p>Ver Guía de Ejercicios N°1, Parte I.</p>
 </section><section id="guardar-o-exportar" class="slide level2 justify"><h2>Guardar o Exportar</h2>
 <ul>
 <li class="fragment">La familia de funciones es <code>write_</code>
 </li>
-<li class="fragment">Siempre deben especificar la extensión del archivo luego del <em>path</em>. Por ejemplo:
+<li class="fragment">Siempre deben <strong>especificar la extensión del archivo</strong> luego del <em>path</em>. Por ejemplo:
 <ul>
 <li class="fragment">
 <code>mtcars.csv</code> si queremos guardarlo como un archivo <strong>csv</strong>
@@ -1304,11 +1293,11 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZGYgPC0gdGliYmxlKGBOb21i
 </div>
 </div>
 </div>
-</section></section><section><section id="cruce-de-datos-left_join" class="title-slide slide level1 center" data-background-color="#000080"><h1><span style="color:white">Cruce de Datos: left_join</span></h1>
+</section></section><section><section id="cruce-de-datos-left_join" class="title-slide slide level1 center" data-background-color="#000080"><h1><span style="color:white">Cruce de Datos: left_join()</span></h1>
 
-</section><section id="por-qué-cruzar-bases-de-datos" class="slide level2 smaller justify"><h2>¿Por qué cruzar bases de datos?</h2>
+</section><section id="por-qué-cruzar-bases-de-datos" class="slide level2 medium"><h2>¿Por qué cruzar bases de datos?</h2>
 <ul>
-<li class="fragment"><p>Al trabajar con datos rara vez tenemos toda la información en una sola tabla: lo habitual es combinar <strong>varias fuentes</strong> vinculadas entre sí.</p></li>
+<li class="fragment"><p>Al trabajar con datos rara vez tenemos toda la información en una sola tabla. Por el contrario, uno de los casos comunes de trabajo con datos públicos requiere combinar <strong>varias fuentes</strong> vinculadas entre sí.</p></li>
 <li class="fragment">
 <p>Existen dos grandes familias de uniones:</p>
 <ul>
@@ -1355,8 +1344,8 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZGYgPC0gdGliYmxlKGBOb21i
 <code>left_join()</code> gráficamente</h2>
 <!-- Animación de Garrick Aden-Buie (proyecto tidyexplain), vía blog de Andrew Heiss. -->
 <!-- Recomendado: descargarla a img/left_join.gif para no depender de internet al compilar. -->
-
-<img data-src="https://www.andrewheiss.com/blog/2024/04/04/group_by-summarize-ungroup-animations/img/left-join.gif" style="width:70.0%" class="r-stretch quarto-figure-center"><p class="caption">Left Join</p></section><section id="aplicación-left_join" class="slide level2 smaller"><h2>Aplicación: <code>left_join()</code>
+<p><img data-src="https://www.andrewheiss.com/blog/2024/04/04/group_by-summarize-ungroup-animations/img/left-join.gif" class="quarto-figure quarto-figure-center" style="width:70.0%" alt="Left Join"><em>Fuente: Animación de Garrick Aden-Buie (proyecto tidyexplain), disponible <a href="https://www.garrickadenbuie.com/project/tidyexplain/#mutating-joins">aquí</a>.</em></p>
+</section><section id="aplicación-left_join" class="slide level2 smaller"><h2>Aplicación: <code>left_join()</code>
 </h2>
 <p>Tenemos dos tablas de comunas vinculadas por su código (<code>cod_comuna</code>):</p>
 <div class="cell">
