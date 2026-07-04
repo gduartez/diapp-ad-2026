@@ -1,0 +1,244 @@
+---
+title: "Ejercicio Grupal N°6 - Análisis de Datos y Estadística Computacional"
+subtitle: "Regresión Lineal Simple con `lm()`"
+author: "Prof. Gabriel Duarte Zúñiga"
+institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
+date: "2026-07-04"
+lang: es
+format:
+  html:
+    toc: true
+    toc-title: "Contenidos"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+    theme: [flatly, styles_ex.scss]
+    highlight-style: github
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    df-print: paged
+    fig-align: center
+    fig-width: 8
+    fig-height: 5
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  eval: true
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(broom)
+library(moderndive)
+library(wooldridge)
+```
+
+::: callout-important
+## Antes de comenzar
+
+```{r}
+#| eval: false
+install.packages("tidyverse")
+install.packages("broom")
+install.packages("moderndive")
+install.packages("wooldridge")
+```
+
+```{r}
+library(tidyverse)
+library(broom)
+library(moderndive)
+library(wooldridge)
+
+data(hprice1)
+```
+:::
+
+------------------------------------------------------------------------
+
+# Ejercicio Grupal Clase N° 6
+
+El dataset **`hprice1`** (Wooldridge) contiene información de **88 viviendas**
+vendidas en una zona de EE.UU. Nos interesa una pregunta simple: **¿cuánto
+se asocia el tamaño de una casa con su precio de venta?**
+
+Trabajaremos con estas variables:
+
+| Variable  | Descripción                                  |
+|-----------|----------------------------------------------|
+| `price`   | Precio de venta (en **miles** de USD)        |
+| `sqrft`   | Superficie construida (en **pies cuadrados**)|
+| `bdrms`   | Número de dormitorios                        |
+| `lotsize` | Tamaño del terreno (pies cuadrados)          |
+| `lprice`  | Logaritmo natural de `price`                 |
+| `lsqrft`  | Logaritmo natural de `sqrft`                 |
+
+> ⏱️ Objetivo: resolver la guía en **30 minutos**. Intente primero cada
+> pregunta y luego despliegue la **Pauta** para revisar.
+
+------------------------------------------------------------------------
+
+### Pregunta 1: Cargar y preparar los datos {#sec-p1}
+
+Cargue el dataset `hprice1` y asígnelo a un objeto llamado `casas`. Luego
+seleccione solo las variables `price`, `sqrft`, `bdrms`, `lotsize`, `lprice`
+y `lsqrft`, sobrescribiendo el objeto `casas`. Use `glimpse()` para inspeccionar
+el resultado. ¿De qué tipo son las variables?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+casas <- hprice1 |>
+  select(price, sqrft, bdrms, lotsize, lprice, lsqrft)
+
+glimpse(casas)
+```
+
+Todas las variables son **numéricas** (`double`). `price` y `sqrft` están en
+sus unidades originales (miles de USD y pies cuadrados), mientras que `lprice`
+y `lsqrft` son las mismas variables transformadas con logaritmo natural.
+:::
+
+### Pregunta 2: Explorar la relación {#sec-p2}
+
+Obtenga estadísticas descriptivas de `casas` con `summary()`. Luego construya
+un gráfico de dispersión de `price` (eje Y) contra `sqrft` (eje X) y agregue la
+recta de regresión con `geom_smooth(method = "lm", se = FALSE)`. ¿Qué tipo de
+relación observa?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+summary(casas)
+
+ggplot(casas, aes(x = sqrft, y = price)) +
+  geom_point(alpha = 0.6, color = "steelblue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red3") +
+  labs(x = "Superficie (pies cuadrados)",
+       y = "Precio (miles de USD)") +
+  theme_classic(base_size = 14)
+```
+
+Se observa una relación **positiva y aproximadamente lineal**: las casas más
+grandes tienden a venderse a un precio mayor. Hay dispersión, pero la tendencia
+es clara. En las siguientes preguntas la vamos a **cuantificar**.
+:::
+
+### Pregunta 3: Estimar la regresión simple {#sec-p3}
+
+Estime un modelo de regresión lineal simple de `price` en función de `sqrft` y
+guárdelo en el objeto `reg1`. Muestre los resultados con `summary()`.
+**Interprete** el coeficiente de `sqrft` ($\hat{\beta}_1$) y el intercepto
+($\hat{\beta}_0$).
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+reg1 <- lm(price ~ sqrft, data = casas)
+summary(reg1)
+```
+
+Como no hay transformaciones, estamos ante una interpretación **nivel-nivel**:
+
+- $\hat{\beta}_1 \approx 0{,}140$: por cada **pie cuadrado adicional**, el precio
+  aumenta en promedio **0,140 miles de USD**, es decir, unos **\$140**. (Equivale
+  a ~\$140.000 por cada 1.000 pies cuadrados adicionales.)
+- $\hat{\beta}_0 \approx 11{,}20$: es el precio estimado cuando `sqrft = 0`. No
+  tiene una interpretación práctica útil (ninguna casa mide 0 pies cuadrados);
+  solo ancla la recta.
+:::
+
+### Pregunta 4: Bondad de ajuste ($R^2$) {#sec-p4}
+
+Extraiga el $R^2$ del modelo `reg1` usando `glance()`. Luego calcúlelo
+**manualmente** como el cociente entre la varianza de los valores ajustados y
+la varianza de `price`. ¿Coinciden? ¿Cómo lo interpreta?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+glance(reg1) |> select(r.squared, sigma, nobs)
+
+# Cálculo manual: var(y_gorro) / var(y)
+var(fitted(reg1)) / var(casas$price)
+```
+
+Ambos métodos entregan el mismo valor: $R^2 \approx 0{,}621$. Esto significa
+que la superficie construida (`sqrft`) explica **cerca del 62%** de la
+variabilidad en los precios de venta. El resto se debe a otros factores no
+incluidos en el modelo (ubicación, terreno, antigüedad, etc.).
+:::
+
+### Pregunta 5: Inferencia sobre el coeficiente {#sec-p5}
+
+Use `get_regression_table()` (paquete `moderndive`) para obtener la tabla de
+resultados con intervalos de confianza. Plantee $H_0: \beta_1 = 0$ y
+$H_A: \beta_1 \neq 0$. A partir del **p-value** y del **intervalo de confianza
+al 95%**, ¿el efecto de `sqrft` es estadísticamente significativo al 5%?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+get_regression_table(reg1)
+```
+
+- El **p-value** de `sqrft` es prácticamente **0** (mucho menor que 0,05).
+- El **IC al 95%** para $\hat{\beta}_1$ es aproximadamente **[0,117 ; 0,164]**,
+  que **no contiene el cero**.
+
+Ambos criterios llevan a la misma conclusión: **rechazamos** $H_0$. Existe
+evidencia estadística de que el tamaño de la casa se asocia con su precio.
+:::
+
+### Pregunta 6: Cambiar la forma funcional (log-log) {#sec-p6}
+
+Estime ahora un modelo con `lprice` como variable dependiente y `lsqrft` como
+variable explicativa; guárdelo en `reg2`. Muestre los resultados con `tidy()`
+(paquete `broom`). Dado que ambas variables están en logaritmo, ¿cómo cambia la
+**interpretación** de $\hat{\beta}_1$?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+reg2 <- lm(lprice ~ lsqrft, data = casas)
+tidy(reg2)
+```
+
+Con la variable dependiente **y** la explicativa en logaritmo, estamos en un
+modelo **log-log**, donde $\hat{\beta}_1$ es una **elasticidad**:
+
+$\hat{\beta}_1 \approx 0{,}87$ significa que un **aumento de 1% en la superficie**
+se asocia, en promedio, con un aumento de **≈ 0,87% en el precio**. A diferencia
+del modelo nivel-nivel de la Pregunta 3, aquí el efecto se lee en **términos
+porcentuales**.
+:::
+
+------------------------------------------------------------------------
+
+# Resumen
+
+| Paso | Función | ¿Qué hace? |
+|-----|-----|------|
+| 1 | `lm(y ~ x, data)` | Estima la regresión por MCO |
+| 2 | `summary()` | Resumen completo (coeficientes, $R^2$, significancia) |
+| 3 | `broom::tidy()` | Coeficientes en formato tibble ordenado |
+| 4 | `broom::glance()` | Métricas del modelo ($R^2$, sigma, n) |
+| 5 | `moderndive::get_regression_table()` | Coeficientes + IC en una tabla |
+| — | `geom_smooth(method = "lm")` | Dibuja la recta ajustada en `ggplot2` |
+
+::: callout-note
+## Formas funcionales
+Recuerde la interpretación de $\hat{\beta}_1$ según el modelo:
+**nivel-nivel** → cambio en unidades; **log-nivel** → cambio en %;
+**log-log** → elasticidad (% sobre %).
+:::

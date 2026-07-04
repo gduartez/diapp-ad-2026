@@ -36,7 +36,7 @@ Recuerde que el código va dentro de un *code chunk*, el cual se puede insertar 
 
 ## Evaluación
 
-Esta tarea consta de **18 preguntas** en total (16 en la Parte I y 2 en la Parte II) y cada pregunta vale **1 punto**. La nota final se calcula con la siguiente fórmula:
+Esta tarea consta de **18 preguntas** en total (15 en la Parte I y 3 en la Parte II) y cada pregunta vale **1 punto**. La nota final se calcula con la siguiente fórmula:
 
 $$Nota = \frac{\text{Puntaje obtenido}}{18}\times 6 +1$$
 
@@ -48,7 +48,7 @@ Cuando se solicite, en sus respuestas no solo deberá entregar el código que pr
 
 ## Fecha de entrega
 
-**Hasta las 23:59 del sábado 28 de junio de 2026** a través de [WebCursos](https://webcursos.uai.cl/) en el buzón correspondiente.
+**Hasta las 23:59 del domingo 28 de junio de 2026** a través de [WebCursos](https://webcursos.uai.cl/) en el buzón correspondiente.
 
 ## Sobre la integridad académica y el uso de IA
 
@@ -177,7 +177,7 @@ En las preguntas 7, 8 y 9 construiremos **un mismo gráfico** de forma progresiv
 
 En las siguientes 4 preguntas, intentaremos replicar el gráfico 4 del [informe de víctimas de homicidio consumado 2025](https://prevenciondehomicidios.cl/wp-content/uploads/2026/03/Informe_de_victimas_de_homicidios_consumados_2025_VF.pdf) (página 16). Para ello necesitamos generar un dataframe que tenga 12 filas (1 fila por mes) y al menos las siguientes 2 variables:
 
-i) Víctimas de homicidios en el año 2025, la cual se usará para generar las columnas del gráfico; y 
+i)  Víctimas de homicidios en el año 2025, la cual se usará para generar las columnas del gráfico; y
 ii) El promedio histórico por mes calculado a partir de las víctimas de homicidios mensual en los años desde 2018 a 2024. Esto permitirá generar la línea de promedio histórico mensual que se observa en el gráfico 4 del informe. Puede utilizar los siguientes colores para intentar acercarse a la estética del gráfico:
 
 ```{r}
@@ -228,11 +228,14 @@ En las siguientes 2 preguntas intentaremos replicar el gráfico 3.2 del [informe
 
 ```
 
-## 1.7 Evolución de las condenas penales de las víctimas
+
+# Parte II: Análisis de homicidios y otras variables {style="text-align: justify"}
+
+## 2.1 Evolución de las condenas penales de las víctimas
 
 En esta sección vamos a intentar obtener un resultado **similar** al gráfico 8 del [informe de víctimas de homicidio consumado 2025](https://prevenciondehomicidios.cl/wp-content/uploads/2026/03/Informe_de_victimas_de_homicidios_consumados_2025_VF.pdf) (página 20).
 
-16. A partir del objeto `homicidios`, agrupe por `anio` y `condenas` y cuente el número de víctimas de homicidio consumado. Luego, calcule el **porcentaje** de víctimas con y sin condena por año (divida cada conteo por el total del año correspondiente). Construya un gráfico de **líneas** que muestre la evolución de estos porcentajes a lo largo de los años, coloreando por tipo de condena. Agregue etiquetas con el porcentaje formateado (`label_percent()`) sobre cada punto. ¿Qué tendencia se observa en relación a las condenas? 
+16. A partir del objeto `homicidios`, agrupe por `anio` y `condenas` y cuente el número de víctimas de homicidio consumado. Luego, calcule el **porcentaje** de víctimas con y sin condena por año (divida cada conteo por el total del año correspondiente). Construya un gráfico de **líneas** que muestre la evolución de estos porcentajes a lo largo de los años, coloreando por tipo de condena. Agregue etiquetas con el porcentaje formateado (`label_percent()`) sobre cada punto. ¿Qué tendencia se observa en relación a las condenas?
 
 ```{r}
 
@@ -240,7 +243,7 @@ En esta sección vamos a intentar obtener un resultado **similar** al gráfico 8
 
 \newpage
 
-# Parte II: Análisis territorial de homicidios y pobreza {style="text-align: justify"}
+## 2.2 Homicidios y pobreza
 
 En esta segunda parte utilizaremos el dataset preprocesado `homicidios_wide_v2.xlsx` que contiene datos a nivel comunal de homicidios (2018–2025), tasa de pobreza y población censada, con el objetivo de explorar la relación entre pobreza y violencia letal a nivel comunal en Chile.
 

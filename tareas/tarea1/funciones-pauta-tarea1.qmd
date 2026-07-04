@@ -1,0 +1,138 @@
+---
+title: "Funciones utilizadas en la Pauta — Tarea 1"
+subtitle: "Estadística para Políticas Públicas · DIAPP 2026"
+format:
+  html:
+    theme: flatly
+    toc: true
+    toc-title: "Contenido"
+    toc-depth: 2
+    code-fold: false
+    self-contained: true
+lang: es
+---
+
+## Resumen de funciones
+
+La siguiente tabla cubre todas las funciones utilizadas en el script de pauta de la Tarea 1, organizadas por temática. Para cada función se indica el paquete de origen, una descripción breve y un ejemplo de uso con los argumentos principales.
+
+---
+
+## 1. Carga de paquetes
+
+| Función | Paquete | Descripción | Ejemplo |
+|---|---|---|---|
+| `library()` | base | Carga un paquete instalado en la sesión. | `library(tidyverse)` |
+| `p_load()` | pacman | Carga (e instala si es necesario) uno o más paquetes en una sola llamada. | `p_load(tidyverse, readxl, janitor)` |
+
+---
+
+## 2. Importación de datos
+
+| Función | Paquete | Descripción | Ejemplo |
+|---|---|---|---|
+| `read_excel()` | readxl | Lee un archivo `.xlsx` o `.xls`. Permite especificar hoja (`sheet`) y filas a omitir (`skip`). | `read_excel("datos.xlsx", sheet = 3, skip = 6)` |
+| `read_rds()` | readr / base | Lee un archivo `.rds` (objeto R serializado), útil para objetos espaciales (`sf`) u otros. | `read_rds("data/homicidios_sf.rds")` |
+
+---
+
+## 3. Exploración y limpieza
+
+| Función | Paquete | Descripción | Ejemplo |
+|---|---|---|---|
+| `glimpse()` | dplyr | Muestra una vista compacta del data frame: dimensiones, tipos de columna y primeros valores. | `glimpse(homicidios)` |
+| `clean_names()` | janitor | Estandariza los nombres de columna a `snake_case` y elimina caracteres especiales. | `clean_names(df)` |
+| `rename()` | dplyr | Renombra columnas. Sintaxis: `nuevo_nombre = nombre_actual`. | `rename(df, region = nom_reg, anio = id_ano)` |
+| `slice()` | dplyr | Selecciona filas por posición. | `slice(df, 2)` — extrae la fila 2 |
+| `select()` | dplyr | Selecciona o descarta columnas. El signo `-` descarta. | `select(df, -1)` — elimina la primera columna |
+
+---
+
+## 4. Transformación de datos
+
+| Función | Paquete | Descripción | Ejemplo |
+|---|---|---|---|
+| `mutate()` | dplyr | Crea o modifica columnas. | `mutate(df, tasa = round(n / pob * 100000, 1))` |
+| `filter()` | dplyr | Filtra filas según una condición lógica. | `filter(df, anio == 2025)` |
+| `group_by()` | dplyr | Agrupa el data frame para operaciones posteriores (como `summarise()`). | `group_by(df, anio, mes)` |
+| `summarise()` | dplyr | Reduce grupos a un resumen (suma, promedio, conteo, etc.). | `summarise(df, n_hom = n(), promedio = mean(x))` |
+| `ungroup()` | dplyr | Elimina el agrupamiento de un data frame. | `ungroup(df)` |
+| `count()` | dplyr | Cuenta el número de observaciones por grupo. Equivale a `group_by() + summarise(n())`. | `count(df, anio, name = "n_homicidios")` |
+| `left_join()` | dplyr | Une dos data frames conservando todas las filas del primero. | `left_join(df1, df2, join_by(anio))` |
+| `pivot_longer()` | tidyr | Convierte columnas en filas (formato ancho → largo). | `pivot_longer(df, !1, names_to = "anio", values_to = "pob")` |
+| `round()` | base | Redondea un número a un número dado de decimales. | `round(3.14159, 1)` → `3.1` |
+| `as.numeric()` | base | Convierte un vector a tipo numérico. | `as.numeric("2024")` |
+| `paste()` | base | Concatena cadenas de texto con un separador (por defecto, espacio). | `paste("2025", mes2, "01")` |
+| `seq()` | base | Genera una secuencia de números. | `seq(2018, 2025, 1)` |
+
+---
+
+## 5. Fechas
+
+| Función | Paquete | Descripción | Ejemplo |
+|---|---|---|---|
+| `ymd()` | lubridate | Convierte cadenas en formato AAAA-MM-DD a tipo `Date`. | `ymd(paste("2025", mes2, "01"))` |
+
+---
+
+## 6. Factores
+
+| Función | Paquete | Descripción | Ejemplo |
+|---|---|---|---|
+| `factor()` | base | Convierte un vector en factor, estableciendo niveles discretos. | `factor(df$hora)` |
+| `fct_relevel()` | forcats | Reordena los niveles de un factor de forma manual o con una función auxiliar. | `fct_relevel(hora, rev)` — invierte el orden |
+
+---
+
+## 7. Visualización (ggplot2)
+
+### Inicialización y capas principales
+
+| Función | Paquete | Descripción | Ejemplo |
+|---|---|---|---|
+| `ggplot()` | ggplot2 | Inicializa un gráfico. Recibe el data frame y los `aes()` globales. | `ggplot(df, aes(x = anio, y = tasa))` |
+| `aes()` | ggplot2 | Define los mapeos estéticos (ejes, color, relleno, etiqueta, etc.). | `aes(x = mes, y = n, fill = zona)` |
+| `geom_line()` | ggplot2 | Añade una capa de líneas. | `geom_line(color = "red3", linewidth = 2)` |
+| `geom_point()` | ggplot2 | Añade puntos. | `geom_point(size = 2.5)` |
+| `geom_col()` | ggplot2 | Barras cuya altura representa el valor de `y` (a diferencia de `geom_bar()`). | `geom_col(aes(y = n_homicidios), fill = azul)` |
+| `geom_text()` | ggplot2 | Añade etiquetas de texto sobre el gráfico. | `geom_text(aes(label = tasa), vjust = -1, fontface = "bold")` |
+| `geom_smooth()` | ggplot2 | Añade una línea de tendencia o suavizado. | `geom_smooth(method = "lm", se = FALSE, color = "darkred")` |
+| `geom_tile()` | ggplot2 | Dibuja rectángulos (mapa de calor). | `geom_tile(color = "white", linewidth = 1)` |
+| `geom_sf()` | ggplot2 / sf | Renderiza geometrías espaciales (`sf`). | `geom_sf(aes(fill = tasa), col = "black")` |
+| `geom_sf_label()` | ggplot2 / sf | Añade etiquetas sobre geometrías espaciales. | `geom_sf_label(aes(label = paste(comuna, round(tasa, 1))))` |
+
+### Escalas
+
+| Función | Paquete | Descripción | Ejemplo |
+|---|---|---|---|
+| `scale_x_continuous()` | ggplot2 | Controla el eje X continuo: breaks, límites, etiquetas. | `scale_x_continuous(breaks = seq(2018, 2025, 1))` |
+| `scale_y_continuous()` | ggplot2 | Controla el eje Y continuo: límites, breaks, formato de etiquetas. | `scale_y_continuous(limits = c(0, 7))` |
+| `scale_x_date()` | ggplot2 | Escala de fechas en eje X. Permite definir intervalos y formato. | `scale_x_date(date_breaks = "1 month", date_labels = "%b")` |
+| `scale_fill_distiller()` | ggplot2 | Relleno continuo usando paletas de ColorBrewer. | `scale_fill_distiller(palette = "Spectral")` |
+| `scale_fill_fermenter()` | ggplot2 | Relleno continuo dividido en intervalos discretos (ColorBrewer). | `scale_fill_fermenter(palette = "Oranges", direction = 1)` |
+| `scale_colour_viridis_d()` | ggplot2 | Color discreto usando la paleta Viridis (apta para daltónicos). | `scale_colour_viridis_d()` |
+| `scale_color_brewer()` | ggplot2 | Color discreto usando paletas de ColorBrewer. | `scale_color_brewer(palette = "Set1")` |
+| `label_percent()` | scales | Formatea valores como porcentaje en etiquetas de ejes o leyendas. | `scale_y_continuous(labels = label_percent())` |
+| `label_percent()` / `percent()` | scales | `percent()` convierte un número a cadena con formato %; `label_percent()` es su versión para escalas. | `percent(pct, accuracy = 1)` |
+
+### Facetas, temas y etiquetas
+
+| Función | Paquete | Descripción | Ejemplo |
+|---|---|---|---|
+| `facet_wrap()` | ggplot2 | Divide el gráfico en paneles por una variable. | `facet_wrap(vars(region), scales = "free")` |
+| `labs()` | ggplot2 | Añade o modifica títulos, etiquetas de ejes, leyenda y pie de página. | `labs(title = "Título", x = "Año", y = "Tasa", caption = "Fuente: ...")` |
+| `theme_classic()` | ggplot2 | Aplica un tema limpio con ejes y sin cuadrícula. | `theme_classic()` |
+| `theme_minimal()` | ggplot2 | Tema minimalista, sin fondo gris ni bordes. | `theme_minimal(base_size = 18)` |
+| `theme_bw()` | ggplot2 | Tema con fondo blanco y cuadrícula gris. | `theme_bw(base_size = 12)` |
+
+---
+
+## 8. Datos espaciales
+
+| Función | Paquete | Descripción | Ejemplo |
+|---|---|---|---|
+| `library(sf)` | sf | Carga el paquete para manejo de datos geoespaciales en R. | `library(sf)` |
+
+---
+
+> **Nota:** El operador `|>` (pipe nativo de R ≥ 4.1) encadena funciones pasando el resultado de la izquierda como primer argumento de la función siguiente. Es equivalente al `%>%` de `magrittr`.

@@ -1,0 +1,469 @@
+---
+title: "Tarea 1 (Pauta)"
+author: 'Gabriel Duarte'
+subtitle: 'Módulo 2 - Análisis de Datos y Estadística Computacional DIAPP-2026 UAI'
+date: today
+date-format: "D MMM YYYY"
+lang: es
+format:
+  html:
+    embed-resources: true
+    toc: true
+    toc-title: "Contenidos"
+    toc-depth: 2
+    theme: flatly
+editor: visual
+---
+
+# Instrucciones {style="text-align: justify"}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, warning = FALSE, message = FALSE)
+```
+
+La tarea debe responderse usando como base este archivo `.qmd` (Quarto document) o `.Rmd` (R Markdown) que se ha compartido en [WebCursos](https://webcursos.uai.cl/).
+
+Al terminar deberá hacer clic en `Render` (o presionar `Ctrl + Shift + K`) o `knit` en R Markdown para generar un archivo `HTML`.
+
+**Deberá enviar dos archivos:**
+
+1.  El archivo `.qmd` o `.Rmd` donde escribió su código y respuestas, renombrado con su apellido y nombre: `Tarea1M2_ApellidoNombre.qmd`.
+2.  El archivo `HTML` generado a partir de este: `Tarea1M2_ApellidoNombre.html`.
+
+**Se descontarán puntos si no se siguen estas instrucciones de nomenclatura y entrega.** Asegúrese de que el archivo `HTML` efectivamente muestre los resultados que usted vio en su computador antes de enviarlo.
+
+Recuerde que el código va dentro de un *code chunk*, el cual se puede insertar con el atajo `Ctrl + Alt + I` (Mac: `Cmd + Option + I`) o con el botón *Insert* en la esquina superior derecha del editor.
+
+## Evaluación
+
+Esta tarea consta de **18 preguntas** en total (15 en la Parte I y 3 en la Parte II) y cada pregunta vale **1 punto**. La nota final se calcula con la siguiente fórmula:
+
+$$Nota = \frac{\text{Puntaje obtenido}}{18}\times 6 +1$$
+
+Adicionalmente, hay una pregunta de **BONUS** que es **OPCIONAL** y cuyo puntaje se sumará al puntaje final en caso de responderla correctamente.
+
+## Sobre las respuestas
+
+Cuando se solicite, en sus respuestas no solo deberá entregar el código que produce la respuesta a cada pregunta, sino que también será necesario que **redacte brevemente qué es lo que obtiene**. Además, su respuesta debe incorporar una **justificación o análisis** cuando así se solicite.
+
+## Fecha de entrega
+
+**Hasta las 23:59 del domingo 28 de junio de 2026** a través de [WebCursos](https://webcursos.uai.cl/) en el buzón correspondiente.
+
+## Sobre la integridad académica y el uso de IA
+
+Esta evaluación es **INDIVIDUAL**. Cualquier evidencia de copia o plagio será penalizada e informada a la coordinación académica del diplomado.
+
+El uso de Inteligencia Artificial (IA) está permitido **solo como asistencia** en la generación del código o en su explicación. La IA es una herramienta de **apoyo a la producción y entendimiento de código**, no de reemplazo de sus habilidades. Los códigos generados por IA con prompts genéricos pueden contener errores o ser ineficientes para los objetivos de la tarea.
+
+**Debe usar solo las funciones revisadas en clases** (presentaciones y guías de ejercicios) a menos que se señale el uso explícito de otras funciones. Cualquier otra función o librería utilizada deberá ser **justificada** por el alumno, indicando el motivo de uso. Se penalizará con reducción parcial o total del puntaje de cada pregunta que no cumpla con esta condición.
+
+## Paquetes necesarios
+
+Antes de comenzar, cargue los paquetes que serán necesarios para el desarrollo de la tarea. Recuerde que si no tiene algún paquete instalado, debe hacerlo con `install.packages("nombre_paquete")` antes de cargarlo, o bien usar `p_load()` del paquete `pacman`.
+
+```{r}
+library(tidyverse)  # Manipulación y visualización de datos
+library(readxl)     # Importar archivos Excel
+library(janitor)    # Limpieza de nombres de columnas
+library(scales)     # Formatear etiquetas en gráficos
+library(sf)         # Datos espaciales (solo para el bonus)
+
+rm(list = ls())     # Limpiar el environment
+```
+
+## Archivos de datos
+
+Coloque los siguientes archivos en una carpeta `data/` dentro de su proyecto:
+
+- `Base_de_Datos_VHC_2018_2025.xlsx` — Víctimas de homicidio consumado (2018–2025).
+- `estimaciones-y-proyecciones-de-población-1992-2070_base-2024_tabulados.xlsx` — Proyecciones de población nacional (INE, base Censo 2024).
+- `homicidios_wide_v2.xlsx` — Datos preprocesados de homicidios a nivel comunal con pobreza y población (para la Parte II).
+- `homicidios_sf.rds` — Datos espaciales de comunas con tasas de homicidio (para el bonus).
+
+\newpage
+
+# Parte I: Análisis temporal de homicidios en Chile {style="text-align: justify"}
+
+En esta primera parte trabajaremos con los datos del [Centro para la Prevención de Homicidios y Delitos Violentos](https://prevenciondehomicidios.cl/) y las proyecciones de población del [INE](https://www.ine.gob.cl/estadisticas-por-tema/demografia-y-poblacion/estimaciones-y-proyecciones-de-poblacion) para construir indicadores y visualizaciones que muestren cómo ha evolucionado la situación de los homicidios en Chile.
+
+## 1.1 Importar y preparar la base de homicidios
+
+1.  Cargue el archivo `Base_de_Datos_VHC_2018_2025.xlsx` y asígnelo a un objeto llamado `homicidios`. Aplique `clean_names()` para estandarizar los nombres de las columnas. Usando `glimpse()`, indique: ¿cuántas variables y cuántas observaciones tiene el *dataframe*? ¿Qué representa cada fila?
+
+```{r}
+homicidios <- read_excel('data/Base_de_Datos_VHC_2018_2025.xlsx') |> 
+  clean_names() 
+
+glimpse(homicidios)
+```
+
+**Respuesta: El dataframe tiene 8669 filas y 15 columnas o variables. Cada fila representa una víctima de homicidio consumado registrada dentro de Chile entre 2018 y 2025.**
+
+2.  Renombre las siguientes variables del objeto `homicidios` para hacerlas más legibles, sobrescribiendo el objeto:
+
+    | Nombre original | Nuevo nombre     |
+    |-----------------|------------------|
+    | `nacion_recod`  | `nacionalidad`   |
+    | `lug_agr_recod` | `lugar_agresion` |
+    | `comun_agr`     | `comuna`         |
+    | `nom_reg`       | `region`         |
+    | `id_ano`        | `anio`           |
+    | `hora_recod`    | `hora`           |
+
+```{r}
+homicidios <- homicidios |> 
+  rename(
+    nacionalidad = nacion_recod,
+    lugar_agresion = lug_agr_recod,
+    comuna = comun_agr, 
+    region = nom_reg,
+    anio = id_ano,
+    hora = hora_recod
+  )
+```
+
+## 1.2 Proyecciones de población nacional
+
+3.  Cargue la **tercera hoja** del archivo `estimaciones-y-proyecciones-de-población-1992-2070_base-2024_tabulados.xlsx`. Inspeccione el archivo en Excel para determinar cuántas filas de encabezado debe saltar con el argumento `skip`. Luego, conserve solamente la fila que contiene la **población total de ambos sexos** usando `slice()`. Asigne el resultado al objeto `proyeccion_2024`. *Hint: la fila de interés es la que dice "Total" en la primera columna, después de saltar los encabezados.*
+
+```{r}
+proyeccion_2024 <- read_excel(
+  'data/estimaciones-y-proyecciones-de-población-1992-2070_base-2024_tabulados.xlsx',
+  sheet = 3,
+  skip = 6
+) |> 
+  slice(2)
+```
+
+4.  Transforme `proyeccion_2024` a formato *long* creando el objeto `proyeccion_2024_long`. Las columnas de años deben pivotearse a una variable llamada `anio` y los valores a una variable llamada `poblacion`. Elimine la primera columna (que contiene el texto "Total") con `select(-1)` y convierta `anio` a numérico con `as.numeric()`. *Hint: use `pivot_longer(!1, ...)` para pivotear todas las columnas excepto la primera.*
+
+```{r}
+proyeccion_2024_long <- proyeccion_2024 |> 
+  pivot_longer(!1, 
+               names_to = "anio",
+               values_to = "poblacion") |> 
+  select(-1) |> 
+  mutate(anio = as.numeric(anio))
+```
+
+## 1.3 Construir indicadores
+
+5.  A partir del objeto `homicidios`, cuente el número de víctimas de homicidios por año y guárdelo en `homicidios_anual`. La variable de conteo debe llamarse `n_homicidios`. *Hint: revise el argumento `name` de la función `count()`.*
+
+```{r}
+homicidios_anual <- homicidios |> 
+  count(anio, name = "n_homicidios")
+```
+
+6.  Cruce `homicidios_anual` con `proyeccion_2024_long` usando `left_join()` por la variable `anio`. Luego, cree una nueva variable llamada `tasa` que represente la **tasa de homicidios por cada 100.000 habitantes**, redondeada a 1 decimal. Sobrescriba el objeto `homicidios_anual`. La fórmula de la tasa de homicidios es la siguiente: $$Tasa = \frac{N°\text{ de víctimas de homicidios}}{\text{Población proyectada}} \times 100.000$$
+
+```{r}
+homicidios_anual <- homicidios_anual |> 
+  left_join(proyeccion_2024_long, join_by(anio)) |> 
+  mutate(tasa = round(n_homicidios/poblacion *100000,1))
+```
+
+## 1.4 Gráfico de evolución: serie de tiempo
+
+En las preguntas 7, 8 y 9 construiremos **un mismo gráfico** de forma progresiva, añadiendo capas y mejoras estéticas en cada paso. Esto permite aplicar el flujo iterativo de `ggplot2` que vimos en clase.
+
+7.  Usando `homicidios_anual`, construya un gráfico de **línea** que muestre la evolución de la tasa de homicidios (`tasa`) a lo largo de los años (`anio`). Use color `"red3"` y grosor `linewidth = 2`. Guarde el gráfico en el objeto `p1`.
+
+```{r}
+p1 <- ggplot(homicidios_anual, aes(x = anio, y = tasa))+
+  geom_line(color = "red3", linewidth = 2)
+
+p1
+```
+
+8.  Sobre el gráfico `p1`, añada las siguientes mejoras y guárdelo en `p1_v2`:
+
+    - Agregue puntos sobre la línea con `size = 2.5`.
+    - Configure el eje x para que muestre **todos los años** de 2018 a 2025.
+    - Configure el eje y para que parta en 0 y llegue hasta 7.
+
+```{r}
+p1_v2 <- p1 +
+  geom_point(size = 2.5)+
+  scale_x_continuous(breaks = seq(2018,2025,1))+ 
+  scale_y_continuous(limits = c(0,7))
+
+p1_v2
+```
+
+9.  Sobre `p1_v2`, añada las siguientes mejoras finales y guárdelo en `p1_v3`:
+
+    - Etiquetas numéricas sobre cada punto con `geom_text()` mostrando el valor de `tasa` (use `vjust = -1` y `fontface = "bold"`).
+    - Título: *"Tasa cada 100 mil habitantes de víctimas de homicidios consumados"*.
+    - Etiqueta del eje x: *"Año"*.
+    - Etiqueta del eje y: *"Tasa"*.
+    - Añada la siguiente fuente: *" Elaboración propia en base a datos del Centro para la Prevención de Homicidios y Delitos Violentos"*.
+    - Tema: `theme_classic()`.
+
+    ¿Qué tendencia observa en la evolución de la tasa de homicidios en Chile entre 2018 y 2025? Describa brevemente.
+
+```{r}
+p1_v3 <- p1_v2 +
+  geom_text(
+    aes(label = tasa),
+    vjust = -1,
+    fontface = "bold"
+  ) +
+  labs(title = "Tasa cada 100 mil habitantes de víctimas de homicidios consumados",
+       x = "Año",
+       y = "Tasa",
+       caption = "Fuente: Elaboración propia en base a datos del
+       Centro para la Prevención de Homicidios y Delitos Violentos") +
+  theme_classic()
+
+p1_v3
+
+```
+
+**Respuesta: La tasa de homicidios muestra una tendencia creciente entre 2018 y 2022, alcanzando su punto máximo en 2022 (6,8 por cada 100 mil habitantes). A partir de ese año se observa una disminución sostenida hasta 2025, aunque la tasa sigue siendo superior a la registrada en 2018.**
+
+## 1.5 Gráfico comparativo: mes actual vs promedio histórico
+
+En las siguientes 4 preguntas, intentaremos replicar el gráfico 4 del [informe de víctimas de homicidio consumado 2025](https://prevenciondehomicidios.cl/wp-content/uploads/2026/03/Informe_de_victimas_de_homicidios_consumados_2025_VF.pdf) (página 16). Para ello necesitamos generar un dataframe que tenga 12 filas (1 fila por mes) y al menos las siguientes 2 variables:
+
+i)  Víctimas de homicidios en el año 2025, la cual se usará para generar las columnas del gráfico; y
+ii) El promedio histórico por mes calculado a partir de las víctimas de homicidios mensual en los años desde 2018 a 2024. Esto permitirá generar la línea de promedio histórico mensual que se observa en el gráfico 4 del informe. Puede utilizar los siguientes colores para intentar acercarse a la estética del gráfico:
+
+```{r}
+azul <- "#173277"
+verde <- "#46B9AE"
+```
+
+10. A partir del objeto `homicidios`, cree dos objetos:
+
+    a.  `homicidios_mensual`: Un dataset que cuente el número de homicidios agrupando por `anio` y `mes2`.
+    b.  `homicidios_promedio`: Usando el dataset creado en a. `homicidios_mensual` filtre por todos los años **excluyendo** el 2025, agrupe por `mes2` y resuma en una nueva variable llamada `promedio_historico` el promedio de homicidios por mes entre 2018 y 2024 a partir de la variable `n_homicidios` redondeado a **0 decimales**).
+
+```{r}
+homicidios_mensual <- homicidios |> 
+  group_by(anio, mes2) |> 
+  summarise(n_homicidios = n())
+
+homicidios_promedio <- homicidios_mensual |> 
+  filter(anio != 2025) |> 
+  group_by(mes2) |> 
+  summarise(promedio_historico = round(mean(n_homicidios),0))
+```
+
+11. Cree el objeto `base_p2` conservando solo las observaciones del año 2025 del objeto `homicidios_mensual`. Crucélo con `homicidios_promedio` usando como llave `mes2`. Luego, cree una variable `mes` de tipo fecha usando `ymd(paste("año", mes2, "dia"))` donde "año" y "día" sean 2025 y 01 respectivamente, para así crear una fecha a partir de una cadena de texto. Con estos datos, construya un gráfico de **columnas** (`geom_col()`) que muestre los homicidios de 2025 por mes. Agregue etiquetas dentro de las barras usando `geom_text()` y configure el eje x con `scale_x_date(date_breaks = "1 month", date_labels = "%b")` para mostrar las abreviaciones de los meses. Guárdelo en `p2`.
+
+```{r}
+base_p2 <- homicidios_mensual |> 
+  filter(anio == 2025) |> 
+  left_join(homicidios_promedio, join_by(mes2))
+
+base_p2 <- base_p2 |> 
+  mutate(
+    mes = ymd(paste("2025", mes2, "01"))
+  )
+
+p2 <- ggplot(base_p2, aes(x = mes)) +
+  geom_col(aes(y = n_homicidios), fill = azul) +
+  geom_text(aes(y = n_homicidios/2, label = n_homicidios),
+            vjust = 0,
+            color = "white",
+            fontface = "bold") +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b")
+
+p2
+
+```
+
+12. Sobre `p2`, agregue el **promedio histórico** como una línea superpuesta con `geom_line()` y `geom_point()`, coloreando ambos en un color distinto al de las barras. Añada etiquetas del promedio con `geom_text()` y en **negrita**. Guarde en `p2_v2`. *Hint: los tres geoms nuevos deben usar `aes(y = promedio_historico)` para referirse a la variable correcta.*
+
+```{r}
+p2_v2 <- p2 + 
+  geom_line(aes(y = promedio_historico), linewidth = 1.5, color = verde) +
+  geom_point(aes(y = promedio_historico), size = 2, color = verde) +
+  geom_text(aes(y = promedio_historico, label = promedio_historico),
+            vjust = -.9,
+            color = verde,
+            fontface = "bold")
+
+p2_v2
+
+```
+
+13. Sobre `p2_v2`, ajuste la escala del eje y con `scale_y_continuous(breaks = seq(0, 125, 25), limits = c(0, 125))` y agregue un título descriptivo, etiquetas de ejes y un tema de su preferencia. Guarde en `p2_v3`. ¿En qué meses del 2025 se superó el promedio histórico?
+
+```{r}
+p2_v3 <- p2_v2 +
+  scale_y_continuous(breaks = seq(0,125,25),
+                     limits = c(0,125))+
+  labs(title = "N° de víctimas de homicidios consumados durante 2025\nsegún mes y promedio mensual 2018-2024",
+       x = "",
+       y = "Frecuencia") +
+  theme_minimal()
+
+p2_v3
+```
+**Respuesta: El promedio histórico entre 2018 y 2024 fue superado en los siguientes meses del año 2025: Febrero (103 vs 87), abril (82 vs 80), julio (98 vs 79), agosto (103 vs 84) y octubre (107 vs 96)**
+
+## 1.6 Heatmap: concentración por hora y día
+
+En las siguientes 2 preguntas intentaremos replicar el gráfico 3.2 del [informe de víctimas de homicidio consumado 2025](https://prevenciondehomicidios.cl/wp-content/uploads/2026/03/Informe_de_victimas_de_homicidios_consumados_2025_VF.pdf) (página 15)
+
+14. A partir del objeto `homicidios`, filtre solo las observaciones del año 2025. Luego, resuma el número de víctimas de homicidio consumado agrupando por `hora` y `dia`. Guárdelo en `homicidios_hora_2025` encadenando la función `ungroup()` al final. Después, sobre este mismo objeto convierta las variables `hora` y `dia` a factores. Genere un vector llamado `levels_dia` con los días ordenados de la semana: Lunes, Martes, Miércoles, Jueves, Viernes, Sábado, Domingo y utílicelo para reordenar la variable `dia` con `fct_relevel()`, de manera tal que los niveles queden en el orden correcto. Para la variable `hora`, invierta el orden con `fct_relevel(hora, rev)` para preservar el orden del gráfico del informe.
+
+```{r}
+homicidios_hora_2025 <- homicidios |> 
+  filter(anio == 2025) |> 
+  group_by(hora, dia) |> 
+  summarise(cantidad = n()) |> 
+  ungroup() |> 
+  mutate(hora = factor(hora),
+         dia = factor(dia)) 
+
+levels_dia <- c(
+  "Lunes",
+  "Martes",
+  "Miércoles",
+  "Jueves",
+  "Viernes",
+  "Sábado",
+  "Domingo"
+)
+
+homicidios_hora_2025 <- homicidios_hora_2025 |> 
+  mutate(hora = fct_relevel(hora, rev),
+         dia = fct_relevel(dia, levels_dia))
+
+```
+
+15. Con el objeto anterior, construya un **heatmap** usando `geom_tile()` con `hora` en el eje y, `dia` en el eje x, y `cantidad` como relleno (`fill`). Agregue el número dentro de cada celda con `geom_text()`. Use la paleta `"Spectral"` de `scale_fill_distiller()` y aplique `theme_minimal()`. Agregue títulos adecuados. ¿En qué día y hora se concentran mayoritariamente los homicidios a nivel nacional?
+
+```{r}
+p3 <- ggplot(
+  homicidios_hora_2025,
+  aes(y = hora, x = dia, fill = cantidad)
+) +
+  geom_tile(color = "white", linewidth = 1) +
+  geom_text(aes(label = cantidad), fontface = "bold", size = 5) +
+  scale_fill_distiller(palette = "Spectral") +
+  # scale_fill_viridis_c(direction = -1) + #Para usar los colores del informe
+  theme_minimal(base_size = 12) +
+  labs(
+    title = "Concentración Temporal",
+    x = "",
+    y = "",
+    fill = "Frecuencia"
+  )
+
+p3
+
+```
+**Respuesta: La mayor concentración de homicidios ocurre los fines de semana en horario vespertino/nocturno. El período con más casos corresponde al domingo entre las 18:00 y las 23:59 horas (73 homicidios), seguido del sábado en el mismo horario (65). También destaca la madrugada del domingo (00:00–05:59), con 63 casos.**
+
+# Parte II: Análisis de homicidios y otras variables {style="text-align: justify"}
+
+## 2.1 Evolución de las condenas penales de las víctimas
+
+En esta sección vamos a intentar obtener un resultado **similar** al gráfico 8 del [informe de víctimas de homicidio consumado 2025](https://prevenciondehomicidios.cl/wp-content/uploads/2026/03/Informe_de_victimas_de_homicidios_consumados_2025_VF.pdf) (página 20).
+
+16. A partir del objeto `homicidios`, agrupe por `anio` y `condenas` y cuente el número de víctimas de homicidio consumado. Luego, calcule el **porcentaje** de víctimas con y sin condena por año (divida cada conteo por el total del año correspondiente). Construya un gráfico de **líneas** que muestre la evolución de estos porcentajes a lo largo de los años, coloreando por tipo de condena. Agregue etiquetas con el porcentaje formateado (`label_percent()`) sobre cada punto. ¿Qué tendencia se observa en relación a las condenas?
+
+```{r}
+homicidios_condenas <- homicidios |> 
+  group_by(anio, condenas) |> 
+  summarise(n_homicidios = n())
+
+homicidios_condenas <- homicidios_condenas |> 
+  group_by(anio) |> 
+  mutate(pct = n_homicidios/sum(n_homicidios))
+
+ggplot(homicidios_condenas, aes(x = anio, y = pct, color = condenas))+
+  geom_line(linewidth = 1.5, alpha = .8) +
+  geom_point(size = 2) +
+  geom_text(
+    aes(label = percent(pct, accuracy = 1)),
+    vjust = -0.8,
+    size  = 3,
+    show.legend = F
+  ) +
+  scale_colour_viridis_d() +
+  labs(
+    x = "Año",
+    y = "Porcentaje",
+    color = "Condenas"
+  ) +
+  scale_y_continuous(labels = label_percent()) +
+  theme_classic()
+
+```
+**Respuesta: La proporción de homicidios con condena se mantiene relativamente estable durante el período analizado, fluctuando entre 47% y 54%, sin evidenciar una tendencia sostenida al alza o a la baja. En la mayoría de los años, las víctimas de homicidios con condena representan una proporción levemente superior a aquellas sin condena, mientras que el porcentaje de casos sin información es muy bajo (0%–2%).**
+
+\newpage
+
+## 2.2 Homicidios y pobreza
+
+En esta segunda parte utilizaremos el dataset preprocesado `homicidios_wide_v2.xlsx` que contiene datos a nivel comunal de homicidios (2018–2025), tasa de pobreza y población censada, con el objetivo de explorar la relación entre pobreza y violencia letal a nivel comunal en Chile.
+
+17. Cargue el archivo `homicidios_wide_v2.xlsx` y asígnelo al objeto `homicidios_wide`. Construya un gráfico de **dispersión** que muestre la relación entre la `tasa_pobreza` (eje x) y la `tasa_hom_2024` (eje y), separado por **región** usando `facet_wrap()`. Agregue una línea de tendencia lineal (`method = "lm"`) sin intervalo de confianza (`se = FALSE`). Deje la escala del eje y como libre (`scales = "free"`). Formatee el eje x como porcentaje. ¿Se observan patrones diferenciados entre regiones? Si es así, describa al menos una diferencia.
+
+```{r}
+homicidios_wide <- read_excel('data/homicidios_wide_v2.xlsx')
+
+ggplot(homicidios_wide,
+       aes(x = tasa_pobreza,
+           y = tasa_hom_2024)) +
+  geom_point() +
+  geom_smooth(se = FALSE,
+              method = "lm",
+              color = "darkred") +
+  facet_wrap(vars(region),
+             scales = "free") +
+  scale_x_continuous(labels = label_percent()) +
+  labs(x = "Tasa de Pobreza", y = "Tasa de Homicidios 2024") +
+  theme_bw(base_size = 12)
+
+```
+**Respuesta: Sí, se observan patrones diferenciados entre regiones. En algunas, como la Metropolitana, Biobío, Valparaíso y Tarapacá, se aprecia una relación positiva entre la tasa de pobreza y la tasa de homicidios, es decir, las comunas con mayores niveles de pobreza tienden a presentar tasas de homicidios más elevadas. En cambio, en otras regiones, como Antofagasta, Los Ríos o Maule, la relación es débil o incluso levemente negativa, sin un patrón claramente definido.**
+
+18. Construya un gráfico de **dispersión** similar al anterior pero ahora identificando grupos por la variable `zona` mediante el **color** de los puntos (no con facetas). Agregue **una** recta de regresión lineal **por zona** y use una paleta de colores distinta a la predeterminada (por ejemplo, `scale_color_brewer(palette = "Set1")`). ¿Qué diferencias observa entre las tendencias de las zonas?
+
+```{r}
+ggplot(homicidios_wide, aes(
+  x = tasa_pobreza,
+  y = tasa_hom_2024,
+  color = zona)
+) +
+  geom_point(alpha = .5) +
+  geom_smooth(se = F, method = "lm") +
+  scale_x_continuous(labels = label_percent()) +
+  scale_color_brewer(palette = "Set1") +
+  labs(x = "Tasa de Pobreza",
+       y = "Tasa de Homicidios 2024",
+       color = "Zona Geográfica") +
+  theme_bw(base_size = 14)
+
+```
+
+**Respuesta: Sí. La zona Norte exhibe la relación positiva más fuerte entre pobreza y homicidios, mientras que en las zonas Centro y Sur la pendiente es mucho más suave, lo que sugiere una asociación más débil. La zona Austral también muestra una tendencia positiva, aunque con pocas observaciones.**
+
+\newpage
+
+# BONUS: Mapa de homicidios {style="text-align: justify"}
+
+19. Cargue el archivo `homicidios_sf.rds` (un objeto espacial de clase `sf`) y asígnelo al objeto `homicidios_mapa`. Filtre por **una región de su elección** y construya un mapa estático con `geom_sf()` que coloree cada comuna según su `tasa_hom_2024`. Agregue etiquetas con el nombre de la comuna y su tasa usando `geom_sf_label()`. Use una paleta de color de su gusto y aplique un tema limpio. Comente brevemente qué comunas presentan las tasas más altas en la región elegida.
+
+```{r}
+homicidios_mapa <- read_rds("data/homicidios_sf.rds")
+library(sf)
+
+homicidios_mapa |> 
+  filter(region == "Antofagasta") |> 
+  ggplot(aes(fill = tasa_hom_2024)) +
+  geom_sf(col = "black", alpha = 0.8) +
+  scale_fill_fermenter(palette = "Oranges", direction = 1) +
+  geom_sf_label(aes(label = paste(comuna, round(tasa_hom_2024,1))), size = 2) +
+  theme_void()
+
+```
+
+**Respuesta: En la Región de Antofagasta, las mayores tasas de homicidios en 2024 se observan en la comuna de Antofagasta (9,2), Tocopilla (7,9) y Mejillones (7,1), mientras que varias comunas presentan tasas de 0 o sin información.**

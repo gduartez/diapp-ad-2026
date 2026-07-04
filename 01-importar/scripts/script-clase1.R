@@ -67,6 +67,7 @@ glimpse(poblacion_2024)
 poblacion_pobreza_2024 <- left_join(pobreza_2024,
                                     poblacion_2024,
                                     join_by(codigo == codigo_comuna)
+                                    # by = c("codigo" = "codigo_comuna") #también sirve
                                     )
 
 glimpse(poblacion_pobreza_2024)
