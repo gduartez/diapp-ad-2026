@@ -1,0 +1,845 @@
+---
+title: "Clase 7: Regresión Lineal Múltiple"
+subtitle: "**Análisis de Datos y Estadística Computacional**"
+institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
+author: '**Prof. Gabriel Duarte Zúñiga**'
+lang: es
+date: "07-07-2026"
+
+format:
+  live-revealjs:
+    date-format: long
+    slide-number: true
+    incremental: true
+    transition: slide
+    background-transition: fade
+    highlight-style: github
+    code-link: true
+    theme: [styles.scss]
+    fig-width: 8
+    fig-height: 5
+    chalkboard:
+      buttons: true
+    preview-links: auto
+    logo: img/logo-26.png
+    quiz:
+      checkKey: 'c'
+      resetKey: 'r'
+      shuffleOptions: false
+      disableOnCheck: false
+      includeScore: false
+
+revealjs-plugins:
+  - quiz
+filters:
+  - live
+engine: knitr
+
+webr:
+  render-df: DT
+  packages:
+    - ggplot2
+    - dplyr
+    - broom
+    - wooldridge
+    - estimatr
+    - sjPlot
+
+editor:
+  markdown:
+    wrap: 72
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+```{r}
+#| include: false
+library(pacman)
+p_load(tidyverse, easystats, sjPlot, wooldridge, ggeffects,
+       estimatr, marginaleffects, broom, moderndive, modelsummary,
+       patchwork, knitr)
+
+theme_set(theme_sjplot(base_size = 14))
+
+data(wage1)
+
+# Factor de sexo: female = 0 -> "Hombre" (grupo de referencia)
+salarios <- wage1 |>
+  mutate(female = factor(female, labels = c("Hombre", "Mujer")))
+```
+
+# ¡Bienvenid\@s a la Clase 7!
+
+## Objetivos de la Clase 7 {.smaller}
+
+- **Objetivo General:** Profundizar en el uso aplicado e interpretación de resultados de modelos de regresión lineal múltiple en `R`, avanzando desde la regresión simple hacia modelos más flexibles y complejos que permitan incorporar variables cualitativas, controles, interacciones y efectos marginales crecientes o decrecientes.
+
+- **Objetivos específicos:**
+
+  + Interpretar modelos de regresión con variables cualitativas, utilizando variables dummy, tales como el sexo de una persona.
+
+  + Estimar e interpretar modelos con **interacciones** entre una variable **dummy** y una variable continua, reconociendo cuándo el efecto de una variable puede diferir entre grupos.
+
+  + Incorporar **términos cuadráticos** para representar relaciones no lineales y efectos marginales que varían según el nivel de la variable explicativa.
+  
+  + Comparar modelos y comunicar resultados de regresión mediante tablas exportables y bien interpretadas.
+
+  + Evaluar de manera inicial los **supuestos** MCO usando paquetes modernos como `performance`.
+
+  + Aplicar errores estándar robustos a heterocedasticidad mediante `lm_robust()`.
+
+## Funciones y paquetes utilizados {.smaller}
+
+Seguiremos usando `lm()` para **estimar**, pero para **interpretar,
+graficar y reportar** usaremos funciones más simples del ecosistema
+`easystats` y otros relacionados:
+
+| Tarea | Función | Paquete |
+|-------|---------|---------|
+| Tabla de coeficientes legible | `model_parameters()` | `parameters` |
+| Predicciones y gráficos de efectos | `ggpredict()`, `plot_model()` | `ggeffects`, `sjPlot` |
+| Pendientes paralelas | `geom_parallel_slopes()` | `moderndive` |
+| Chequear supuestos | `check_model()` | `performance` |
+| Errores robustos | `lm_robust()` | `estimatr` |
+| Comparar modelos | `compare_performance()` | `performance` |
+| Tablas estilo *paper* | `tab_model()`, `modelsummary()` | `sjPlot`, `modelsummary` |
+
+# [Variables dummy y modelos de regresión múltiple (MRM)]{style="color:white"} {background-color="#173277"}
+
+## MRS con variable explicativa **cualitativa** {.smaller .justify}
+
+- Hasta ahora, hemos realizado regresiones simple usando variables numéricas tanto en $Y$ como en $X$. Sin embargo, en ciencias sociales muchas variables de interés son **categóricas**: sexo, estado civil, tener o no un beneficio, etc.
+
+- En `wage1`, la variable `female` vale **1** si la persona es mujer y **0** si es hombre. La convertiremos en **factor** para que `R` la trate como variable categórica:
+
+. . . 
+
+```{r}
+#| echo: true
+library(pacman)
+p_load(tidyverse, easystats, sjPlot, wooldridge, ggeffects,
+       estimatr, marginaleffects, broom, moderndive, modelsummary,
+       patchwork, knitr)
+
+salarios <- wage1 |>
+  mutate(female = factor(female, labels = c("Hombre", "Mujer")))
+
+salarios |> count(female)
+```
+
+- Dado que $female = 0$ corresponde a **hombres**, ellos serán el **grupo de referencia** (*benchmark*) para nuestros análisis de regresión.
+
+## ¿Hay diferencias por sexo? {.smaller .justify}
+
+```{r}
+#| echo: true
+#| fig-height: 4
+ggplot(salarios, aes(x = educ, y = wage, color = female)) +
+  geom_point(alpha = 0.6) +
+  labs(x = "Años de experiencia", y = "Salario por hora (USD)",
+       color = "Sexo")
+```
+
+. . .
+
+A simple vista, los **hombres** parecieran ganar más que las mujeres
+**aun con la misma cantidad de años de educación**.
+
+## Distribución del salario por sexo {.smaller .justify}
+
+Partamos describiendo las diferencias del salario por hora entre hombres y mujeres:
+
+:::: columns
+::: {.column width="50%"}
+```{r}
+#| echo: true
+#| fig-height: 4
+ggplot(salarios, aes(x = wage, fill = female)) +
+  geom_density(alpha = 0.5) +
+  labs(x = "Salario por hora (USD)",
+       y = "Densidad",
+       fill = "Sexo")
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: true
+salarios |>
+  group_by(female) |>
+  summarise(salario_promedio = mean(wage))
+```
+:::
+::::
+
+. . .
+
+Vemos que el salario promedio de los **hombres es 2.51 (7.10-4.59) dólares** superior al de las mujeres.
+
+## Regresión con una dummy {.smaller .justify}
+
+Del modelo teórico $wage_i = \beta_0 + \beta_1 female_i + \mu_i$ podemos estimar el salario esperado a través de la siguiente ecuación de regresión muestral: 
+
+$$\widehat{wage}_i = \hat{\beta}_0 + \hat{\beta}_1\, female_i$$
+
+. . . 
+
+Podemos mostrar los resultados usando tanto `get_regression_table()` o `model_parameters()`, o bien, las funciones vistas en la clase anterior (`summary()` o `tidy()`)
+
+```{r}
+#| echo: true
+m1 <- lm(wage ~ female, data = salarios)
+model_parameters(m1)
+```
+
+. . .
+
+::: callout-tip
+## La clave de una dummy
+El coeficiente de `female [Mujer]` (**-2.51**) es la **diferencia de
+salario promedio** entre mujeres y hombres. El intercepto (**7.10**) es
+el **salario promedio de los hombres** (grupo de referencia).
+:::
+
+## La dummy = diferencia de medias {.smaller .justify}
+
+Con una sola dummy, la regresión **reproduce las medias por grupo**:
+
+. . .
+
+$$
+\small
+\begin{aligned}
+E(wage \mid female) = \hat{\beta_0} + \hat{\beta_1} \times female \\
+E(wage \mid female = Hombre) &= 7.10 + (-2.51)\times 0 = 7.10 \\
+E(wage \mid female = Mujer)  &= 7.10 + (-2.51)\times 1 = 4.59
+\end{aligned}
+$$
+
+. . .
+
+```{r}
+#| echo: true
+#| fig-height: 3
+ggpredict(m1, terms = "female") |> plot()
+```
+
+**Interpretación:** Las mujeres ganan, en promedio,  **\$2.51 menos**
+por hora que los hombres (recordar que son salarios de 1976).
+
+## Añadiendo más variables explicativas {.smaller}
+
+- ¿Es plausible que **solo** el sexo determine el salario? Probablemente
+  no, ya que esperaríamos que la **educación**, la **experiencia**, entre otras variables también importen.
+
+- En un modelo de **regresión lineal múltiple** incluimos más de una variable explicativa:
+
+. . .
+
+$$wage = \beta_0 + \beta_1 female + \beta_2 educ + \beta_3 X + \cdots + \mu$$
+
+- Veamos un ejemplo de regresión múltiple añadiendo 2 regresores: `female` y `educ`: 
+
+. . .
+
+$$wage = \beta_0 + \beta_1 female + \beta_2 educ + \mu$$ 
+
+-  En `R`, es posible agregar regresores (variables explicativas o $x$) con  el signo  `+` dentro del argumento `formula`:
+
+. . .
+
+```{r}
+#| echo: true
+m2 <- lm(wage ~ female + educ, data = salarios)
+model_parameters(m2)
+```
+
+## Interpretación *ceteris paribus* {.smaller}
+
+Del modelo `wage ~ female + educ`:
+
+- $\hat{\beta}_{educ} = 0.51$: por cada **año adicional de educación**, el
+  salario sube en promedio **\$0.51**, **manteniendo constante el sexo**
+  (*ceteris paribus*).
+
+- $\hat{\beta}_{female} = -2.27$: a **igual nivel de educación**, una
+  mujer gana en promedio **\$2.27 menos** por hora que un hombre.
+
+. . .
+
+Podemos comparar rápidamente ambos modelos con la función `tab_model` del paquete `sjPlot`:
+
+```{r}
+#| echo: true
+#| output: false
+tab_model(m1, m2, show.reflvl = T, show.intercept = T, 
+          p.style = "numeric_stars")
+```
+
+## Interpretación *ceteris paribus* {.smaller}
+
+```{r}
+#| echo: false
+tab_model(m1, m2, show.reflvl = T, show.intercept = T, 
+          p.style = "numeric_stars")
+```
+
+::: callout-note
+Al **controlar por educación**, la brecha por sexo baja de \$2.51 a
+\$2.27.
+:::
+
+## Dummy sin interacción = **pendientes paralelas** {.smaller}
+
+Un modelo aditivo (sin interacción) permite **distinto intercepto** por sexo, pero **la misma pendiente** del efecto marginal de la educación. La función `geom_parallel_slopes()` del paquete `moderndive` nos permite graficar justamente este escenario con dos rectas **paralelas**.
+
+```{r}
+#| echo: true
+#| fig-height: 3.8
+ggplot(salarios, aes(x = educ, y = wage, color = female)) +
+  geom_point(alpha = 0.4) +
+  geom_parallel_slopes(se = FALSE) +
+  labs(x = "Años de educación", y = "Salario por hora (USD)",
+       color = "Sexo")
+```
+
+
+## 🧠 Pregunta N° 1 {.quiz-question .smaller}
+
+En el modelo `wage ~ female + educ`, el coeficiente de `educ` es
+**0.51**. ¿Cuál es la interpretación correcta?
+
+::: nonincremental
+***Seleccione la opción correcta***
+
+- [Las mujeres ganan \$0.51 más que los hombres]{data-explanation="No. La diferencia por sexo la mide el coeficiente de female, no el de educ. Además el coeficiente de female es negativo."}
+- [La educación explica el 51% de la variación del salario]{data-explanation="Eso sería una interpretación de R², no del coeficiente. 0.51 está en dólares por año de educación."}
+- [Hombres y mujeres tienen distinto retorno de la educación]{data-explanation="Este modelo NO tiene interacción, así que impone el MISMO retorno de la educación para ambos sexos (pendientes paralelas). Para permitir retornos distintos necesitamos una interacción."}
+- [Por cada año adicional de educación, el salario sube \$0.51 en promedio, manteniendo constante el sexo]{.correct data-explanation="Correcto. En regresión múltiple cada coeficiente mide el efecto marginal de su variable ceteris paribus: aquí, a igual sexo, un año más de educación se asocia con \$0.51 más por hora."}
+:::
+
+# [Modelos más flexibles]{style="color:white"} {background-color="#173277"}
+
+## ¿Y si el efecto de la educación **difiere** por sexo? {.smaller}
+
+- El modelo aditivo estima la **misma pendiente** para hombres y mujeres. Pero ¿qué ocurre si el **retorno de la educación** fuese distinto entre ambos grupos?
+
+- Para permitirlo, agregamos una **interacción** mediante la sintaxis `female*educ`.
+
+. . . 
+
+::: {.callout-warning}
+## Advertencia
+En `R` no es lo mismo incluir en la sintaxis `female:educ` que `female*educ`:
+
+- `lm(wage ~ female:educ)` estima solo el término de interacción: $wage = \gamma_0  + \gamma_H (female=0 \times educ) +  \gamma_M (female=1 \times educ) + \mu$
+- `lm(wage ~ female*educ)` estima los dos efectos principales más la interacción: $wage = \beta_0 + \beta_1 female + \beta_2 educ + \beta_3 (female \times educ) + \mu$
+
+El último modelo es el más común y recomendado a menos que teóricamente se justifique forzar que ambos grupos tengan el mismo intercepto, ya que permite responder la pregunta **¿difiere el retorno de la educación entre hombres y mujeres?**
+:::
+
+. . .
+
+```{r}
+#| echo: true
+m3 <- lm(wage ~ female * educ, data = salarios)
+model_parameters(m3)
+```
+
+## Dos rectas: distinto intercepto **y** pendiente {.smaller}
+
+Del resultado anterior tenemos que $wage = \beta_0 + \beta_1 female + \beta_2 educ + \beta_3 (female \times educ)$ con:
+
+- $\beta_0 = 0.2$
+- $\beta_1 = -1.2$
+- $\beta_2 = 0.54$
+- $\beta_3\ = -0.09$.
+
+. . .
+
+Reemplazando valores para hombres ($female = 0$) y mujeres ($female = 1$) tenemos que:
+
+$$
+\small
+\begin{aligned}
+\text{Hombres:}\ & \widehat{wage} = 0.20 + 0.54\,educ \\
+\text{Mujeres:}\ & \widehat{wage} = (0.20 - 1.20) + (0.54 - 0.09)\,educ \\
+                 & \widehat{wage} = -1.00 + 0.45\,educ
+\end{aligned}
+$$
+
+. . .
+
+- $\hat{\beta}_3 = -0.09$ mide **cuánto difiere el retorno de la
+  educación** entre mujeres y hombres. Es **negativo** (retorno algo
+  menor para mujeres), pero **no** es estadísticamente significativo
+  ($p \approx 0.41$): no hay evidencia fuerte de que las pendientes
+  difieran.
+
+## Visualizar la interacción {.smaller .justify}
+
+```{r}
+#| echo: true
+#| fig-height: 3.6
+plot_model(m3, type = "pred", terms = c("educ", "female"))
+```
+
+Ahora las rectas **no son paralelas**: se permite que la brecha por sexo
+**cambie** con el nivel de educación.
+
+## Paradoja de Simpson {.smaller .justify}
+
+Una tendencia que aparece en los datos **combinados** puede
+**desaparecer o invertirse** al mirar los **subgrupos** (o viceversa). Veamos esto con el dataset de la nivelación sobre pingüinos (`penguins`):
+
+```{r}
+#| echo: false
+#| fig-height: 3.5
+
+penguins <- penguins
+g1 <- ggplot(penguins, aes(x=bill_len, y=bill_dep)) +
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE, color = "red3") +
+  labs(x="Largo del pico", y= "Alto del pico",
+       title="Datos combinados",
+       color = "Especies")
+
+g2 <- ggplot(penguins, aes(x=bill_len, y=bill_dep, 
+                 color=species)) +
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x="Largo del pico", y="Alto del pico",
+       title="Datos desagregados por grupo",
+       color = "Especies")
+
+g1 | g2
+```
+
+::: callout-important
+## La moraleja aplicada
+La pendiente combinada es **negativa**, pero **dentro** de cada grupo es
+**positiva**. Omitir la variable de especia (`species`) nos habría llevado a la conclusión **opuesta**. Por lo tanto, controlar por la variable correcta puede **cambiar el signo** de las estimaciones.
+:::
+
+## No linealidades: términos cuadráticos {.smaller .justify}
+
+- A veces el efecto de una variable **no es constante**. La experiencia
+  suele tener **rendimientos decrecientes**: los primeros años suman mucho, mientras que los últimos mucho menos (o incluso disminuyen el salario esperado).
+
+- Lo modelamos agregando $exper^2$ con `I(exper^2)`:
+
+. . .
+
+$$wage = \beta_0 + \beta_1 exper + \beta_2 exper^2 + u$$
+
+```{r}
+#| echo: true
+m4 <- lm(wage ~ exper + I(exper^2), data = salarios)
+model_parameters(m4)
+```
+
+## El efecto marginal ya **no** es constante {.smaller}
+
+Con un término cuadrático, el efecto de un año más de experiencia
+**depende del nivel de experiencia**:
+
+$$\frac{\partial\, \widehat{wage}}{\partial\, exper} = \hat{\beta}_1 + 2\hat{\beta}_2\, exper = 0.3 - 2(0.0061)\,exper$$
+
+. . .
+
+- La ecuación estimada indica que `exper` tiene un **efecto decreciente** sobre `wage`, ya que $\hat\beta_2 < 0$.
+- Primer año de experiencia: aporta ~**\$0.30**.
+- Al pasar de 10 a 11 años: aporta ~$0.298 - 2(0.0061)(10) \approx$ **\$0.18**.
+- Como $\hat{\beta}_2 < 0$, el efecto es **decreciente** y se vuelve cero cerca de los **~24 años** de experiencia.
+- Cuando el coeficiente de $x$ es positivo y el de $x^2$ es negativo la función cuadrática tiene **forma parabólica**. Siempre existe un valor positivo de $x$ para el que el efecto de $x$ sobre $y$ es cero; antes de este punto, $x$ tiene un efecto positivo sobre $y$; después, $x$ tiene un efecto negativo sobre $y$. 
+
+## Graficar el efecto (predicciones) {.smaller .justify}
+
+```{r}
+#| echo: true
+#| fig-height: 3.8
+plot_model(m4, type = "pred", terms = "exper [all]") +
+  labs(title = "Salario predicho según experiencia",
+       x = "Años de experiencia", y = "Salario por hora (USD)")
+```
+
+La curva sube, se **aplana** y luego **cae**: la forma de "U invertida" típica de un cuadrático con $\hat{\beta}_2<0$.
+
+## Graficar el **efecto marginal** {.smaller .justify}
+
+Con `marginaleffects`  y la función `plot_slopes()` obtenemos la **pendiente** en cada punto:
+
+```{r}
+#| echo: true
+#| fig-height: 3.6
+plot_slopes(m4, variables = "exper", condition = "exper") +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  labs(title = "Efecto marginal de un año más de experiencia",
+       x = "Años de experiencia", y = "Efecto sobre el salario")
+```
+
+Donde la línea cruza el **cero**, el efecto marginal comienza a ser negativo.
+
+## 🧠 Pregunta N° 2 {.quiz-question .smaller}
+
+En `wage ~ exper + I(exper^2)` obtenemos $\hat{\beta}_1 = 0.30$ y
+$\hat{\beta}_2 = -0.006$. ¿Qué implica el signo **negativo** de
+$\hat{\beta}_2$?
+
+::: nonincremental
+***Seleccione la opción correcta***
+
+- [El efecto de la experiencia es negativo desde el primer año]{data-explanation="No. Con β1 positivo, los primeros años tienen efecto positivo; el término cuadrático negativo hace que ese efecto vaya disminuyendo."}
+- [La experiencia no afecta el salario]{data-explanation="Sí lo afecta; de hecho ambos términos son significativos. Lo que ocurre es que el efecto cambia con el nivel de experiencia."}
+- [El efecto de la experiencia es decreciente: cada año adicional aporta menos que el anterior]{.correct data-explanation="Correcto. β2 < 0 implica rendimientos decrecientes: la curva tiene forma de U invertida y el efecto marginal (β1 + 2β2·exper) se reduce a medida que crece la experiencia."}
+- [El modelo está mal especificado]{data-explanation="Un β2 negativo es esperable y con sentido económico (rendimientos decrecientes), no una señal de error."}
+:::
+
+## 💻 Ejercicio Aplicado 1 {.smaller}
+
+Estime un modelo que explique `wage` con `educ`, `exper`, `tenure` pero con términos cuadráticos en `exper` y `tenure`.
+Extraiga la tabla de coeficientes con `tidy()` e identifique cuál
+variable tiene el mayor efecto marginal.
+
+```{webr}
+library(wooldridge)
+library(broom)
+data(wage1)
+
+modelo <- lm(wage ~ ___ + ___ + ___ + ___ + ___ , data = wage1)
+tidy(modelo)
+```
+
+# [¿Qué modelo escoger?]{style="color:white"} {background-color="#173277"}
+
+## Un modelo más completo {.smaller .justify}
+
+Juntemos lo aprendido en un modelo con **interacción** y **término cuadrático** y mostrémoslo con `modelsummary()`:
+
+```{r}
+#| echo: true
+m5 <- lm(wage ~ female * educ + exper + I(exper^2), data = salarios)
+modelsummary(m5, stars = T, gof_map = c("nobs", "r.squared", "adj.r.squared"), shape = term ~ model + statistic,)
+```
+
+## ¿Cuántas variables agrego? $R^2$ ajustado {.smaller}
+
+- Al agregar regresores, el $R^2$ **siempre sube o se mantiene**, aunque la variable no aporte nada de información. Por eso, en modelos de regresión múltiple es relevante utilizar una métrica que penalice la inclusión de variables. Una de ellas es el **$R^2$ ajustado**:
+
+. . . 
+
+$$R^2_{adj}=1-\left( \frac{SCE}{SCT}\frac{n-1}{n-k-1}\right)=1-\left( \frac{\sum_{i=1}^n (Y_i-\hat{Y}_i)^2}{\sum(Y_i - \bar{Y})^2}\frac{n-1}{n-k-1}\right)$$
+
+
+- Con $n$ el número de observaciones y $k$ el número de variables independientes.
+
+## $R^2$ en Regresión Lineal Múltiple {.smaller .justify}
+
+- Si la nueva variable no "aporta nueva información", $R^2_{adj}$ no aumenta (e incluso puede disminuir si añadimos *variables intrusas*).
+
+- Debido a lo anterior, $R^2_{adj}$ suele ser mejor para la comparación entre modelos.
+
+. . .
+
+```{r, echo=TRUE}
+glance(m1) |>  select(adj.r.squared) |>  pull(1)
+```
+. . .
+
+```{r, echo=TRUE}
+glance(m2) |>  select(adj.r.squared) |>  pull(1)
+```
+
+. . .
+
+```{r, echo=TRUE}
+glance(m5) |>  select(adj.r.squared) |>  pull(1)
+```
+
+## Estadístico F {.smaller .justify}
+
+$$F=\frac{(SCR_R-SCR_{SR})/q}{SCR_{SR}/(n-k-1)}=\frac{(R^2_{SR}-R^2_{R})/q}{(1-R^2_{SR})/(n-k-1)}$$
+
+. . .
+
+El estadístico F es una forma de comparar **pares** de modelos. Se compara un modelo **Restringido (R)** y con un  modelo **Sin Restricción (SR)**.
+
+. . .
+
+- Modelo R: $\hat{Y}=\hat{\beta_0}+\hat{\beta_1}X_1$
+- Modelo SR: $\hat{Y}=\hat{\beta_0}+\hat{\beta_1}X_1+\hat{\beta_2}X_2$
+
+. . .
+
+Esta prueba entrega su respectivo **p.value** considerando una hipótesis nula, $H_0$, del tipo *"El modelo con más variables (SR) no agrega información útil en comparación al modelo R"*.
+
+## Estadístico F: `anova` {.smaller .justify}
+
+Para realizar el test de hipótesis entre modelos, podemos ocupar la función `anova()` y entregando como argumento los modelos guardados:
+
+. . .
+
+```{r, echo=TRUE}
+anova(m1, m2)
+```
+
+## Estadístico F: `anova` {.smaller}
+
+```{r, echo=TRUE}
+anova(m4, m5)
+```
+
+- Por lo tanto, en este caso como **rechazo** la hipótesis nula, concluyo que `m2` sí agrega información *valiosa* respecto a `m1`. 
+
+- Del mismo modo, `m5` sí agrega información  *valiosa* respecto al  modelo `m4`.
+
+## Estadístico F: Resumen {.smaller .justify}
+
+Comparemos el `m1` con el `m2`: 
+
+. . .
+
+$$wage = \beta_0 + \beta_1educ$$ 
+
+. . .
+
+$$wage = \beta_0 + \beta_1educ + \beta_2female$$
+
+- **Estadístico F:** Evalúa la razón de la mejora en la varianza explicada por el modelo más complejo (f2) comparado con el modelo más simple (f1) respecto a la varianza no explicada (residual).
+- **Valor p (Pr(>F)):** Valor p asociado al estadístico F.
+    + Si el **valor-p es bajo** (por ejemplo, menor que 0.05), esto sugiere que la inclusión de la variable female en el modelo **proporciona una mejora significativa** en la predicción del salario.
+    + Si el **valor-p es alto**, se sugiere optar por el modelo más sencillo utilizando un criterio de *parsimonia*.
+
+## Criterios de información {.smaller}
+
+- Los criterios de información son medidas de calidad relativa para nuestros modelos estadísticos. En general, hablamos de dos: *Akaike Information Criterion* (AIC) y *Bayesian Information Criterion* (BIC).
+
+- Bajo estos criterios, **un valor más bajo es mejor**. El valor numérico de estos criterios se puede obtener a partir de la función `glance()`:
+
+. . .
+
+```{r, echo=TRUE}
+BIC <- data.frame(
+  reg1 = glance(m1) |>  pull(BIC), reg2 = glance(m2) |> pull(BIC), reg3 = glance(m4) |> pull(BIC), reg4 = glance(m5) |> pull(BIC))
+BIC
+anova(m4,m5)
+```
+
+## Criterios de información {.smaller .justify}
+
+- En este caso, las conclusiones del **BIC** nos orientan de la misma manera que el **estadístico F**. Es importante notar que no siempre pude ocurrir de esta manera así, por lo que es importante utilizar criterios adicionales en la práctica.
+
+- Utilizamos la **prueba F** cuando nos interesa la significancia estadística específica de las variables adicionales.
+
+- Utilizamos el **BIC (o AIC)** cuando nos interesa un balance entre ajuste y complejidad, especialmente en contextos donde la parsimonia del modelo es importante (por ejemplo, evitar sobreajuste, es decir, que el modelo sea demasiado complejo y capture incluso fluctuaciones aleatorias de los datos).
+
+## Comparar modelos rápidamente {.smaller .justify}
+
+`compare_performance()` compara varias métricas de ajuste y permite ordenarlas con el argumento `rank = TRUE` para así tener indicios de cuál sería el mejor modelo bajo estos criterios:
+
+```{r}
+#| echo: true
+compare_performance(m2, m3, m5,
+                    metrics = c("R2", "R2_adj", "RMSE", "AIC", "BIC"),
+                    rank = TRUE)
+```
+
+. . .
+
+::: callout-tip
+## En simple
+- **$R^2$ ajustado** ↑ y **AIC/BIC** ↓ indican **mejor** modelo.
+- No se trata de "el $R^2$ más alto", sino del mejor **balance entre ajuste y parsimonia**.
+:::
+
+# [Evaluación de supuestos MCO]{style="color:white"} {background-color="#173277"}
+
+## Chequear supuestos con `performance` {.smaller .justify}
+
+- Si bien las estrategias anteriores nos permiten seleccionar un modelo en base a criterios de varianza explicada y parsimonia, existen criterios adicionales que se deben considerar para establecer un modelo robusto.
+
+- En este contexto, siempre es importante chequear si se cumplen los **supuestos de MCO** que hacen que los estimadores tengan características deseables (típicamente, insesgamiento y menor varianza).
+
+- `check_model()` genera un panel visual de diagnóstico en una sola línea:
+
+. . .
+
+```{r}
+#| echo: true
+#| eval: false
+check_model(m5)
+```
+
+## Chequear supuestos con `performance` {.smaller .justify}
+
+```{r}
+#| echo: false
+check_model(m5)
+```
+
+## ¿Qué mirar en cada panel? {.smaller .justify}
+
+- **Linealidad**: la línea debería ser aproximadamente plana (sin patrones).
+- **Normalidad de residuos** (QQ-plot): Los puntos deberían seguir la  línea demarcada.
+- **Homocedasticidad**: La nube de puntos debería tener un ancho **constante** y horizontal.
+- **Observaciones influyentes**: Puntos fuera de las bandas merecen atención.
+- **Multicolinealidad**: Deberíamos buscar un valor inferior a 10 (puntos verdes).
+
+. . .
+
+::: callout-tip
+`performance` además entrega **veredictos automáticos** legibles, sin tener que interpretar gráficos a ojo.
+:::
+
+## Tests de supuestos legibles {.smaller .justify}
+
+- Con las funciones de prefijo `check_*()` podemos realizar test rápidos de validación de los supuestos. Sin embargo, siempre se recomienda **combinar** tanto el análisis visual con los test estadísticos.
+
+. . .
+
+```{r}
+#| echo: true
+check_normality(m5)
+check_heteroskedasticity(m5)
+```
+
+. . .
+
+::: callout-warning
+## Heterocedasticidad detectada
+Cuando la varianza del error **no** es constante, los coeficientes MCO siguen siendo **insesgados**, pero sus **errores estándar** (y por tanto los p-values e intervalos) quedan **mal calculados**. La inferencia deja de ser confiable.
+:::
+
+## Solución aplicada: errores robustos {.smaller .justify}
+
+En vez de descartar el modelo, corregimos los **errores estándar** con
+`lm_robust()` (paquete `estimatr`, usa por defecto errores tipo **HC2**):
+
+```{r}
+#| echo: true
+m5_robusto <- lm_robust(wage ~ female * educ + exper + I(exper^2),
+                        data = salarios)
+
+tidy(m5_robusto) |>
+  select(term, estimate, std.error, p.value, conf.low, conf.high)
+```
+
+## MCO vs. robusto: mismos $\beta$, distintos SE {.smaller}
+
+```{r}
+#| echo: true
+#| eval: true
+tab_model(m5, m5_robusto,
+          dv.labels = c("MCO clásico", "SE robustos (HC2)"),
+          show.ci = FALSE, p.style = "numeric_stars")
+```
+
+::: callout-note
+Los **coeficientes no cambian** (la estimación puntual es la misma). Lo que cambia son los **errores estándar** y, con ellos, la significancia. Es una práctica recurrente reportar errores estándar robustos en presencia de heterocedasticidad.
+:::
+
+## Exportar tablas estilo *paper* {.smaller .justify}
+
+Con `modelsummary()` armamos una tabla comparativa lista para un informe:
+
+```{r}
+#| echo: true
+#| eval: false
+modelsummary(
+  list("Aditivo"      = m2,
+       "Interacción"  = m3,
+       "Completo"     = m5),
+  stars = TRUE,
+  estimate  = "{estimate}{stars}",
+  statistic = "({std.error})",
+  gof_map = c("nobs", "r.squared", "adj.r.squared"),
+  output = "tabla_modelos.docx"   # también .html, .png, .tex
+)
+```
+
+. . .
+
+::: callout-note
+Cambiando el argumento `output` exportas la **misma** tabla a **Word**,
+**HTML** o **LaTeX**. `sjPlot::tab_model(..., file = "tabla.doc")` cumple
+un rol equivalente.
+:::
+
+## Exportar tablas estilo *paper* {.smaller .justify}
+
+Con `modelsummary()` armamos una tabla comparativa lista para un informe:
+
+```{r}
+#| echo: false
+#| eval: true
+modelsummary(
+  list("Aditivo"      = m2,
+       "Interacción"  = m3,
+       "Completo"     = m5),
+  stars = TRUE,
+  estimate  = "{estimate}{stars}",
+  statistic = "({std.error})",
+  gof_map = c("nobs", "r.squared", "adj.r.squared")
+)
+```
+
+## 🧠 Pregunta N° 3 {.quiz-question .smaller}
+
+`check_heteroskedasticity()` detecta heterocedasticidad en tu modelo.
+Usas `lm_robust()` y comparas con el MCO clásico. ¿Qué esperas observar?
+
+::: nonincremental
+***Seleccione la opción correcta***
+
+- [Los coeficientes estimados cambian mucho]{data-explanation="No. Los errores robustos NO modifican las estimaciones puntuales de los coeficientes; solo corrigen sus errores estándar."}
+- [Los coeficientes son los mismos, pero cambian los errores estándar y la significancia]{.correct data-explanation="Correcto. Bajo heterocedasticidad, MCO sigue siendo insesgado (mismos β), pero los SE clásicos están mal calculados. lm_robust corrige los SE, afectando p-values e intervalos."}
+- [El R² del modelo mejora sustancialmente]{data-explanation="Los errores robustos no cambian el ajuste del modelo (R²); corrigen la inferencia, no la bondad de ajuste."}
+- [Se elimina la heterocedasticidad de los datos]{data-explanation="No se 'elimina' la heterocedasticidad; se corrige la forma de calcular los errores estándar para que la inferencia sea válida pese a ella."}
+:::
+
+# Recapitulación
+
+## ¿Qué aprendimos hoy? {.smaller}
+
+| Tema | Idea clave |
+|------|------------|
+| **Dummy** | Su coeficiente es una **diferencia de medias** respecto al grupo de referencia |
+| **RLM** | Podemos enriquerecer nuestro modelo añadiendo variables explicativas con `+` |
+| **Dummy sin interacción** | Solo cambio en el intercepto (mismo efecto para todos) → **pendientes paralelas** |
+| **Dumyy con interacción** | El efecto de una variable **depende** de otra (pendientes distintas) |
+| **Paradoja de Simpson** | Omitir una variable relevante puede **cambiar o invertir** las conclusiones |
+| **Términos cuadráticos** | Efecto marginal **no constante** ($\beta_1 + 2\beta_2 x$) |
+| **Comparación de modelos** | $R^2_{adj}$, AIC/BIC y  `anova()`|
+| `performance`| Chequeo de supuestos MCO rápido y legible |
+| `lm_robust()` | Corrige SE bajo heterocedasticidad (mismos $\beta$) |
+| **Tablas de resultados de regresión** | tablas con `modelsummary()` y `tab_model()` |
+
+## Funciones clave de hoy {.smaller}
+
+```{r}
+#| echo: true
+#| eval: false
+m  <- lm(wage ~ female * educ + exper + I(exper^2), data = salarios)
+
+model_parameters(m)                 # coeficientes legibles
+plot_model(m, type = "pred", terms = c("educ", "female"))  # efectos
+geom_parallel_slopes(se = FALSE)    # modelo aditivo (moderndive)
+check_model(m); check_heteroskedasticity(m)   # supuestos
+lm_robust(..., data = salarios)     # errores robustos (estimatr)
+compare_performance(m2, m3, m, rank = TRUE)   # comparar
+modelsummary(list(...), output = "tabla.docx")  # exportar
+```
+
+## Próxima clase {.smaller}
+
+- Modelos con variable dependiente **binaria** (Probit y Logit).
+- Caso aplicado de análisis de datos.
+- Repaso aplicado para la **Tarea 2** y cierre del curso.
+
+
+## Bibliografía {.smaller}
+
+- Heiss, F. (2020). *Using R for Introductory Econometrics* (2ª ed.).
+- Wooldridge, J. (2020). *Introducción a la econometría* (7ª ed.).
+- Lüdecke et al. (2021). *easystats*: paquetes `parameters`,
+  `performance`, `see`.
