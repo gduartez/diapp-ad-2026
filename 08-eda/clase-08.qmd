@@ -1,0 +1,588 @@
+---
+title: "Clase 8: Variables Binarias, Aplicaciones y Cierre"
+subtitle: "**Análisis de Datos y Estadística Computacional**"
+institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
+author: '**Prof. Gabriel Duarte Zúñiga**'
+lang: es
+date: "07-11-2026"
+
+format:
+  live-revealjs:
+    date-format: long
+    slide-number: true
+    incremental: true
+    transition: slide
+    background-transition: fade
+    highlight-style: github
+    code-link: true
+    theme: [styles.scss]
+    fig-width: 8
+    fig-height: 5
+    chalkboard:
+      buttons: true
+    preview-links: auto
+    logo: img/logo-26.png
+    quiz:
+      checkKey: 'c'
+      resetKey: 'r'
+      shuffleOptions: false
+      disableOnCheck: false
+      includeScore: false
+
+revealjs-plugins:
+  - quiz
+filters:
+  - live
+engine: knitr
+
+webr:
+  render-df: DT
+  packages:
+    - ggplot2
+    - dplyr
+    - broom
+    - wooldridge
+
+editor:
+  markdown:
+    wrap: 72
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+```{r}
+#| include: false
+library(pacman)
+p_load(tidyverse, wooldridge, broom, marginaleffects, parameters,
+       performance, see, sjPlot, modelsummary, patchwork, ggeffects)
+
+theme_set(theme_sjplot(base_size = 14))
+
+data(mroz)
+data(kielmc)
+data(wage1)
+```
+
+# ¡Bienvenid\@s a la última clase!
+
+## Objetivos de la Clase 8 {.smaller .justify}
+
+Hoy cerraremos el módulo aplicando lo aprendido a **nuevos tipos de problemas**
+y conectando las aplicaciones con los contenidos del siguiente módulo.
+
+::: nonincremental
+**Bloque 1 — Variable dependiente binaria**
+
+- Modelo de **probabilidad lineal** (MPL) y sus problemas.
+- Modelos **logit y probit**: acotan la probabilidad a $[0,1]$.
+- **Efectos marginales** con `avg_slopes()`.
+- ¿Probit o logit?
+
+**Bloque 2 — Transformaciones, explicar vs. predecir y causalidad**
+
+- Cuándo conviene la **transformación logarítmica**.
+- **Explicar** (foco en $\beta$) vs. **predecir** (foco en $\hat{y}$).
+- **Diferencias en Diferencias** (DiD): un ejemplo sencillo.
+- Aplicaciones de **IA** en econometría.
+
+**Bloque 3 — Cierre**
+
+- Repaso de la **Tarea 2**.
+- Cierre del curso.
+:::
+
+# [Variable dependiente binaria]{style="color:white"} {background-color="#173277"}
+
+## ¿Qué ocurre si  $Y$ es binaria? {.smaller}
+
+- Hasta ahora la variable dependiente $Y$ era **continua** (salario,
+  precio, etc.).
+
+- Pero muchas preguntas de política pública tienen una $Y$ **binaria** (por ejemplo, 1/0):
+
+  - ¿La persona **participa** en el mercado laboral? (sí/no)
+  - ¿La comuna **tuvo** al menos un homicidio? (sí/no)
+  - ¿El hogar **recibe** un subsidio? (sí/no)
+
+. . .
+
+En esta clase usaremos el dataset `mroz` (participación laboral femenina) como ejemplo: la variable
+`inlf` vale 1 si la mujer está en la fuerza laboral y 0 si no.
+
+## Modelo de Probabilidad Lineal (MPL) {.smaller .justify}
+
+Si estimamos con `lm()` una $Y$ binaria, obtenemos un **modelo de
+probabilidad lineal**: el valor ajustado se interpreta como
+$P(Y=1\mid X)$, es decir, la probabilidad de que la variable de interés ($Y$) tome el valor de uno dado las variables de control.
+
+```{r}
+#| echo: true
+mpl <- lm(inlf ~ nwifeinc + educ + exper + I(exper^2) +
+            age + kidslt6 + kidsge6, data = mroz)
+tidy(mpl, digits  = 10)
+```
+
+. . .
+
+**Ventaja:** interpretación directa. Un año más de `educ` se asocia con
+**+0.038**, es decir, **+3.8 puntos porcentuales** en la probabilidad de
+participar, *ceteris paribus*.
+
+## El problema del MPL {.smaller}
+
+Las probabilidades predichas **se salen del rango** $[0,1]$:
+
+```{r}
+#| echo: true
+pred <- predict(mpl)
+range(pred)              # mínimo y máximo predicho
+sum(pred < 0); sum(pred > 1)   # ¿cuántas fuera de [0,1]?
+```
+
+## El problema del MPL {.smaller}
+
+```{r}
+#| echo: false
+#| fig-height: 4
+ggplot(mroz, aes(x = exper, y = inlf)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = "lm", se = FALSE, aes(color = "MPL (lm)"))
+```
+
+
+. . .
+
+::: callout-warning
+- El MPL predice probabilidades de hasta **113%** y de hasta **-34%**, lo
+que **no tiene sentido**.
+- Además, impone un efecto marginal **constante**y genera **heterocedasticidad**. Como la variable dependiente solo puede tomar los valores 0 y 1, la incertidumbre depende de la probabilidad del evento. Cuando la probabilidad está cerca de 0 o 1, el resultado es relativamente predecible y los errores presentan poca dispersión. Cuando la probabilidad está cerca de 0,5, ambos resultados son plausibles y los errores presentan mayor dispersión. Por ello, la varianza del error no puede ser constante y se deben utilizar errores estándar robustos.
+- Por lo tanto necesitamos una función que *acote* la predicción dentro de $[0,1]$.
+:::
+
+## Logit y probit: acotar la probabilidad {.smaller .justify}
+
+La solución es pasar la parte lineal por una **función de enlace**
+$G(\cdot)$ que siempre devuelve un valor entre 0 y 1:
+
+$$P(Y=1\mid X) = G(\beta_0 + \beta_1 x_1 + \cdots + \beta_k x_k)$$
+
+::: nonincremental
+- **Logit:** $G$ es la función logística $\dfrac{e^{z}}{1+e^{z}}$.
+- **Probit:** $G$ es la normal acumulada $\Phi(z)$.
+:::
+
+. . .
+
+Ambos se estiman con `glm()` (modelos lineales **generalizados**) por
+**máxima verosimilitud** (no entraremos en el detalle matemático).
+
+. . .
+
+::: callout-note
+La máxima verosimilitud elige los parámetros que hacen más probable observar los datos efectivamente registrados. A diferencia de MCO, que busca minimizar la suma de los residuos al cuadrado, la máxima verosimilitud utiliza la distribución probabilística del resultado; por eso es el método habitual en modelos logit y probit.
+:::
+
+## De la recta a la curva en "S" {.smaller .justify}
+
+```{r}
+#| echo: false
+#| fig-height: 4
+ggplot(mroz, aes(x = exper, y = inlf)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth(method = "lm", se = FALSE, aes(color = "MPL (lm)")) +
+  geom_smooth(method = "glm", se = FALSE,
+              method.args = list(family = "binomial"),
+              aes(color = "Logit (glm)")) +
+  scale_color_manual(values = c("MPL (lm)" = "red3", "Logit (glm)" = "steelblue")) +
+  labs(x = "Años de experiencia", y = "P(en la fuerza laboral = 1)", color = NULL)
+```
+
+La recta roja (MPL) puede **superar 1**; la curva azul (logit) se
+**mantiene** entre 0 y 1.
+
+## Logit en R {.smaller}
+
+Misma sintaxis de fórmula; solo cambiamos a `glm()` con
+`family = binomial`:
+
+```{r}
+#| echo: true
+logit <- glm(inlf ~ nwifeinc + educ + exper + I(exper^2) +
+               age + kidslt6 + kidsge6,
+             family = binomial(link = "logit"), data = mroz)
+tidy(logit) |> select(term, estimate, p.value)
+```
+
+. . .
+
+::: callout-important
+## El costo del logit: la interpretación
+Los coeficientes están en escala de **log-odds** (logaritmo de odds).
+El coeficiente de `educ` (**0.22**) **no** se lee como "+0.22 de
+probabilidad": solo es indicativo del **signo** del efecto (positivo o negativo) y la **significancia** (si es estadísticamente significativo). Para un número interpretable necesitamos calcular el **efecto marginal**.
+:::
+
+## Efectos marginales con `avg_slopes()` {.smaller}
+
+`avg_slopes()` (paquete `marginaleffects`) traduce los coeficientes a la
+**escala de la probabilidad**, que sí es interpretable:
+
+```{r}
+#| echo: true
+avg_slopes(logit)
+```
+
+. . .
+
+El efecto marginal promedio de `educ` es **≈ 0.039**: un año más de
+educación aumenta, en promedio, **~3.9 puntos porcentuales** la
+probabilidad de participar (casi idéntico al MPL, pero **sin** predecir
+fuera de $[0,1]$)
+
+## Dos formas de resumir el efecto marginal {.smaller}
+
+Como la curva no es una recta, la pendiente **cambia en cada punto**.
+Hay dos maneras habituales de resumirla en un solo número:
+
+::: incremental
+- **APE** (*Average Partial Effect*): calcula el efecto en **cada
+  observación** y luego **promedia**. Es lo que entrega `avg_slopes()`
+  por defecto y lo más recomendado.
+- **MEM / PEA** (*efecto en la media*): evalúa el efecto en la
+  observación **"promedio"** (todas las variables en su media).
+:::
+
+. . .
+
+::: callout-tip
+## En simple
+En la práctica pueden usar **`avg_slopes()`** (APE) para resolver el ejercicio correspondiente a esta materia en la tarea.
+:::
+
+## ¿Modelo logit o probit? {.smaller}
+
+- Ambos modelos se utilizan cuando la variable dependiente es binaria y garantizan que las probabilidades estimadas se encuentren dentro del intervalo $[0,1]$.
+
+- La principal diferencia radica en la función de distribución utilizada:
+  - el modelo **logit** emplea la distribución logística;
+  - el modelo **probit** emplea la distribución normal acumulada.
+
+- En muchas aplicaciones empíricas, ambos modelos producen predicciones y efectos marginales similares, aunque pueden diferir en observaciones ubicadas en los extremos de la distribución.
+
+- En R, la elección del modelo se realiza modificando el argumento `link`:
+
+. . .
+
+```{r}
+#| echo: true
+#| eval: false
+glm(inlf ~ educ + age, family = binomial(link = "logit"), data = mroz)
+glm(inlf ~ educ + age, family = binomial(link = "probit"), data = mroz)
+```
+
+. . .
+
+::: callout-tip
+## Recomendación
+- La elección entre logit y probit suele depender del contexto del estudio, la interpretación deseada y la comparación con estudios previos.
+
+- El modelo logit es más habitual y permite interpretar los coeficientes mediante odds y odds ratios. El modelo probit es frecuente cuando se supone la existencia de una variable latente con distribución normal.
+
+- En ambos casos, se recomienda mantener una especificación consistente y comunicar los resultados mediante probabilidades predichas o efectos marginales, por ejemplo con `avg_slopes()`.
+:::
+
+## 💻 Ejercicio rápido {.smaller}
+
+Estime un **logit** que explique `inlf` con `educ` y `age`, y muestre sus
+coeficientes con `tidy()`. ¿Qué signo tiene el coeficiente de `educ`?
+
+```{webr}
+library(wooldridge)
+library(broom)
+data(mroz)
+
+modelo <- glm(inlf ~ ___ + ___, ___ = ___, data = mroz)
+tidy(modelo)
+```
+
+## 🧠 Pregunta N° 1 {.quiz-question .smaller}
+
+Estimas un **logit** y el coeficiente de `educ` es **0.22**. ¿Cómo lo
+interpretas?
+
+::: nonincremental
+***Seleccione la opción correcta***
+
+- [Un año más de educación aumenta la probabilidad en 22 puntos porcentuales]{data-explanation="No. Los coeficientes del logit están en log-odds, no en probabilidad. 0.22 no es un cambio de 22 pp."}
+- [El modelo explica el 22% de la variación de inlf]{data-explanation="Eso sería una lectura tipo R², que además no aplica igual en un logit (se usa el pseudo-R²)."}
+- [La probabilidad predicha es siempre 0.22]{data-explanation="No; la probabilidad predicha varía con los valores de las variables explicativas siguiendo la curva logística."}
+- [Está en escala de log-odds: indica el signo y la significancia, pero para un efecto en probabilidad necesito calcular un efecto marginal(por ejemplo, con avg_slopes())]{.correct data-explanation="Correcto. El coeficiente crudo del logit vive en escala de log-odds. Para un número interpretable en la escala de probabilidad podemos usar avg_slopes() (efecto marginal promedio)."}
+:::
+
+# [Aplicaciones y misceláneos]{style="color:white"} {background-color="#173277"}
+
+## La transformación logarítmica {.smaller}
+
+Ya vimos que usar `log()` cambia la **interpretación** (a porcentajes /
+elasticidades). ¿Pero **cuándo conviene** aplicarla?
+
+::: incremental
+- Cuando la variable es **positiva** y está **muy sesgada a la derecha**
+  (ingresos, salarios, precios, población): el `log` **comprime** la cola
+  y acerca la distribución a una forma **simétrica**.
+- Cuando tiene sentido pensar en **cambios porcentuales** más que
+  absolutos (un aumento de "10%" es más natural que "10 dólares").
+- Cuando la relación entre variables es **multiplicativa** más que
+  aditiva.
+:::
+
+## Ejemplo: `wage` vs. `log(wage)` {.smaller}
+
+```{r}
+#| echo: true
+#| fig-height: 3.6
+g1 <- ggplot(wage1, aes(wage)) + geom_density(fill = "steelblue", alpha = .5) +
+  labs(title = "wage (sesgada a la derecha)", x = "Salario por hora")
+g2 <- ggplot(wage1, aes(log(wage))) + geom_density(fill = "seagreen", alpha = .5) +
+  labs(title = "log(wage) (más simétrica)", x = "log(Salario)")
+g1 | g2
+```
+
+. . .
+
+El salario tiene una **cola larga** a la derecha (asimetría ≈ 2.0); al
+tomar logaritmo la distribución se **simetriza** (asimetría ≈ 0.4). Por
+eso en economía se modela tan seguido `log(salario)`, `log(precio)`, etc.
+
+## Un recordatorio de fondo: explicar ≠ predecir {.smaller}
+
+::::::: columns
+:::: {.column width="50%"}
+::: {.fragment .fade-in}
+**Explicar** (foco en $\hat{\beta}$)
+
+- Entender **cómo se relacionan** las variables.
+- Interpretar coeficientes *ceteris paribus*, hacer **inferencia**.
+- Cuidar el **sesgo** (variables omitidas, causalidad).
+- **Es el foco de este curso.**
+:::
+::::
+
+:::: {.column width="50%"}
+::: {.fragment .fade-in}
+**Predecir** (foco en $\hat{y}$)
+
+- Que $\hat{y}$ esté lo más **cerca** posible del valor real.
+- Importa el desempeño **fuera de muestra**.
+- Cuidar el **sobreajuste**.
+- **Es el foco del Módulo 3 (Machine Learning).**
+:::
+::::
+:::::::
+
+. . .
+
+::: callout-tip
+Los mismos modelos sirven para ambas cosas, pero **las prioridades
+cambian**. Aquí nos importó el **por qué** ($\beta$); en Machine Learning importará predominantemente el **qué tan bien predice** ($\hat{y}$).
+:::
+
+## Inferencia causal: Un ejemplo concreto {.smaller}
+
+- Hasta ahora hemos revisado herramientas para modelar **asociaciones** *ceteris paribus*, no efectos
+  causales.
+
+- Estimar efectos **causales** con datos observacionales requiere un buen
+  **contrafactual**. Existen varios métodos (experimentos (RCT), matching,
+  variables instrumentales, regresión discontinua...), contenidos que **exceden
+  a este curso** pero pueden revisar la bibliografía sugeridad si quisieran profundizar las aplicaciones de los conocimientos vistos en este curso.
+
+- A continuación, estudiaremos superficialmente una estrategia básica muy usada en política pública para estimar impacto causal: **Diferencias en Diferencias (DiD)**.
+
+## Diferencias en Diferencias (DiD) {.smaller}
+
+La idea en una frase: comparar el **cambio antes/después** de un grupo
+**tratado** con el **cambio antes/después** de un grupo de **control**.
+
+. . .
+
+**Ejemplo clásico (Wooldridge):** en 1981 se construyó un **incinerador**
+de basura. ¿Cuánto **bajó el precio** de las casas **cercanas** por su
+culpa? Datos `kielmc`: precios en **1978** (antes) y **1981** (después),
+para casas **cercanas** (`nearinc = 1`) y **lejanas** (`nearinc = 0`).
+
+. . .
+
+```{r}
+#| echo: true
+kielmc |>
+  group_by(y81, nearinc) |>
+  summarise(precio_promedio = mean(rprice), .groups = "drop")
+```
+
+## La tabla 2x2 y la doble diferencia {.smaller}
+
+|                | Cercanas (trat.) | Lejanas (control) | Diferencia |
+|----------------|:---------------:|:----------------:|:----------:|
+| **1978 (antes)** | 63.693 | 82.517 | -18.824 |
+| **1981 (después)** | 70.619 | 101.308 | -30.689 |
+| **Cambio (después-antes)** | +6.926 | +18.790 | **-11.864** |
+
+. . .
+
+El estimador **DiD** es esa **doble diferencia = -11.864**: las casas
+cercanas al incinerador subieron **\$11.864 menos** que las lejanas. Ese
+número aísla el efecto del incinerador del alza **general** del mercado.
+
+## DiD = el coeficiente de la interacción {.smaller}
+
+No hace falta calcular la tabla a mano: el estimador DiD es exactamente
+el **coeficiente de la interacción** `periodo × tratamiento`:
+
+```{r}
+#| echo: true
+did <- lm(rprice ~ y81 * nearinc, data = kielmc)
+model_parameters(did) |> select(Parameter, Coefficient, p)
+```
+
+. . .
+
+::: callout-important
+## La clave del DiD
+El coeficiente de **`y81:nearinc` (≈ -11.864)** es el efecto estimado.
+`y81` capta la tendencia **común** del mercado y `nearinc` la diferencia
+**previa** entre zonas; la **interacción** aísla lo que le pasó **solo**
+a las casas cercanas **después** del incinerador. (Válido si, sin
+incinerador, ambos grupos hubieran evolucionado en **paralelo**.)
+:::
+
+## 🧠 Pregunta N° 2 {.quiz-question .smaller}
+
+En un DiD estimado como `lm(y ~ periodo * tratamiento)`, ¿cuál
+coeficiente estima el efecto causal del programa?
+
+::: nonincremental
+***Seleccione la opción correcta***
+
+- [El de `periodo`]{data-explanation="No. periodo capta el cambio común en el tiempo que afecta a AMBOS grupos (tratados y controles)."}
+- [El de `tratamiento`]{data-explanation="No. tratamiento capta la diferencia PREVIA entre grupos (antes de la intervención), no el efecto."}
+- [El de la interacción `periodo:tratamiento`]{.correct data-explanation="Correcto. La interacción es la 'doble diferencia': el cambio extra del grupo tratado respecto del control tras la intervención. Ese es el estimador DiD."}
+- [El intercepto]{data-explanation="El intercepto es el nivel del grupo de control en el período base; no mide el efecto."}
+:::
+
+## IA aplicada a la econometría {.smaller}
+
+Herramientas como **Gemini** u otros modelos abiertos pueden **acelerar**
+la producción del trabajo investigativo, **como apoyo** (no reemplazo) de los criterios utilizados. Piensen en la IA siempre como un asistente que los puede ayudar a:
+
+::: incremental
+- **Explicar salidas:** pegar una tabla de `model_parameters()` o
+  `avg_slopes()` y pedir una interpretación en palabras para revisarla.
+- **Depurar código R:** entender un error, sugerir por qué `glm()` no
+  converge o por qué una interacción quedó mal escrita.
+- **Sugerir especificaciones:** proponer formas funcionales (logs,
+  cuadráticos) o *checks* de supuestos a considerar. Sin embargo, el criterio humano y del experto en la materia es **clave** para tomar la decisión final o crear prompts que guien la implementación práctica de estrategias cuantitaivas adecuadas al contexto.
+- **Documentar y comunicar:** redactar comentarios, títulos de gráficos o
+  el resumen de resultados de un informe.
+:::
+
+## IA: La recomendación clave es usarla **siempre** con criterio {.smaller}
+
+::: callout-warning
+## Precauciones
+- La IA **puede equivocarse** (código ineficiente, interpretaciones
+  erróneas, funciones inexistentes). **Siempre deben verificar** y contrastar lo esperado contra la salida real en R.
+- La IA es apoyo a la **producción y comprensión** de código, **no** un
+  reemplazo de su juicio. La responsabilidad del análisis es **del investigador/analista**.
+- Recuerden la política para la **Tarea 2**: la IA se permite como
+  **asistencia**. Si utilizan funciones no vistas en clases, deben justificarlas.
+:::
+
+. . .
+
+**Buen prompt = buen resultado:** Siempre entreguen contexto (datos, objetivo,
+funciones permitidas) y no pidan que "resuelva" por ustedes.
+
+# [Repaso de la Tarea 2 y cierre]{style="color:white"} {background-color="#173277"}
+
+## Repaso Tarea 2: el hilo conductor {.smaller}
+
+La Tarea 2 recorrió **casi todo el módulo** con datos comunales de
+homicidios:
+
+| Preguntas | Concepto | Clase |
+|-----------|----------|:-----:|
+| 1–3 | Preparación de datos, dummy y exploración visual | 6–7 |
+| 4–5 | Regresión simple y **dummy** (diferencia de medias) | 7 |
+| 6–7 | **Múltiple**, *ceteris paribus* e **interacción** | 7 |
+| 8–9 | **Cuadrático** y modelo ampliado | 7 |
+| 10 | **Comparación** de modelos ($R^2_{adj}$, AIC/BIC, F) | 7 |
+| 11 | **Supuestos** y **errores robustos** | 7 |
+| 12 | **Logit** y `avg_slopes()` | **8** |
+| 13 + Bonus | **Correlación ≠ causalidad** y sobreajuste | 6–8 |
+
+## Repaso Tarea 2: los aprendizajes clave {.smaller}
+
+::: incremental
+- El coeficiente de una **dummy** es una **diferencia de medias**; al
+  agregar controles cambia su lectura.
+- Más variables ⇒ mayor $R^2$, pero en contexto de modelos de regresión lineal múltple  se recomienda usar **$R^2$ ajustado**,  **AIC/BIC** y **pruebas F**.
+- Si se detecta **heterocedasticidad**, podemos corregir la estimación con **`lm_robust()`**
+  (mismos $\beta$, otros errores estándar).
+- Con $Y$ **binaria** (por ej: comunas con al menos un homicidio) usamos **logit** y calculamos el efecto marginal con **`avg_slopes()`**.
+- Nada de esto prueba **causalidad**: son asociaciones. Y **maximizar el
+  $R^2$** metiendo todo (Bonus) es una **mala** estrategia.
+:::
+
+## Recomendaciones para el análisis de datos {.smaller}
+
+::: incremental
+1. **Partan de una pregunta:** Primero la pregunta y la teoría, después
+   los datos y finalmente la estimación (no al revés).
+2. **Entiendan los datos:** su origen, sus sesgos, sus limitaciones y sobre todo su fuente y qué representan (qué miden los datos: ¿denuncias? ¿víctimas? ¿victimarios? ¿investigaciones?). Exploren y entiendan en profundidad sus datos
+   antes de modelar.
+3. **Trabajen ordenado y de manera reproducible:** *tidy data*, buen orden de
+   carpetas y scripts, y un archivo `.qmd` o ``.Rmd` que cualquiera persona (o ustedes mismos) pueda re-ejecutar.
+4. **Sean transparentes:** no fuercen los datos hacia una conclusión (no hagan *cherry picking* para intentar validar su resultado deseado o esperado).
+5. **Comuniquen:** visualizaciones limpias y una interpretación clara; conozcan a su audiencia y para construir una presentación adecuada a ese público y simplifiquen en la medida de lo posible.
+:::
+
+## Mensaje final {.smaller}
+
+> En el análisis de datos moderno, la clave está en combinar una
+> **comprensión profunda de los datos**, el uso de **herramientas
+> adecuadas** y el compromiso con la **reproducibilidad y la
+> transparencia**. Cada paso (desde la limpieza hasta la comunicación) es una
+> oportunidad para aplicar estos principios. Conviértanse en analistas
+> **rigurosos** y comunicadores **efectivos**: el conocimiento que
+> generen será tan valioso como su capacidad para transmitirlo.
+
+. . .
+
+> "La disciplina es la parte más importante del éxito." — Truman Capote
+
+## Lo que viene {.smaller}
+
+- **Módulo 3 — Machine Learning:** el foco se mueve de **explicar**
+  ($\beta$) a **predecir** ($\hat{y}$), cuidando el desempeño **fuera de
+  muestra** y el **sobreajuste**.
+
+## Mensaje Final {.smaller}
+
+> La disciplina es la parte más importante del éxito (Truman Capote)
+
+. . .
+
+{{< video https://www.youtube.com/watch?v=MctxBZnhcAU width="560" height="315" >}}
+
+# ¡Gracias totales! 🎓
+
+## Bibliografía {.smaller}
+
+- Heiss, F. (2020). *Using R for Introductory Econometrics* (2ª ed.).
+- Wooldridge, J. (2020). *Introducción a la econometría* (7ª ed.).
+- Gertler, P. et al. (2017). *La evaluación de impacto en la práctica*
+  (BID / Banco Mundial).
+- Lüdecke et al. (2021). *easystats*: `parameters`, `performance`,
+  `marginaleffects`.
+

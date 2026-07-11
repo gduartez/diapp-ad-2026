@@ -1,0 +1,296 @@
+---
+title: "Tarea 2 (Pauta)"
+author: 'Gabriel Duarte'
+subtitle: 'Módulo 2 - Análisis de Datos y Estadística Computacional DIAPP-2026 UAI'
+date: today
+date-format: "D MMM YYYY"
+lang: es
+format:
+  html:
+    embed-resources: true
+    toc: true
+    toc-title: "Contenidos"
+    toc-depth: 2
+    theme: flatly
+editor: visual
+---
+
+# Instrucciones {style="text-align: justify"}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, warning = FALSE, message = FALSE)
+```
+
+La tarea debe responderse usando como base este archivo `.qmd` (Quarto document) o `.Rmd` (R Markdown) que se ha compartido en [WebCursos](https://webcursos.uai.cl/).
+
+Al terminar deberá hacer clic en `Render` (o presionar `Ctrl + Shift + K`) o `knit` en R Markdown para generar un archivo `HTML`.
+
+**Deberá enviar dos archivos:**
+
+1.  El archivo `.qmd` o `.Rmd` donde escribió su código y respuestas, renombrado con su apellido y nombre: `Tarea2M2_ApellidoNombre.qmd`.
+2.  El archivo `HTML` generado a partir de este: `Tarea2M2_ApellidoNombre.html`.
+
+**Se descontarán puntos si no se siguen estas instrucciones de nomenclatura y entrega.** Asegúrese de que el archivo `HTML` efectivamente muestre los resultados que usted vio en su computador antes de enviarlo.
+
+Recuerde que el código va dentro de un *code chunk*, el cual se puede insertar con el atajo `Ctrl + Alt + I` (Mac: `Cmd + Option + I`) o con el botón *Insert* en la esquina superior derecha del editor.
+
+## Evaluación
+
+Esta tarea consta de **13 preguntas** en total. La nota final se calcula con la siguiente fórmula:
+
+$$Nota = \frac{\text{Puntaje obtenido}}{13}\times 6 +1$$
+
+Adicionalmente, hay una pregunta de **BONUS** que es **OPCIONAL** y cuyo puntaje se sumará al puntaje final en caso de responderla correctamente.
+
+## Sobre las respuestas
+
+Cuando se solicite, en sus respuestas no solo deberá entregar el código que produce la respuesta a cada pregunta, sino que también será necesario que **redacte brevemente qué es lo que obtiene**. Además, su respuesta debe incorporar una **justificación o análisis** cuando así se solicite.
+
+## Fecha de entrega
+
+**Hasta las 23:59 del domingo 19 de julio de 2026** a través de [WebCursos](https://webcursos.uai.cl/) en el buzón correspondiente.
+
+## Sobre la integridad académica y el uso de IA
+
+Esta evaluación es **INDIVIDUAL**. Cualquier evidencia de copia o plagio será penalizada e informada a la coordinación académica del diplomado.
+
+El uso de Inteligencia Artificial (IA) está permitido **solo como asistencia** en la generación del código o en su explicación. La IA es una herramienta de **apoyo a la producción y entendimiento de código**, no de reemplazo de sus habilidades. Los códigos generados por IA con prompts genéricos pueden contener errores o ser ineficientes para los objetivos de la tarea.
+
+**Debe usar solo las funciones revisadas en clases** (presentaciones y guías de ejercicios) a menos que se señale el uso explícito de otras funciones. Cualquier otra función o librería utilizada deberá ser **justificada** por el alumno, indicando el motivo de uso. Se penalizará con reducción parcial o total del puntaje de cada pregunta que no cumpla con esta condición.
+
+## Paquetes necesarios
+
+Antes de comenzar, cargue los paquetes que serán necesarios para el desarrollo de la tarea. Recuerde que si no tiene algún paquete instalado, debe hacerlo con `install.packages("nombre_paquete")` antes de cargarlo, o bien usar `p_load()` del paquete `pacman`.
+
+```{r}
+library(pacman)
+p_load(
+  tidyverse,
+  readxl,
+  performance,
+  parameters,
+  sjPlot,
+  ggeffects,
+  estimatr,
+  marginaleffects,
+  broom,
+  moderndive,
+  modelsummary,
+  infer
+)
+
+rm(list = ls())     # Limpiar el environment
+```
+
+::: {callout-warning}
+No se recomienda cargar el entorno `easystats` para esta tarea. Esto puede enmascarar algunas de las funciones que hemos utilizado en clases provocando potenciales errores, por lo que se sugiere remitirse exclusivamente a los paquetes indicados en el chunk de código anterior
+:::
+
+## Archivos de datos
+
+Coloque los siguientes archivos en una carpeta `data/` dentro de su proyecto:
+
+- `homicidios_tarea2.xlsx` — Víctimas de homicidio consumado (2018–2025) con diferentes variables a nivel comunal cuya descripción puede encontrar en el Anexo I.
+
+\newpage
+
+En esta tarea seguiremos trabajando con datos del [Centro para la Prevención de Homicidios y Delitos Violentos](https://prevenciondehomicidios.cl/), pero ahora con el objetivo de intentar explicar qué variables influyen en la  la violencia letal de los territorios, aproximándonos a esta variable de respuesta mediante la tasa de víctimas de homicidios consumados a nivel comunal en Chile.  Para ello, el *dataset* incorpora diversa información adicional a nivel comunal tal como tasa de pobreza, tasa de población migrante, escolaridad promedio, densidad poblacional, entre otras.
+
+# Preguntas Tarea 2 {style="text-align: justify"}
+
+## Pregunta 1
+
+1.  Cargue la base de datos `homicidios_tarea2.xlsx` y guárdelo en el objeto `homicidios1`. Muestre la estructura del *dataset* indicando la cantidad de observaciones, cantidad de variables y cuáles de ellas no son numéricas. Usando `slice_max()` muestre cuál es la comuna con mayor cantidad de víctimas de homicidio consumado para cada región en la serie histórica 2018-2025 según la variable `hom_totales`. Para precisar la información, solo seleccione solo las columnas `nombre_comuna` y `hom_totales`. *(Hint: debiese obtener una tabla con 16 filas, o 1 comuna para cada una de las 16 regiones del país, y 3 columnas: región, nombre_comuna y hom_totales)*
+
+```{r}
+homicidios1 <- read_excel('data/clean/homicidios_tarea2.xlsx')
+
+glimpse(homicidios1)
+
+homicidios1 |>
+  group_by(region) |>
+  slice_max(hom_totales, n = 1) |>
+  select(nombre_comuna, hom_totales)
+```
+
+**Respuesta: El dataframe tiene 315 observaciones y 38 columnas o variables. Las únicas variables no numéricas son  `nombre_comuna`, `region` y `categoria_pndr`**
+
+## Pregunta 2
+
+2.  Sobrescriba `homicidios1` creando una nueva variable dicotómica llamada `urbana` a partir de la variable `categoría_pndr`, la cual sea igual a 1 cuando la comuna sea `“Urbana”` y 0 en otro caso. Adicionalmente, cree la variable `pobreza_pct` y `migrantes_pct` multiplicando la variable `tasa_pobreza` e `inmigrantes_2024` por 100 respectivamente (Esto nos ayudará posteriormente a interpretar el coeficiente estimado de esta variable como el efecto marginal en “puntos porcentuales”). ¿Cuántas comunas de las 315 con al menos una víctima de homicidio en la serie histórica son urbanas?. Por último, convierta la variable `urbana` a factor indicando las etiquetas (labels) de "Rural o Mixta" cuando urbana sea = 0 y "Urbana" cuando `urbana` sea = 1 procurando sobrescribir este cambio en `homicidios1` . Corrobore que la categorización quedó bien realizada contando cuantas comunas "Rurales o Mixtas" aparecen en su nuevo *dataframe*.  *(Hint: Para la creación de una variable dicotómica, puede simplificar la sintaxis usando la función if_else()).*
+
+```{r}
+homicidios2 <- homicidios1 |>
+  mutate(
+    urbana = if_else(categoria_pndr == "Urbana", 1, 0),
+    pobreza_pct = tasa_pobreza * 100,
+    migrantes_pct = tasa_migrantes * 100
+  )
+
+homicidios2 |>
+  count(urbana)
+
+homicidios2 <- homicidios2 |>
+  mutate(urbana = factor(urbana, labels = c("Rural o Mixta", "Urbana")))
+
+homicidios2 |>
+  count(urbana)
+```
+
+## Pregunta 3
+
+3.  Haga un gráfico de dispersión que muestra la relación entre el porcentaje de migrantes y la tasa de homicidios 2024 presente en su *dataset* diferenciando colores por la variable `urbana`. Para darle un toque más distintivo puede usar `scale_color_sjplot()` u otra paleta de colres que se ajuste a sus preferencias. ¿Qué relación observa entre estas variables?
+
+```{r}
+ggplot(
+  homicidios2,
+  aes(x = migrantes_pct, y = tasa_homicidios24, color = urbana)
+) +
+  geom_point(alpha = 0.8) +
+  scale_color_sjplot() +
+  labs(
+    x = "Población Migrante (%)",
+    y = "Tasa de homicidios cada 100.000 hab.",
+    color = "Clasificación PNDR"
+  )
+```
+
+## Pregunta 4
+
+4.  Ajuste un modelo de regresión simple que estime la relación observada en la pregunta 3 entre la `tasa_homicidios24` (variable dependiente) y `migrantes_pct` (variable explicativa) y muestre los resultados utilizando alguna de las funciones vistas en clase (por ejemplo, `model_parameters()`) ¿Qué valor tiene la pendiente de la recta que ajusta estas dos variables? ¿Es estadísticamente significativa esta relación? 
+
+```{r}
+reg1 <- lm(tasa_homicidios24 ~ migrantes_pct, data = homicidios2)
+
+model_parameters(reg1)
+```
+
+## Pregunta 5
+
+5.  Estime un modelo de regresión simple utilizando la misma variable dependiente (`tasa_homicidios24`) pero reemplazando la variable explicativa por `urbana` ¿Cómo se interpreta el coeficiente estimado asociado a la variable `urbana`? ¿Que puede concluir a partir de los resultados de la regresión?
+
+```{r}
+reg2 <- lm(tasa_homicidios24 ~ urbana, data = homicidios2)
+
+model_parameters(reg2)
+
+```
+
+## Pregunta 6
+
+6. Estime un modelo de regresión múltiple incorporando como variables explicativas `esc_promedio_s18` y `urbana` ¿Cómo se interpreta el coeficiente de `urbana` ahora? Visualice la relación entre la escolaridad promedio de la población mayor de edad y la tasa de homicidios 2024 diferenciando las rectas estimadas según `urbana`. Para responder esto, apóyese en la construcción de un gráfico usando `geom_parallel_slopes(se = FALSE)` ocupando `esc_promedio_s18` en el eje x
+
+```{r}
+reg3 <- lm(
+  tasa_homicidios24 ~ esc_promedio_s18 + urbana,
+  data = homicidios2
+)
+
+model_parameters(reg3)
+
+ggplot(
+  homicidios2,
+  aes(x = esc_promedio_s18, y = tasa_homicidios24, color = urbana)
+) +
+  geom_point(alpha = 0.4) +
+  geom_parallel_slopes(se = FALSE) +
+  labs(
+    x = "Escolaridad promedio de la población mayor de edad",
+    y = "Tasa de homidios cada 100.000 habitantes",
+    color = "Clasificación PNDR"
+  )
+```
+
+## Pregunta 7
+
+7.  Usando `homicidios_anual`, construya un gráfico de **línea** que muestre la evolución de la tasa de homicidios (`tasa`) a lo largo de los años (`anio`). Use color `"red3"` y grosor `linewidth = 2`. Guarde el gráfico en el objeto `p1`.
+
+```{r}
+
+```
+
+## Pregunta 8
+
+8.  Sobre el gráfico `p1`, añada las siguientes mejoras y guárdelo en `p1_v2`:
+
+
+```{r}
+
+```
+
+## Pregunta 9
+
+9.  riba brevemente.
+
+```{r}
+
+```
+
+**Respuesta: La tasa de homicidios muestra una tendencia creciente entre 2018 y 2022, alcanzando su punto máximo en 2022 (6,8 por cada 100 mil habitantes). A partir de ese año se observa una disminución sostenida hasta 2025, aunque la tasa sigue siendo superior a la registrada en 2018.**
+
+## Pregunta 10
+
+10. A partir del objeto `homicidios`, cree dos objetos:
+
+
+```{r}
+
+```
+
+## Pregunta 11
+
+11. 
+
+```{r}
+
+```
+
+## Pregunta 12
+
+12. 
+
+```{r}
+
+```
+
+## Pregunta 13
+
+13. 
+
+```{r}
+
+```
+
+## Pregunta 14
+
+14. 
+
+```{r}
+
+```
+
+
+# BONUS: Pregunta de razonamiento {style="text-align: justify"}
+
+15. Un colega le dice que para explicar la variabilidad de la violencia letal en los territorios la mejor estrategia es agregar la mayor cantidad de variables posibles con el fin de maximizar el $R^2$ y le pide a usted que estime un modelo con todas las variables disponibles que no sean redundantes. Para ello, primero seleccione las siguientes variables y guárdelas en un objeto llamado homicidios_r2 ejecutando el siguiente código:
+
+```{r}
+homicidios_r2 <- homicidios2 |>
+  select(tasa_homicidios24:last_col(), -tasa_migrantes)
+```
+
+Estime el modelo utilizando como variable dependiente `tasa_homicidios24` y como variable explicativa el resto de las variables presentes en `homicidios_r2` (*Hint: un atajo para establecer como control todas las variables de la base a excepción de la dependiente es usar la siguiente fórmula: lm(y ~ ., data = datos)*)
+
+Analice el $R^2$ y $R^2_{adj}$ (o r cuadrado ajustado) y coméntele a su colega lo que opina de esa estrategia aplicada a estos datos y de un argumento adicional al r-cuadrado de por qué es una buena o mala estrategia empírica:
+
+```{r}
+reg_bonus <- lm(tasa_homicidios24 ~ ., data = homicidios_r2)
+summary(reg_bonus)
+```
+
+
+**Respuesta:** Lo que nos pide nuestro colega tiene varios problemas:
+
+1. Al incluir todas las variables es verdad que el  $R^2$, pero en este contexto es más pertinente fijarse en el $R^2_{adj}$. Comparado con los últimos modelos, este indicador es más bajo por lo que desde esta perspectiva no es una buena estrategia.
+2. En segundo lugar, lo que está haciendo su colega es tratar de predecir una variable solo con variables explicativas sin tener un modelo detrás ni entender los datos. Es siempre importante buscar modelos teóricos que permitan sustentar la hipótesis y ajuste que se realiza con los datos (recordar que el orden recomendado para una pregunta de investigación social es: pregunta - modelo - datos - estimación; no al revés).
+

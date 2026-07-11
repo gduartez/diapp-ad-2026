@@ -13,7 +13,7 @@ project:
     - "05-inferencia/*.qmd"
     - "06-regresion1/*.qmd"
     - "07-regresion2/*.qmd"
-    - "!08-eda/*.qmd"
+    - "08-eda/*.qmd"
 
 website:
   title: "DIAPP 2026 · Análisis de Datos"

@@ -1,0 +1,392 @@
+---
+title: "Tarea 2 (Pauta)"
+author: 'Gabriel Duarte'
+subtitle: 'Módulo 2 - Análisis de Datos y Estadística Computacional DIAPP-2026 UAI'
+date: "2026-07-10"
+date-format: "D MMM YYYY"
+lang: es
+format:
+  html:
+    embed-resources: true
+    toc: true
+    toc-title: "Contenidos"
+    toc-depth: 2
+    theme: flatly
+editor: visual
+---
+
+# Instrucciones {style="text-align: justify"}
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, warning = FALSE, message = FALSE)
+```
+
+La tarea debe responderse usando como base este archivo `.qmd` (Quarto document) o `.Rmd` (R Markdown) que se ha compartido en [WebCursos](https://webcursos.uai.cl/).
+
+Al terminar deberá hacer clic en `Render` (o presionar `Ctrl + Shift + K`) o `knit` en R Markdown para generar un archivo `HTML`.
+
+**Deberá enviar dos archivos:**
+
+1.  El archivo `.qmd` o `.Rmd` donde escribió su código y respuestas, renombrado con su apellido y nombre: `Tarea2M2_ApellidoNombre.qmd`.
+2.  El archivo `HTML` generado a partir de este: `Tarea2M2_ApellidoNombre.html`.
+
+**Se descontarán puntos si no se siguen estas instrucciones de nomenclatura y entrega.** Asegúrese de que el archivo `HTML` efectivamente muestre los resultados que usted vio en su computador antes de enviarlo.
+
+Recuerde que el código va dentro de un *code chunk*, el cual se puede insertar con el atajo `Ctrl + Alt + I` (Mac: `Cmd + Option + I`) o con el botón *Insert* en la esquina superior derecha del editor.
+
+## Evaluación
+
+Esta tarea consta de **13 preguntas** en total. La nota final se calcula con la siguiente fórmula:
+
+$$Nota = \frac{\text{Puntaje obtenido}}{13}\times 6 +1$$
+
+Adicionalmente, hay una pregunta de **BONUS** que es **OPCIONAL** y cuyo puntaje se sumará al puntaje final en caso de responderla correctamente.
+
+## Sobre las respuestas
+
+Cuando se solicite, en sus respuestas no solo deberá entregar el código que produce la respuesta a cada pregunta, sino que también será necesario que **redacte brevemente qué es lo que obtiene**. Además, su respuesta debe incorporar una **justificación o análisis** cuando así se solicite.
+
+## Fechas
+
+- **Fecha de publicación:** viernes 10 de julio de 2026.
+- **Fecha de entrega:** hasta las **23:59 del domingo 19 de julio de 2026** a través de [WebCursos](https://webcursos.uai.cl/) en el buzón correspondiente.
+
+## Sobre la integridad académica y el uso de IA
+
+Esta evaluación es **INDIVIDUAL**. Cualquier evidencia de copia o plagio será penalizada e informada a la coordinación académica del diplomado.
+
+El uso de Inteligencia Artificial (IA) está permitido **solo como asistencia** en la generación del código o en su explicación. La IA es una herramienta de **apoyo a la producción y entendimiento de código**, no de reemplazo de sus habilidades. Los códigos generados por IA con prompts genéricos pueden contener errores o ser ineficientes para los objetivos de la tarea.
+
+**Debe usar solo las funciones revisadas en clases** (presentaciones y guías de ejercicios) a menos que se señale el uso explícito de otras funciones. Cualquier otra función o librería utilizada deberá ser **justificada** por el alumno, indicando el motivo de uso. Se penalizará con reducción parcial o total del puntaje de cada pregunta que no cumpla con esta condición.
+
+## Paquetes necesarios
+
+Antes de comenzar, cargue los paquetes que serán necesarios para el desarrollo de la tarea. Recuerde que si no tiene algún paquete instalado, debe hacerlo con `install.packages("nombre_paquete")` antes de cargarlo, o bien usar `p_load()` del paquete `pacman`.
+
+```{r}
+library(pacman)
+p_load(
+  tidyverse,
+  readxl,
+  performance,
+  parameters,
+  sjPlot,
+  ggeffects,
+  estimatr,
+  marginaleffects,
+  broom,
+  moderndive,
+  modelsummary,
+  infer
+)
+```
+
+::: callout-warning
+No se recomienda cargar el entorno `easystats` para esta tarea. Esto puede enmascarar algunas de las funciones que hemos utilizado en clases provocando potenciales errores, por lo que se sugiere remitirse exclusivamente a los paquetes indicados en el chunk de código anterior.
+:::
+
+## Archivos de datos
+
+Coloque los siguientes archivos en una carpeta `data/` dentro de su proyecto:
+
+- `homicidios_tarea2.xlsx` — Víctimas de homicidio consumado (2018–2025) con diferentes variables a nivel comunal cuya descripción puede encontrar en el Anexo I.
+
+En esta tarea seguiremos trabajando con datos del [Centro para la Prevención de Homicidios y Delitos Violentos](https://prevenciondehomicidios.cl/), pero ahora con el objetivo de intentar explicar qué variables influyen en la violencia letal de los territorios, aproximándonos a esta variable de respuesta mediante la tasa de víctimas de homicidios consumados a nivel comunal en Chile. Para ello, el *dataset* incorpora diversa información adicional a nivel comunal tal como tasa de pobreza, tasa de población migrante, escolaridad promedio, densidad poblacional, entre otras.
+
+# Preguntas Tarea 2 {style="text-align: justify"}
+
+## Pregunta 1
+
+1.  Cargue la base de datos `homicidios_tarea2.xlsx` y guárdelo en el objeto `homicidios1`. Muestre la estructura del *dataset* indicando la cantidad de observaciones, cantidad de variables y cuáles de ellas no son numéricas. Usando `slice_max()` muestre cuál es la comuna con mayor cantidad de víctimas de homicidio consumado para cada región en la serie histórica 2018-2025 según la variable `hom_totales`. Para precisar la información, solo seleccione solo las columnas `nombre_comuna` y `hom_totales`. *(Hint: debiese obtener una tabla con 16 filas, o 1 comuna para cada una de las 16 regiones del país, y 3 columnas: región, nombre_comuna y hom_totales)*
+
+```{r}
+homicidios1 <- read_excel('data/homicidios_tarea2.xlsx')
+
+glimpse(homicidios1)
+
+homicidios1 |>
+  group_by(region) |>
+  slice_max(hom_totales, n = 1) |>
+  select(nombre_comuna, hom_totales)
+```
+
+**Respuesta: El dataframe tiene 315 observaciones y 38 columnas o variables. Las únicas variables no numéricas son `nombre_comuna`, `region` y `categoria_pndr`.**
+
+## Pregunta 2
+
+2.  Cree un nuevo objeto llamado `homicidios2` usando como base `homicidios1` y creando una nueva variable dicotómica llamada `urbana` a partir de la variable `categoría_pndr`, la cual sea igual a 1 cuando la comuna sea `“Urbana”` y 0 en otro caso. Adicionalmente, cree la variable `pobreza_pct` y `migrantes_pct` multiplicando la variable `tasa_pobreza` e `tasa_migrantes` por 100 respectivamente (Esto nos ayudará posteriormente a interpretar el coeficiente estimado de esta variable como el efecto marginal en “puntos porcentuales”). ¿Cuántas comunas de las 315 con al menos una víctima de homicidio en la serie histórica son urbanas?. Por último, convierta la variable `urbana` a factor indicando las etiquetas (labels) de "Rural o Mixta" cuando urbana sea = 0 y "Urbana" cuando `urbana` sea = 1 procurando sobrescribir este cambio en `homicidios1`. Corrobore que la categorización quedó bien realizada contando cuantas comunas "Rurales o Mixtas" aparecen en su nuevo *dataframe*. *(Hint: Para la creación de una variable dicotómica, puede simplificar la sintaxis usando la función if_else()).*
+
+```{r}
+homicidios2 <- homicidios1 |>
+  mutate(
+    urbana = if_else(categoria_pndr == "Urbana", 1, 0),
+    pobreza_pct = tasa_pobreza * 100,
+    migrantes_pct = tasa_migrantes * 100
+  )
+
+homicidios2 |>
+  count(urbana)
+
+homicidios2 <- homicidios2 |>
+  mutate(urbana = factor(urbana, labels = c("Rural o Mixta", "Urbana")))
+
+homicidios2 |>
+  count(urbana)
+```
+
+**Respuesta: De las 315 comunas, 84 son urbanas. Tras convertir `urbana` a factor (referencia = "Rural o Mixta"), el conteo confirma 231 comunas "Rural o Mixta" y 84 "Urbana", lo que valida que las etiquetas quedaron bien asignadas.**
+
+## Pregunta 3
+
+3.  Haga un gráfico de dispersión que muestra la relación entre el porcentaje de migrantes y la tasa de homicidios 2024 presente en su *dataset* diferenciando colores por la variable `urbana`. Para darle un toque más distintivo puede usar `scale_color_sjplot()` u otra paleta de colres que se ajuste a sus preferencias. ¿Qué relación observa entre estas variables?
+
+```{r}
+ggplot(
+  homicidios2,
+  aes(x = migrantes_pct, y = tasa_homicidios24, color = urbana)
+) +
+  geom_point(alpha = 0.8) +
+  scale_color_sjplot() +
+  labs(
+    x = "Población Migrante (%)",
+    y = "Tasa de homicidios cada 100.000 hab.",
+    color = "Clasificación PNDR"
+  )
+```
+
+**Respuesta: Se observa una relación positiva entre el porcentaje de población migrante y la tasa de homicidios 2024: las comunas con mayor porcentaje de migrantes tienden a presentar tasas de homicidio más altas. La nube de puntos muestra además que las comunas urbanas se concentran en niveles distintos a las rurales/mixtas, lo que sugiere que conviene controlar por esa clasificación.**
+
+## Pregunta 4
+
+4.  Ajuste un modelo de regresión simple que estime la relación observada en la pregunta 3 entre la `tasa_homicidios24` (variable dependiente) y `migrantes_pct` (variable explicativa) y muestre los resultados utilizando alguna de las funciones vistas en clase (por ejemplo, `model_parameters()`) ¿Qué valor tiene la pendiente de la recta que ajusta estas dos variables? ¿Es estadísticamente significativa esta relación?
+
+```{r}
+reg1 <- lm(tasa_homicidios24 ~ migrantes_pct, data = homicidios2)
+
+model_parameters(reg1)
+```
+
+**Respuesta: La pendiente (coeficiente de `migrantes_pct`) es ≈ 0.27: por cada punto porcentual adicional de población migrante, la tasa de homicidios aumenta en promedio 0.27 por cada 100.000 habitantes. Con un p-value muy pequeño (≈ 2.7e-05 \< 0.05), la relación es estadísticamente significativa. Al ser una regresión simple, mide *asociación*, no un efecto causal.**
+
+## Pregunta 5
+
+5.  Estime un modelo de regresión simple utilizando la misma variable dependiente (`tasa_homicidios24`) pero reemplazando la variable explicativa por `urbana` ¿Cómo se interpreta el coeficiente estimado asociado a la variable `urbana`? ¿Que puede concluir a partir de los resultados de la regresión?
+
+```{r}
+reg2 <- lm(tasa_homicidios24 ~ urbana, data = homicidios2)
+
+model_parameters(reg2)
+```
+
+**Respuesta: Como `urbana` es una dummy (referencia = "Rural o Mixta"), el intercepto (≈ 5.55) es la tasa promedio de las comunas rurales/mixtas y el coeficiente de `urbana [Urbana]` (≈ 0.81) es la *diferencia de medias*: las comunas urbanas tienen en promedio 0.81 homicidios más por 100.000 hab. (6.36 vs 5.55). Sin embargo, el p-value ≈ 0.40 (\> 0.05): la diferencia NO es significativa, por lo que con esta única variable no hay evidencia de que la tasa difiera por tipo de comuna.**
+
+## Pregunta 6
+
+6.  Estime un modelo de regresión múltiple incorporando como variables explicativas `esc_promedio_s18` y `urbana` ¿Cómo se interpreta el coeficiente de `urbana` ahora? Visualice la relación entre la escolaridad promedio de la población mayor de edad y la tasa de homicidios 2024 diferenciando las rectas estimadas según `urbana`. Para responder esto, apóyese en la construcción de un gráfico usando `geom_parallel_slopes(se = FALSE)` ocupando `esc_promedio_s18` en el eje x
+
+```{r}
+reg3 <- lm(
+  tasa_homicidios24 ~ esc_promedio_s18 + urbana,
+  data = homicidios2
+)
+
+model_parameters(reg3)
+
+ggplot(
+  homicidios2,
+  aes(x = esc_promedio_s18, y = tasa_homicidios24, color = urbana)
+) +
+  geom_point(alpha = 0.4) +
+  geom_parallel_slopes(se = FALSE) +
+  labs(
+    x = "Escolaridad promedio de la población mayor de edad",
+    y = "Tasa de homidios cada 100.000 habitantes",
+    color = "Clasificación PNDR"
+  )
+```
+
+**Respuesta: Ahora el coeficiente de `urbana` (≈ 3.78, p ≈ 0.003) mide la diferencia entre comunas urbanas y rurales/mixtas *a igual escolaridad*: al controlar por `esc_promedio_s18`, las comunas urbanas pasan a tener una tasa significativamente mayor. Este cambio respecto de la Pregunta 5 ilustra la lógica *ceteris paribus* (la escolaridad estaba enmascarando la diferencia). El coeficiente de `esc_promedio_s18` (≈ -1.61, p \< 0.001) indica que a mayor escolaridad promedio, menor tasa de homicidios. El gráfico con `geom_parallel_slopes()` muestra dos rectas paralelas: mismo efecto de la escolaridad, distinto intercepto.**
+
+## Pregunta 7
+
+7.  Estime un modelo de regresión múltiple que agregue como controles `pobreza_pct` y `migrantes_pct` e incorpore una **interacción** entre `urbana` y `esc_promedio_s18` (sintaxis `urbana * esc_promedio_s18`). Guárdelo en `reg4`. ¿Qué mide el término de interacción? ¿El efecto de la escolaridad sobre la tasa de homicidios difiere entre comunas urbanas y rurales/mixtas? Apóyese en `plot_model(type = "pred")` para visualizarlo.
+
+```{r}
+reg4 <- lm(
+  tasa_homicidios24 ~ pobreza_pct + migrantes_pct + urbana * esc_promedio_s18,
+  data = homicidios2
+)
+
+model_parameters(reg4)
+
+plot_model(reg4, type = "pred", terms = c("esc_promedio_s18", "urbana"))
+```
+
+**Respuesta: El término `urbana × esc_promedio_s18` (≈ -0.22) mide cuánto difiere la pendiente de la escolaridad entre comunas urbanas y rurales/mixtas. Su p-value ≈ 0.80 indica que NO es significativo: no hay evidencia de que el efecto de la escolaridad difiera por tipo de comuna (las rectas del gráfico tienen pendientes casi iguales). En este modelo `migrantes_pct` (≈ 0.38) sigue siendo positivo y muy significativo, y `pobreza_pct` (≈ 0.16) resulta significativo al 5%.**
+
+## Pregunta 8
+
+8.  A partir del modelo anterior, incorpore la **densidad poblacional** con un **término cuadrático** (`densidad_poblacional + I(densidad_poblacional^2)`) para permitir un efecto marginal no constante. Guárdelo en `reg5`. Interprete el signo de los coeficientes del término lineal y cuadrático, grafique el efecto predicho con `plot_model(type = "pred", terms = "densidad_poblacional [all]")` y compare `reg4` y `reg5` con `modelsummary()`.
+
+```{r}
+reg5 <- lm(
+  tasa_homicidios24 ~ pobreza_pct +
+    migrantes_pct +
+    urbana * esc_promedio_s18 +
+    densidad_poblacional +
+    I(densidad_poblacional^2),
+  data = homicidios2
+)
+
+model_parameters(reg5)
+
+plot_model(reg5, type = "pred", terms = "densidad_poblacional [all]") +
+  labs(
+    title = "Tasa de homicidios predicha según densidad poblacional",
+    x = "Densidad poblacional (hab/km2)",
+    y = "Tasa de homidios cada 100.000 habitantes"
+  )
+
+modelsummary(
+  list("Interacción (reg4)" = reg4, "Con cuadrático (reg5)" = reg5),
+  stars = TRUE,
+  gof_map = c("nobs", "r.squared", "adj.r.squared")
+)
+```
+
+**Respuesta: El efecto marginal de la densidad ya no es constante, sino** $\beta_1 + 2\beta_2 \cdot densidad$. El coeficiente lineal es positivo y el cuadrático negativo (forma de U invertida). No obstante, aquí la evidencia de curvatura es débil**: el término cuadrático es solo marginalmente significativo (p ≈ 0.08) y el lineal no alcanza significancia. El** $R^2$ ajustado sube muy poco respecto de `reg4` (≈ 0.126 → ≈ 0.131), por lo que la densidad aporta poco en estos datos. El gráfico ayuda a visualizar la forma de la relación.
+
+## Pregunta 9
+
+9.  Estime un modelo **ampliado** (`reg6`) que incluya `pobreza_pct`, `migrantes_pct`, `esc_promedio_s18`, la densidad con su término cuadrático (`densidad_poblacional + I(densidad_poblacional^2)`) y `tasa_drogas24`. Compare `reg5` y `reg6` con `tab_model()`. ¿Aporta la variable `tasa_drogas24` a la explicación de la violencia letal?
+
+```{r}
+reg6 <- lm(
+  tasa_homicidios24 ~
+    pobreza_pct +
+    migrantes_pct +
+    esc_promedio_s18 +
+    densidad_poblacional +
+    I(densidad_poblacional^2) +
+    tasa_drogas24,
+  data = homicidios2
+)
+
+model_parameters(reg6)
+
+tab_model(reg5, reg6, p.style = "numeric_stars")
+```
+
+**Respuesta:** `tasa_drogas24` entra con coeficiente ≈ 0.014 y p-value muy pequeño (≈ 2e-06): es un predictor teóricamente plausible, pues la violencia letal se asocia a economías ilícitas). Al incluirlo, el $R^2$ ajustado sube a ≈ 0.187, el mayor hasta ahora. El modelo se estima sobre 310 observaciones (5 comunas tienen `tasa_drogas24` faltante). Aquí `pobreza_pct` deja de ser significativo, mientras que `migrantes_pct`, `esc_promedio_s18` y `densidad_poblacional` se mantienen.
+
+## Pregunta 10
+
+10. Compare los modelos `reg1`, `reg4` y `reg6`  estimados con `compare_performance(..., rank = TRUE)`. Luego realice una prueba F anidada con `anova()` entre un modelo simple, uno intermedio y el ampliado. *(Nota: `anova()` requiere que los modelos se estimen sobre la **misma muestra**; como `tasa_drogas24` puede tener valores perdidos, primero filtre esas filas para que todos los modelos comparen el mismo número de observaciones.)* ¿Qué modelo prefiere y por qué?
+
+```{r}
+compare_performance(reg1, reg4, reg6, rank = TRUE)
+
+# anova() exige la MISMA muestra en todos los modelos:
+homicidios_f <- homicidios2 |>
+  filter(!is.na(tasa_drogas24))
+
+reg1_f <- lm(tasa_homicidios24 ~ migrantes_pct, data = homicidios_f)
+
+reg4_f <- lm(
+  tasa_homicidios24 ~ pobreza_pct + migrantes_pct + urbana * esc_promedio_s18,
+  data = homicidios_f
+)
+
+anova(reg1_f, reg4_f, reg6)
+```
+
+**Respuesta: `compare_performance(rank = TRUE)` ubica a `reg6` como el mejor modelo (mayor** $R^2$ ajustado ≈ 0.187 y menores AIC/BIC). La prueba F anidada con `anova()` —estimada sobre la misma muestra tras filtrar los NA de `tasa_drogas24`— confirma que cada ampliación aporta información significativa. Se prefiere `reg6` por lograr el mejor balance entre ajuste y parsimonia, no simplemente por tener el $R^2$ más alto.
+
+## Pregunta 11
+
+11. Evalúe los supuestos del modelo `reg6` usando `check_model()` y `check_heteroscedasticity()`. Si detecta heterocedasticidad, reestime el modelo con **errores robustos** usando `lm_robust()` (guárdelo en `reg6_robust`) y compárelo con el modelo clásico mediante `tab_model()`. Comente qué cambia y qué no.
+
+```{r}
+#| eval: false
+check_model(reg6)
+```
+
+```{r}
+check_heteroscedasticity(reg6)
+
+reg6_robust <- lm_robust(
+  tasa_homicidios24 ~
+    pobreza_pct +
+    migrantes_pct +
+    esc_promedio_s18 +
+    densidad_poblacional +
+    I(densidad_poblacional^2) +
+    tasa_drogas24,
+  data = homicidios2
+)
+
+tab_model(reg6, reg6_robust, p.style = "numeric_stars")
+```
+
+**Respuesta: `check_heteroscedasticity()`** detecta heterocedasticidad en `reg6` (Breusch-Pagan con p \< 0.001): la varianza de los errores no es constante. MCO sigue siendo insesgado, pero sus errores estándar quedan mal calculados, así que reestimamos con `lm_robust()` (HC2). Al comparar con `tab_model()`, los **coeficientes no cambian** (misma estimación puntual), pero sí los **errores estándar** y, con ellos, la significancia. `check_collinearity()` mostrará VIF altos para `densidad_poblacional` y su término cuadrático, algo esperable por construcción y no una multicolinealidad problemática entre variables distintas.
+
+## Pregunta 12
+
+12. Cree una variable **binaria** `homicidio24_bin` que valga 1 si la comuna tuvo al menos una víctima de homicidio en 2024 (`hom_2024 > 0`) y 0 en caso contrario. Reporte cuantas comunas reportaron víctimas de homicidios consumados durante 2024 y cuántas no.  Estime un modelo **logit** (`glm()` con `family = binomial(link = "logit")`) usando como predictores los mismos del modelo ampliado. Obtenga los **efectos marginales promedio** con `avg_slopes()` del paquete `marginaleffects` e interprete el efecto de alguna variable.
+
+```{r}
+homicidios_logit <- homicidios2 |>
+  mutate(
+    homicidio24_bin = if_else(hom_2024 > 0, 1, 0)
+  )
+
+homicidios_logit |> 
+  count(homicidio24_bin)
+
+logit1 <- glm(
+  homicidio24_bin ~
+    pobreza_pct +
+    migrantes_pct +
+    esc_promedio_s18 +
+    densidad_poblacional +
+    I(densidad_poblacional^2) +
+    tasa_drogas24,
+  family = binomial(link = "logit"),
+  data = homicidios_logit
+)
+
+model_parameters(logit1)
+
+avg_slopes(logit1)
+```
+
+**Respuesta:** De las 315 comunas, 206 registraron al menos una víctima de homicidio en 2024 (`homicidio24_bin = 1`) y 109 no. Como los coeficientes del logit están en escala de *log-odds* y no se interpretan directamente, usamos `avg_slopes()`, que entrega el **efecto marginal promedio** en la escala de la probabilidad: cuánto cambia, en promedio, la probabilidad de que una comuna registre al menos un homicidio ante un cambio unitario en cada variable, ceteris paribus. Por ejemplo, el efecto de `pobreza_pct` se lee como el cambio promedio en esa probabilidad por cada punto porcentual adicional de pobreza (en esta especificación `pobreza_pct` y `esc_promedio_s18` resultan significativas).
+
+## Pregunta 13
+
+13. **Reflexión (máx. 200 palabras).** A partir de todo lo estimado en esta tarea, ¿por qué estos resultados **no** permiten afirmar que un mayor porcentaje de población migrante **cause** una mayor tasa de homicidios? Discuta en función de lo que representan los datos de víctimas de homicidios y la estructura de los datos observacionales, variables omitidas, causalidad inversa/simultaneidad y la distinción entre correlación y causalidad.
+
+**Respuesta: Aunque en varios modelos `migrantes_pct` aparezca asociado a la tasa de homicidios, estos resultados son de naturaleza *observacional* y no identifican un efecto causal. Primero, existen** variables omitidas correlacionadas tanto con la presencia de migrantes como con la violencia (nivel socioeconómico, mercados laborales, economías ilícitas, capacidad institucional local, etc.); aun controlando por pobreza, escolaridad, densidad y drogas, es imposible descartar confusores no observados. Segundo, puede haber **causalidad inversa o simultaneidad**: los flujos migratorios y la localización de la población responden a características de las comunas que también determinan la violencia. Tercero, no contamos con un **contrafactual creíble** (no hay asignación aleatoria ni un diseño de identificación), por lo que los coeficientes miden *asociación ceteris paribus dentro del modelo*, no un efecto causal. En síntesis, correlación no es causalidad: para hablar de causa se requeriría un diseño de evaluación de impacto que escapa al alcance de este curso.
+
+# BONUS: Pregunta de razonamiento {style="text-align: justify"}
+
+**(Opcional)** Un colega le dice que para explicar la variabilidad de la violencia letal en los territorios la mejor estrategia es agregar la mayor cantidad de variables posibles con el fin de maximizar el $R^2$ y le pide a usted que estime un modelo con todas las variables disponibles que no sean redundantes. Para ello, primero seleccione las siguientes variables y guárdelas en un objeto llamado `homicidios_r2` ejecutando el siguiente código:
+
+```{r}
+homicidios_r2 <- homicidios2 |>
+  select(tasa_homicidios24:last_col(), -tasa_migrantes)
+```
+
+Estime el modelo utilizando como variable dependiente `tasa_homicidios24` y como variable explicativa el resto de las variables presentes en `homicidios_r2` (*Hint: un atajo para establecer como control todas las variables de la base a excepción de la dependiente es usar la siguiente fórmula: `lm(y ~ ., data = datos)`*).
+
+Analice el $R^2$ y $R^2_{adj}$ (o r cuadrado ajustado) y coméntele a su colega lo que opina de esa estrategia aplicada a estos datos y dé un argumento adicional al r-cuadrado de por qué es una buena o mala estrategia empírica incluir todas las varaibles que tenga disponibles:
+
+```{r}
+reg_bonus <- lm(tasa_homicidios24 ~ ., data = homicidios_r2)
+summary(reg_bonus)
+```
+
+**Respuesta:** Lo que nos pide nuestro colega tiene varios problemas:
+
+1.  Al incluir todas las variables es verdad que el $R^2$ aumenta, pero en este contexto es más pertinente fijarse en el $R^2_{adj}$. Comparado con los últimos modelos, este indicador es más bajo, por lo que desde esta perspectiva no es una buena estrategia.
+2.  En segundo lugar, lo que está haciendo su colega es tratar de predecir una variable solo con variables explicativas sin tener un modelo detrás ni entender los datos. Es siempre importante buscar modelos teóricos y literatura especializada que permitan sustentar la hipótesis y el ajuste que se realiza con los datos (recordar que el orden recomendado para una pregunta de investigación social es: pregunta → modelo → datos → estimación; no al revés). Además, sobreajustar el modelo (incluir variables intrusas) suele **empeorar la capacidad predictiva fuera de muestra** y complica la interpretación de los coeficientes.

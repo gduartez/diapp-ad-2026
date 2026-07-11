@@ -98,7 +98,7 @@ homicidios <- read_excel('data/Base_de_Datos_VHC_2018_2025.xlsx') |>
 glimpse(homicidios)
 ```
 
-**Respuesta: El dataframe tiene 8669 filas y 15 columnas o variables. Cada fila representa una víctima de homicidio consumado registrada dentro de Chile entre 2018 y 2025.**
+[**Respuesta: El dataframe tiene 8669 filas y 15 columnas o variables. Cada fila representa una víctima de homicidio consumado registrada dentro de Chile entre 2018 y 2025.**]{.mark}
 
 2.  Renombre las siguientes variables del objeto `homicidios` para hacerlas más legibles, sobrescribiendo el objeto:
 
@@ -303,6 +303,7 @@ p2_v3 <- p2_v2 +
 
 p2_v3
 ```
+
 **Respuesta: El promedio histórico entre 2018 y 2024 fue superado en los siguientes meses del año 2025: Febrero (103 vs 87), abril (82 vs 80), julio (98 vs 79), agosto (103 vs 84) y octubre (107 vs 96)**
 
 ## 1.6 Heatmap: concentración por hora y día
@@ -358,6 +359,7 @@ p3 <- ggplot(
 p3
 
 ```
+
 **Respuesta: La mayor concentración de homicidios ocurre los fines de semana en horario vespertino/nocturno. El período con más casos corresponde al domingo entre las 18:00 y las 23:59 horas (73 homicidios), seguido del sábado en el mismo horario (65). También destaca la madrugada del domingo (00:00–05:59), con 63 casos.**
 
 # Parte II: Análisis de homicidios y otras variables {style="text-align: justify"}
@@ -396,6 +398,7 @@ ggplot(homicidios_condenas, aes(x = anio, y = pct, color = condenas))+
   theme_classic()
 
 ```
+
 **Respuesta: La proporción de homicidios con condena se mantiene relativamente estable durante el período analizado, fluctuando entre 47% y 54%, sin evidenciar una tendencia sostenida al alza o a la baja. En la mayoría de los años, las víctimas de homicidios con condena representan una proporción levemente superior a aquellas sin condena, mientras que el porcentaje de casos sin información es muy bajo (0%–2%).**
 
 \newpage
@@ -423,6 +426,7 @@ ggplot(homicidios_wide,
   theme_bw(base_size = 12)
 
 ```
+
 **Respuesta: Sí, se observan patrones diferenciados entre regiones. En algunas, como la Metropolitana, Biobío, Valparaíso y Tarapacá, se aprecia una relación positiva entre la tasa de pobreza y la tasa de homicidios, es decir, las comunas con mayores niveles de pobreza tienden a presentar tasas de homicidios más elevadas. En cambio, en otras regiones, como Antofagasta, Los Ríos o Maule, la relación es débil o incluso levemente negativa, sin un patrón claramente definido.**
 
 18. Construya un gráfico de **dispersión** similar al anterior pero ahora identificando grupos por la variable `zona` mediante el **color** de los puntos (no con facetas). Agregue **una** recta de regresión lineal **por zona** y use una paleta de colores distinta a la predeterminada (por ejemplo, `scale_color_brewer(palette = "Set1")`). ¿Qué diferencias observa entre las tendencias de las zonas?

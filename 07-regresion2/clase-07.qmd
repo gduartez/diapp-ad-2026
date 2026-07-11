@@ -136,7 +136,7 @@ salarios |> count(female)
 #| fig-height: 4
 ggplot(salarios, aes(x = educ, y = wage, color = female)) +
   geom_point(alpha = 0.6) +
-  labs(x = "Años de experiencia", y = "Salario por hora (USD)",
+  labs(x = "Años de educación", y = "Salario por hora (USD)",
        color = "Sexo")
 ```
 

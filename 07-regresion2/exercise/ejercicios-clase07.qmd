@@ -1,0 +1,357 @@
+---
+title: "Ejercicio Guiado N°7 - Análisis de Datos y Estadística Computacional"
+subtitle: "Regresión Múltiple: dummies, interacciones, cuadráticos y robustez"
+author: "Prof. Gabriel Duarte Zúñiga"
+institute: "Universidad Adolfo Ibáñez | DIAPP-2026"
+date: "2026-07-07"
+lang: es
+format:
+  html:
+    toc: true
+    toc-title: "Contenidos"
+    toc-depth: 2
+    toc-location: left
+    number-sections: false
+    theme: [flatly, styles_ex.scss]
+    highlight-style: github
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    df-print: paged
+    fig-align: center
+    fig-width: 8
+    fig-height: 5
+    self-contained: true
+execute:
+  echo: true
+  warning: false
+  message: false
+  eval: true
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(easystats)
+library(sjPlot)
+library(ggeffects)
+library(estimatr)
+library(marginaleffects)
+library(broom)
+library(moderndive)
+library(modelsummary)
+library(wooldridge)
+```
+
+::: callout-important
+## Antes de comenzar
+
+Esta guía usa los mismos paquetes "modernos" que vimos en clase. Si es la
+primera vez, instálalos (una sola vez):
+
+```{r}
+#| eval: false
+install.packages(c(
+  "tidyverse",      # manipulación y gráficos
+  "easystats",      # parameters, performance, see, report
+  "sjPlot",         # tab_model(), plot_model()
+  "ggeffects",      # ggpredict()
+  "estimatr",       # lm_robust()
+  "marginaleffects",# plot_slopes()
+  "broom",          # tidy(), glance()
+  "moderndive",     # geom_parallel_slopes()
+  "modelsummary",   # tablas comparativas
+  "wooldridge"      # datasets
+))
+```
+
+Luego cárgalos al inicio de tu sesión:
+
+```{r}
+#| eval: false
+library(tidyverse)
+library(easystats)
+library(sjPlot)
+library(ggeffects)
+library(estimatr)
+library(marginaleffects)
+library(broom)
+library(moderndive)
+library(modelsummary)
+library(wooldridge)
+```
+:::
+
+------------------------------------------------------------------------
+
+# Ejercicio Grupal
+
+Seguiremos con el dataset **`hprice1`** (Wooldridge) de la guía anterior:
+**88 viviendas** con su precio de venta y características. Ahora
+aplicaremos **regresión múltiple** para responder preguntas más ricas:
+¿importa el **estilo** de la casa?, ¿el efecto del tamaño **difiere** según
+el estilo?, ¿el terreno tiene **rendimientos decrecientes**?
+
+| Variable   | Descripción                                        |
+|------------|----------------------------------------------------|
+| `price`    | Precio de venta (en **miles** de USD)              |
+| `sqrft`    | Superficie construida (**pies cuadrados**)         |
+| `bdrms`    | Número de dormitorios                              |
+| `lotsize`  | Tamaño del terreno (pies cuadrados)                |
+| `colonial` | **1** si la casa es de estilo colonial, **0** si no|
+| `lprice`   | Logaritmo natural de `price`                       |
+
+> ⏱️ Objetivo: resolver la guía en unos **30-40 minutos**. Intente primero cada
+> pregunta y antes de desplegar la **Pauta**.
+
+------------------------------------------------------------------------
+
+### Pregunta 1: Cargar los datos y preparar la dummy {#sec-p1}
+
+Cargue `hprice1` en un objeto llamado `casas`. Convierta `colonial` en un
+**factor** con etiquetas `"No colonial"` (0) y `"Colonial"` (1), guardándolo
+en el mismo objeto. Verifique con `count()` cuántas casas hay de cada tipo.
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+casas <- hprice1 |>
+  mutate(colonial = factor(colonial, labels = c("No colonial", "Colonial")))
+
+casas |> count(colonial)
+```
+
+Hay **27** casas no coloniales y **61** coloniales. Al convertir `colonial`
+en factor, R tomará **"No colonial"** como **grupo de referencia**
+(*benchmark*): los coeficientes se interpretarán **respecto a** ese grupo.
+:::
+
+### Pregunta 2: Regresión con una dummy {#sec-p2}
+
+Estime `price` en función de `colonial` y guárdelo en `m1`. Muestre los
+resultados con `model_parameters()`. **Interprete** el intercepto y el
+coeficiente de `colonial`. ¿Es la diferencia estadísticamente significativa?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+m1 <- lm(price ~ colonial, data = casas)
+model_parameters(m1)
+```
+
+Con una sola dummy, la regresión **reproduce las medias por grupo**:
+
+- **Intercepto = 272.4**: precio promedio de las casas **no coloniales**
+  (el grupo de referencia), es decir, unos **\$272.400**.
+- **colonial [Colonial] = 30.5**: las casas coloniales cuestan, en promedio,
+  **\$30.500 más** (272.4 + 30.5 = 302.9).
+
+Sin embargo, el **p-value ≈ 0.20** (> 0.05): la diferencia **no** es
+estadísticamente significativa. En la muestra las coloniales son más caras,
+pero no tenemos evidencia suficiente para afirmar que eso ocurre en la
+población.
+:::
+
+### Pregunta 3: Agregar controles (regresión múltiple) {#sec-p3}
+
+Estime ahora `price ~ colonial + sqrft + bdrms` y guárdelo en `m2`. Compare
+`m1` y `m2` con `tab_model()`. **Interprete** el coeficiente de `sqrft`
+*ceteris paribus* y explique **qué le pasó** al coeficiente de `colonial`.
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+m2 <- lm(price ~ colonial + sqrft + bdrms, data = casas)
+
+tab_model(m1, m2, show.reflvl = TRUE, show.intercept = TRUE,
+          p.style = "numeric_stars")
+```
+
+- **`sqrft` = 0.130**: por cada **pie cuadrado adicional**, el precio sube en
+  promedio **\$130** (0.130 miles), **manteniendo constantes** el estilo y el
+  número de dormitorios (*ceteris paribus*). Es altamente significativo.
+- **`colonial`** cae de **30.5** a **13.1** (y sigue sin ser significativo):
+  buena parte de la "prima colonial" bruta se debía a que las casas coloniales
+  tienden a ser **más grandes**. Al **controlar por tamaño**, esa diferencia
+  se reduce mucho.
+
+Esto ilustra la lógica *ceteris paribus*: controlar por las variables
+correctas cambia lo que un coeficiente significa.
+:::
+
+### Pregunta 4: ¿El efecto del tamaño difiere por estilo? (interacción) {#sec-p4}
+
+Estime `price ~ colonial * sqrft` y guárdelo en `m3`. Muéstrelo con
+`model_parameters()` y grafique con `plot_model(type = "pred")`. ¿Qué mide el
+término de interacción? ¿Es significativo?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+m3 <- lm(price ~ colonial * sqrft, data = casas)
+model_parameters(m3)
+```
+
+```{r}
+#| fig-height: 4
+plot_model(m3, type = "pred", terms = c("sqrft", "colonial"))
+```
+
+El término **`colonial × sqrft` (≈ 0.025)** mide **cuánto difiere el efecto
+del tamaño** entre casas coloniales y no coloniales (la diferencia de
+pendientes). Es **positivo** pero su **p-value ≈ 0.31**: **no** hay evidencia
+de que el precio por pie cuadrado dependa del estilo. En el gráfico, las dos
+rectas tienen pendientes **casi iguales** (no significativamente distintas).
+
+Recuerde: `colonial * sqrft` incluye los efectos principales **más** la
+interacción; `colonial:sqrft` incluiría **solo** la interacción.
+:::
+
+### Pregunta 5: No linealidad — términos cuadráticos {#sec-p5}
+
+¿Tiene el **terreno** rendimientos decrecientes? Estime
+`price ~ lotsize + I(lotsize^2)` y guárdelo en `m4`. Grafique el efecto con
+`plot_model(type = "pred")` y el **efecto marginal** con `plot_slopes()`.
+Interprete el signo del término cuadrático.
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+m4 <- lm(price ~ lotsize + I(lotsize^2), data = casas)
+model_parameters(m4)
+```
+
+```{r}
+#| fig-height: 3.6
+plot_model(m4, type = "pred", terms = "lotsize [all]") +
+  labs(title = "Precio predicho según tamaño del terreno")
+```
+
+```{r}
+#| fig-height: 3.6
+plot_slopes(m4, variables = "lotsize", condition = "lotsize") +
+  labs(title = "Efecto marginal de un pie² adicional de terreno")
+```
+
+El coeficiente de `lotsize` es **positivo** y el de `I(lotsize^2)` es
+**negativo** (ambos significativos): el terreno tiene **rendimientos
+decrecientes**. Cada pie cuadrado adicional aumenta el precio, pero **cada vez
+menos**. El efecto marginal es $\hat\beta_1 + 2\hat\beta_2 \cdot lotsize$, que
+**cae** a medida que el terreno crece (la curva del segundo gráfico baja).
+Dentro del rango habitual de los datos el efecto es **positivo pero
+decreciente**.
+:::
+
+### Pregunta 6: Chequear supuestos {#sec-p6}
+
+Sobre el modelo `m2` (`price ~ colonial + sqrft + bdrms`), genere el
+diagnóstico visual con `check_model()` y aplique el test
+`check_heteroskedasticity()`. ¿Se cumple el supuesto de homocedasticidad?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+#| eval: true
+check_model(m2)
+```
+
+```{r}
+check_heteroskedasticity(m2)
+```
+
+`check_heteroskedasticity()` **detecta heterocedasticidad** (p < 0.05): la
+varianza de los errores **no** es constante (algo muy común con precios de
+vivienda, donde las casas caras tienen residuos más dispersos).
+
+**Consecuencia:** los coeficientes MCO siguen siendo **insesgados**, pero sus
+**errores estándar**, y por lo tanto los p-values e intervalos, quedan **mal
+calculados**. La inferencia deja de ser confiable tal como está.
+:::
+
+### Pregunta 7: Errores estándar robustos {#sec-p7}
+
+Reestime `m2` con `lm_robust()` (guárdelo en `m2_rob`) y compárelo con el MCO
+clásico usando `tab_model()`. ¿Qué cambia y qué **no** cambia?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+m2_rob <- lm_robust(price ~ colonial + sqrft + bdrms, data = casas)
+
+tab_model(m2, m2_rob,
+          dv.labels = c("MCO clásico", "SE robustos (HC2)"),
+          show.ci = FALSE, p.style = "numeric_stars")
+```
+
+Los **coeficientes son idénticos**: `lm_robust()` **no** cambia las
+estimaciones puntuales. Lo que cambia son los **errores estándar** (y con
+ellos p-values y significancia), que ahora son **válidos bajo
+heterocedasticidad**. Reportar errores robustos es práctica **estándar** con
+datos de corte transversal como estos.
+:::
+
+### Pregunta 8: Transformar la variable dependiente (log) {#sec-p8}
+
+Estime el mismo modelo de la Pregunta 3 pero con **`log(price)`** como
+variable dependiente: `lm(log(price) ~ colonial + sqrft + bdrms)`, guárdelo en
+`m5`. Interprete cómo **cambia** la lectura del coeficiente de `sqrft`. Como
+bonus, vuelva a correr `check_heteroskedasticity()`. ¿Qué observa?
+
+::: {.callout-tip collapse="true"}
+### Pauta
+
+```{r}
+m5 <- lm(log(price) ~ colonial + sqrft + bdrms, data = casas)
+model_parameters(m5)
+```
+
+Al usar el **logaritmo del precio**, pasamos a un modelo **log-nivel**: el
+coeficiente se interpreta en **términos porcentuales** (semi-elasticidad,
+$100 \times \hat\beta$).
+
+- **`sqrft` = 0.00039**: cada pie cuadrado adicional se asocia con un
+  **+0.039%** en el precio ($100 \times 0.00039$), o ~**3.9% por cada 100 pies
+  cuadrados**. Compare con la Pregunta 3, donde el mismo efecto se leía en
+  **dólares** (\$130/pie²).
+- **`colonial` ≈ 0.08**: una casa colonial cuesta aproximadamente **8% más**,
+  *ceteris paribus*.
+
+**Bonus:**
+
+```{r}
+check_heteroskedasticity(m5)
+```
+
+¡La heterocedasticidad **ya no se detecta** (p > 0.05)! Transformar la
+variable dependiente a logaritmo no solo cambia la **interpretación** a
+porcentajes: además suele **estabilizar la varianza** de los errores, un
+motivo frecuente para trabajar con `log()` en variables como precios o
+salarios.
+:::
+
+------------------------------------------------------------------------
+
+# Resumen
+
+| Modelo | Sintaxis en R | Idea clave |
+|--------|---------------|------------|
+| Dummy | `price ~ colonial` | Coeficiente = **diferencia de medias** vs. referencia |
+| Múltiple | `price ~ colonial + sqrft + bdrms` | Cada coef. es marginal **ceteris paribus** |
+| Interacción | `price ~ colonial * sqrft` | El efecto de una variable **depende** de otra |
+| Cuadrático | `price ~ lotsize + I(lotsize^2)` | Efecto marginal **no constante** ($\beta_1+2\beta_2 x$) |
+| Robustez | `lm_robust(...)` | Corrige SE; **mismos** $\beta$ |
+| Log del DV | `log(price) ~ ...` | Coeficientes en **%** (semi-elasticidad) |
+
+::: callout-note
+## Funciones clave para interpretar y reportar
+`model_parameters()`, `tab_model()`, `plot_model()`, `plot_slopes()`,
+`check_model()`, `check_heteroskedasticity()`, `lm_robust()` y
+`modelsummary()`.
+:::
