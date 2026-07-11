@@ -42,6 +42,8 @@ webr:
     - dplyr
     - broom
     - wooldridge
+    - estimatr
+    - sjPlot
 
 editor:
   markdown:

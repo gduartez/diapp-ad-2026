@@ -2,7 +2,7 @@
 title: "Tarea 2 (Pauta)"
 author: 'Gabriel Duarte'
 subtitle: 'Módulo 2 - Análisis de Datos y Estadística Computacional DIAPP-2026 UAI'
-date: "2026-07-10"
+date: "2026-07-11"
 date-format: "D MMM YYYY"
 lang: es
 format:
